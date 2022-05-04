@@ -12,7 +12,7 @@ public class Funcion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Date fechaHora;
+	//private Date fechaHora;
 	
 	@ManyToOne
 	private Pelicula pelicula;
@@ -32,12 +32,12 @@ public class Funcion {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getFechaHora() {
+	/*public Date getFechaHora() {
 		return fechaHora;
 	}
 	public void setFechaHora(Date fechaHora) {
 		this.fechaHora = fechaHora;
-	}
+	}*/
 	public Pelicula getPelicula() {
 		return pelicula;
 	}

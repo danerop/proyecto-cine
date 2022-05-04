@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
+/*
 @Entity
 public class PeliculaGenero {
 
@@ -19,3 +19,4 @@ public class PeliculaGenero {
 	@ManyToOne
 	private Genero genero;
 }
+*/

@@ -12,9 +12,9 @@ public class Sala {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	/*@ManyToOne
 	private TipoDeSala tipo;
-	
+	*/
 	@ManyToOne
 	private Cine cine;
 	
@@ -24,12 +24,12 @@ public class Sala {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public TipoDeSala getTipo() {
+	/*public TipoDeSala getTipo() {
 		return tipo;
 	}
 	public void setTipo(TipoDeSala tipo) {
 		this.tipo = tipo;
-	}
+	}*/
 	public Cine getCine() {
 		return cine;
 	}

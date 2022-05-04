@@ -1,5 +1,5 @@
 package ar.edu.unlam.tallerweb1.modelo;
-
+/*
 public enum Genero {
 	Terror,
 	CienciaFiccion,
@@ -8,3 +8,4 @@ public enum Genero {
 	Accion,
 	Comedia;
 }
+*/
