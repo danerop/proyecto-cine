@@ -16,6 +16,6 @@ public class PeliculaGenero {
 	@ManyToOne
 	private Pelicula pelicula;
 	
-	@ManyToOne
+//	@ManyToOne
 	private Genero genero;
 }

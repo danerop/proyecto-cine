@@ -23,7 +23,7 @@ public class Boleto {
 	@ManyToOne
 	private Butaca butaca;
 	
-	private Date fecha;
+//	private Date fecha;
 	private Float precio;
 	
 	public Long getId() {
@@ -56,12 +56,12 @@ public class Boleto {
 	public void setButaca(Butaca butaca) {
 		this.butaca = butaca;
 	}
-	public Date getFecha() {
-		return fecha;
-	}
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
+//	public Date getFecha() {
+//		return fecha;
+//	}
+//	public void setFecha(Date fecha) {
+//		this.fecha = fecha;
+//	}
 	public Float getPrecio() {
 		return precio;
 	}

@@ -105,6 +105,7 @@
 	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
 	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
   </div>
+  <a href="compra" class="btn btn-primary" role="button">COMPRAR</a>
 </div>
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>

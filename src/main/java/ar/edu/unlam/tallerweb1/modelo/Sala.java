@@ -12,7 +12,7 @@ public class Sala {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+//	@ManyToOne
 	private TipoDeSala tipo;
 	
 	@ManyToOne
