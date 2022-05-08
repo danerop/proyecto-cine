@@ -15,6 +15,8 @@ public class Cine {
 	private String direccion;
 	private String telefono;
 	private String email;
+	private String urlImagenCine;
+	
 	
 	public Long getId() {
 		return id;
@@ -46,5 +48,10 @@ public class Cine {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+	public String getUrlImagenCine() {
+		return urlImagenCine;
+	}
+	public void setUrlImagenCine (String urlImagenCine) {
+		this.urlImagenCine = urlImagenCine;
+	}
 }
