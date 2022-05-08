@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,8 @@ public class Boleto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Integer nroBoleto;
+	private Date fecha;
+	private Float precio;
 	
 	@ManyToOne
 	private Usuario cliente;
@@ -23,8 +27,6 @@ public class Boleto {
 	@ManyToOne
 	private Butaca butaca;
 	
-	//private Date fecha;
-	private Float precio;
 	
 	public Long getId() {
 		return id;
@@ -56,18 +58,17 @@ public class Boleto {
 	public void setButaca(Butaca butaca) {
 		this.butaca = butaca;
 	}
-	/*public Date getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
-	}*/
+	}
 	public Float getPrecio() {
 		return precio;
 	}
 	public void setPrecio(Float precio) {
 		this.precio = precio;
 	}
-	
 	
 }

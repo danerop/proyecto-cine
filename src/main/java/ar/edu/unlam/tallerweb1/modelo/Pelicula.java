@@ -15,6 +15,7 @@ public class Pelicula {
 	private Integer anio;
 	private String descripcion;
 	private Integer duracion;
+	private String urlImagenPelicula;
 	
 	public Long getId() {
 		return id;
@@ -46,6 +47,11 @@ public class Pelicula {
 	public void setDuracion(Integer duracion) {
 		this.duracion = duracion;
 	}
-	
+	public String getUrlImagenPelicula() {
+		return urlImagenPelicula;
+	}
+	public void setUrlImagenPelicula(String urlImagenPelicula) {
+		this.urlImagenPelicula = urlImagenPelicula;
+	}
 	
 }

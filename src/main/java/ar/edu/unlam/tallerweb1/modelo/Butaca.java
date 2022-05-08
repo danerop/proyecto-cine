@@ -12,11 +12,11 @@ public class Butaca {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Boolean ocupada = false;
 	
 	@ManyToOne
 	private Sala sala;
 	
-	private Boolean ocupada = false;
 	
 	public Long getId() {
 		return id;
