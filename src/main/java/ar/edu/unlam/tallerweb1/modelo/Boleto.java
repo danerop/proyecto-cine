@@ -27,6 +27,9 @@ public class Boleto {
 	@ManyToOne
 	private Butaca butaca;
 	
+	/*@ManyToOne
+	private Sala sala;
+	 */
 	
 	public Long getId() {
 		return id;

@@ -22,7 +22,6 @@ public class Usuario {
 	private String password;
 	private Boolean activo = false;
 	private String urlImagenUsuario;
-	
 	@ManyToOne
 	private Rol rol;
 	
