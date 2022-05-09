@@ -76,6 +76,12 @@
   </button>
 </div>
 <br>
+
+<div class="">
+  <a class="btn btn-primary" role="button" href="admin">Controles Administrador</a>
+</div>
+<br>
+
 <select class="form-select-bg-size cine-selection" aria-label="Default select example">
   <option selected>Selecciona un cine</option>
   <option value="1">Hoyts Morón</option>

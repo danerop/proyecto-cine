@@ -18,6 +18,7 @@ public class Boleto {
 	private Date fecha;
 	private Float precio;
 	
+	
 	@ManyToOne
 	private Usuario cliente;
 	
