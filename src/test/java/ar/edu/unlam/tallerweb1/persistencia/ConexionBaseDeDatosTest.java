@@ -17,7 +17,6 @@ public class ConexionBaseDeDatosTest extends SpringTest{
         assertThat(session().isConnected()).isTrue();
     }
 
-    
     @Test
     @Transactional @Rollback
     public void crearUsuario(){

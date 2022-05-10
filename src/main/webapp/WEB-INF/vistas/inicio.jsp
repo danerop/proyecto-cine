@@ -101,7 +101,7 @@
 <br>
 <div class="d-flex flex-column bd-highlight mb-3">
   <div class="d-flex justify-content-evenly">
-	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
+	<img src="${pelicula.urlImagenPelicula}" class="img-thumbnail" alt="...">
 	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
 	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
   </div>

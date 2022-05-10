@@ -18,7 +18,6 @@ public class Boleto {
 	private Date fecha;
 	private Float precio;
 	
-	
 	@ManyToOne
 	private Usuario cliente;
 	
@@ -28,6 +27,9 @@ public class Boleto {
 	@ManyToOne
 	private Butaca butaca;
 	
+	/*@ManyToOne
+	private Sala sala;
+	 */
 	
 	public Long getId() {
 		return id;
