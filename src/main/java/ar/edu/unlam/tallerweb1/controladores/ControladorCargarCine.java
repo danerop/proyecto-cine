@@ -24,12 +24,6 @@ public class ControladorCargarCine {
 		this.servicioCine = servicioCine;
 	}
 	
-	@RequestMapping("/admin")
-	public ModelAndView irAAdmin() {
-		ModelMap modelo = new ModelMap();
-		modelo.put("datosCine", new DatosCine());
-		return new ModelAndView("admin", modelo);
-	}
 	
 	@RequestMapping(path = "/busqueda-cine", method = RequestMethod.POST)
 	public ModelAndView buscarCinePorId( @ModelAttribute("datosCine") DatosCine DatosCine) {

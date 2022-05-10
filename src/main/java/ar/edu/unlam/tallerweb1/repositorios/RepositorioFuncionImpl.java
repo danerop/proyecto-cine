@@ -9,34 +9,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Cine;
+import ar.edu.unlam.tallerweb1.modelo.Funcion;
 
-@Repository("repositorioCine")
-public class RepositorioCineImpl implements RepositorioCine {
+@Repository("repositorioFuncion")
+public class RepositorioFuncionImpl implements RepositorioFuncion {
 
 	private SessionFactory sessionFactory;
 
 	@Autowired
-	public RepositorioCineImpl(SessionFactory sessionFactory){
+	public RepositorioFuncionImpl(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;
 	}
 	
 	@Override
-	public List<Cine> obtenerTodosLosCines() {
+	public List<Funcion> obtenerTodasLasFunciones() {
 		Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(Cine.class).list();
+		return session.createCriteria(Funcion.class).list();
 	}
-	
+
 	@Override
-	public Cine buscarCinePorId(Long id) {
-		return (Cine) sessionFactory.getCurrentSession().createCriteria(Cine.class)
+	public Funcion buscarFuncionPorId(Long id) {
+		return (Funcion) sessionFactory.getCurrentSession().createCriteria(Funcion.class)
 				.add(Restrictions.eq("id",id))
 				.uniqueResult();
 	}
 
 	@Override
-	public void guardarCine(Cine cine) {
-		sessionFactory.getCurrentSession().save(cine);
+	public void guardarFuncion(Funcion funcion) {
+		sessionFactory.getCurrentSession().save(funcion);
 	}
-	
-	
+
 }

@@ -1,11 +1,14 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.modelo.Cine;
+import ar.edu.unlam.tallerweb1.modelo.Funcion;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioCine;
 
 @Service("servicioCine")
@@ -27,6 +30,11 @@ public class ServicioCineImpl implements ServicioCine{
 	@Override
 	public void guardarCine(Cine cine) {
 		repositorioCineDao.guardarCine(cine);
+	}
+
+	@Override
+	public List<Cine> obtenerTodosLosCines() {
+		return repositorioCineDao.obtenerTodosLosCines();
 	}
 
 }

@@ -62,6 +62,7 @@
   <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group mr-2" role="group">
       <button type="button" class="btn btn-secondary cargar-cine">Cargar Cine</button>
+      <button type="button" class="btn btn-secondary cargar-sala">Cargar Sala</button>
       <button type="button" class="btn btn-secondary cargar-pelicula">Cargar Pelicula</button>
       <button type="button" class="btn btn-secondary cargar-funcion">Cargar Función</button>
     </div>
@@ -105,12 +106,39 @@
 		
     </div>
 
+	<div class="formulario-cargar-sala" style="display: none; padding: 1rem;">
+      <h4>Formulario Crear Sala</h4>
+    </div>
+
     <div class="formulario-cargar-pelicula" style="display: none; padding: 1rem;">
       <h4>Formulario Crear Película</h4>
     </div>
 
     <div class="formulario-cargar-funcion" style="display: none; padding: 1rem;">
-      <h4>Formulario Crear Función</h4>
+      
+      <form:form action="agregar-funcion" method="POST" modelAttribute="datosFuncion">
+			<h4>Formulario Crear Funcion</h4>
+			<hr class="colorgraph"><br>
+			
+			<form:input path="fechaHora" id="fechaHora" type="fechaHora" class="form-control" />
+			<form:input path="precioMayor" id="precioMayor" type="precioMayor" class="form-control" />
+			<form:input path="precioMenor" id="precioMenor" type="precioMenor" class="form-control" />
+			
+			<%--
+			<label for="exampleFormControlSelect1">Example select</label>
+			<select class="form-control" id="exampleFormControlSelect1">
+				
+				<c:forEach var = "i" begin = "1" end = "5">
+         			
+         			<option>${}</option>
+         			
+      			</c:forEach>
+				
+			</select>--%>
+					
+			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Cine</button>
+		</form:form>
+      
     </div>
   </div>
 
@@ -129,6 +157,10 @@
     $(".cargar-funcion").click(function () {
       $(".formularios>div").each(function () { $(this).hide(); });
       $(".formulario-cargar-funcion").show();
+    });
+    $(".cargar-sala").click(function () {
+      $(".formularios>div").each(function () { $(this).hide(); });
+      $(".formulario-cargar-sala").show();
     });
   </script>
 
