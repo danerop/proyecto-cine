@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +27,9 @@ public class Funcion {
 	
 	private Float precioMayor;
 	private Float precioMenor;
+	
+	private Date fecha;
+	private Integer hora;
 	
 	public Long getId() {
 		return id;
