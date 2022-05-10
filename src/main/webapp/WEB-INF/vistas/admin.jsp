@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,18 +69,48 @@
 
   <br>
 
-  <div class="container formularios">
-    <div class="formulario-cargar-cine" style="display: none;">
-      <h4>Formulario Crear Cine</h4>
+  <div class="container formularios bg-light rounded">
+    <div class="formulario-cargar-cine" style="display: none; padding: 1rem;">
+		
+		<form:form action="agregar-cine" method="POST" modelAttribute="datosCine">
+			<h4>Formulario Crear Cine</h4>
+			<hr class="colorgraph"><br>
+			
+			<form:input path="nombreLocal" id="nombreLocal" type="nombreLocal" class="form-control" />
+			<form:input path="direccion" id="direccion" type="direccion" class="form-control" />
+			<form:input path="telefono" id="telefono" type="telefono" class="form-control" />
+			<form:input path="email" id="email" type="email" class="form-control" />
+			<form:input path="urlImagenCine" type="urlImagenCine" id="urlImagenCine" class="form-control"/>     		  
+					
+			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Cine</button>
+		</form:form>
+		
+		
+		<br>
+		<hr class="colorgraph"><br>
+		<br>
+		
+		<form:form action="busqueda-cine" method="POST" modelAttribute="datosCine">
+			<h4>Formulario buscar Cine</h4>
+			<hr class="colorgraph"><br>
+			
+			<form:input path="id" type="id" class="form-control" />
+			
+			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Buscar cine</button>
+		</form:form>
+		
+		<c:if test="${not empty cinenombre}">
+	        <h4><span>Cine Encontrado: ${cinenombre} dirección: ${cinedireccion}</span></h4>
+		</c:if>
+		
     </div>
 
-    <div class="formulario-cargar-pelicula" style="display: none;">
+    <div class="formulario-cargar-pelicula" style="display: none; padding: 1rem;">
       <h4>Formulario Crear Película</h4>
     </div>
 
-    <div class="formulario-cargar-funcion" style="display: none;">
+    <div class="formulario-cargar-funcion" style="display: none; padding: 1rem;">
       <h4>Formulario Crear Función</h4>
-      <div class="invisible">asd</div>
     </div>
   </div>
 
