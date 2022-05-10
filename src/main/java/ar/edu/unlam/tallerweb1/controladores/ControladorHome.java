@@ -21,11 +21,4 @@ public class ControladorHome {
 		return new ModelAndView("peliculas");
 	
 	}
-	
-	@RequestMapping(path = "/admin", method = RequestMethod.GET)
-	public ModelAndView admin(){
-		
-		return new ModelAndView("admin");
-	
-	}
 }
