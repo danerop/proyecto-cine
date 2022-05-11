@@ -32,6 +32,8 @@ public class ControladorFuncion {
 		nuevaFuncion.setPrecioMenor(datosFuncion.getPrecioMenor());
 		nuevaFuncion.setFechaHora(datosFuncion.getFechaHora());
 		
+		servicioFuncion.guardarFuncion(nuevaFuncion);
+		
 		return new ModelAndView("admin");
 		
 	}
