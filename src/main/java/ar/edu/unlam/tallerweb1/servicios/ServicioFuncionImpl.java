@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -55,6 +56,25 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	public List<Funcion> obtenerFuncionesPorPelicula(Long idPelicula) {
 		return repositorioFuncionDao.obtenerFuncionesPorPelicula(idPelicula);
 	}
+
+	@Override
+	public List<Cine> obtenerCinesDisponiblesParaFunciones(Long idPelicula) {
+		return repositorioFuncionDao.obtenerCinesDisponiblesParaFunciones(idPelicula);
+	}
+
+	@Override
+	public List<Funcion> obtenerFuncionesPorCineFechaHoraYPelicula(Long idCine, Long idPelicula, Date fechaHora,
+			String hora) {
+		return repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraYPelicula(idCine, idPelicula, fechaHora, hora);
+	}
+
+	
+
+	
+
+
+
+	
 
 
 }

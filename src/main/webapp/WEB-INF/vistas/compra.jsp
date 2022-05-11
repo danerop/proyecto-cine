@@ -70,8 +70,8 @@
           </label>
           <select id="selectcine" class="form-select" aria-label="Default select example">
              <option selected>Selecciona un cine</option>
-            <c:forEach items="${funcionesDisponibles}" var="funciones">
-            	<option path="idcine" value="${funciones.getCine().getId() }">${funciones.getCine().getNombreLocal()}</option>
+            <c:forEach items="${cinesDisponibles}" var="cines">
+            	<option path="idcine" value="${cines.getId()}">${cines.getNombreLocal()}</option>
             </c:forEach>
 
           </select>
@@ -79,29 +79,29 @@
           <h4 class="upspace"> Seleccione fecha:</h4>
           <div class="btn-group container-fluid" role="group" aria-label="Button group with nested dropdown">
             <div class="row container-fluid">
-              <input type="radio" class="btn-check" name="fecha" id="fecha1" autocomplete="off" value="04/05/2022"
+              <input type="radio" class="btn-check fechas" name="fecha" id="fecha1" autocomplete="off" value="04/05/2022"
                 path="fecha">
-              <label class="btn btn-outline-primary col" for="fecha1">Hoy <br> 04/05</label>
+              <label class="btn btn-outline-primary col fechas" for="fecha1">Hoy <br> 04/05</label>
+              
+              <input type="radio" class="btn-check fechas" name="fecha" id="fecha2" autocomplete="off" value="04/05/2022"
+                path="fecha">
+              <label class="btn btn-outline-primary col fechas" for="fecha2">Mañana <br> 05/05</label>
 
-              <input type="radio" class="btn-check" name="fecha" id="fecha2" autocomplete="off" value="04/05/2022"
+              <input type="radio" class="btn-check fechas" name="fecha" id="fecha3" autocomplete="off" value="04/05/2022"
                 path="fecha">
-              <label class="btn btn-outline-primary col" for="fecha2">Mañana <br> 05/05</label>
+              <label class="btn btn-outline-primary col fechas" for="fecha3">Dia <br> 06/05</label>
 
-              <input type="radio" class="btn-check" name="fecha" id="fecha3" autocomplete="off" value="04/05/2022"
+              <input type="radio" class="btn-check fechas" name="fecha" id="fecha4" autocomplete="off" value="04/05/2022"
                 path="fecha">
-              <label class="btn btn-outline-primary col" for="fecha3">Dia <br> 06/05</label>
+              <label class="btn btn-outline-primary col fechas" for="fecha4">Dia <br> 07/05</label>
 
-              <input type="radio" class="btn-check" name="fecha" id="fecha4" autocomplete="off" value="04/05/2022"
+              <input type="radio" class="btn-check fechas" name="fecha" id="fecha5" autocomplete="off" value="04/05/2022"
                 path="fecha">
-              <label class="btn btn-outline-primary col" for="fecha4">Dia <br> 07/05</label>
+              <label class="btn btn-outline-primary col fechas" for="fecha5">Dia <br> 08/05</label>
 
-              <input type="radio" class="btn-check" name="fecha" id="fecha5" autocomplete="off" value="04/05/2022"
+              <input type="radio" class="btn-check fechas" name="fecha" id="fecha6" autocomplete="off" value="04/05/2022"
                 path="fecha">
-              <label class="btn btn-outline-primary col" for="fecha5">Dia <br> 08/05</label>
-
-              <input type="radio" class="btn-check" name="fecha" id="fecha6" autocomplete="off" value="04/05/2022"
-                path="fecha">
-              <label class="btn btn-outline-primary col" for="fecha6">Dia <br> 09/05</label>
+              <label class="btn btn-outline-primary col fechas" for="fecha6">Dia <br> 09/05</label>
 
               <button type="button" class="btn btn-outline-primary col">Siguiente <br> Semana</button>
             </div>
@@ -109,25 +109,18 @@
 
           <h4 class="upspace">Horarios</h4>
           
-              <c:forEach items="${funcionesDisponibles}" var="funciones">
-              <h1>${funciones.getHora()} </h1>
-              </c:forEach>
           
           <div class="btn-group container-fluid" role="group" aria-label="Button group with nested dropdown">
             <div class="container-fluid row">
               
-
+			<c:forEach items="${funcionesDisponibles}" var="horarios">
+			
+			  <input type="radio" class="btn-check horarios horariocine-${horarios.getCine().getId() }" name="horario" id="horario-${horarios.getId() }" autocomplete="off" path="hora" value="${horarios.getHora()}">
+              <label class="btn btn-outline-primary col horarios horariocine-${horarios.getCine().getId() }" for="horario-${horarios.getId() }">${horarios.getHora()}</label>
+			
+			</c:forEach>
               
-              <input type="radio" class="btn-check" name="horario" id="horario1" autocomplete="off" value="1800">
-              <label class="btn btn-outline-primary col" for="horario1"path="hora">18:00</label>
 
-              <input type="radio" class="btn-check" name="horario" id="horario2" autocomplete="off" value="1900"
-                path="hora">
-              <label class="btn btn-outline-primary col" for="horario2">19:00</label>
-
-              <input type="radio" class="btn-check" name="horario" id="horario3" autocomplete="off" value="2000"
-                path="hora">
-              <label class="btn btn-outline-primary col" for="horario3">20:00</label>
               
             </div>
           </div>
@@ -142,48 +135,7 @@
           <h1>Metodo pago</h1>
           <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
 
-          <div class="card p-3">
-
-            <h6 class="text-uppercase">Detalles pago</h6>
-            <div class="inputbox mt-3"> <input type="text" name="name" class="form-control" required="required">
-              <span>Nombre Completo</span> </div>
-
-
-            <div class="row">
-
-              <div class="col-md-6">
-
-                <div class="inputbox mt-3 mr-2"> <input type="text" name="name" class="form-control"
-                    required="required"> <i class="fa fa-credit-card"></i> <span>Numero Tarjeta</span>
-
-
-                </div>
-
-
-              </div>
-
-              <div class="col-md-6">
-
-                <div class="d-flex flex-row">
-
-
-                  <div class="inputbox mt-3 mr-2"> <input type="text" name="name" class="form-control"
-                      required="required"> <span>Fecha Expiración</span> </div>
-
-                  <div class="inputbox mt-3 mr-2"> <input type="text" name="name" class="form-control"
-                      required="required"> <span>CVV</span> </div>
-
-
-                </div>
-
-
-              </div>
-
-
-            </div>
-
-
-          </div>
+         
 
           <!-- zzzzzzzzzzzzzzzzzzzzzzzzzz -->
           <div class="d-flex justify-content-center btncompraboleto">
@@ -222,6 +174,22 @@
     crossorigin="anonymous"></script>
   <script src="./js/bootstrap.min.js"></script>
   <script src="./js/pago.js"></script>
+  
+  <script type="text/javascript">
+  $(document).ready (function(){
+	 $(".horarios").hide();
+	 $("#selectcine").change(function(){
+		 var seleccionado=$("#selectcine option:selected").val();
+		 $(".horarios").hide();
+		 $('.horariocine-'+seleccionado).show();
+	 });
+	 $(".fechas").click(mostrarSegunFecha)
+  });
+  function mostrarSegunFecha(){
+
+	  
+  }
+  </script>
 </body>
 
 </html>

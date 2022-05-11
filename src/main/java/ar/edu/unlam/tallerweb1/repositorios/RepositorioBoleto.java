@@ -5,5 +5,5 @@ import ar.edu.unlam.tallerweb1.modelo.Boleto;
 public interface RepositorioBoleto {
 
 	void guardarBoleto(Boleto boleto);
-    Boleto buscarBoleto();
+    Boleto buscarBoleto(Long id);
 }
