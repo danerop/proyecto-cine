@@ -2,18 +2,14 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import java.sql.Date;
 
-import ar.edu.unlam.tallerweb1.modelo.Cine;
-import ar.edu.unlam.tallerweb1.modelo.Pelicula;
-import ar.edu.unlam.tallerweb1.modelo.Sala;
-
 public class DatosFuncion {
 	private Long id;
-	private Date fechaHora;
+	private String fechaHora;
 	private Float precioMayor;
 	private Float precioMenor;
-	private Pelicula pelicula;
-	private Cine cine;
-	private Sala sala;
+	private Long idPelicula;
+	private Long idCine;
+	private Long idSala;
 	
 	
 	public Long getId() {
@@ -22,10 +18,10 @@ public class DatosFuncion {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getFechaHora() {
+	public String getFechaHora() {
 		return fechaHora;
 	}
-	public void setFechaHora(Date fechaHora) {
+	public void setFechaHora(String fechaHora) {
 		this.fechaHora = fechaHora;
 	}
 	public Float getPrecioMayor() {
@@ -40,24 +36,22 @@ public class DatosFuncion {
 	public void setPrecioMenor(Float precioMenor) {
 		this.precioMenor = precioMenor;
 	}
-	public Pelicula getPelicula() {
-		return pelicula;
+	public Long getIdPelicula() {
+		return idPelicula;
 	}
-	public void setPelicula(Pelicula pelicula) {
-		this.pelicula = pelicula;
+	public void setIdPelicula(Long idPelicula) {
+		this.idPelicula = idPelicula;
 	}
-	public Cine getCine() {
-		return cine;
+	public Long getIdCine() {
+		return idCine;
 	}
-	public void setCine(Cine cine) {
-		this.cine = cine;
+	public void setIdCine(Long idCine) {
+		this.idCine = idCine;
 	}
-	public Sala getSala() {
-		return sala;
+	public Long getIdSala() {
+		return idSala;
 	}
-	public void setSala(Sala sala) {
-		this.sala = sala;
+	public void setIdSala(Long idSala) {
+		this.idSala = idSala;
 	}
-	
-	
 }
