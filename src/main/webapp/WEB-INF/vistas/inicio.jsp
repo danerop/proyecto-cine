@@ -53,7 +53,7 @@
 	</nav>
 <br>
 <div class="">
-  <a class="btn btn-primary" role="button" href="admin">Controles Administrador</a>
+  <a class="btn btn-primary" role="button" href="http://localhost:8080/proyecto-cine/admin?sel=cargar-cine">Controles Administrador</a>
 </div>
 <br>
 
