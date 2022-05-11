@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -40,6 +42,31 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 	@Override
 	public void guardarFuncion(Funcion funcion) {
 		sessionFactory.getCurrentSession().save(funcion);
+	}
+
+	@Override
+	public List<Funcion> obtenerFuncionesPorCineYPelicula(Long idCine, Long idPelicula) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Funcion.class)
+		.add(Restrictions.eq("cine.id",idCine))
+		.add(Restrictions.eq("pelicula.id", idPelicula))
+		.list();
+	}
+
+	@Override
+	public List<Funcion> obtenerFuncionesPorCine(Long idCine) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Funcion.class)
+		.add(Restrictions.eq("cine.id",idCine))
+		.list();
+	}
+
+	@Override
+	public List<Funcion> obtenerFuncionesPorPelicula(Long idPelicula) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Funcion.class)
+		.add(Restrictions.eq("pelicula.id", idPelicula))
+		.list();
 	}
 
 }

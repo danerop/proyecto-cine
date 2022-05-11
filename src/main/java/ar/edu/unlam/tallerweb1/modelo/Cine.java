@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ public class Cine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String nombreLocal;
 	private String direccion;
 	private String telefono;
@@ -18,6 +20,8 @@ public class Cine {
 	private String urlImagenCine;
 	
 	
+	
+
 	public Long getId() {
 		return id;
 	}
@@ -54,4 +58,5 @@ public class Cine {
 	public void setUrlImagenCine (String urlImagenCine) {
 		this.urlImagenCine = urlImagenCine;
 	}
+	
 }

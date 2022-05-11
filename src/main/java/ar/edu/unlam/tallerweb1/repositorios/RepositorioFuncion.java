@@ -10,6 +10,10 @@ public interface RepositorioFuncion {
 	List<Funcion> obtenerTodasLasFunciones();
 	Funcion buscarFuncionPorId(Long id);
 	void guardarFuncion(Funcion funcion);
+	List<Funcion> obtenerFuncionesPorCineYPelicula(Long idCine, Long idPelicula);
+	List<Funcion> obtenerFuncionesPorCine(Long idCine);
+	List<Funcion> obtenerFuncionesPorPelicula(Long idPelicula);
+	
 	
 
 }

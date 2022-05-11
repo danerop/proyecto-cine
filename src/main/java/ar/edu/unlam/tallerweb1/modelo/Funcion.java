@@ -1,13 +1,11 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
 import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
 @Entity
 public class Funcion {
 
@@ -23,14 +21,12 @@ public class Funcion {
 	private Pelicula pelicula;
 	
 	@ManyToOne
-	private Cine cine;
+	public Cine cine;
 	
 	@ManyToOne
 	private Sala sala;
 	
-	
-	private Date fecha;
-	private Integer hora;
+	private String hora;
 	
 	public Long getId() {
 		return id;
@@ -74,4 +70,11 @@ public class Funcion {
 	public void setPrecioMenor(Float precioMenor) {
 		this.precioMenor = precioMenor;
 	}
+	public String getHora() {
+		return hora;
+	}
+	public void setHora(String hora) {
+		this.hora = hora;
+	}
+	
 }
