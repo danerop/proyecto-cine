@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,11 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
 public class ControladorHome {
 	
 	private ServicioCine servicioCine;
+	
+	@Autowired
+		public ControladorHome(ServicioCine servicioCine){
+		this.servicioCine = servicioCine;
+	}
 	
 	@RequestMapping(path = "/inicio", method = RequestMethod.GET)
 	public ModelAndView inicio(){
@@ -38,12 +44,11 @@ public class ControladorHome {
 		ModelMap modelo = new ModelMap();
 		modelo.put("datosCine", new DatosCine());
 		modelo.put("datosFuncion", new DatosFuncion());
+	
 		
-		//List<Cine> listaCines = new ArrayList<Cine>();
-		//listaCines.add(servicioCine.buscarCinePorID(2L));
 		//Iterator<Cine> iter = listaCines.iterator();
 
-		//modelo.put("listaCine", listaCines);
+		modelo.put("listaCines", servicioCine.obtenerTodosLosCines() );
 		return new ModelAndView("admin", modelo);
 	}
 }

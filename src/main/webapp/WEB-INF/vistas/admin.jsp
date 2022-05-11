@@ -124,18 +124,18 @@
 			<form:input path="precioMayor" id="precioMayor" type="precioMayor" class="form-control" />
 			<form:input path="precioMenor" id="precioMenor" type="precioMenor" class="form-control" />
 			
-			<%--
-			<label for="exampleFormControlSelect1">Example select</label>
+		
+			<%--<label for="exampleFormControlSelect1">Example select</label> --%>
 			<select class="form-control" id="exampleFormControlSelect1">
 				
-				<c:forEach var = "i" begin = "1" end = "5">
+				<c:forEach items="${listaCines}" var="cine">
          			
-         			<option>${}</option>
+         			<option>${cine.getNombreLocal()}</option>
          			
       			</c:forEach>
 				
-			</select>--%>
-					
+			</select>
+			
 			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Cine</button>
 		</form:form>
       
