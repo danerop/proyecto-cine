@@ -31,6 +31,7 @@ public class ControladorFuncion {
 		nuevaFuncion.setPrecioMayor(datosFuncion.getPrecioMayor());
 		nuevaFuncion.setPrecioMenor(datosFuncion.getPrecioMenor());
 		nuevaFuncion.setFechaHora(datosFuncion.getFechaHora());
+		servicioFuncion.guardarFuncion(nuevaFuncion);
 		
 		servicioFuncion.guardarFuncion(nuevaFuncion);
 		

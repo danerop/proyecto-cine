@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,34 +51,7 @@
 	    </div>
 	  </div>
 	</nav>
-	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="https://static.cinemarkhoyts.com.ar/Images/Highlights/443.png" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://static.cinemarkhoyts.com.ar/Images/Highlights/442.png" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://static.cinemarkhoyts.com.ar/Images/Highlights/452.png" class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
 <br>
-
 <div class="">
   <a class="btn btn-primary" role="button" href="admin">Controles Administrador</a>
 </div>
@@ -99,18 +74,22 @@
 <h3 class="text-center">Películas</h3>
 <br>
 <br>
-<div class="d-flex flex-column bd-highlight mb-3">
-  <div class="d-flex justify-content-evenly">
-	<img src="${pelicula.urlImagenPelicula}" class="img-thumbnail" alt="...">
-	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
-	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
+<div class="container">
+  <div class="row justify-content-evenly row-cols-3">	<!-- d-flex flex-column bd-highlight mb-3  -->
+	<c:forEach items="${listaPeliculas}" var="pelicula">
+     	<div class="col d-flex justify-content-evenly" style="margin-bottom: 50px;">
+     		<div class="card" style="width: 14rem;">
+  			<img src="${pelicula.getUrlImagenPelicula()}" class="card-img-top" alt="...">
+			  <div class="card-body" style="text-align: center; background-color:black; height:60px;">
+			    <h5 class="card-title" style="font-size:15px; color:white;">${pelicula.getNombre()}</h5>
+			  </div>
+			</div>
+		<!-- 	<img src="${pelicula.getUrlImagenPelicula()}" class="img-thumbnail peliculaItem" alt="..."> -->
+ 		</div>				
+	</c:forEach>
+	<br>
   </div>
   <br>
-  <div class="d-flex justify-content-evenly">
-	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
-	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
-	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
-  </div>
 </div>
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
