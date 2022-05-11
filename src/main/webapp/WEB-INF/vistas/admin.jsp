@@ -61,17 +61,19 @@
 
   <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group mr-2" role="group">
-      <button type="button" class="btn btn-secondary cargar-cine">Cargar Cine</button>
-      <button type="button" class="btn btn-secondary cargar-sala">Cargar Sala</button>
-      <button type="button" class="btn btn-secondary cargar-pelicula">Cargar Pelicula</button>
-      <button type="button" class="btn btn-secondary cargar-funcion">Cargar Función</button>
+      <a class="btn btn-secondary cargar-cine" href="http://localhost:8080/proyecto-cine/admin?sel=cargar-cine">Cargar Cine</a>
+      <a class="btn btn-secondary cargar-sala" href="http://localhost:8080/proyecto-cine/admin?sel=cargar-sala">Cargar Sala</a>
+      <a class="btn btn-secondary cargar-pelicula" href="http://localhost:8080/proyecto-cine/admin?sel=cargar-pelicula">Cargar Pelicula</a>
+      <a class="btn btn-secondary cargar-funcion" href="http://localhost:8080/proyecto-cine/admin?sel=cargar-funcion">Cargar Función</a>
     </div>
   </div>
 
   <br>
 
   <div class="container formularios bg-light rounded">
-    <div class="formulario-cargar-cine" style="display: none; padding: 1rem;">
+  
+   	<c:if test="${seleccion == 'cargar-cine'}">
+      <div class="formulario-cargar-cine" style=" padding: 1rem;">
 		
 		<form:form action="agregar-cine" method="POST" modelAttribute="datosCine">
 			<h4>Formulario Crear Cine</h4>
@@ -83,10 +85,10 @@
 			<form:input path="email" id="email" type="email" class="form-control" />
 			<form:input path="urlImagenCine" type="urlImagenCine" id="urlImagenCine" class="form-control"/>     		  
 					
-			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Cine</button>
+			<input type="submit" />
 		</form:form>
 		
-		
+		<%--
 		<br>
 		<hr class="colorgraph"><br>
 		<br>
@@ -97,54 +99,73 @@
 			
 			<form:input path="id" type="id" class="form-control" />
 			
-			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Buscar cine</button>
+			<input type="submit" />
 		</form:form>
 		
 		<c:if test="${not empty cinenombre}">
 	        <h4><span>Cine Encontrado: ${cinenombre} dirección: ${cinedireccion}</span></h4>
 		</c:if>
-		
-    </div>
+		--%>
+      </div>
+    </c:if>
 
-	<div class="formulario-cargar-sala" style="display: none; padding: 1rem;">
-      <h4>Formulario Crear Sala</h4>
-    </div>
-
-    <div class="formulario-cargar-pelicula" style="display: none; padding: 1rem;">
-      <h4>Formulario Crear Película</h4>
-    </div>
-
-    <div class="formulario-cargar-funcion" style="display: none; padding: 1rem;">
-      
-      <form:form action="agregar-funcion" method="POST" modelAttribute="datosFuncion">
+	<c:if test="${seleccion == 'cargar-sala'}">
+	  <div class="formulario-cargar-sala" style="padding: 1rem;">
+      	<form:form action="agregar-sala" method="POST" modelAttribute="datosSala">
+	    	<h4>Formulario Crear Sala</h4>
+			<hr class="colorgraph"><br>
+			
+			<form:select path="idCine" class="form-control">
+				<c:forEach items="${listaCines}" var="cine">
+         			<form:option value="${cine.getId()}" label="${cine.getId()}"/>
+      			</c:forEach>
+			</form:select>
+			
+			<input type="submit" />
+	  	</form:form>
+      </div>
+	</c:if>
+	
+	<c:if test="${seleccion == 'cargar-pelicula'}">
+      <div class="formulario-cargar-pelicula" style="padding: 1rem;">
+       <h4>Formulario Crear Película</h4>
+      </div>
+	</c:if>
+	
+	<c:if test="${seleccion == 'cargar-funcion'}">
+      <div class="formulario-cargar-funcion" style="padding: 1rem;">
+        <form:form action="agregar-funcion" method="POST" modelAttribute="datosFuncion">
 			<h4>Formulario Crear Funcion</h4>
 			<hr class="colorgraph"><br>
 			
-			<form:input path="fechaHora" id="fechaHora" type="fechaHora" class="form-control" />
-			<form:input path="precioMayor" id="precioMayor" type="precioMayor" class="form-control" />
-			<form:input path="precioMenor" id="precioMenor" type="precioMenor" class="form-control" />
+			<form:input path="fechaHora" type="fechaHora" class="form-control" />
+			<form:input path="precioMayor" type="precioMayor" class="form-control" />
+			<form:input path="precioMenor" type="precioMenor" class="form-control" />
 			
 		
-			<%--<label for="exampleFormControlSelect1">Example select</label> --%>
-			<select class="form-control" id="exampleFormControlSelect1">
+			<%--<label for="seleccionCine">Example select</label> 
+			
+			<select class="form-control" id="seleccionCine" path="cine" type="cine">
 				
 				<c:forEach items="${listaCines}" var="cine">
          			
-         			<option>${cine.getNombreLocal()}</option>
+         			<form:options value="${cine}">${cine.getNombreLocal()}</form:options>
          			
       			</c:forEach>
 				
-			</select>
+			</select>--%>
+			
 			
 			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Cine</button>
 		</form:form>
-      
-    </div>
+      </div>
+    </c:if>
+    
   </div>
 
 
   <script src="js/jquery.min.js"></script>
-  <script>
+  <script>/*
     //si se pulsa un botón, se muestran su formulario correspondiente.
     $(".cargar-cine").click(function () {
       $(".formularios>div").each(function () { $(this).hide(); });
@@ -161,7 +182,7 @@
     $(".cargar-sala").click(function () {
       $(".formularios>div").each(function () { $(this).hide(); });
       $(".formulario-cargar-sala").show();
-    });
+    });*/
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
