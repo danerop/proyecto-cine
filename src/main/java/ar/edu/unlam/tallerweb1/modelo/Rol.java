@@ -14,6 +14,7 @@ public class Rol {
 	private String nombre;
 	private String descripcion;
 	
+	
 	public Long getId() {
 		return id;
 	}

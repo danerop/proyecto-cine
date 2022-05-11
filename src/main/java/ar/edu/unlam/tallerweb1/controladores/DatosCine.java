@@ -1,22 +1,13 @@
-package ar.edu.unlam.tallerweb1.modelo;
+package ar.edu.unlam.tallerweb1.controladores;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
-public class Cine {
+public class DatosCine {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nombreLocal;
 	private String direccion;
 	private String telefono;
 	private String email;
 	private String urlImagenCine;
-	
 	
 	public Long getId() {
 		return id;
@@ -51,7 +42,7 @@ public class Cine {
 	public String getUrlImagenCine() {
 		return urlImagenCine;
 	}
-	public void setUrlImagenCine (String urlImagenCine) {
+	public void setUrlImagenCine(String urlImagenCine) {
 		this.urlImagenCine = urlImagenCine;
 	}
 }

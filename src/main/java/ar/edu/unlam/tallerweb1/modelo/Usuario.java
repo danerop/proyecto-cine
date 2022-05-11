@@ -21,10 +21,10 @@ public class Usuario {
 	private String email;
 	private String password;
 	private Boolean activo = false;
-	
+	private String urlImagenUsuario;
+
 	@ManyToOne
 	private Rol rol;
-	
 	
 	public Rol getRol() {
 		return rol;
@@ -56,12 +56,16 @@ public class Usuario {
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
 	}
-
 	public boolean activo() {
 		return activo;
     }
-
     public void activar() {
 		activo = true;
     }
+	public String getUrlImagenUsuario() {
+		return urlImagenUsuario;
+	}
+	public void setUrlImagenUsuario(String urlImagenUsuario) {
+		this.urlImagenUsuario = urlImagenUsuario;
+	}
 }

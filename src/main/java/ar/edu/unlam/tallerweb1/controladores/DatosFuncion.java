@@ -1,36 +1,20 @@
-package ar.edu.unlam.tallerweb1.modelo;
+package ar.edu.unlam.tallerweb1.controladores;
 
 import java.sql.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import ar.edu.unlam.tallerweb1.modelo.Cine;
+import ar.edu.unlam.tallerweb1.modelo.Pelicula;
+import ar.edu.unlam.tallerweb1.modelo.Sala;
 
-@Entity
-public class Funcion {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DatosFuncion {
 	private Long id;
 	private Date fechaHora;
 	private Float precioMayor;
 	private Float precioMenor;
-
-	
-	@ManyToOne
 	private Pelicula pelicula;
-	
-	@ManyToOne
 	private Cine cine;
-	
-	@ManyToOne
 	private Sala sala;
 	
-	
-	private Date fecha;
-	private Integer hora;
 	
 	public Long getId() {
 		return id;
@@ -43,6 +27,18 @@ public class Funcion {
 	}
 	public void setFechaHora(Date fechaHora) {
 		this.fechaHora = fechaHora;
+	}
+	public Float getPrecioMayor() {
+		return precioMayor;
+	}
+	public void setPrecioMayor(Float precioMayor) {
+		this.precioMayor = precioMayor;
+	}
+	public Float getPrecioMenor() {
+		return precioMenor;
+	}
+	public void setPrecioMenor(Float precioMenor) {
+		this.precioMenor = precioMenor;
 	}
 	public Pelicula getPelicula() {
 		return pelicula;
@@ -62,16 +58,6 @@ public class Funcion {
 	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
-	public Float getPrecioMayor() {
-		return precioMayor;
-	}
-	public void setPrecioMayor(Float precioMayor) {
-		this.precioMayor = precioMayor;
-	}
-	public Float getPrecioMenor() {
-		return precioMenor;
-	}
-	public void setPrecioMenor(Float precioMenor) {
-		this.precioMenor = precioMenor;
-	}
+	
+	
 }

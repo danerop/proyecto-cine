@@ -76,6 +76,12 @@
   </button>
 </div>
 <br>
+
+<div class="">
+  <a class="btn btn-primary" role="button" href="admin">Controles Administrador</a>
+</div>
+<br>
+
 <select class="form-select-bg-size cine-selection" aria-label="Default select example">
   <option selected>Selecciona un cine</option>
   <option value="1">Hoyts Morón</option>
@@ -95,7 +101,7 @@
 <br>
 <div class="d-flex flex-column bd-highlight mb-3">
   <div class="d-flex justify-content-evenly">
-	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
+	<img src="${pelicula.urlImagenPelicula}" class="img-thumbnail" alt="...">
 	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
 	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
   </div>
