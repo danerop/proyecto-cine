@@ -10,6 +10,7 @@ public class DatosCompraBoleto {
 	private String hora;
 	private Long idPelicula;
 	private Long idUsuario;
+	private Long idSala;
 	
 	
 	public DatosCompraBoleto(Long idPelicula, Long idUsuario) {
@@ -54,6 +55,12 @@ public class DatosCompraBoleto {
 	}
 	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+	public Long getIdSala() {
+		return idSala;
+	}
+	public void setIdSala(Long idSala) {
+		this.idSala = idSala;
 	}
 	
 }

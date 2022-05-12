@@ -185,6 +185,8 @@
 			<br>
 			<form:label path="precioMenor">Precio para menores (ARS$):</form:label>
 			<form:input path="precioMenor" type="precioMenor" class="form-control" />
+			<form:label path="hora">Horario (Formato hora:minutos):</form:label>
+			<form:input path="hora" type="hora" class="form-control" />
 			
 			<br>
 			<%-- De momento va a ser así, pero en el final el selector de sala mostrará solo las salas del cine--%>

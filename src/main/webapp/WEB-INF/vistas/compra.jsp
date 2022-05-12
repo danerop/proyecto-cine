@@ -76,34 +76,20 @@
 
           </form:select>
 
-          <h4 class="upspace"> Seleccione fecha:</h4>
+          <h4 class="upspace"> Seleccione fecha y sala:</h4>
           <div class="btn-group container-fluid" role="group" aria-label="Button group with nested dropdown">
             <div class="row container-fluid">
-              <input type="radio" class="btn-check fechas" name="fecha" id="fecha1" autocomplete="off" value="04/05/2022"
-                path="fecha">
-              <form:label class="btn btn-outline-primary col fechas" for="fecha1" value="04/05/2022" path="fecha">Hoy <br> 04/05</form:label>
+
               
-              <input type="radio" class="btn-check fechas" name="fecha" id="fecha2" autocomplete="off" value="04/05/2022"
+              <c:forEach items="${funcionesDisponibles}" var="fechasMostrar">
+              
+              <input type="radio" class="btn-check fechas fechas-${fechasMostrar.getCine().getId()}" name="fecha" id="fecha-${fechasMostrar.getId()}" autocomplete="off" value="${fechasMostrar.getFechaHora()}"
                 path="fecha">
-              <form:label class="btn btn-outline-primary col fechas" for="fecha2" value="04/05/2022" path="fecha">Mañana <br> 05/05</form:label>
-
-              <input type="radio" class="btn-check fechas" name="fecha" id="fecha3" autocomplete="off" value="04/05/2022"
-                path="fecha">
-              <form:label class="btn btn-outline-primary col fechas" for="fecha3" value="04/05/2022" path="fecha">Dia <br> 06/05</form:label>
-
-              <input type="radio" class="btn-check fechas" name="fecha" id="fecha4" autocomplete="off" value="04/05/2022"
-                path="fecha">
-              <form:label class="btn btn-outline-primary col fechas" for="fecha4" value="04/05/2022" path="fecha">Dia <br> 07/05</form:label>
-
-              <input type="radio" class="btn-check fechas" name="fecha" id="fecha5" autocomplete="off" value="04/05/2022"
-                path="fecha">
-              <form:label class="btn btn-outline-primary col fechas" for="fecha5" value="04/05/2022" path="fecha">Dia <br> 08/05</form:label>
-
-              <input type="radio" class="btn-check fechas" name="fecha" id="fecha6" autocomplete="off" value="04/05/2022"
-                path="fecha">
-              <form:label class="btn btn-outline-primary col fechas" for="fecha6" value="04/05/2022" path="fecha">Dia <br> 09/05</form:label>
-
-              <button type="button" class="btn btn-outline-primary col">Siguiente <br> Semana</button>
+              <form:label class="btn btn-outline-primary col fechas fechas-${fechasMostrar.getCine().getId()}" for="fecha-${fechasMostrar.getId()}" value="${fechasMostrar.getFechaHora()}" path="fecha">${fechasMostrar.getFechaHora()} <br><span id="idSala">${fechasMostrar.getSala().getId()}</span>-${fechasMostrar.getSala().getTipo()}</form:label>
+              
+              
+              </c:forEach>
+  
             </div>
           </div>
 
@@ -115,8 +101,8 @@
               
 			<c:forEach items="${funcionesDisponibles}" var="horarios">
 			
-			  <input type="radio" class="btn-check horarios horariocine-${horarios.getCine().getId() }" name="horario" id="horario-${horarios.getId() }" autocomplete="off" path="hora" value="${horarios.getHora()}">
-              <form:label path="hora" class="btn btn-outline-primary col horarios horariocine-${horarios.getCine().getId() }" for="horario-${horarios.getId() }">${horarios.getHora()}</form:label>
+			  <input type="radio" class="btn-check horarios ${horarios.getFechaHora()}" name="horario" id="horario-${horarios.getId() }" autocomplete="off" path="hora" value="${horarios.getHora()}">
+              <form:label value="${horarios.getHora()}" path="hora" class="btn btn-outline-primary col horarios ${horarios.getFechaHora()}" for="horario-${horarios.getId() }">${horarios.getHora()}</form:label>
 			
 			</c:forEach>
               
@@ -125,8 +111,8 @@
             </div>
           </div>
 
-          <div class="d-flex justify-content-center btncompraboleto">
-            <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".primersig"
+          <div  class="d-flex justify-content-center btncompraboleto">
+            <button id="primerSiguiente" type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".primersig"
               aria-expanded="false" aria-controls="fecha-horario metodo-pago">Siguiente</button>
           </div>
         </div>
@@ -145,16 +131,23 @@
               aria-expanded="false" aria-controls="metodo-pago confirmacion">Siguiente</button>
           </div>
         </div>
-
+       	<form:label id="siempreoculto" path="idSala" value=""></form:label>
         <div id="confirmacion" class="collapse segundosig">
-          <h2>Datos</h2>
-          <h2>Confirmas?</h2>
+          <h1>Datos</h1>
+          <img alt="imgPelicula" src="${peliculaElegida.getUrlImagenPelicula()}">
+          <h2>Pelicula: ${peliculaElegida.getNombre()} </h2>  
+          <h2 id="cineS">Cine:</h2>
+          <h2 id="fechaSalaS">Fecha y sala:</h2>
+          <h2 id="horaS">Hora:</h2>
           <div class="d-flex justify-content-center btncompraboleto">
             <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target=".segundosig"
               aria-expanded="false" aria-controls="metodo-pago confirmacion">Volver</button>
             <form:button type="button submit" class="btn btn-primary">Comprar</form:button>
           </div>
         </div>
+        
+        
+
       </form:form>
 
 
@@ -177,18 +170,43 @@
   
   <script type="text/javascript">
   $(document).ready (function(){
+	 var nombreCine;
+	 var fechaysala;
+	 var horario;
+	 var idSala;
+	 $("#siempreOculto").hide();
+	 $(".fechas").hide();
 	 $(".horarios").hide();
+	 $("#primerSiguiente").hide();
 	 $("#selectcine").change(function(){
 		 var seleccionado=$("#selectcine option:selected").val();
 		 $(".horarios").hide();
-		 $('.horariocine-'+seleccionado).show();
+		 $(".fechas").hide();
+		 $("#primerSiguiente").hide();
+		 $('.fechas-'+seleccionado).show();
+		nombreCine=$("#selectcine option:selected").html();
 	 });
-	 $(".fechas").click(mostrarSegunFecha)
+	 $(".fechas").click(function(){
+		var radVal = $("input[name='fecha']:checked").val();
+		$(".horarios").hide();
+		$("#primerSiguiente").hide();
+		$('.'+radVal).show();
+		fechaysala=$("input[name='fecha']:checked").next().html();
+	
+	 });
+	 $(".horarios").click(function(){
+		 $("#primerSiguiente").show();
+		 horario=$("input[name='horario']:checked").next().html();
+		 idSala=$("#idSala").html();
+		 $("#siempreOculto").val(idSala);
+		 $("#siempreOculto").html(idSala);
+	 });
+	 $("#primerSiguiente").click(function(){
+		$("#cineS").html("Cine: "+nombreCine); 
+		$("#fechaSalaS").html("Fecha y sala: "+fechaysala);
+		$("#horaS").html("Hora: "+horario)
+	 });
   });
-  function mostrarSegunFecha(){
-
-	  
-  }
   </script>
 </body>
 

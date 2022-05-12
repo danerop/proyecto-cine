@@ -55,6 +55,7 @@ public class ControladorFuncion {
 		nuevaFuncion.setCine(cineSeleccionado);
 		nuevaFuncion.setSala(salaSeleccionada);
 		nuevaFuncion.setPelicula(peliculaSeleccionada);
+		nuevaFuncion.setHora(datosFuncion.getHora());
 		
 		servicioFuncion.guardarFuncion(nuevaFuncion);
 		
