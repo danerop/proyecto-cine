@@ -27,22 +27,25 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioSala;
 public class ControladorHome {
 	
 	@Autowired
-	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala){
+	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala, ServicioLogin servicioUsuario){
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine = servicioCine;
 		this.servicioSala = servicioSala;
+		this.servicioUsuario = servicioUsuario;
 	}
 	
 	private ServicioCine servicioCine;
 	private ServicioSala servicioSala;
 	private ServicioPelicula servicioPelicula;
+	private ServicioLogin servicioUsuario;
 	
 	@RequestMapping(path = "/inicio", method = RequestMethod.GET)
 	public ModelAndView inicio(){
 		
 		ModelMap model = new ModelMap();
+		model.put("usuario", servicioUsuario.consultarUsuarioPorId(1L));
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
-				
+	
 		return new ModelAndView("inicio", model);
 
 	

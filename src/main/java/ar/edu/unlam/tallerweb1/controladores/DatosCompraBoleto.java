@@ -12,7 +12,6 @@ public class DatosCompraBoleto {
 	private Long idUsuario;
 	
 	
-	
 	public DatosCompraBoleto(Long idPelicula, Long idUsuario) {
 		super();
 		this.idPelicula = idPelicula;
@@ -46,10 +45,14 @@ public class DatosCompraBoleto {
 		this.idPelicula = idPelicula;
 	}
 	public Date getDateSql() throws ParseException {
-		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+		
+		return Date.valueOf(fecha);
+		
+		/*
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
 		java.util.Date date = sdf1.parse(this.fecha);
 		java.sql.Date sql = new java.sql.Date(date.getTime());  
-		return sql;
+		return sql;*/
 	}
 //	public Date getSql() {
 //		Date sql=Date.valueOf(fecha);

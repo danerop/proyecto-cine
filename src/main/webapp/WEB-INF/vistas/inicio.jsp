@@ -59,19 +59,19 @@
 
 <select class="form-select-bg-size cine-selection" aria-label="Default select example">
   <option selected>Selecciona un cine</option>
-  <option value="1">Hoyts Morï¿½n</option>
+  <option value="1">Hoyts Morón</option>
   <option value="2">Cinemark San Justo</option>
   <option value="3">Cinemark Caballito</option>
 </select>
 <select class="form-select-bg-size" aria-label="Default select example">
-  <option selected>Selecciona una pelï¿½cula</option>
+  <option selected>Selecciona una película</option>
   <option value="1">Batman</option>
   <option value="2">Spiderman</option>
   <option value="3">Uncharted</option>
 </select>
 <br>
 <br>
-<h3 class="text-center">Pelï¿½culas</h3>
+<h3 class="text-center">Películas</h3>
 <br>
 <br>
 <div class="container">
@@ -82,6 +82,7 @@
   			<img src="${pelicula.getUrlImagenPelicula()}" class="card-img-top" alt="...">
 			  <div class="card-body" style="text-align: center; background-color:black; height:60px;">
 			    <h5 class="card-title" style="font-size:15px; color:white;">${pelicula.getNombre()}</h5>
+			    <a href="compra?p=${pelicula.getId()}&u=${usuario.getId()}" class="btn btn-primary" role="button">COMPRAR</a>
 			  </div>
 			</div>
 		<!-- 	<img src="${pelicula.getUrlImagenPelicula()}" class="img-thumbnail peliculaItem" alt="..."> -->
@@ -90,12 +91,6 @@
 	<br>
   </div>
   <br>
-  <div class="d-flex justify-content-evenly">
-	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
-	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
-	<img src="https://static.cinemarkhoyts.com.ar/Images/Posters/ebf9bbf852aefab0c08cf992217808ab.jpg?v=51032022" class="img-thumbnail" alt="...">
-  </div>
-  <a href="compra" class="btn btn-primary" role="button">COMPRAR</a>
 
 </div>
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
