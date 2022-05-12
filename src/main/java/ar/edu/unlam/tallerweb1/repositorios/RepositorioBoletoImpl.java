@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
 
-@Repository("RepositorioBoleto")
+@Repository("repositorioBoleto")
 public class RepositorioBoletoImpl implements RepositorioBoleto{
 
 	private SessionFactory sessionFactory;

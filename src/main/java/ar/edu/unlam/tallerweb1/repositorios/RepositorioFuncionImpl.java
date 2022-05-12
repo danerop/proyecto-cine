@@ -87,7 +87,7 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		return session.createCriteria(Funcion.class)
 		.add(Restrictions.eq("cine.id",idCine))
 		.add(Restrictions.eq("pelicula.id", idPelicula))
-		.add(Restrictions.eq("fecha", fechaHora))
+		.add(Restrictions.eq("fechaHora", fechaHora))
 		.add(Restrictions.eq("hora", hora))
 		.add(Restrictions.ne("entradasDisponibles", 0l))
 		.list();

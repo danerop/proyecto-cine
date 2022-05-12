@@ -67,6 +67,7 @@
             <h4>Direccion: </h4>
             <h4>Fecha: </h4>
             <h4>Horario: </h4>
+            <h2>zzz ${datosCompraBoleto.getDateSql()} </h2>
 
         </div>
     </div>

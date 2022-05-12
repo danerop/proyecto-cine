@@ -26,6 +26,10 @@ public class Usuario {
 	@ManyToOne
 	private Rol rol;
 	
+	public Usuario() {
+		
+	}
+	
 	public Rol getRol() {
 		return rol;
 	}

@@ -20,7 +20,9 @@ public class Cine {
 	private String urlImagenCine;
 	
 	
-	
+	public Cine() {
+		
+	}
 
 	public Long getId() {
 		return id;

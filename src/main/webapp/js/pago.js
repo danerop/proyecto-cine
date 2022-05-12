@@ -27,6 +27,6 @@ function pasarDiaAsTRING(date){
     var dia= date.getDate();
     var mes= date.getMonth()+1;
     var ano= date.getFullYear();
-    date=dia +"/"+mes+"/"+ano;
+    date=ano +"-"+mes+"-"+dia;
     return date;
 }

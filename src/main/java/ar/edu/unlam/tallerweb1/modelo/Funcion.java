@@ -30,6 +30,10 @@ public class Funcion {
 	
 	private String hora;
 	
+	public Funcion() {
+		
+	}
+	
 	public Long getId() {
 		return id;
 	}

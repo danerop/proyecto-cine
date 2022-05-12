@@ -30,14 +30,23 @@ public class Boleto {
 	@ManyToOne
 	private Sala sala;
 
-
+	private Date fecha;
 	
-	public Boleto(Long nroBoleto, Usuario cliente, Funcion funcion, Float precio) {
+	
+	public Boleto(Long nroBoleto, Usuario cliente, Funcion funcion, Float precio, Date fecha) {
 		super();
 		this.nroBoleto = nroBoleto;
 		this.cliente = cliente;
 		this.funcion = funcion;
 		this.precio = precio;
+		this.fecha=fecha;
+	}
+	public Boleto() {
+		
+	}
+	public Boleto(Long nroBoleto, Float precio) {
+		this.nroBoleto=nroBoleto;
+		this.precio=precio;
 	}
 	
 	public Long getId() {

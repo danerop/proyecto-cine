@@ -61,47 +61,47 @@
 
   <main>
     <div class="container-fluid contenedorpago">
-      <form action="validar-compra" method="POST" modelAttribute="datosCompraBoleto">
+      <form:form action="validar-compra?p=${p}&u=${u}" method="POST" modelAttribute="datosCompraBoleto">
         <div id="fecha-horario" class="collapse primersig">
           <h1 class="text-center">Compra</h1>
 
           <label for="selectcine">
             <h4 class="upspace">Seleccione un cine</h4>
           </label>
-          <select id="selectcine" class="form-select" aria-label="Default select example">
+          <form:select id="selectcine" class="form-select" aria-label="Default select example" path="idcine">
              <option selected>Selecciona un cine</option>
             <c:forEach items="${cinesDisponibles}" var="cines">
-            	<option path="idcine" value="${cines.getId()}">${cines.getNombreLocal()}</option>
+            	<form:option path="idcine" value="${cines.getId()}">${cines.getNombreLocal()}</form:option>
             </c:forEach>
 
-          </select>
+          </form:select>
 
           <h4 class="upspace"> Seleccione fecha:</h4>
           <div class="btn-group container-fluid" role="group" aria-label="Button group with nested dropdown">
             <div class="row container-fluid">
               <input type="radio" class="btn-check fechas" name="fecha" id="fecha1" autocomplete="off" value="04/05/2022"
                 path="fecha">
-              <label class="btn btn-outline-primary col fechas" for="fecha1">Hoy <br> 04/05</label>
+              <form:label class="btn btn-outline-primary col fechas" for="fecha1" value="04/05/2022" path="fecha">Hoy <br> 04/05</form:label>
               
               <input type="radio" class="btn-check fechas" name="fecha" id="fecha2" autocomplete="off" value="04/05/2022"
                 path="fecha">
-              <label class="btn btn-outline-primary col fechas" for="fecha2">Mañana <br> 05/05</label>
+              <form:label class="btn btn-outline-primary col fechas" for="fecha2" value="04/05/2022" path="fecha">Mañana <br> 05/05</form:label>
 
               <input type="radio" class="btn-check fechas" name="fecha" id="fecha3" autocomplete="off" value="04/05/2022"
                 path="fecha">
-              <label class="btn btn-outline-primary col fechas" for="fecha3">Dia <br> 06/05</label>
+              <form:label class="btn btn-outline-primary col fechas" for="fecha3" value="04/05/2022" path="fecha">Dia <br> 06/05</form:label>
 
               <input type="radio" class="btn-check fechas" name="fecha" id="fecha4" autocomplete="off" value="04/05/2022"
                 path="fecha">
-              <label class="btn btn-outline-primary col fechas" for="fecha4">Dia <br> 07/05</label>
+              <form:label class="btn btn-outline-primary col fechas" for="fecha4" value="04/05/2022" path="fecha">Dia <br> 07/05</form:label>
 
               <input type="radio" class="btn-check fechas" name="fecha" id="fecha5" autocomplete="off" value="04/05/2022"
                 path="fecha">
-              <label class="btn btn-outline-primary col fechas" for="fecha5">Dia <br> 08/05</label>
+              <form:label class="btn btn-outline-primary col fechas" for="fecha5" value="04/05/2022" path="fecha">Dia <br> 08/05</form:label>
 
               <input type="radio" class="btn-check fechas" name="fecha" id="fecha6" autocomplete="off" value="04/05/2022"
                 path="fecha">
-              <label class="btn btn-outline-primary col fechas" for="fecha6">Dia <br> 09/05</label>
+              <form:label class="btn btn-outline-primary col fechas" for="fecha6" value="04/05/2022" path="fecha">Dia <br> 09/05</form:label>
 
               <button type="button" class="btn btn-outline-primary col">Siguiente <br> Semana</button>
             </div>
@@ -116,7 +116,7 @@
 			<c:forEach items="${funcionesDisponibles}" var="horarios">
 			
 			  <input type="radio" class="btn-check horarios horariocine-${horarios.getCine().getId() }" name="horario" id="horario-${horarios.getId() }" autocomplete="off" path="hora" value="${horarios.getHora()}">
-              <label class="btn btn-outline-primary col horarios horariocine-${horarios.getCine().getId() }" for="horario-${horarios.getId() }">${horarios.getHora()}</label>
+              <form:label path="hora" class="btn btn-outline-primary col horarios horariocine-${horarios.getCine().getId() }" for="horario-${horarios.getId() }">${horarios.getHora()}</form:label>
 			
 			</c:forEach>
               
@@ -152,10 +152,10 @@
           <div class="d-flex justify-content-center btncompraboleto">
             <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target=".segundosig"
               aria-expanded="false" aria-controls="metodo-pago confirmacion">Volver</button>
-            <button type="button submit" class="btn btn-primary">Comprar</button>
+            <form:button type="button submit" class="btn btn-primary">Comprar</form:button>
           </div>
         </div>
-      </form>
+      </form:form>
 
 
     </div>
