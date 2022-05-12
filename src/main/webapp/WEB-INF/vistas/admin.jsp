@@ -146,7 +146,27 @@
 	
 	<c:if test="${seleccion == 'cargar-pelicula'}">
       <div class="formulario-cargar-pelicula" style="padding: 1rem;">
-       <h4>Formulario Para Crear Película</h4>
+      <form:form action="agregar-pelicula" method="POST" modelAttribute="datosPelicula">
+			<h4>Formulario Para Crear Pelicula</h4>
+			<hr class="colorgraph"><br>
+			
+			<form:label path="nombre">Nombre:</form:label>
+			<form:input path="nombre" id="nombre" type="nombre" class="form-control" />
+			<br>
+			<form:label path="anio">Año:</form:label>
+			<form:input path="anio" id="anio" type="anio" class="form-control" />
+			<br>
+			<form:label path="descripcion">Descripción:</form:label>
+			<form:input path="descripcion" id="descripcion" type="descripcion" class="form-control" />
+			<br>
+			<form:label path="duracion">Duración:</form:label>
+			<form:input path="duracion" id="duracion" type="duracion" class="form-control" />
+			<br>
+			<form:label path="urlImagenPelicula">Url de la portada:</form:label>
+			<form:input path="urlImagenPelicula" type="urlImagenPelicula" id="urlImagenPelicula" class="form-control"/>     		  
+			<br>
+			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Pelicula</button>
+		</form:form>
       </div>
 	</c:if>
 	
@@ -179,6 +199,13 @@
 			<form:select path="idSala" class="form-control">
 				<c:forEach items="${listaSalas}" var="sala">
          			<form:option value="${sala.getId()}" label="id: ${sala.getId()} -tipo de sala: ${sala.getTipo()} -de cine: ${sala.getCine().getNombreLocal()}"/>
+      			</c:forEach>
+			</form:select>
+			<br>
+			<form:label path="idPelicula">Seleccione la pelicula:</form:label>
+			<form:select path="idPelicula" class="form-control">
+				<c:forEach items="${listaPeliculas}" var="pelicula">
+         			<form:option value="${pelicula.getId()}" label="id: ${pelicula.getId()} -nombre: ${pelicula.getNombre()}"/>
       			</c:forEach>
 			</form:select>
 			<br>

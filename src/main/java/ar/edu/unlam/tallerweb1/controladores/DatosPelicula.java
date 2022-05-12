@@ -2,8 +2,6 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 public class DatosPelicula {
 
-	public class Pelicula {
-
 		private Long id;
 		private String nombre;
 		private Integer anio;
@@ -50,4 +48,3 @@ public class DatosPelicula {
 		
 	}
 
-}
