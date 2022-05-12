@@ -17,7 +17,7 @@ public class Funcion {
 	private Float precioMenor;
 
 
-	private Long entradasDisponibles;
+	private Long entradasDisponibles=30l;
 	
 	@ManyToOne
 	private Pelicula pelicula;

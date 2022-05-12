@@ -16,7 +16,9 @@ public interface RepositorioFuncion {
 	List<Funcion> obtenerFuncionesPorCine(Long idCine);
 	List<Funcion> obtenerFuncionesPorPelicula(Long idPelicula);
 	List<Cine> obtenerCinesDisponiblesParaFunciones(Long idPelicula);
-	List<Funcion> obtenerFuncionesPorCineFechaHoraYPelicula(Long idCine, Long idPelicula, Date fechaHora, String hora);
+	Funcion obtenerFuncionesPorCineFechaHoraSalaYPelicula(Long idCine, Long idPelicula, Date fechaHora, String hora, Long idSala);
+	
+	List<Funcion> obtenerFuncionesUnicasPorFecha(Long idPelicula);
 	
 	
 

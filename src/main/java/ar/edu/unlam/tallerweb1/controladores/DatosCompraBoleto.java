@@ -10,6 +10,7 @@ public class DatosCompraBoleto {
 	private String hora;
 	private Long idPelicula;
 	private Long idUsuario;
+	private Long idSala;
 	
 	
 	public DatosCompraBoleto(Long idPelicula, Long idUsuario) {
@@ -48,21 +49,18 @@ public class DatosCompraBoleto {
 		
 		return Date.valueOf(fecha);
 		
-		/*
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
-		java.util.Date date = sdf1.parse(this.fecha);
-		java.sql.Date sql = new java.sql.Date(date.getTime());  
-		return sql;*/
 	}
-//	public Date getSql() {
-//		Date sql=Date.valueOf(fecha);
-//		return sql;
-//	}
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
 	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+	public Long getIdSala() {
+		return idSala;
+	}
+	public void setIdSala(Long idSala) {
+		this.idSala = idSala;
 	}
 	
 }

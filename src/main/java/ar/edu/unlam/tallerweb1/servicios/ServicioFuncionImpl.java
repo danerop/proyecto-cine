@@ -63,9 +63,14 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	}
 
 	@Override
-	public List<Funcion> obtenerFuncionesPorCineFechaHoraYPelicula(Long idCine, Long idPelicula, Date fechaHora,
-			String hora) {
-		return repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraYPelicula(idCine, idPelicula, fechaHora, hora);
+	public Funcion obtenerFuncionesPorCineFechaHoraSalaYPelicula(Long idCine, Long idPelicula, Date fechaHora,
+			String hora, Long idSala) {
+		return repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, fechaHora, hora, idSala);
+	}
+
+	@Override
+	public List<Funcion> obtenerFuncionesUnicasPorFecha(Long idPelicula) {
+		return repositorioFuncionDao.obtenerFuncionesUnicasPorFecha(idPelicula);
 	}
 
 	

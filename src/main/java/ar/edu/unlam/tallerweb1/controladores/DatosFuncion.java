@@ -10,7 +10,7 @@ public class DatosFuncion {
 	private Long idPelicula;
 	private Long idCine;
 	private Long idSala;
-	
+	private String hora;
 	
 	public Long getId() {
 		return id;
@@ -54,4 +54,11 @@ public class DatosFuncion {
 	public void setIdSala(Long idSala) {
 		this.idSala = idSala;
 	}
+	public String getHora() {
+		return hora;
+	}
+	public void setHora(String hora) {
+		this.hora = hora;
+	}
+	
 }
