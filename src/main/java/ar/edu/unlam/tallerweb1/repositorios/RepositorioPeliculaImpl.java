@@ -10,16 +10,16 @@ import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 
 
-@Repository
+@Repository("repositorioPelicula")
 public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	
 	@Inject
 	private SessionFactory sessionFactory;
 
 	@Override
-	public Long insertarPelicula(Pelicula pelicula) {
+	public void guardarPelicula(Pelicula pelicula) {
 		Session session = sessionFactory.getCurrentSession();
-		return (Long) session.save(pelicula);
+		session.save(pelicula);
 	}
 
 	@Override

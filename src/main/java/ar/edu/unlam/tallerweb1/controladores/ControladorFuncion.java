@@ -15,6 +15,7 @@ import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
+import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSala;
 //import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 
@@ -24,18 +25,14 @@ public class ControladorFuncion {
 	private ServicioFuncion servicioFuncion;
 	private ServicioCine servicioCine;
 	private ServicioSala servicioSala;
-	
-	//Están comentados todo lo que tiene que ver con el servicio de Peliculas. Cuando esté listo solo sería cosa de
-	//desconmentar y ajustar cualquier nombre distinto.
-	
-	//private ServicioPelicula servicioPelicula;
+	private ServicioPelicula servicioPelicula;
 	
 	@Autowired
-	public ControladorFuncion(ServicioFuncion servicioFuncion, ServicioCine servicioCine, ServicioSala servicioSala/*, ServicioPelicula servicioPelicula*/){
+	public ControladorFuncion(ServicioFuncion servicioFuncion, ServicioCine servicioCine, ServicioSala servicioSala, ServicioPelicula servicioPelicula){
 		this.servicioFuncion = servicioFuncion;
 		this.servicioCine = servicioCine;
 		this.servicioSala = servicioSala;
-		//this.servicioPelicula = servicioPelicula;
+		this.servicioPelicula = servicioPelicula;
 	}
 	
 	@RequestMapping(path = "/agregar-funcion", method = RequestMethod.POST)
@@ -44,11 +41,11 @@ public class ControladorFuncion {
 		Funcion nuevaFuncion = new Funcion();
 		Cine cineSeleccionado = new Cine();
 		Sala salaSeleccionada = new Sala();
-		//Pelicula peliculaSeleccionada = new Pelicula();
+		Pelicula peliculaSeleccionada = new Pelicula();
 		
 		cineSeleccionado = servicioCine.buscarCinePorID(datosFuncion.getIdCine());
 		salaSeleccionada = servicioSala.buscarSalaPorId(datosFuncion.getIdSala());
-		//peliculaSeleccionada = servicioPelicula.buscarPeliculaPorId(datosFuncion.getIdPelicula());
+		peliculaSeleccionada = servicioPelicula.buscarPeliculaPorID(datosFuncion.getIdPelicula());
 		
 		Date fecha = Date.valueOf(datosFuncion.getFechaHora());
 		
@@ -57,7 +54,7 @@ public class ControladorFuncion {
 		nuevaFuncion.setPrecioMenor(datosFuncion.getPrecioMenor());
 		nuevaFuncion.setCine(cineSeleccionado);
 		nuevaFuncion.setSala(salaSeleccionada);
-		//nuevaFuncion.setPelicula(peliculaSeleccionada);
+		nuevaFuncion.setPelicula(peliculaSeleccionada);
 		
 		servicioFuncion.guardarFuncion(nuevaFuncion);
 		

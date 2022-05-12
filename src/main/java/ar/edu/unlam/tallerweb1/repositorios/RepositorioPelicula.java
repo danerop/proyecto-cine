@@ -8,7 +8,7 @@ import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 
 public interface RepositorioPelicula {
 
-	Long insertarPelicula(Pelicula pelicula);
+	void guardarPelicula(Pelicula pelicula);
 	
     Pelicula obtenerPeliculaPorID(Long id);
     
