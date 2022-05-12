@@ -1,0 +1,21 @@
+@charset "ISO-8859-1";
+
+body{
+	background-color: #004080;
+}
+
+.form-size{
+	width: 20px;
+}
+
+.cine-selection{
+	margin-right: 20px;
+	margin-left: 10px;
+}
+h3{
+	color: white;
+	text-decoration: underline;
+}
+h5{
+	font-size: 15px;
+}

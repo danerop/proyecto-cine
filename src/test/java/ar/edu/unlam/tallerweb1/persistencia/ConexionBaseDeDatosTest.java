@@ -17,15 +17,17 @@ public class ConexionBaseDeDatosTest extends SpringTest{
         assertThat(session().isConnected()).isTrue();
     }
 
+
     @Test
     @Transactional @Rollback
     public void crearUsuario(){
         Usuario usuario = new Usuario();
         usuario.setEmail("seba@gmail.com");
         usuario.setPassword("1234");
-        usuario.setRol("ADMIN");
+        //usuario.setRol("ADMIN");
         session().save(usuario);
         assertThat(usuario.getId()).isNotNull();
     }
+
 
 }
