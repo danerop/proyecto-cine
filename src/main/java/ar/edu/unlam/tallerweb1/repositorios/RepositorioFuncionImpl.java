@@ -102,7 +102,7 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		.add(Restrictions.eq("pelicula.id", idPelicula))
 		.add(Restrictions.eq("fechaHora", fechaHora))
 		.add(Restrictions.eq("hora", hora))
-		.add(Restrictions.eq("sala", idSala))
+		.add(Restrictions.eq("sala.id", idSala))
 		.add(Restrictions.ne("entradasDisponibles", 0l))
 		.uniqueResult();
 	}

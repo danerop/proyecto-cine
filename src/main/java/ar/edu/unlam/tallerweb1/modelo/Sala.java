@@ -15,8 +15,8 @@ public class Sala {
 	private Long id;
 	
 
-	@Enumerated(EnumType.STRING)
-	private TipoDeSala tipo;
+//	@Enumerated(EnumType.STRING)
+//	private TipoDeSala tipo;
 
 	@ManyToOne			/*ManyToMany*/
 	private Cine cine;
@@ -28,12 +28,12 @@ public class Sala {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public TipoDeSala getTipo() {
-		return tipo;
-	}
-	public void setTipo(TipoDeSala tipo) {
-		this.tipo = tipo;
-	}
+//	public TipoDeSala getTipo() {
+//		return tipo;
+//	}
+//	public void setTipo(TipoDeSala tipo) {
+//		this.tipo = tipo;
+//	}
 	public Cine getCine() {
 		return cine;
 	}
