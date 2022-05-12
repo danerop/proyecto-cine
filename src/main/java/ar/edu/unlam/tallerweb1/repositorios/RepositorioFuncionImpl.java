@@ -92,6 +92,20 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		.add(Restrictions.ne("entradasDisponibles", 0l))
 		.list();
 	}
+
+	@Override
+	public Funcion obtenerFuncionesPorCineFechaHoraPeliculaYSala(Long idCine, Long idPelicula, Date fechaHora,
+			String hora, Long idSala) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Funcion) session.createCriteria(Funcion.class)
+		.add(Restrictions.eq("cine.id",idCine))
+		.add(Restrictions.eq("pelicula.id", idPelicula))
+		.add(Restrictions.eq("fechaHora", fechaHora))
+		.add(Restrictions.eq("hora", hora))
+		.add(Restrictions.eq("sala", idSala))
+		.add(Restrictions.ne("entradasDisponibles", 0l))
+		.uniqueResult();
+	}
 	
 
 
