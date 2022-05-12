@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
+import ar.edu.unlam.tallerweb1.modelo.Funcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBoleto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
@@ -48,20 +49,14 @@ public class ControladorCompraBoleto {
 	public ModelAndView irARecibo(@RequestParam(value="p") Long idPelicula,
 			  					  @RequestParam(value="u") Long idUsuario,
 								  @ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) throws ParseException {
-								  
-		Boleto boletoAGuardar=new Boleto(3311l, servicioUsuario.consultarUsuarioPorId(idUsuario), servicioFuncion.buscarFuncion(2l), (float) 900.0, datosCompraBoleto.getDateSql());
 		
-		if (servicioFuncion.obtenerFuncionesPorCineFechaHoraYPelicula(datosCompraBoleto.getIdcine(),datosCompraBoleto.getIdPelicula(), datosCompraBoleto.getDateSql(), datosCompraBoleto.getHora())!=null) {
-			
+		Funcion funcionDelBoleto=servicioFuncion.obtenerFuncionesPorCineFechaHoraPeliculaYSala(datosCompraBoleto.getIdcine(), idPelicula, datosCompraBoleto.getDateSql(), datosCompraBoleto.getHora(), 1l);
+		Boleto boletoAGuardar=new Boleto(null, servicioUsuario.consultarUsuarioPorId(idUsuario), servicioFuncion.buscarFuncion(funcionDelBoleto.getId()), servicioFuncion.buscarFuncion(funcionDelBoleto.getId()).getPrecioMayor() , datosCompraBoleto.getDateSql());
+		
+		if (funcionDelBoleto!=null) {
 			servicioBoleto.guardarBoleto(boletoAGuardar);
-			
 		}
-//		
-//
-//		
-//		Boleto boletoTest=new Boleto(datosCompraBoleto.getIdcine(), (float) 10.1);
-//		servicioBoleto.guardarBoleto(boletoTest);
-//		
+
 		
 		return new ModelAndView("recibocompra");
 	}

@@ -47,17 +47,8 @@ public class DatosCompraBoleto {
 	public Date getDateSql() throws ParseException {
 		
 		return Date.valueOf(fecha);
-		
-		/*
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
-		java.util.Date date = sdf1.parse(this.fecha);
-		java.sql.Date sql = new java.sql.Date(date.getTime());  
-		return sql;*/
+
 	}
-//	public Date getSql() {
-//		Date sql=Date.valueOf(fecha);
-//		return sql;
-//	}
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
