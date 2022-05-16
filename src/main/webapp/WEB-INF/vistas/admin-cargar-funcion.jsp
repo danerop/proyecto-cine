@@ -73,6 +73,11 @@
   <div class="container formularios bg-light rounded" style="margin-bottom:25px;">
 
       <div class="formulario-cargar-funcion" style="padding: 1rem;">
+      
+        <c:if test="${not empty mens}">
+  	  		<h5 class="p-3 mb-2 bg-success text-white"> ${mens} </h5>
+  	  	</c:if>
+      
         <form:form action="agregar-funcion" method="POST" modelAttribute="datosFuncion">
 			<h4>Formulario Para Crear Funcion</h4>
 			<hr class="colorgraph"><br>

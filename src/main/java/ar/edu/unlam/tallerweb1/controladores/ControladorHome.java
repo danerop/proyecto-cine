@@ -26,6 +26,11 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioSala;
 
 @Controller
 public class ControladorHome {
+
+	private ServicioCine servicioCine;
+	private ServicioSala servicioSala;
+	private ServicioPelicula servicioPelicula;
+	private ServicioLogin servicioUsuario;
 	
 	@Autowired
 	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala, ServicioLogin servicioUsuario){
@@ -34,12 +39,7 @@ public class ControladorHome {
 		this.servicioSala = servicioSala;
 		this.servicioUsuario = servicioUsuario;
 	}
-	
-	private ServicioCine servicioCine;
-	private ServicioSala servicioSala;
-	private ServicioPelicula servicioPelicula;
-	private ServicioLogin servicioUsuario;
-	
+
 	@RequestMapping(path = "/inicio", method = RequestMethod.GET)
 	public ModelAndView inicio(){
 		
@@ -49,7 +49,6 @@ public class ControladorHome {
 	
 		return new ModelAndView("inicio", model);
 
-	
 	}
 	
 	@RequestMapping(path = "/peliculas", method = RequestMethod.GET)
@@ -59,52 +58,4 @@ public class ControladorHome {
 	
 	}
 	
-	
-	
-	@RequestMapping( path = "/admin", method = RequestMethod.GET)
-	public ModelAndView irAAdmin() {
-		
-		return new ModelAndView("admin");
-		
-	}
-	
-	@RequestMapping( path = "/admin-cargar-cine", method = RequestMethod.GET)
-	public ModelAndView irAAdminCargarCine() {
-		ModelMap modelo = new ModelMap();
-		
-		modelo.addAttribute("datosCine", new Cine());
-		modelo.put("listaCines", servicioCine.obtenerTodosLosCines());
-		
-		return new ModelAndView("admin-cargar-cine", modelo);
-	}
-	@RequestMapping( path = "/admin-cargar-sala", method = RequestMethod.GET)
-	public ModelAndView irAAdminCargarSala() {
-		ModelMap modelo = new ModelMap();
-		
-		modelo.addAttribute("datosSala", new DatosSala());
-		modelo.put("listaCines", servicioCine.obtenerTodosLosCines());
-		modelo.put("listaSalas", servicioSala.obtenerTodasLasSalas());
-		
-		return new ModelAndView("admin-cargar-sala", modelo);
-	}
-	@RequestMapping( path = "/admin-cargar-pelicula", method = RequestMethod.GET)
-	public ModelAndView irAAdminCargarPelicula() {
-		ModelMap modelo = new ModelMap();
-		
-		modelo.addAttribute("datosPelicula", new Pelicula());
-		modelo.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
-		
-		return new ModelAndView("admin-cargar-pelicula", modelo);
-	}
-	@RequestMapping( path = "/admin-cargar-funcion", method = RequestMethod.GET)
-	public ModelAndView irAAdminCargarFuncion() {
-		ModelMap modelo = new ModelMap();
-		
-		modelo.addAttribute("datosFuncion", new DatosFuncion());
-		modelo.put("listaCines", servicioCine.obtenerTodosLosCines());
-		modelo.put("listaSalas", servicioSala.obtenerTodasLasSalas());
-		modelo.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
-		
-		return new ModelAndView("admin-cargar-funcion", modelo);
-	}
 }

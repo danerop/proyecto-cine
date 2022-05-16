@@ -74,6 +74,10 @@
   
       <div class="formulario-cargar-cine" style=" padding: 1rem;">
 		
+	  	<c:if test="${not empty mens}">
+  	  		<h5 class="p-3 mb-2 bg-success text-white"> ${mens} </h5>
+  	  	</c:if>
+  
 		<form:form action="agregar-cine" method="POST" modelAttribute="datosCine">
 			<h4>Formulario Para Crear Cine</h4>
 			<hr class="colorgraph"><br>
@@ -96,24 +100,6 @@
 			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Cine</button>
 		</form:form>
 		
-		<%--
-		<br>
-		<hr class="colorgraph"><br>
-		<br>
-		
-		<form:form action="busqueda-cine" method="POST" modelAttribute="datosCine">
-			<h4>Formulario buscar Cine</h4>
-			<hr class="colorgraph"><br>
-			
-			<form:input path="id" type="id" class="form-control" />
-			
-			<input type="submit" />
-		</form:form>
-		
-		<c:if test="${not empty cinenombre}">
-	        <h4><span>Cine Encontrado: ${cinenombre} dirección: ${cinedireccion}</span></h4>
-		</c:if>
-		--%>
       </div>
       
   </div>

@@ -73,7 +73,12 @@
   <div class="container formularios bg-light rounded" style="margin-bottom:25px;">
   
       <div class="formulario-cargar-pelicula" style="padding: 1rem;">
-      <form:form action="agregar-pelicula" method="POST" modelAttribute="datosPelicula">
+      
+        <c:if test="${not empty mens}">
+  	  		<h5 class="p-3 mb-2 bg-success text-white"> ${mens} </h5>
+  	  	</c:if>
+      
+        <form:form action="agregar-pelicula" method="POST" modelAttribute="datosPelicula">
 			<h4>Formulario Para Crear Pelicula</h4>
 			<hr class="colorgraph"><br>
 			

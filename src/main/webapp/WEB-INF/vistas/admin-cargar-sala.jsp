@@ -73,6 +73,11 @@
   <div class="container formularios bg-light rounded" style="margin-bottom:25px;">
   
 	  <div class="formulario-cargar-sala" style="padding: 1rem;">
+	  
+	    <c:if test="${not empty mens}">
+  	  		<h5 class="p-3 mb-2 bg-success text-white"> ${mens} </h5>
+  	  	</c:if>
+	  
       	<form:form action="agregar-sala" method="POST" modelAttribute="datosSala">
 	    	<h4>Formulario Para Crear Sala</h4>
 			<hr class="colorgraph"><br>
