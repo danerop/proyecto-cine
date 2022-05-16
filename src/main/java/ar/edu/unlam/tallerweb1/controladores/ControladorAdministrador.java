@@ -57,6 +57,7 @@ public class ControladorAdministrador {
 		
 		return new ModelAndView("admin-cargar-cine", modelo);
 	}
+	
 	@RequestMapping( path = "/admin-cargar-sala", method = RequestMethod.GET)
 	public ModelAndView irAAdminCargarSala() {
 		ModelMap modelo = new ModelMap();
@@ -67,6 +68,7 @@ public class ControladorAdministrador {
 		
 		return new ModelAndView("admin-cargar-sala", modelo);
 	}
+	
 	@RequestMapping( path = "/admin-cargar-pelicula", method = RequestMethod.GET)
 	public ModelAndView irAAdminCargarPelicula() {
 		ModelMap modelo = new ModelMap();
@@ -76,6 +78,7 @@ public class ControladorAdministrador {
 		
 		return new ModelAndView("admin-cargar-pelicula", modelo);
 	}
+	
 	@RequestMapping( path = "/admin-cargar-funcion", method = RequestMethod.GET)
 	public ModelAndView irAAdminCargarFuncion() {
 		ModelMap modelo = new ModelMap();
@@ -103,6 +106,8 @@ public class ControladorAdministrador {
 		
 		servicioCine.guardarCine(nuevoCine);
 		
+		model.addAttribute("datosCine", new Cine());
+		model.put("listaCines", servicioCine.obtenerTodosLosCines());
 		model.put("mens", "Cine guardado con exito");
 		return new ModelAndView("admin-cargar-cine", model);
 	}
@@ -127,6 +132,9 @@ public class ControladorAdministrador {
 		
 		servicioSala.guardarSala(nuevaSala);
 		
+		model.addAttribute("datosSala", new DatosSala());
+		model.put("listaCines", servicioCine.obtenerTodosLosCines());
+		model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
 		model.put("mens", "Sala guardada con exito");
 		return new ModelAndView("admin-cargar-sala", model);
 	}
@@ -144,6 +152,8 @@ public class ControladorAdministrador {
 		
 		servicioPelicula.guardarPelicula(nuevaPelicula);
 		
+		model.addAttribute("datosPelicula", new Pelicula());
+		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
 		model.put("mens", "Película guardada con exito");
 		return new ModelAndView("admin-cargar-pelicula", model);
 	}
@@ -172,6 +182,10 @@ public class ControladorAdministrador {
 		
 		servicioFuncion.guardarFuncion(nuevaFuncion);
 		
+		model.addAttribute("datosFuncion", new DatosFuncion());
+		model.put("listaCines", servicioCine.obtenerTodosLosCines());
+		model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
+		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
 		model.put("mens", "Función guardada con exito");
 		return new ModelAndView("admin-cargar-funcion", model);
 		
