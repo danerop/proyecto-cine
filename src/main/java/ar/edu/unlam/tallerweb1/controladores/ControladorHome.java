@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Cine;
+import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBoleto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
 
@@ -58,19 +59,52 @@ public class ControladorHome {
 	
 	}
 	
+	
+	
 	@RequestMapping( path = "/admin", method = RequestMethod.GET)
-	public ModelAndView irAAdminConSeleccion( @RequestParam(value="sel") String sel ) {
+	public ModelAndView irAAdmin() {
+		
+		return new ModelAndView("admin");
+		
+	}
+	
+	@RequestMapping( path = "/admin-cargar-cine", method = RequestMethod.GET)
+	public ModelAndView irAAdminCargarCine() {
 		ModelMap modelo = new ModelMap();
 		
-		modelo.addAttribute("datosCine", new DatosCine());
-		modelo.addAttribute("datosFuncion", new DatosFuncion());
+		modelo.addAttribute("datosCine", new Cine());
+		modelo.put("listaCines", servicioCine.obtenerTodosLosCines());
+		
+		return new ModelAndView("admin-cargar-cine", modelo);
+	}
+	@RequestMapping( path = "/admin-cargar-sala", method = RequestMethod.GET)
+	public ModelAndView irAAdminCargarSala() {
+		ModelMap modelo = new ModelMap();
+		
 		modelo.addAttribute("datosSala", new DatosSala());
-		modelo.addAttribute("datosPelicula", new DatosPelicula());
+		modelo.put("listaCines", servicioCine.obtenerTodosLosCines());
+		modelo.put("listaSalas", servicioSala.obtenerTodasLasSalas());
+		
+		return new ModelAndView("admin-cargar-sala", modelo);
+	}
+	@RequestMapping( path = "/admin-cargar-pelicula", method = RequestMethod.GET)
+	public ModelAndView irAAdminCargarPelicula() {
+		ModelMap modelo = new ModelMap();
+		
+		modelo.addAttribute("datosPelicula", new Pelicula());
+		modelo.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+		
+		return new ModelAndView("admin-cargar-pelicula", modelo);
+	}
+	@RequestMapping( path = "/admin-cargar-funcion", method = RequestMethod.GET)
+	public ModelAndView irAAdminCargarFuncion() {
+		ModelMap modelo = new ModelMap();
+		
+		modelo.addAttribute("datosFuncion", new DatosFuncion());
 		modelo.put("listaCines", servicioCine.obtenerTodosLosCines());
 		modelo.put("listaSalas", servicioSala.obtenerTodasLasSalas());
 		modelo.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
-		modelo.put("seleccion", sel);
 		
-		return new ModelAndView("admin", modelo);
+		return new ModelAndView("admin-cargar-funcion", modelo);
 	}
 }

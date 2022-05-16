@@ -70,6 +70,34 @@
 
   <br>
 
+  <div class="container formularios bg-light rounded" style="margin-bottom:25px;">
+  
+	  <div class="formulario-cargar-sala" style="padding: 1rem;">
+      	<form:form action="agregar-sala" method="POST" modelAttribute="datosSala">
+	    	<h4>Formulario Para Crear Sala</h4>
+			<hr class="colorgraph"><br>
+			
+			<form:label path="idCine">Seleccione el cine:</form:label>
+			<form:select path="idCine" class="form-control">
+				<c:forEach items="${listaCines}" var="cine">
+         			<form:option value="${cine.getId()}" label="id: ${cine.getId()} nombre: ${cine.getNombreLocal()}"/>
+      			</c:forEach>
+			</form:select>
+			<br>
+			<form:label path="tipo">Seleccione el tipo de Sala:</form:label>
+			<form:select path="tipo" class="form-control">
+				<form:option value="1" label="Comun"/>
+				<form:option value="2" label="Sala3D"/>
+				<form:option value="3" label="Sala4D"/>
+				<form:option value="4" label="GoldenClass"/>
+			</form:select>
+			<br>
+			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Sala</button>
+	  	</form:form>
+      </div>
+	
+  </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">

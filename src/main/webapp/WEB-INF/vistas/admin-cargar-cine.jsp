@@ -70,6 +70,54 @@
 
   <br>
 
+  <div class="container formularios bg-light rounded" style="margin-bottom:25px;">
+  
+      <div class="formulario-cargar-cine" style=" padding: 1rem;">
+		
+		<form:form action="agregar-cine" method="POST" modelAttribute="datosCine">
+			<h4>Formulario Para Crear Cine</h4>
+			<hr class="colorgraph"><br>
+			
+			<form:label path="nombreLocal">Nombre Del Local:</form:label>
+			<form:input path="nombreLocal" id="nombreLocal" type="nombreLocal" class="form-control" />
+			<br>
+			<form:label path="direccion">Dirección:</form:label>
+			<form:input path="direccion" id="direccion" type="direccion" class="form-control" />
+			<br>
+			<form:label path="telefono">Telefono:</form:label>
+			<form:input path="telefono" id="telefono" type="telefono" class="form-control" />
+			<br>
+			<form:label path="email">Email:</form:label>
+			<form:input path="email" id="email" type="email" class="form-control" />
+			<br>
+			<form:label path="urlImagenCine">Url de la portada:</form:label>
+			<form:input path="urlImagenCine" type="urlImagenCine" id="urlImagenCine" class="form-control"/>     		  
+			<br>
+			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Cine</button>
+		</form:form>
+		
+		<%--
+		<br>
+		<hr class="colorgraph"><br>
+		<br>
+		
+		<form:form action="busqueda-cine" method="POST" modelAttribute="datosCine">
+			<h4>Formulario buscar Cine</h4>
+			<hr class="colorgraph"><br>
+			
+			<form:input path="id" type="id" class="form-control" />
+			
+			<input type="submit" />
+		</form:form>
+		
+		<c:if test="${not empty cinenombre}">
+	        <h4><span>Cine Encontrado: ${cinenombre} dirección: ${cinedireccion}</span></h4>
+		</c:if>
+		--%>
+      </div>
+      
+  </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
