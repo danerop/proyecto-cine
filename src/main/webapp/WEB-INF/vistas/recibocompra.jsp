@@ -60,14 +60,12 @@
   <main>
     <div class="container-fluid contenedorpago">
         <div>
-            <h4>Pelicula: </h4>
-            
-            <h4>Numero boleto: </h4>
-            <h4>Cine: </h4>
-            <h4>Direccion: </h4>
-            <h4>Fecha: </h4>
-            <h4>Horario: </h4>
-            <h2>zzz ${datosCompraBoleto.getDateSql()} </h2>
+            <h4>Pelicula: ${peliculaElegida.getNombre()}</h4>
+            <h4>Numero boleto: ${boletoGenerado.getNroBoleto()} </h4>
+            <h4>Cine: ${boletoGenerado.getCine().getNombre()}</h4>
+            <h4>Direccion: ${boletoGenerado.getCine().geDireccion()}</h4>
+            <h4>Fecha: ${datosCompraBoleto.getDateSql()}</h4>
+            <h4>Horario: ${datosCompraBoleto.getHora()}</h4>
 
         </div>
     </div>

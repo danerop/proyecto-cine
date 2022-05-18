@@ -1,6 +1,6 @@
 $(document).ready (function(){
-    $("#fecha-horario").collapse('show');
-    cargarfechas();
+   $("#fecha-horario").collapse('show');
+    
 });
 function cargarfechas(){
     date1 = new Date();

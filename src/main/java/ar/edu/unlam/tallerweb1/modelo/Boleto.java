@@ -33,13 +33,15 @@ public class Boleto {
 	private Date fecha;
 	
 	
-	public Boleto(Long nroBoleto, Usuario cliente, Funcion funcion, Float precio, Date fecha) {
+	public Boleto(Long nroBoleto, Usuario cliente, Funcion funcion, Float precio, Date fecha, Sala sala, Butaca butaca) {
 		super();
 		this.nroBoleto = nroBoleto;
 		this.cliente = cliente;
 		this.funcion = funcion;
 		this.precio = precio;
 		this.fecha=fecha;
+		this.sala=sala;
+		this.butaca=butaca;
 	}
 	public Boleto() {
 		

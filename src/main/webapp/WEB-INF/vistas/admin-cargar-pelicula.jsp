@@ -70,6 +70,39 @@
 
   <br>
 
+  <div class="container formularios bg-light rounded" style="margin-bottom:25px;">
+  
+      <div class="formulario-cargar-pelicula" style="padding: 1rem;">
+      
+        <c:if test="${not empty mens}">
+  	  		<h5 class="p-3 mb-2 bg-success text-white"> ${mens} </h5>
+  	  	</c:if>
+      
+        <form:form action="agregar-pelicula" method="POST" modelAttribute="datosPelicula">
+			<h4>Formulario Para Crear Pelicula</h4>
+			<hr class="colorgraph"><br>
+			
+			<form:label path="nombre">Nombre:</form:label>
+			<form:input path="nombre" id="nombre" type="nombre" class="form-control" />
+			<br>
+			<form:label path="anio">Año:</form:label>
+			<form:input path="anio" id="anio" type="anio" class="form-control" />
+			<br>
+			<form:label path="descripcion">Descripción:</form:label>
+			<form:input path="descripcion" id="descripcion" type="descripcion" class="form-control" />
+			<br>
+			<form:label path="duracion">Duración:</form:label>
+			<form:input path="duracion" id="duracion" type="duracion" class="form-control" />
+			<br>
+			<form:label path="urlImagenPelicula">Url de la portada:</form:label>
+			<form:input path="urlImagenPelicula" type="urlImagenPelicula" id="urlImagenPelicula" class="form-control"/>     		  
+			<br>
+			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Pelicula</button>
+		</form:form>
+      </div>
+
+  </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
