@@ -52,7 +52,6 @@ public class ControladorCompraBoleto {
 		modelo.put("p", idPelicula);
 		modelo.put("peliculaElegida", servicioPelicula.buscarPeliculaPorID(idPelicula));
 		modelo.put("u", idUsuario);
-		modelo.put("funcionPorFechas", servicioFuncion.obtenerFuncionesUnicasPorFecha(idPelicula));
 		return new ModelAndView("compra", modelo);
 	
 	}
@@ -63,7 +62,7 @@ public class ControladorCompraBoleto {
 
 
 		Funcion funcionElegida=servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(datosCompraBoleto.getIdcine(), idPelicula, datosCompraBoleto.getDateSql(), datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());
-//		Boleto boletoAGuardar=new Boleto(999l, servicioUsuario.consultarUsuarioPorId(idUsuario), funcionElegida ,funcionElegida.getPrecioMayor() , datosCompraBoleto.getDateSql(), servicioSala.buscarSalaPorId(datosCompraBoleto.getIdSala()),null);
+
 	
 		
 		Sala sala = new Sala();
@@ -76,18 +75,14 @@ public class ControladorCompraBoleto {
 		boletoAGuardar.setPrecio((float) 999.0);
 			
 	
-		servicioBoleto.guardarBoleto(boletoAGuardar);
-		if (funcionElegida!=null) {
-			
-//			Boleto boletoAGuardar=new Boleto();
+//		servicioBoleto.guardarBoleto(boletoAGuardar);
 
-			
-		}
-
-//		ModelMap model = new ModelMap();
-//		model.put("boletoGenerado", servicioBoleto.buscarBoleto(funcionElegida.getId()));
-
+		ModelMap model = new ModelMap();
+		model.put("datosCompraBoleto", datosCompraBoleto);
+		model.put("funcionelegida", funcionElegida);
+		model.putIfAbsent("idPeli", idPelicula);
 		
-		return new ModelAndView("recibocompra");
+		
+		return new ModelAndView("recibocompra", model);
 	}
 }

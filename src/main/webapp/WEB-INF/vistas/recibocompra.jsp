@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,13 +62,14 @@
   <main>
     <div class="container-fluid contenedorpago">
         <div>
-            <h4>Pelicula: ${peliculaElegida.getNombre()}</h4>
-            <h4>Numero boleto: ${boletoGenerado.getNroBoleto()} </h4>
-            <h4>Cine: ${boletoGenerado.getCine().getNombre()}</h4>
-            <h4>Direccion: ${boletoGenerado.getCine().geDireccion()}</h4>
-            <h4>Fecha: ${datosCompraBoleto.getDateSql()}</h4>
-            <h4>Horario: ${datosCompraBoleto.getHora()}</h4>
 
+            <h4>zzFecha: ${datosCompraBoleto.getDateSql() }</h4>
+            <h4>Horario: ${datosCompraBoleto.getHora() } </h4>
+            <h4>idCine: ${datosCompraBoleto.getIdcine() }</h4>
+            <h4>idSala: ${datosCompraBoleto.getIdSala() }</h4>
+            <h4>IDPELI: ${idPeli}</h4>
+            
+            <h4>saigonokibou:  ${funcionelegida.getFechaHora()}</h4>
         </div>
     </div>
 

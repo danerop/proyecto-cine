@@ -45,7 +45,7 @@ public class DatosCompraBoleto {
 	public void setIdPelicula(Long idPelicula) {
 		this.idPelicula = idPelicula;
 	}
-	public Date getDateSql() throws ParseException {
+	public Date getDateSql() {
 		
 		return Date.valueOf(fecha);
 

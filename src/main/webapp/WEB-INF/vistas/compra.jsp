@@ -101,8 +101,8 @@
               
 			<c:forEach items="${funcionesDisponibles}" var="horarios">
 			
-			  <input type="radio" class="btn-check horarios ${horarios.getFechaHora()}" name="horario" id="horario-${horarios.getId() }" autocomplete="off" path="hora" value="${horarios.getHora()}">
-              <form:label value="${horarios.getHora()}" path="hora" class="btn btn-outline-primary col horarios ${horarios.getFechaHora()}" for="horario-${horarios.getId() }">${horarios.getHora()}</form:label>
+			  <input type="radio" class="btn-check horarios ${horarios.getFechaHora()}-${horarios.getSala().getId()}" name="hora" id="horario-${horarios.getId() }" autocomplete="off" path="hora" value="${horarios.getHora()}">
+              <form:label value="${horarios.getHora()}" path="hora" class="btn btn-outline-primary col horarios ${horarios.getFechaHora()}-${horarios.getSala().getId()}" for="horario-${horarios.getId() }">${horarios.getHora()}</form:label>
 			
 			</c:forEach>
               
@@ -131,7 +131,10 @@
               aria-expanded="false" aria-controls="metodo-pago confirmacion">Siguiente</button>
           </div>
         </div>
-       	<form:label id="siempreoculto" path="idSala" value=""></form:label>
+        
+        <input type="hidden" value="99" id="tempidsala" name="idSala" path="idSala">
+       	<form:label for="tempidsala" path="idSala"></form:label>
+        
         <div id="confirmacion" class="collapse segundosig">
           <h1>Datos</h1>
           <img alt="imgPelicula" src="${peliculaElegida.getUrlImagenPelicula()}">
@@ -187,24 +190,30 @@
 		nombreCine=$("#selectcine option:selected").html();
 	 });
 	 $(".fechas").click(function(){
+		idSala=$("input[name='fecha']:checked").next().find("span").html();
+		console.log(idSala);
+			
 		var radVal = $("input[name='fecha']:checked").val();
 		$(".horarios").hide();
 		$("#primerSiguiente").hide();
-		$('.'+radVal).show();
+		$('.'+radVal +'-'+ idSala).show();
 		fechaysala=$("input[name='fecha']:checked").next().html();
-	
+		
+
 	 });
 	 $(".horarios").click(function(){
 		 $("#primerSiguiente").show();
-		 horario=$("input[name='horario']:checked").next().html();
-		 idSala=$("#idSala").html();
-		 $("#siempreOculto").val(idSala);
-		 $("#siempreOculto").html(idSala);
+		 horario=$("input[name='hora']:checked").next().html();
+		 
+			
 	 });
 	 $("#primerSiguiente").click(function(){
 		$("#cineS").html("Cine: "+nombreCine); 
 		$("#fechaSalaS").html("Fecha y sala: "+fechaysala);
-		$("#horaS").html("Hora: "+horario)
+		$("#horaS").html("Hora: "+horario);
+		
+
+		$("#tempidsala").val(idSala);
 	 });
   });
   </script>
