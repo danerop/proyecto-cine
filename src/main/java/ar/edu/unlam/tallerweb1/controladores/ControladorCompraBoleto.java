@@ -62,27 +62,19 @@ public class ControladorCompraBoleto {
 
 
 		Funcion funcionElegida=servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(datosCompraBoleto.getIdcine(), idPelicula, datosCompraBoleto.getDateSql(), datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());
-
-	
-		
-		Sala sala = new Sala();
-		Usuario usuario = new Usuario();
-		Boleto boletoAGuardar=new Boleto();
-		boletoAGuardar.setCliente(usuario);
-		boletoAGuardar.setFecha(datosCompraBoleto.getDateSql());
-		boletoAGuardar.setFuncion(funcionElegida);
-		boletoAGuardar.setNroBoleto(999l);
-		boletoAGuardar.setPrecio((float) 999.0);
-			
-	
-//		servicioBoleto.guardarBoleto(boletoAGuardar);
-
 		ModelMap model = new ModelMap();
-		model.put("datosCompraBoleto", datosCompraBoleto);
-		model.put("funcionelegida", funcionElegida);
-		model.putIfAbsent("idPeli", idPelicula);
 		
-		
+		if (funcionElegida!=null) {
+			
+			Boleto boletoAGuardar=new Boleto();
+			boletoAGuardar.setFuncion(funcionElegida);
+			boletoAGuardar.setPrecio(funcionElegida.getPrecioMayor());
+			
+			servicioBoleto.guardarBoleto(boletoAGuardar);
+			model.put("boletoGenerado", boletoAGuardar);
+		}
+
+			
 		return new ModelAndView("recibocompra", model);
 	}
 }

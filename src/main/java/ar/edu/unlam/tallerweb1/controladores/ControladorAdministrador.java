@@ -182,7 +182,7 @@ public class ControladorAdministrador {
 		
 		servicioFuncion.guardarFuncion(nuevaFuncion);
 		
-		model.addAttribute("datosFuncion", new DatosFuncion());
+		model.addAttribute("datosFuncion", datosFuncion);
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());
 		model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());

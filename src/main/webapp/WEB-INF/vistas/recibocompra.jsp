@@ -12,9 +12,16 @@
   <title>Compra Boleto</title>
   <link rel="stylesheet" href="./css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/pago.css">
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </symbol>
+
 </head>
 
 <body>
+
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
       <div class="container-fluid">
@@ -60,17 +67,36 @@
   </header>
 
   <main>
+  
+ <div class="alert alert-success d-flex align-items-center alert-dismissible" role="alert">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+  <div>
+    Gracias por su compra!
+  </div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+    
+    
     <div class="container-fluid contenedorpago">
-        <div>
+			<h1 class="text-center">RECIBO</h1>
+			<div class="row">
+			<div class="col-6">
+				<h4>Pelicula: ${boletoGenerado.getFuncion().getPelicula().getNombre()}</h4>
+            	<h4>Fecha: ${boletoGenerado.getFuncion().getFechaHora() }</h4>
+            	<h4>Horario: ${boletoGenerado.getFuncion().getHora() } </h4>
+            	<h4>Cine: ${boletoGenerado.getFuncion().getCine().getNombreLocal() }</h4>
+            	<h4>Sala: ${boletoGenerado.getFuncion().getSala().getId()} -  ${boletoGenerado.getFuncion().getSala().getTipo() }</h4>
+				<h4>Precio: $${boletoGenerado.getPrecio()}</h4>
+				<br>
+				<button class="btn btn-primary mx-auto d-block">Imprimir</button>
+			</div>
+			<div class="col-6">
+				<img class="img-responsive w-50 mx-auto d-block" alt="codigoqr" src="https://qrcode.tec-it.com/API/QRCode?data=smsto%3A555-555-5555%3AGenerador+de+C%C3%B3digos+QR+de+TEC-IT">
+				<br>
+				<h6 class="text-center">!Mostrá esté código qr para entrar a la sala!</h6>
+			</div>
+			</div>
 
-            <h4>zzFecha: ${datosCompraBoleto.getDateSql() }</h4>
-            <h4>Horario: ${datosCompraBoleto.getHora() } </h4>
-            <h4>idCine: ${datosCompraBoleto.getIdcine() }</h4>
-            <h4>idSala: ${datosCompraBoleto.getIdSala() }</h4>
-            <h4>IDPELI: ${idPeli}</h4>
-            
-            <h4>saigonokibou:  ${funcionelegida.getFechaHora()}</h4>
-        </div>
     </div>
 
 

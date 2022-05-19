@@ -37,16 +37,7 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 
 	@Override
 	public List<Funcion> obtenerTodasLasFunciones() {
-		List<Funcion> funciones = repositorioFuncionDao.obtenerTodasLasFunciones();
-	
-//		for (Funcion funcion : funciones) {
-//			if (funcion!=null) {
-//				Date temp=funcion.getFechaHora();
-//				temp.setDate(temp.getDate()+1);
-//				funcion.setFechaHora(temp);
-//			}
-//		}
-		
+		List<Funcion> funciones = repositorioFuncionDao.obtenerTodasLasFunciones();		
 		return funciones;
 	}
 	@Override
@@ -56,16 +47,7 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 
 	@Override
 	public List<Funcion> obtenerFuncionesPorPelicula(Long idPelicula) {
-		List<Funcion> funciones = repositorioFuncionDao.obtenerFuncionesPorPelicula(idPelicula);
-		
-		for (Funcion funcion : funciones) {
-			if (funcion!=null) {
-				Date temp=funcion.getFechaHora();
-				temp.setDate(temp.getDate()+1);
-				funcion.setFechaHora(temp);
-			}
-		}
-		
+		List<Funcion> funciones = repositorioFuncionDao.obtenerFuncionesPorPelicula(idPelicula);		
 		return funciones;
 	}
 
@@ -78,13 +60,7 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	public Funcion obtenerFuncionesPorCineFechaHoraSalaYPelicula(Long idCine, Long idPelicula, Date fechaHora,
 			String hora, Long idSala) {
 		Funcion funcionzz=repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, fechaHora, hora, idSala);
-		
-//		if (funcionzz!=null) {
-//			Date temp=funcionzz.getFechaHora();
-//			temp.setDate(temp.getDate()+1);
-//			funcionzz.setFechaHora(temp);
-//		}
-		
+
 		return funcionzz;
 	}
 
