@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
+import ar.edu.unlam.tallerweb1.modelo.Butaca;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
 
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBoleto;
+import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
@@ -31,14 +33,16 @@ public class ControladorCompraBoleto {
 	private ServicioLogin servicioUsuario;
 	private ServicioPelicula servicioPelicula;
 	private ServicioSala servicioSala;
+	private ServicioButaca servicioButaca;
 	
 	@Autowired
-		public ControladorCompraBoleto(ServicioFuncion servicioFuncion, ServicioBoleto servicioBoleto, ServicioLogin servicioUsuario, ServicioPelicula servicioPelicula, ServicioSala servicioSala){
+		public ControladorCompraBoleto(ServicioFuncion servicioFuncion, ServicioBoleto servicioBoleto, ServicioLogin servicioUsuario, ServicioPelicula servicioPelicula, ServicioSala servicioSala, ServicioButaca servicioButaca){
 		this.servicioFuncion=servicioFuncion;
 		this.servicioBoleto=servicioBoleto;
 		this.servicioUsuario=servicioUsuario;
 		this.servicioPelicula=servicioPelicula;
 		this.servicioSala=servicioSala;
+		this.servicioButaca=servicioButaca;
 	}
 
 	@RequestMapping(path="/compra", method = RequestMethod.GET )
@@ -55,6 +59,44 @@ public class ControladorCompraBoleto {
 		return new ModelAndView("compra", modelo);
 	
 	}
+	
+	@RequestMapping(path="/comprar-butaca", method = RequestMethod.POST)
+	public ModelAndView irAElegirButaca(@RequestParam(value="p") Long idPelicula,
+			  					  		@RequestParam(value="u") Long idUsuario,
+			  					  		@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) throws ParseException {
+
+		ModelMap model = new ModelMap();
+		
+		Integer cantFilas = servicioSala.buscarSalaPorId(datosCompraBoleto.getIdSala()).getCantFilas();
+		Integer cantColumnas = servicioSala.buscarSalaPorId(datosCompraBoleto.getIdSala()).getCantColumnas();
+		
+		
+		//Creador de matriz
+		char matrizButacas[][] = new char[cantFilas][cantColumnas];
+		for(int i=0; i < matrizButacas.length; i++) {
+			for(int j=0; j < matrizButacas[i].length; j++) {
+				matrizButacas[i][j] = 'V';	//lugar vacio (sin butaca)
+			}
+		}
+		
+		//marcado de butacas disponibles dentro de la matriz
+		for(Butaca but: servicioButaca.obtenerButacasPorSala(datosCompraBoleto.getIdSala())){
+			int fil = but.getNumFila()-1;
+			int col = but.getNumColumna()-1;
+			
+			if(but.getOcupada()) {
+				matrizButacas[fil][col] = 'N';	//butaca no disponible
+			} else {
+				matrizButacas[fil][col] = 'D';	//butaca disponible
+			}
+		}
+		
+		model.put("cantFilas", cantFilas );
+		model.put("cantColumnas", cantColumnas );
+		model.put("matrizButacas", matrizButacas);
+		return new ModelAndView("compra-butaca", model);
+	}
+	
 	@RequestMapping(path="/validar-compra", method = RequestMethod.POST)
 	public ModelAndView irARecibo(@RequestParam(value="p") Long idPelicula,
 			  					  @RequestParam(value="u") Long idUsuario,

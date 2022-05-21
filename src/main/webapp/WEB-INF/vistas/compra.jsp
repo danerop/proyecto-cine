@@ -61,7 +61,7 @@
 
   <main>
     <div class="container-fluid contenedorpago">
-      <form:form action="validar-compra?p=${p}&u=${u}" method="POST" modelAttribute="datosCompraBoleto">
+      <form:form action="comprar-butaca?p=${p}&u=${u}" method="POST" modelAttribute="datosCompraBoleto">
         <div id="fecha-horario" class="collapse primersig">
           <h1 class="text-center">Compra</h1>
 
