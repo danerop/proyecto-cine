@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioUsuario;
+import ar.edu.unlam.tallerweb1.modelo.Rol;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 // Implelemtacion del Servicio de usuarios, la anotacion @Service indica a Spring que esta clase es un componente que debe
@@ -29,4 +30,13 @@ public class ServicioLoginImpl implements ServicioLogin {
 		return servicioLoginDao.buscarUsuario(email, password);
 	}
 
+	@Override
+	public Usuario consultarUsuarioPorId(Long id) {
+		return servicioLoginDao.buscarUsuarioPorId(id);
+	}
+
+	@Override
+	public Usuario consultarUsuarioPorRol(String rol) {
+		return servicioLoginDao.buscarUsuarioPorRol(rol);
+	}
 }

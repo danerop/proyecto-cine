@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
+import ar.edu.unlam.tallerweb1.modelo.Rol;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -52,4 +53,18 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 		sessionFactory.getCurrentSession().update(usuario);
 	}
 
+	@Override
+	public Usuario buscarUsuarioPorId(Long id) {
+		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
+				.add(Restrictions.eq("id", id))
+				.uniqueResult();
+	}
+
+	@Override
+	public Usuario buscarUsuarioPorRol(String rol) {
+		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
+				.createAlias("rol_id", "rol")
+				.add(Restrictions.eq("rol.nombre", rol))
+				.uniqueResult();
+	}
 }
