@@ -17,6 +17,10 @@ public class Pelicula {
 	private Integer duracion;
 	private String urlImagenPelicula;
 	
+	public Pelicula() {
+		
+	}
+	
 	public Long getId() {
 		return id;
 	}

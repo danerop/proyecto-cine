@@ -14,9 +14,7 @@ public class Boleto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Integer nroBoleto;
-	private Date fecha;
-	private Float precio;
+	private Long nroBoleto;
 	
 	@ManyToOne
 	private Usuario cliente;
@@ -27,9 +25,31 @@ public class Boleto {
 	@ManyToOne
 	private Butaca butaca;
 	
-	/*@ManyToOne
+	private Float precio;
+
+	@ManyToOne
 	private Sala sala;
-	 */
+
+	private Date fecha;
+	
+	
+	public Boleto(Long nroBoleto, Usuario cliente, Funcion funcion, Float precio, Date fecha, Sala sala, Butaca butaca) {
+		super();
+		this.nroBoleto = nroBoleto;
+		this.cliente = cliente;
+		this.funcion = funcion;
+		this.precio = precio;
+		this.fecha=fecha;
+		this.sala=sala;
+		this.butaca=butaca;
+	}
+	public Boleto() {
+		
+	}
+	public Boleto(Long nroBoleto, Float precio) {
+		this.nroBoleto=nroBoleto;
+		this.precio=precio;
+	}
 	
 	public Long getId() {
 		return id;
@@ -37,10 +57,10 @@ public class Boleto {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Integer getNroBoleto() {
+	public Long getNroBoleto() {
 		return nroBoleto;
 	}
-	public void setNroBoleto(Integer nroBoleto) {
+	public void setNroBoleto(Long nroBoleto) {
 		this.nroBoleto = nroBoleto;
 	}
 	public Usuario getCliente() {

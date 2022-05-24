@@ -18,6 +18,7 @@ public class PeliculaGenero {
 	@ManyToOne
 	private Pelicula pelicula;
 	
+
 	@Enumerated(EnumType.STRING)
 	private Genero genero;
 }
