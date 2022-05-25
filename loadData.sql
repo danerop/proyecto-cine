@@ -14,7 +14,7 @@ VALUES("Sonic 2", 2022, "descripcion", 150, "img/pelicula/sonic2.jpg"),
 INSERT INTO rol(id, nombre, descripcion)
 values (1, "admin", "Usuario con gestion de rol"),
 	   (2, "usuario", "Usuario"),
-	   (3, "admin", "Usuario con gestion de rol");
+	   (3, "recepcionista", "Usuario que puede recibir boletos");
 
 INSERT INTO usuario(id, activo, email, password, urlImagenUsuario, rol_id)
 values (1, true, "elian@gmail.com", "1234", "img", 1),
