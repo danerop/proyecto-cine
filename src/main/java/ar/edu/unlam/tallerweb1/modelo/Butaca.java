@@ -13,8 +13,7 @@ public class Butaca {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Boolean ocupada = false;
-	private Integer numFila;
-	private Integer numColumna;
+	private Integer nroUbicacion;
 	
 	@ManyToOne
 	private Sala sala;
@@ -38,18 +37,13 @@ public class Butaca {
 	public void setOcupada(Boolean ocupada) {
 		this.ocupada = ocupada;
 	}
-	public Integer getNumFila() {
-		return numFila;
+	public Integer getNroUbicacion() {
+		return nroUbicacion;
 	}
-	public void setNumFila(Integer numFila) {
-		this.numFila = numFila;
+	public void setNroUbicacion(Integer nroUbicacion) {
+		this.nroUbicacion = nroUbicacion;
 	}
-	public Integer getNumColumna() {
-		return numColumna;
-	}
-	public void setNumColumna(Integer numColumna) {
-		this.numColumna = numColumna;
-	}
+
 	
 	
 }

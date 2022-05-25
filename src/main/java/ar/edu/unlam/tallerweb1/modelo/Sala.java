@@ -13,8 +13,6 @@ public class Sala {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Integer cantFilas;
-	private Integer cantColumnas;
 	
 	@Enumerated(EnumType.STRING)
 	private TipoDeSala tipo;
@@ -41,17 +39,4 @@ public class Sala {
 	public void setCine(Cine cine) {
 		this.cine = cine;
 	}
-	public Integer getCantFilas() {
-		return cantFilas;
-	}
-	public void setCantFilas(Integer cantFilas) {
-		this.cantFilas = cantFilas;
-	}
-	public Integer getCantColumnas() {
-		return cantColumnas;
-	}
-	public void setCantColumnas(Integer cantColumnas) {
-		this.cantColumnas = cantColumnas;
-	}
-	
 }

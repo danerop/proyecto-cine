@@ -59,41 +59,16 @@ public class ControladorCompraBoleto {
 		return new ModelAndView("compra", modelo);
 	
 	}
-	
 	@RequestMapping(path="/comprar-butaca", method = RequestMethod.POST)
 	public ModelAndView irAElegirButaca(@RequestParam(value="p") Long idPelicula,
 			  					  		@RequestParam(value="u") Long idUsuario,
 			  					  		@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) throws ParseException {
-
 		ModelMap model = new ModelMap();
+		model.put("butacas", servicioButaca.obtenerButacasPorSala(datosCompraBoleto.getIdSala()));
+		model.put("datosCompraBoleto", datosCompraBoleto);
+		model.put("p", idPelicula);
+		model.put("u", idUsuario);
 		
-		Integer cantFilas = servicioSala.buscarSalaPorId(datosCompraBoleto.getIdSala()).getCantFilas();
-		Integer cantColumnas = servicioSala.buscarSalaPorId(datosCompraBoleto.getIdSala()).getCantColumnas();
-		
-		
-		//Creador de matriz
-		char matrizButacas[][] = new char[cantFilas][cantColumnas];
-		for(int i=0; i < matrizButacas.length; i++) {
-			for(int j=0; j < matrizButacas[i].length; j++) {
-				matrizButacas[i][j] = 'V';	//lugar vacio (sin butaca)
-			}
-		}
-		
-		//marcado de butacas disponibles dentro de la matriz
-		for(Butaca but: servicioButaca.obtenerButacasPorSala(datosCompraBoleto.getIdSala())){
-			int fil = but.getNumFila()-1;
-			int col = but.getNumColumna()-1;
-			
-			if(but.getOcupada()) {
-				matrizButacas[fil][col] = 'N';	//butaca no disponible
-			} else {
-				matrizButacas[fil][col] = 'D';	//butaca disponible
-			}
-		}
-		
-		model.put("cantFilas", cantFilas );
-		model.put("cantColumnas", cantColumnas );
-		model.put("matrizButacas", matrizButacas);
 		return new ModelAndView("compra-butaca", model);
 	}
 	
@@ -101,14 +76,16 @@ public class ControladorCompraBoleto {
 	public ModelAndView irARecibo(@RequestParam(value="p") Long idPelicula,
 			  					  @RequestParam(value="u") Long idUsuario,
 								  @ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) throws ParseException {
-
+		
 
 		Funcion funcionElegida=servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(datosCompraBoleto.getIdcine(), idPelicula, datosCompraBoleto.getDateSql(), datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());
 		ModelMap model = new ModelMap();
 		
+		model.put("datosCompraBoleto", datosCompraBoleto);
 		if (funcionElegida!=null) {
 			
 			Boleto boletoAGuardar=new Boleto();
+			boletoAGuardar.setButaca(servicioButaca.obtenerButaca(datosCompraBoleto.getIdButaca()));
 			boletoAGuardar.setFuncion(funcionElegida);
 			boletoAGuardar.setPrecio(funcionElegida.getPrecioMayor());
 			

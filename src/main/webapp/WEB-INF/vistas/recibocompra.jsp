@@ -87,13 +87,14 @@
             	<h4>Cine: ${boletoGenerado.getFuncion().getCine().getNombreLocal() }</h4>
             	<h4>Sala: ${boletoGenerado.getFuncion().getSala().getId()} -  ${boletoGenerado.getFuncion().getSala().getTipo() }</h4>
 				<h4>Precio: $${boletoGenerado.getPrecio()}</h4>
+				<h4>Número de butaca: ${boletoGenerado.getButaca().getId()}</h4>
 				<br>
 				<button class="btn btn-primary mx-auto d-block">Imprimir</button>
 			</div>
 			<div class="col-6">
 				<img class="img-responsive w-50 mx-auto d-block" alt="codigoqr" src="https://qrcode.tec-it.com/API/QRCode?data=smsto%3A555-555-5555%3AGenerador+de+C%C3%B3digos+QR+de+TEC-IT">
 				<br>
-				<h6 class="text-center">!Mostrá esté código qr para entrar a la sala!</h6>
+				<h6 class="text-center">¡Mostrá esté código qr para entrar a la sala!</h6>
 			</div>
 			</div>
 

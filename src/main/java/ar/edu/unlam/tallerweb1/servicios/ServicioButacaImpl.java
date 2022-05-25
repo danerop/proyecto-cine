@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.modelo.Butaca;
+import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioButaca;
 
 @Service("servicioButaca")
@@ -25,5 +26,27 @@ public class ServicioButacaImpl implements ServicioButaca{
 	public List<Butaca> obtenerButacasPorSala(Long idSala) {
 		return repositorioButacaDao.obtenerButacasPorSala(idSala);
 	}
+
+	@Override
+	public void guardarButaca(Butaca butaca) {
+		this.repositorioButacaDao.guardarButaca(butaca);
+	}
+
+	@Override
+	public void guardarButacas(List<Integer> ubicaciones, Sala sala) {
+		for (Integer i : ubicaciones) {
+			Butaca temp=new Butaca();
+			temp.setNroUbicacion(i);
+			temp.setSala(sala);
+			this.repositorioButacaDao.guardarButaca(temp);
+		}
+	}
+
+	@Override
+	public Butaca obtenerButaca(Long idSala) {
+		
+		return repositorioButacaDao.obtenerButaca(idSala);
+	}
 	
+		
 }

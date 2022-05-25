@@ -15,6 +15,7 @@ import ar.edu.unlam.tallerweb1.modelo.Funcion;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeSala;
+import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
@@ -29,14 +30,16 @@ public class ControladorAdministrador {
 	private ServicioPelicula servicioPelicula;
 	private ServicioLogin servicioUsuario;
 	private ServicioFuncion servicioFuncion;
+	private ServicioButaca servicioButaca;
 	
 	@Autowired
-	public ControladorAdministrador(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala, ServicioLogin servicioUsuario, ServicioFuncion servicioFuncion){
+	public ControladorAdministrador(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala, ServicioLogin servicioUsuario, ServicioFuncion servicioFuncion, ServicioButaca servicioButaca){
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine = servicioCine;
 		this.servicioSala = servicioSala;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioFuncion = servicioFuncion;
+		this.servicioButaca=servicioButaca;
 	}
 	
 	@RequestMapping( path = "/admin", method = RequestMethod.GET)
@@ -127,10 +130,12 @@ public class ControladorAdministrador {
 		case 4: tipo = TipoDeSala.GoldenClass; break;
 		}
 		
+		
 		nuevaSala.setCine(cineSeleccionado);
 		nuevaSala.setTipo(tipo);
 		
 		servicioSala.guardarSala(nuevaSala);
+		servicioButaca.guardarButacas(datosSala.getButacas(), nuevaSala);
 		
 		model.addAttribute("datosSala", new DatosSala());
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());

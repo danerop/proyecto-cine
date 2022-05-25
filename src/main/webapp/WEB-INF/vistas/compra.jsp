@@ -136,16 +136,17 @@
        	<form:label for="tempidsala" path="idSala"></form:label>
         
         <div id="confirmacion" class="collapse segundosig">
-          <h1>Datos</h1>
+          <h1>Confirmas?</h1>
           <img alt="imgPelicula" src="${peliculaElegida.getUrlImagenPelicula()}">
           <h2>Pelicula: ${peliculaElegida.getNombre()} </h2>  
           <h2 id="cineS">Cine:</h2>
           <h2 id="fechaSalaS">Fecha y sala:</h2>
           <h2 id="horaS">Hora:</h2>
+          <h2>Precio: </h2>
           <div class="d-flex justify-content-center btncompraboleto">
             <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target=".segundosig"
               aria-expanded="false" aria-controls="metodo-pago confirmacion">Volver</button>
-            <form:button type="button submit" class="btn btn-primary">Comprar</form:button>
+            <form:button type="button submit" class="btn btn-primary">Elegir Butaca</form:button>
           </div>
         </div>
         

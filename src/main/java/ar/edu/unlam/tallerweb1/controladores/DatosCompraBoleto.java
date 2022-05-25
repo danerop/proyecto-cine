@@ -11,6 +11,7 @@ public class DatosCompraBoleto {
 	private Long idPelicula;
 	private Long idUsuario;
 	private Long idSala;
+	private Long idButaca;
 	
 	
 	public DatosCompraBoleto(Long idPelicula, Long idUsuario) {
@@ -61,6 +62,12 @@ public class DatosCompraBoleto {
 	}
 	public void setIdSala(Long idSala) {
 		this.idSala = idSala;
+	}
+	public Long getIdButaca() {
+		return idButaca;
+	}
+	public void setIdButaca(Long idButaca) {
+		this.idButaca = idButaca;
 	}
 	
 }
