@@ -14,4 +14,8 @@ public interface RepositorioUsuario {
 	void modificar(Usuario usuario);
 	Usuario buscarUsuarioPorId(Long id);
 	Usuario buscarUsuarioPorRol(String rol);
+	Usuario consultarUsuario(Usuario usuario);
+	Long insertarUsuario(Usuario usuario);
+	Usuario buscarUsuarioPorRolEmail(String rol, String email);
+	
 }

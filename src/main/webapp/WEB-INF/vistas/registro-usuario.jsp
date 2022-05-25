@@ -1,36 +1,64 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" >
-    <!-- Bootstrap theme -->
-    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 </head>
 <body>
-<div class = "container">
-    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <form:form action="registrarme" method="POST" modelAttribute="usuario">
-            <h3 class="form-signin-heading">Nuevo Usuario</h3>
-            <hr class="colorgraph"><br>
+	<div class="container">
 
-            <form:input path="email" id="email" class="form-control" />
-            <form:input path="clave" type="password" id="clave" class="form-control"/>
 
-            <button id="btn-registrarme" class="btn btn-lg btn-primary btn-block" Type="Submit"/>Registrarme</button>
-        </form:form>
+		<h2 class="text-center text-white mt-5"">Bienvenidoo a CineApp</h2>
 
-        <c:if test="${not empty error}">
-            <h4><span>${error}</span></h4>
-            <br>
-        </c:if>
-    </div>
-</div>
+		<div class="container-fluid bg-image" id="loginbox">
+			<div class="container my-5 p-4 col-12 col-md-6 col-lg-4"
+				style="border-radius: 10px; backdrop-filter: blur(15px); box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.8);">
+				<form:form class="d-flex flex-column" action="procesarRegistro"
+					method="POST" modelAttribute="usuario">
 
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" ></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="js/bootstrap.min.js" type="text/javascript"></script>
+					<h3 style="color: whitesmoke">Registro</h3>
+					<div class="mb-3" style="color: whitesmoke">
+						<label for="exampleInputEmail1" class="form-label">Email</label>
+						<form:input path="email" id="email" type="email"
+							class="form-control text-light"
+							style="background-color: transparent; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.65); border-radius: 10px; border-color: transparent;"
+							aria-describedby="emailHelp" />
+					</div>
+
+					<div class="mb-3" style="color: whitesmoke">
+						<label for="exampleInputPassword1" class="form-label">Contraseña</label>
+						<form:input path="password" type="password" id="password"
+							class="form-control"
+							style="background-color: transparent; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.65); border-radius: 10px; border-color: transparent; color: whitesmoke;" />
+					</div>
+									
+					<div class="mb-3" style="color: whitesmoke">
+						<label for="repassword" class="form-label">Repetir Contraseña</label>
+						<input type="password" name="repassword" id="repassword"
+							class="form-control"
+							style="background-color: transparent; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.65); border-radius: 10px; border-color: transparent; color: whitesmoke;" />
+					</div>
+									
+					<button Type="submit" class="btn mt-3 bg-info"
+						style="border-radius: 10px; color: white;">Registrarse</button>
+				</form:form>
+					<c:if test="${not empty error}">
+					<h5 class="text-white text-center">
+						<span>${error}</span>
+					</h5>
+					<br>
+				</c:if>
+			</div>
+		</div>
+
+
+	</div>
+				
+
+<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

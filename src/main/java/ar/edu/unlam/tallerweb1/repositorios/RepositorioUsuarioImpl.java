@@ -61,9 +61,33 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	}
 
 	@Override
+	public Usuario buscarUsuarioPorRolEmail(String rol, String email) {
+		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
+				.add(Restrictions.eq("email", email))
+				.createAlias("rol", "rol")
+				.add(Restrictions.eq("rol.nombre", rol))
+				.uniqueResult();
+	}
+	
+	@Override
+	public Usuario consultarUsuario(Usuario usuario) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Usuario) session.createCriteria(Usuario.class)
+				.add(Restrictions.eq("email", usuario.getEmail()))
+				.add(Restrictions.eq("password", usuario.getPassword()))
+				.uniqueResult();
+	}
+
+	@Override
+	public Long insertarUsuario(Usuario usuario) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Long) session.save(usuario);
+	}
+
+	@Override
 	public Usuario buscarUsuarioPorRol(String rol) {
 		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
-				.createAlias("rol_id", "rol")
+				.createAlias("rol", "rol")
 				.add(Restrictions.eq("rol.nombre", rol))
 				.uniqueResult();
 	}

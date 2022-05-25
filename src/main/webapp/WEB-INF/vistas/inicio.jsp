@@ -27,8 +27,11 @@
 	          <a class="nav-link active" aria-current="page" href="inicio">Home</a>
 	        </li>
 	        <li class="nav-item">
-	          <a class="nav-link" href="peliculas">Pelï¿½culas</a>
+	          <a class="nav-link" href="peliculas">Peliculas</a>
 	        </li>
+   			<li class="nav-item">
+   			  <a class="nav-link" href="cerrarSesion">Cerrar sesión</a>
+   			</li>
 	        <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 	            Suscripciones
@@ -40,9 +43,6 @@
 	            <li><a class="dropdown-item" href="#">Something else here</a></li>
 	          </ul>
 	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link disabled">Disabled</a>
-	        </li>
 	      </ul>
 	      <form class="d-flex">
 	        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -52,10 +52,25 @@
 	  </div>
 	</nav>
 <br>
-<div class="">
-  <a class="btn btn-primary" role="button" href="http://localhost:8080/proyecto-cine/admin?sel=cargar-cine">Controles Administrador</a>
-</div>
-<br>
+			<%
+				if (request.getAttribute("usuario") != null) {
+			%>
+			<h2 class="text-center text-light mb-4">Bienvenido,
+				${usuario.email}.</h2>
+				<h2 class="text-center text-light mb-4">Rol:
+				${usuario.getRol().getNombre()}.</h2>
+			<%
+				}
+			%>
+			
+	      <c:if test = "${usuario.getRol().getNombre() == 'admin'}">
+  		<div class="">
+	  		<a class="btn btn-primary" role="button" href="http://localhost:8080/proyecto-cine/admin?sel=cargar-cine">Controles Administrador</a>
+		</div>
+		<br>	
+    	 </c:if>
+
+
 
 <select class="form-select-bg-size cine-selection" aria-label="Default select example">
   <option selected>Selecciona un cine</option>

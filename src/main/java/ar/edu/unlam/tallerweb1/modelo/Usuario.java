@@ -6,6 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 // Clase que modela el concepto de Usuario, la anotacion @Entity le avisa a hibernate que esta clase es persistible
 // el paquete ar.edu.unlam.tallerweb1.modelo esta indicado en el archivo hibernateCOntext.xml para que hibernate
 // busque entities en el
@@ -22,8 +25,10 @@ public class Usuario {
 	private String password;
 	private Boolean activo = false;
 	private String urlImagenUsuario;
+	private String roles;
 
 	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
 	private Rol rol;
 	
 	public Usuario() {
@@ -71,5 +76,13 @@ public class Usuario {
 	}
 	public void setUrlImagenUsuario(String urlImagenUsuario) {
 		this.urlImagenUsuario = urlImagenUsuario;
+	}
+
+	public String getRoles() {
+		return roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 }
