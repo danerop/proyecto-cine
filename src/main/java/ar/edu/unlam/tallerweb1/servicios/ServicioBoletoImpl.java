@@ -23,7 +23,8 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	@Override
 	public void guardarBoleto(Boleto boleto) {
 		this.repositorioBoletoDao.guardarBoleto(boleto);
-//		boleto.getFuncion().setEntradasDisponibles(boleto.getFuncion().getEntradasDisponibles()-1);;
+//		this.repositorioBoletoDao.buscarBoleto(boleto.getId()).getButaca().setOcupada(true);
+//		this.repositorioBoletoDao.buscarBoleto(boleto.getId()).getFuncion().setEntradasDisponibles(boleto.getFuncion().getEntradasDisponibles()-1);
 	}
 
 	@Override

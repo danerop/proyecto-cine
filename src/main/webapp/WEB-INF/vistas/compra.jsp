@@ -109,48 +109,14 @@
 
               
             </div>
+            	<input type="hidden" value="99" id="tempidsala" name="idSala" path="idSala">
+       			<form:label for="tempidsala" path="idSala"></form:label>
           </div>
 
           <div  class="d-flex justify-content-center btncompraboleto">
-            <button id="primerSiguiente" type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".primersig"
-              aria-expanded="false" aria-controls="fecha-horario metodo-pago">Siguiente</button>
+			<form:button type="button submit" class="btn btn-primary">Siguiente</form:button>
           </div>
         </div>
-
-        <div id="metodo-pago" class="collapse primersig segundosig">
-          <h1>Metodo pago</h1>
-          <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-
-         
-
-          <!-- zzzzzzzzzzzzzzzzzzzzzzzzzz -->
-          <div class="d-flex justify-content-center btncompraboleto">
-            <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target=".primersig"
-              aria-expanded="false" aria-controls="metodo-pago fecha-horario">Volver</button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".segundosig"
-              aria-expanded="false" aria-controls="metodo-pago confirmacion">Siguiente</button>
-          </div>
-        </div>
-        
-        <input type="hidden" value="99" id="tempidsala" name="idSala" path="idSala">
-       	<form:label for="tempidsala" path="idSala"></form:label>
-        
-        <div id="confirmacion" class="collapse segundosig">
-          <h1>Confirmas?</h1>
-          <img alt="imgPelicula" src="${peliculaElegida.getUrlImagenPelicula()}">
-          <h2>Pelicula: ${peliculaElegida.getNombre()} </h2>  
-          <h2 id="cineS">Cine:</h2>
-          <h2 id="fechaSalaS">Fecha y sala:</h2>
-          <h2 id="horaS">Hora:</h2>
-          <h2>Precio: </h2>
-          <div class="d-flex justify-content-center btncompraboleto">
-            <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target=".segundosig"
-              aria-expanded="false" aria-controls="metodo-pago confirmacion">Volver</button>
-            <form:button type="button submit" class="btn btn-primary">Elegir Butaca</form:button>
-          </div>
-        </div>
-        
-        
 
       </form:form>
 
@@ -174,9 +140,6 @@
   
   <script type="text/javascript">
   $(document).ready (function(){
-	 var nombreCine;
-	 var fechaysala;
-	 var horario;
 	 var idSala;
 	 $("#siempreOculto").hide();
 	 $(".fechas").hide();
@@ -188,33 +151,19 @@
 		 $(".fechas").hide();
 		 $("#primerSiguiente").hide();
 		 $('.fechas-'+seleccionado).show();
-		nombreCine=$("#selectcine option:selected").html();
 	 });
 	 $(".fechas").click(function(){
 		idSala=$("input[name='fecha']:checked").next().find("span").html();
-		console.log(idSala);
 			
 		var radVal = $("input[name='fecha']:checked").val();
 		$(".horarios").hide();
 		$("#primerSiguiente").hide();
 		$('.'+radVal +'-'+ idSala).show();
-		fechaysala=$("input[name='fecha']:checked").next().html();
-		
-
+		$("#tempidsala").val(idSala);
 	 });
 	 $(".horarios").click(function(){
 		 $("#primerSiguiente").show();
-		 horario=$("input[name='hora']:checked").next().html();
-		 
-			
-	 });
-	 $("#primerSiguiente").click(function(){
-		$("#cineS").html("Cine: "+nombreCine); 
-		$("#fechaSalaS").html("Fecha y sala: "+fechaysala);
-		$("#horaS").html("Hora: "+horario);
-		
-
-		$("#tempidsala").val(idSala);
+		 horario=$("input[name='hora']:checked").next().html();	
 	 });
   });
   </script>

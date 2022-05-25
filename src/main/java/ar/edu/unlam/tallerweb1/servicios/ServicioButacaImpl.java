@@ -47,6 +47,12 @@ public class ServicioButacaImpl implements ServicioButaca{
 		
 		return repositorioButacaDao.obtenerButaca(idSala);
 	}
+
+	@Override
+	public Integer cantidadDeButacasEnSala(Long idSala) {
+		
+		return repositorioButacaDao.obtenerButacasPorSala(idSala).size();
+	}
 	
 		
 }

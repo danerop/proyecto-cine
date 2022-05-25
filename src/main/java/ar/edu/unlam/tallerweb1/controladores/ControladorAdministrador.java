@@ -184,6 +184,7 @@ public class ControladorAdministrador {
 		nuevaFuncion.setSala(salaSeleccionada);
 		nuevaFuncion.setPelicula(peliculaSeleccionada);
 		nuevaFuncion.setHora(datosFuncion.getHora());
+		nuevaFuncion.setEntradasDisponibles(servicioButaca.cantidadDeButacasEnSala(salaSeleccionada.getId()));
 		
 		servicioFuncion.guardarFuncion(nuevaFuncion);
 		

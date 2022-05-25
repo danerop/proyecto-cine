@@ -10,4 +10,5 @@ public interface ServicioButaca {
 	void guardarButaca(Butaca butaca);
 	void guardarButacas(List<Integer> ubicaciones, Sala sala);
 	Butaca obtenerButaca(Long idSala);
+	Integer cantidadDeButacasEnSala(Long idSala);
 }

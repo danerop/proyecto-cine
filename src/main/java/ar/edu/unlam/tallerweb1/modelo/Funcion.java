@@ -17,7 +17,7 @@ public class Funcion {
 	private Float precioMenor;
 
 
-	private Long entradasDisponibles=30l;
+	private Integer entradasDisponibles;
 	
 	@ManyToOne
 	private Pelicula pelicula;
@@ -82,10 +82,10 @@ public class Funcion {
 	public void setHora(String hora) {
 		this.hora = hora;
 	}
-	public Long getEntradasDisponibles() {
+	public Integer getEntradasDisponibles() {
 		return entradasDisponibles;
 	}
-	public void setEntradasDisponibles(Long entradasDisponibles) {
+	public void setEntradasDisponibles(Integer entradasDisponibles) {
 		this.entradasDisponibles = entradasDisponibles;
 	}
 	
