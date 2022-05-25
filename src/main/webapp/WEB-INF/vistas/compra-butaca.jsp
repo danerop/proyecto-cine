@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,17 +10,11 @@
   <title>Compra Boleto</title>
   <link rel="stylesheet" href="./css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/pago.css">
-
-  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-  </symbol>
-
+  <link rel="stylesheet" href="./css/tabla-butacas.css">
 </head>
-
 <body>
-
-  <header>
+	
+	<header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
       <div class="container-fluid">
         <!--  <div class="d-flex justify-content-evenly">...</div> -->
@@ -65,54 +57,38 @@
       </div>
     </nav>
   </header>
+	
+	<main class="container-fluid contenedorpago">
+	
+		<h3 class="text-center">Elegí tu butaca</h3>
+	
+		<br>
+	
+		<table class="tabla-seleccion-butaca mx-auto">
+		  <tbody>
+			<c:forEach var="fil" begin="1" end="${cantFilas}">
+			  <tr>
+				<c:forEach var="col" begin="1" end="${cantColumnas}">
+				
+				  <td class="cuadro-butaca cb-butaca${matrizButacas[fil-1][col-1]}"></td>
 
-  <main>
+				</c:forEach>
+			  </tr>
+			</c:forEach>
+		  </tbody>
+		</table>
+		
+		<br>
+		
+		<div class="text-center">\______________________________________________/</div>
+	</main>
+	
   
- <div class="alert alert-success d-flex align-items-center alert-dismissible" role="alert">
-  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-  <div>
-    Gracias por su compra!
-  </div>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-    
-    
-    <div class="container-fluid contenedorpago">
-			<h1 class="text-center">RECIBO</h1>
-			<div class="row">
-			<div class="col-6">
-				<h4>Pelicula: ${boletoGenerado.getFuncion().getPelicula().getNombre()}</h4>
-            	<h4>Fecha: ${boletoGenerado.getFuncion().getFechaHora() }</h4>
-            	<h4>Horario: ${boletoGenerado.getFuncion().getHora() } </h4>
-            	<h4>Cine: ${boletoGenerado.getFuncion().getCine().getNombreLocal() }</h4>
-            	<h4>Sala: ${boletoGenerado.getFuncion().getSala().getId()} -  ${boletoGenerado.getFuncion().getSala().getTipo() }</h4>
-				<h4>Precio: $${boletoGenerado.getPrecio()}</h4>
-				<br>
-				<button class="btn btn-primary mx-auto d-block">Imprimir</button>
-			</div>
-			<div class="col-6">
-				<img class="img-responsive w-50 mx-auto d-block" alt="codigoqr" src="https://qrcode.tec-it.com/API/QRCode?data=smsto%3A555-555-5555%3AGenerador+de+C%C3%B3digos+QR+de+TEC-IT">
-				<br>
-				<h6 class="text-center">!Mostrá esté código qr para entrar a la sala!</h6>
-			</div>
-			</div>
-
-    </div>
-
-
-
-
-  </main>
-
-  <footer>
-
-  </footer>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
     crossorigin="anonymous"></script>
   <script src="./js/bootstrap.min.js"></script>
-  <script src="./js/pago.js"></script>
 </body>
-
 </html>

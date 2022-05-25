@@ -12,14 +12,9 @@ public interface ServicioFuncion {
 	List<Funcion> obtenerTodasLasFunciones();
 	Funcion buscarFuncion(Long id);
 	void guardarFuncion(Funcion funcion);
-	List<Funcion> obtenerFuncionesPorPeliculaYCine(Long idCine, Long idCinePelicula);
 	List<Funcion> obtenerFuncionesPorCine(Long idCine);
 	List<Funcion> obtenerFuncionesPorPelicula(Long idPelicula);
 	List<Cine> obtenerCinesDisponiblesParaFunciones(Long idPelicula);
-
 	Funcion obtenerFuncionesPorCineFechaHoraSalaYPelicula(Long idCine, Long idPelicula, Date fechaHora, String hora,Long idSala);
-	
-	List<Funcion> obtenerFuncionesUnicasPorFecha(Long idPelicula);
-
 	
 }

@@ -37,16 +37,9 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 
 	@Override
 	public List<Funcion> obtenerTodasLasFunciones() {
-		return repositorioFuncionDao.obtenerTodasLasFunciones();
+		List<Funcion> funciones = repositorioFuncionDao.obtenerTodasLasFunciones();		
+		return funciones;
 	}
-
-
-	@Override
-	public List<Funcion> obtenerFuncionesPorPeliculaYCine(Long idCine, Long idPelicula) {
-		
-		return repositorioFuncionDao.obtenerFuncionesPorCineYPelicula(idCine, idPelicula);
-	}
-
 	@Override
 	public List<Funcion> obtenerFuncionesPorCine(Long idCine) {
 		return repositorioFuncionDao.obtenerFuncionesPorCine(idCine);
@@ -54,7 +47,8 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 
 	@Override
 	public List<Funcion> obtenerFuncionesPorPelicula(Long idPelicula) {
-		return repositorioFuncionDao.obtenerFuncionesPorPelicula(idPelicula);
+		List<Funcion> funciones = repositorioFuncionDao.obtenerFuncionesPorPelicula(idPelicula);		
+		return funciones;
 	}
 
 	@Override
@@ -65,13 +59,12 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	@Override
 	public Funcion obtenerFuncionesPorCineFechaHoraSalaYPelicula(Long idCine, Long idPelicula, Date fechaHora,
 			String hora, Long idSala) {
-		return repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, fechaHora, hora, idSala);
+		Funcion funcionzz=repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, fechaHora, hora, idSala);
+
+		return funcionzz;
 	}
 
-	@Override
-	public List<Funcion> obtenerFuncionesUnicasPorFecha(Long idPelicula) {
-		return repositorioFuncionDao.obtenerFuncionesUnicasPorFecha(idPelicula);
-	}
+
 
 
 	
