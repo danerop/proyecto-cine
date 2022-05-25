@@ -2,11 +2,14 @@ package ar.edu.unlam.tallerweb1.modelo;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+
 
 @Entity
 public class Boleto {
@@ -18,10 +21,10 @@ public class Boleto {
 	@ManyToOne
 	private Usuario cliente;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.REFRESH})
 	private Funcion funcion;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.REFRESH})
 	private Butaca butaca;
 	
 	private Float precio;

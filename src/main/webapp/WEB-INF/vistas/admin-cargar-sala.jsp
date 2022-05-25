@@ -10,6 +10,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap theme -->
   <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/tabla-butacas.css">
   <title>Controles Administrador</title>
 </head>
 <body>
@@ -96,10 +97,47 @@
 				<form:option value="3" label="Sala4D"/>
 				<form:option value="4" label="GoldenClass"/>
 			</form:select>
+			<div>
 			<br>
+			Butacas: <br>
+			 <button type="button" class="btn btn-lg btn-primary p-3" disabled></button> Butaca disponible
+			
+			</div>
+			<div class="table-responsive">
+  <table class="table">
+		  <tbody>
+		  		<tr>
+		  		<td>&nbsp;</td>
+		  		<c:forEach var="h" begin="1" end="32">
+				  <td class="text-center">${h}</td>
+				</c:forEach>
+		  		</tr>
+		  		
+			<c:forEach var="fil" begin="1" end="16">
+			  <tr>
+			  	<td class="align-middle">${fil}</td>
+				<c:forEach var="col" begin="1" end="32">
+				  <td> 
+				    <input type="checkbox" class="btn-check position-fixed" name="butacas" id="btncheck${col+(32*(fil-1))}" autocomplete="off" value="${col+(32*(fil-1))}">
+  					<form:label class="btn btn-outline-primary p-4" for="btncheck${col+(32*(fil-1))}" path="butacas">&nbsp;&nbsp;&nbsp;</form:label>
+				  </td>
+				</c:forEach>
+			  </tr>
+			  </c:forEach>
+		 
+		  </tbody>
+
+  </table>
+</div>
+<br>
 			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Sala</button>
 	  	</form:form>
       </div>
+
+
+
+
+ 
 	
   </div>
 

@@ -27,5 +27,18 @@ public class RepositorioButacaImpl implements RepositorioButaca{
 				.add(Restrictions.eq("sala.id", idSala))
 				.list();
 	}
+
+	@Override
+	public void guardarButaca(Butaca butaca) {
+		sessionFactory.getCurrentSession().save(butaca);
+	}
+
+	@Override
+	public Butaca obtenerButaca(Long idButaca) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Butaca) session.createCriteria(Butaca.class)
+				.add(Restrictions.eq("id", idButaca))
+				.uniqueResult();
+	}
 	
 }
