@@ -10,7 +10,7 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet" >
 	<!-- Bootstrap theme -->
 	<link href="css/style.css" rel="stylesheet">
-<title>Home</title>
+<title>Inicio</title>
 </head>
 
 <body>
@@ -24,25 +24,14 @@
 	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	      <ul class="navbar-nav w-100 d-flex justify-content-evenly">
 	        <li class="nav-item">
-	          <a class="nav-link active" aria-current="page" href="inicio">Home</a>
+	          <a class="nav-link active" aria-current="page" href="inicio">Inicio</a>
 	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" href="peliculas">Peliculas</a>
-	        </li>
+			<li class="nav-item">
+   			  <a class="nav-link" href="suscripcion">Suscripciones</a>
+   			</li>
    			<li class="nav-item">
    			  <a class="nav-link" href="cerrarSesion">Cerrar sesión</a>
    			</li>
-	        <li class="nav-item dropdown">
-	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-	            Suscripciones
-	          </a>
-	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <li><a class="dropdown-item" href="#">Action</a></li>
-	            <li><a class="dropdown-item" href="#">Another action</a></li>
-	            <li><hr class="dropdown-divider"></li>
-	            <li><a class="dropdown-item" href="#">Something else here</a></li>
-	          </ul>
-	        </li>
 	      </ul>
 	      <form class="d-flex">
 	        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -58,18 +47,17 @@
 			<h2 class="text-center text-light mb-4">Bienvenido,
 				${usuario.email}.</h2>
 				<h2 class="text-center text-light mb-4">Rol:
-				${usuario.getRol().getNombre()}.</h2>
+				${usuario.getRol()}.</h2>
 			<%
 				}
 			%>
 			
-	      <c:if test = "${usuario.getRol().getNombre() == 'admin'}">
+	      <c:if test = "${usuario.getRol() == 'admin'}">
   		<div class="">
 	  		<a class="btn btn-primary" role="button" href="http://localhost:8080/proyecto-cine/admin?sel=cargar-cine">Controles Administrador</a>
 		</div>
 		<br>	
     	 </c:if>
-
 
 
 <select class="form-select-bg-size cine-selection" aria-label="Default select example">

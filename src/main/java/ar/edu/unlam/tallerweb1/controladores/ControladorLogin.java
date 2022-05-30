@@ -1,6 +1,5 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
-import ar.edu.unlam.tallerweb1.modelo.Rol;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +59,7 @@ public class ControladorLogin {
 		ModelMap model = new ModelMap();
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol().getNombre());
+			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 			request.getSession().setAttribute("usuario", usuarioBuscado);
 			model.put("sesion", request.getAttribute("usuario"));
 			model.put("sesionRol", request.getAttribute("ROL"));
@@ -87,13 +86,11 @@ public class ControladorLogin {
 		// validar password con repassword
 		ModelMap modelo = new ModelMap();
 		
-		Rol rolUsuariosNuevos = new Rol();
-		rolUsuariosNuevos.setNombre("usuario");
-		usuario.setRol(rolUsuariosNuevos);
-		
 		if (servicioLogin.consultarUsuario(usuario) == null) {
 			if (usuario.getPassword().equals(repassword)) {
 				// guardo en la base
+				usuario.setActivo(true);
+				usuario.setRol("usuario");
 				servicioLogin.insertarUsuario(usuario);
 				modelo.put("correcto", "¡Usuario registrado correctamente! " + usuario.getEmail());
 			} else {
@@ -106,7 +103,6 @@ public class ControladorLogin {
 		}
 		
 		return new ModelAndView("login", modelo);
-
 	}
 
 	@RequestMapping("/cerrarSesion")

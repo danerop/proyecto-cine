@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class DatosCompraBoleto {
-	private Long idcine;
+	private Long idCine;
 	private String fecha;
 	private String hora;
 	private Long idPelicula;
@@ -22,10 +22,10 @@ public class DatosCompraBoleto {
 		
 	}
 	public Long getIdcine() {
-		return idcine;
+		return idCine;
 	}
 	public void setIdcine(Long idcine) {
-		this.idcine = idcine;
+		this.idCine = idcine;
 	}
 	public String getFecha() {
 		return fecha;
