@@ -30,7 +30,7 @@ public class Usuario {
 	private String rol;
 	
 	@OneToOne
-	@Cascade(CascadeType.SAVE_UPDATE)
+	@Cascade(CascadeType.PERSIST)
 	private Suscripcion suscripcion;
 	
 	public Long getId() {

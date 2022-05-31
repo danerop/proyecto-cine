@@ -80,24 +80,16 @@ public class Boleto {
 	public void setPrecio(Float precio) {
 		this.precio = precio;
 	}
-	public Sala getSala() {
-		return sala;
-	}
-	public void setSala(Sala sala) {
-		this.sala = sala;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((butaca == null) ? 0 : butaca.hashCode());
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
-		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
 		result = prime * result + ((funcion == null) ? 0 : funcion.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nroBoleto == null) ? 0 : nroBoleto.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((precio == null) ? 0 : precio.hashCode());
-		result = prime * result + ((sala == null) ? 0 : sala.hashCode());
 		return result;
 	}
 	@Override
@@ -119,11 +111,6 @@ public class Boleto {
 				return false;
 		} else if (!cliente.equals(other.cliente))
 			return false;
-		if (fecha == null) {
-			if (other.fecha != null)
-				return false;
-		} else if (!fecha.equals(other.fecha))
-			return false;
 		if (funcion == null) {
 			if (other.funcion != null)
 				return false;
@@ -133,21 +120,6 @@ public class Boleto {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (nroBoleto == null) {
-			if (other.nroBoleto != null)
-				return false;
-		} else if (!nroBoleto.equals(other.nroBoleto))
-			return false;
-		if (precio == null) {
-			if (other.precio != null)
-				return false;
-		} else if (!precio.equals(other.precio))
-			return false;
-		if (sala == null) {
-			if (other.sala != null)
-				return false;
-		} else if (!sala.equals(other.sala))
 			return false;
 		return true;
 	}

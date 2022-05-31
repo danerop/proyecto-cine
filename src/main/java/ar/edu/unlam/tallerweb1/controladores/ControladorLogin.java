@@ -72,7 +72,7 @@ public class ControladorLogin {
 //			default:
 //				break;
 //			}
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol().getNombre());
+			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 			request.getSession().setAttribute("usuario", usuarioBuscado);
 			model.put("sesion", request.getAttribute("usuario"));
 			model.put("sesionRol", request.getAttribute("ROL"));
@@ -98,7 +98,7 @@ public class ControladorLogin {
 			@RequestParam(value = "repassword", required = false) String repassword) {
 		// validar password con repassword
 		ModelMap modelo = new ModelMap();
-		
+
 		if (servicioLogin.consultarUsuario(usuario) == null) {
 			if (usuario.getPassword().equals(repassword)) {
 				// guardo en la base
@@ -114,7 +114,7 @@ public class ControladorLogin {
 			modelo.put("error", "Ya existe el usuario");
 			return new ModelAndView("registro-usuario", modelo);
 		}
-		
+
 		return new ModelAndView("login", modelo);
 	}
 
