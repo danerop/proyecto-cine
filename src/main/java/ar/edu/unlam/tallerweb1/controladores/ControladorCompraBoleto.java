@@ -7,6 +7,7 @@ import java.text.ParseException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.jboss.logging.Message.Format;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -155,13 +156,16 @@ public class ControladorCompraBoleto {
 public ModelAndView ReciboGenerado(@RequestParam(value="p") Long idPelicula,							  
 							  HttpServletRequest request,
 							  @ModelAttribute("mapping1Form") ModelMap model
-		) {
-
+		) throws IOException, WriterException{
+	ModelMap modelo=new ModelMap();
+	if (model!=null) {
+		modelo=model;
+	}
 	
 	
 	
 		
-	return new ModelAndView("recibocompra", model);
+	return new ModelAndView("recibocompra", modelo);
 }
 }
 
