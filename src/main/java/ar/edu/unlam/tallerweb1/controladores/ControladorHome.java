@@ -6,11 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Cine;
@@ -42,9 +44,12 @@ public class ControladorHome {
 	}
 
 	@RequestMapping(path = "/inicio", method = RequestMethod.GET)
-	public ModelAndView inicio(HttpServletRequest request){
+	public ModelAndView inicio(HttpServletRequest request,
+							@ModelAttribute("mapping1Form") ModelMap model2
+			){
 		
 		ModelMap model = new ModelMap();
+		model.addAllAttributes(model2);
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		
 		if(user != null) {

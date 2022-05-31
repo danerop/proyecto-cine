@@ -4,10 +4,14 @@ import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+
 
 
 
@@ -21,10 +25,12 @@ public class Boleto {
 	@ManyToOne
 	private Usuario cliente;
 	
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.REFRESH})
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="FUNCION_ID")
 	private Funcion funcion;
 	
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.REFRESH})
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="BUTACA_ID")
 	private Butaca butaca;
 	
 	private Float precio;

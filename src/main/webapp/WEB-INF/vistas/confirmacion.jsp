@@ -61,7 +61,7 @@
 
   <main>
     <div class="container-fluid contenedorpago">
-      <form:form action="validar-compra?p=${p}&u=${u}" method="POST" modelAttribute="datosCompraBoleto">
+      <form:form action="validar-compra?p=${p}" method="POST" modelAttribute="datosCompraBoleto">
         
         <input type="hidden" value="${datosCompraBoleto.getIdSala()}" id="tempidsala" name="idSala" path="idSala">
        	<form:label for="tempidsala" path="idSala"></form:label>
