@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,12 +86,15 @@ public class ControladorLogin {
 			@RequestParam(value = "repassword", required = false) String repassword) {
 		// validar password con repassword
 		ModelMap modelo = new ModelMap();
+		Suscripcion s = new Suscripcion();
 		
 		if (servicioLogin.consultarUsuario(usuario) == null) {
 			if (usuario.getPassword().equals(repassword)) {
 				// guardo en la base
+				s.setId(1L);
 				usuario.setActivo(true);
 				usuario.setRol("usuario");
+				usuario.setSuscripcion(s);
 				servicioLogin.insertarUsuario(usuario);
 				modelo.put("correcto", "¡Usuario registrado correctamente! " + usuario.getEmail());
 			} else {

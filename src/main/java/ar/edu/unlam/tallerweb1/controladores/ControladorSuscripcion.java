@@ -31,40 +31,62 @@ public class ControladorSuscripcion {
 	}
 
 	@RequestMapping(path = "/suscripcion", method = RequestMethod.GET)
-	public ModelAndView irASuscripcion(HttpServletRequest request) {
+	public ModelAndView irASuscripcion() {
 		
 		ModelMap model = new ModelMap();
 		
-		model.put("datosSuscripcion", new DatosSuscripcion());
 		model.put("listaDeSuscripciones", servicioSuscripcion.obtenerTodasLasSuscripciones());
 
 		return new ModelAndView("suscripcion", model);
 	}
 
-	@RequestMapping(path = "/procesarSuscripcion", method = RequestMethod.POST)
+	@RequestMapping(path = "/pago-suscripcion", method = RequestMethod.GET)
 	public ModelAndView suscripcionElegida(@ModelAttribute("datosSuscripcion") DatosSuscripcion datosSuscripcion,
 										   HttpServletRequest request, 
 										   @RequestParam(value = "s") Long idSuscripcion,
 										   @RequestParam(value = "u") Long idUsuario)
 										   {
 
-		ModelMap modelo = new ModelMap();
-		Usuario usuario = servicioUsuario.consultarUsuarioPorId(idUsuario);
+		ModelMap model = new ModelMap();
+		/*Usuario usuario = servicioUsuario.consultarUsuarioPorId(idUsuario);*/
 		Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
-		
-		Suscripcion sub = servicioSuscripcion.obtenerSuscripcionPorId(idSuscripcion);
-		Suscripcion suscripcion = new Suscripcion();
 	
+		/*Suscripcion sub = servicioSuscripcion.obtenerSuscripcionPorId(idSuscripcion);
+		Suscripcion suscripcion = new Suscripcion();*/
 		
 		if (usuarioSesion != null) {
+				model.put("datosSuscripcion", datosSuscripcion);
+				model.put("s", idSuscripcion);
+				model.put("u", idUsuario);
+				model.put("servicioElegido", servicioSuscripcion.obtenerSuscripcionPorId(idSuscripcion));
 				/*modelo.put("s", idSuscripcion);
 				modelo.put("suscripcion", idSuscripcion);
-				usuarioSesion.setSuscripcion(sub);*/
-				usuario.setSuscripcion(sub);
-				
-				return new ModelAndView("validar-suscripcion", modelo);
+				usuarioSesion.setSuscripcion(sub);
+				usuario.setSuscripcion(sub);*/
+				return new ModelAndView("pago-suscripcion", model);
 		}
-			return new ModelAndView("redirect:/login", modelo);
+			return new ModelAndView("redirect:/login", model);
 	}
+	
 
+	@RequestMapping(path = "/procesarSuscripcion", method = RequestMethod.POST)
+	public ModelAndView reciboSuscripcion(@ModelAttribute("datosSuscripcion") DatosSuscripcion datosSuscripcion,
+										   HttpServletRequest request, 
+										   @RequestParam(value = "s") Long idSuscripcion,
+										   @RequestParam(value = "u") Long idUsuario){
+				
+				Usuario usuarioSuscripto = servicioUsuario.consultarUsuarioPorId(idUsuario);
+				Suscripcion sub = servicioSuscripcion.obtenerSuscripcionPorId(idSuscripcion);
+				
+				usuarioSuscripto.setSuscripcion(sub);
+				servicioUsuario.actualizarUsuario(usuarioSuscripto);
+				
+				ModelMap model = new ModelMap();
+				model.put("datosSuscripcion", datosSuscripcion);
+				model.put("s", idSuscripcion);
+				model.put("u", idUsuario);
+				model.put("usuarioSuscripto", usuarioSuscripto);
+		
+				return new ModelAndView("validar-suscripcion", model);
+	}				
 }

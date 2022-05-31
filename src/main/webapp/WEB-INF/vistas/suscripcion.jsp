@@ -46,7 +46,6 @@
 <h2 align="center" style="color:white; text-decoration: underline;">¡Conocé nuestras suscripciones!</h2>
 
 	<div class="container-fluid">
-	<form:form action="procesarSuscripcion?s=${s}&u=${u}" method="POST" modelAttribute="datosSuscripcion">
      <div class="container p-5">
       <div class="row justify-content-evenly">  
       <c:forEach items="${listaDeSuscripciones}" var="suscripcion" varStatus="sub" begin="1">
@@ -61,7 +60,7 @@
 	              <span class="h2">$${suscripcion.cuota}</span>/mes
 	              <br><br>
 	              <div class="d-grid my-3">
-              	<!-- <a href="validar-suscripcion?s=${suscripcion.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a> -->
+              		<a href="pago-suscripcion?s=${suscripcion.id}&u=${usuario.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a>
 	              </div>
 	              <ul>
 	                <li>¡${suscripcion.cantidadBoletosGratis} entradas mensuales gratis!</li>
@@ -81,8 +80,7 @@
 	              <span class="h2">$${suscripcion.cuota}</span>/mes
 	              <br><br>
 	              <div class="d-grid my-3">
-	              	<form:button type="submit" class="btn btn-outline-dark btn-block" >Seleccionar</form:button>
-	              	<!--<a href="validar-suscripcion?s=${suscripcion.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a>   -->
+	              	<a href="pago-suscripcion?s=${suscripcion.id}&u=${usuario.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a>
 	              </div>
 	              <ul>
 	                <li>¡${suscripcion.cantidadBoletosGratis} entradas mensuales gratis!</li>
@@ -97,11 +95,10 @@
       </c:forEach>
 	  </div>
     </div>
-    </form:form>    
    </div>
 
-		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>
 
 </html>

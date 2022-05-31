@@ -4,7 +4,7 @@ INSERT INTO pelicula(nombre, anio, descripcion, duracion, urlImagenPelicula)
 VALUES("Sonic 2", 2022, "descripcion", 150, "img/pelicula/sonic2.jpg"),
 	  ("Dr Strange: Multiverso de la locura", 2022, "descripcion", 150, "img/pelicula/strange.jpg"),
       ("Animales Fantasticos 3", 2022, "descripcion", 150, "img/pelicula/animalesf.jpg"),
-      ("Bombonera: La película del templo", 2022, "descripcion", 150, "img/pelicula/bombonera.jpg"),
+      ("Bombonera: La pelÃ­cula del templo", 2022, "descripcion", 150, "img/pelicula/bombonera.jpg"),
       ("La Medium", 2022, "descripcion", 150, "img/pelicula/lamedium.jpg"),
       ("En la mira", 2022, "descripcion", 150, "img/pelicula/enlamira.jpg"),
       ("El hombre del norte", 2022, "descripcion", 150, "img/pelicula/elhombredelnorte.jpg"),
@@ -17,9 +17,9 @@ VALUES (1, "comun", 0, 0, 0),
 	   (3, "premium", 50.0, 4, 1250.0);
 
 INSERT INTO usuario(id, activo, email, password, rol, urlImagenUsuario, suscripcion_id)
-values (1, true, "elian@gmail.com", "1234", "admin", "img", 3),
-       (2, true, "hector@gmail.com", "1234", "usuario", "img", 2),
-       (3, true, "braian@gmail.com", "1234", "admin", "img", 1);
+values (1, true, "elian@gmail.com", "1234", "admin", "img", suscripcion_id),
+       (2, true, "hector@gmail.com", "1234", "usuario", "img", suscripcion_id),
+       (3, true, "braian@gmail.com", "1234", "admin", "img", suscripcion_id);
 
 INSERT INTO cine(id, direccion, email, nombreLocal, telefono, urlImagenCine)
 VALUES(1, "cine sonic", "email","CINE NOW","telefono", "url de la imagen"),
@@ -48,7 +48,6 @@ select * from funcion;
 select * from sala;
 select * from cine;
 select * from boleto;
-select * from rol;
 
 select * from Usuario usuario
 join Suscripcion suscripcion on usuario.suscripcion_id = suscripcion.id

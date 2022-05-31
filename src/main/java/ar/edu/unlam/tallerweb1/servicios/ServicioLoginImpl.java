@@ -52,4 +52,9 @@ public class ServicioLoginImpl implements ServicioLogin {
 	public Usuario consultarUsuarioPorSuscripcion(Long idSuscripcion) {
 		return servicioLoginDao.buscarUsuarioPorSuscripcionID(idSuscripcion);
 	}
+
+	@Override
+	public void actualizarUsuario(Usuario usuario) {
+		servicioLoginDao.modificar(usuario);
+	}
 }

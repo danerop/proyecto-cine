@@ -9,6 +9,7 @@ public interface ServicioLogin {
 	Usuario consultarUsuarioPorId(Long id);
 	Usuario consultarUsuarioPorRol(Usuario usuario);
 	Usuario consultarUsuario(Usuario usuario);
+	void actualizarUsuario(Usuario usuario);
 	Long insertarUsuario(Usuario usuario);
 	Usuario consultarUsuarioPorSuscripcion (Long idSuscripcion);
 }
