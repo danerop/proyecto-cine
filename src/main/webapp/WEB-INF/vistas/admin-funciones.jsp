@@ -84,6 +84,30 @@
         <h4>Formulario Para Crear Funcion</h4>
         <hr class="colorgraph"><br>
 
+		<form:label path="idCine">Seleccione el cine:</form:label>
+        <form:select path="idCine" class="form-control">
+          <c:forEach items="${listaCines}" var="cine">
+            <form:option value="${cine.getId()}" label="id: ${cine.getId()} -nombre: ${cine.getNombreLocal()}" />
+          </c:forEach>
+        </form:select>
+        <br>
+
+        <form:label path="idSala">Seleccione la sala:</form:label>
+        <form:select path="idSala" class="form-control">
+          <c:forEach items="${listaSalas}" var="sala">
+            <form:option value="${sala.getId()}" label="id: ${sala.getId()} -tipo de sala: ${sala.getTipo()} -de cine: ${sala.getCine().getNombreLocal()}" />
+          </c:forEach>
+        </form:select>
+        <br>
+
+        <form:label path="idPelicula">Seleccione la pelicula:</form:label>
+        <form:select path="idPelicula" class="form-control">
+          <c:forEach items="${listaPeliculas}" var="pelicula">
+            <form:option value="${pelicula.getId()}" label="id: ${pelicula.getId()} -nombre: ${pelicula.getNombre()}" />
+          </c:forEach>
+        </form:select>
+        <br>
+
         <form:label path="fechaHora">Introducir fecha:</form:label>
         <form:input path="fechaHora" type="date" id="start" name="trip-start" />
         <br><br>
@@ -98,31 +122,6 @@
 
         <form:label path="precioMenor">Precio para menores (ARS$):</form:label>
         <form:input path="precioMenor" type="precioMenor" class="form-control" />
-        <br>
-
-        <form:label path="idCine">Seleccione el cine:</form:label>
-        <form:select path="idCine" class="form-control">
-          <c:forEach items="${listaCines}" var="cine">
-            <form:option value="${cine.getId()}" label="id: ${cine.getId()} -nombre: ${cine.getNombreLocal()}" />
-          </c:forEach>
-        </form:select>
-        <br>
-
-        <form:label path="idSala">Seleccione la sala:</form:label>
-        <form:select path="idSala" class="form-control">
-          <c:forEach items="${listaSalas}" var="sala">
-            <form:option value="${sala.getId()}"
-              label="id: ${sala.getId()} -tipo de sala: ${sala.getTipo()} -de cine: ${sala.getCine().getNombreLocal()}" />
-          </c:forEach>
-        </form:select>
-        <br>
-
-        <form:label path="idPelicula">Seleccione la pelicula:</form:label>
-        <form:select path="idPelicula" class="form-control">
-          <c:forEach items="${listaPeliculas}" var="pelicula">
-            <form:option value="${pelicula.getId()}" label="id: ${pelicula.getId()} -nombre: ${pelicula.getNombre()}" />
-          </c:forEach>
-        </form:select>
         <br>
 
         <button class="btn btn-lg btn-primary btn-block" Type="Submit" />Cargar Función</button>
