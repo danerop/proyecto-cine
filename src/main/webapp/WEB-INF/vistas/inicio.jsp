@@ -14,7 +14,8 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
 	  <div class="container-fluid"> 
 	  <!--  <div class="d-flex justify-content-evenly">...</div> -->
 	    <a class="navbar-brand" href="inicio">LOGO</a>
@@ -51,7 +52,14 @@
 	    </div>
 	  </div>
 	</nav>
-<br>
+	</header>
+	<c:if test="${msg!=null}">
+		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  			<strong>${msg}</strong> 
+  			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	</c:if>
+	<br>
 			<%
 				if (request.getAttribute("usuario") != null) {
 			%>
@@ -97,7 +105,7 @@
   			<img src="${pelicula.getUrlImagenPelicula()}" class="card-img-top" alt="...">
 			  <div class="card-body" style="text-align: center; background-color:black; height:60px;">
 			    <h5 class="card-title" style="font-size:15px; color:white;">${pelicula.getNombre()}</h5>
-			    <a href="compra?p=${pelicula.getId()}&u=${usuario.getId()}" class="btn btn-primary" role="button">COMPRAR</a>
+			    <a href="compra?p=${pelicula.getId()}" class="btn btn-primary" role="button">COMPRAR</a>
 			  </div>
 			</div>
 		<!-- 	<img src="${pelicula.getUrlImagenPelicula()}" class="img-thumbnail peliculaItem" alt="..."> -->

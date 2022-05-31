@@ -60,6 +60,19 @@ public class ControladorLogin {
 		ModelMap model = new ModelMap();
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
+//			switch (usuarioBuscado.getRol().getId()) {
+//			case 1:
+//				
+//				break;
+//			case 2:
+//				
+//				break;
+//			case 3:
+//				
+//				break;
+//			default:
+//				break;
+//			}
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol().getNombre());
 			request.getSession().setAttribute("usuario", usuarioBuscado);
 			model.put("sesion", request.getAttribute("usuario"));

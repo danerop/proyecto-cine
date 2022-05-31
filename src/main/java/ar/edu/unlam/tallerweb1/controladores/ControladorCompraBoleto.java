@@ -1,5 +1,8 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.ParseException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Butaca;
@@ -101,40 +112,53 @@ public class ControladorCompraBoleto {
 	@RequestMapping(path="/validar-compra", method = RequestMethod.POST)
 	public ModelAndView irARecibo(@RequestParam(value="p") Long idPelicula,
 								  @ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto,
-								  HttpServletRequest request
-			) throws ParseException {
-		
-
-		Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(datosCompraBoleto.getIdcine(),idPelicula, datosCompraBoleto.getDateSql(), datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());
+								  HttpServletRequest request,
+								  RedirectAttributes redirectAttributes
+			) {
+		ModelAndView ret=new ModelAndView();
 		ModelMap model = new ModelMap();
-		
-		model.put("datosCompraBoleto", datosCompraBoleto);
-		if (funcionElegida!=null) {
+		if (request.getSession().getAttribute("usuario")!=null) {
 			
-			Boleto boletoAGuardar=new Boleto();
-			Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-			boletoAGuardar.setButaca(servicioButaca.obtenerButaca(datosCompraBoleto.getIdButaca()));
-			boletoAGuardar.setFuncion(funcionElegida);
-			boletoAGuardar.setPrecio(funcionElegida.getPrecioMayor());
-			boletoAGuardar.setCliente(user);
+			Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(datosCompraBoleto.getIdcine(),idPelicula, datosCompraBoleto.getDateSql(), datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());
+				
+			model.put("msg", "La butaca seleccionada ya ha sido ocupada, por favor intente con otra");
+			redirectAttributes.addFlashAttribute("mapping1Form", model);
+			ret=new ModelAndView("redirect:/inicio", model);
 			
-			servicioBoleto.guardarBoleto(boletoAGuardar);
-			model.put("boletoGenerado", boletoAGuardar);
 			
-			return new ModelAndView("redirect:/recibo?p="+idPelicula, model);
-		}
+			if (funcionElegida!=null && servicioButaca.obtenerButaca(datosCompraBoleto.getIdButaca()).getOcupada()==false) {
+				
+				Boleto boletoAGuardar=new Boleto();
+				Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+				boletoAGuardar.setButaca(servicioButaca.obtenerButaca(datosCompraBoleto.getIdButaca()));
+				boletoAGuardar.setFuncion(funcionElegida);
+				boletoAGuardar.setPrecio(funcionElegida.getPrecioMayor());
+				boletoAGuardar.setCliente(user);
+				
+				servicioBoleto.guardarBoleto(boletoAGuardar);
+				model.put("boletoGenerado", boletoAGuardar);
+				redirectAttributes.addFlashAttribute("mapping1Form", model);
 
-			
-		return new ModelAndView("recibocompra", model);
+				
+				ret=new ModelAndView("redirect:/recibo?p="+idPelicula);
+			} 
+		} else {
+			model.put("msg", "Debes estar logueado para comprar un boleto");
+			redirectAttributes.addFlashAttribute("mapping1Form", model);
+			ret=new ModelAndView("redirect:/inicio", model);
+		}
+	
+		return ret;
 	}
 
 @RequestMapping(path="/recibo", method = RequestMethod.GET)
 public ModelAndView ReciboGenerado(@RequestParam(value="p") Long idPelicula,							  
 							  HttpServletRequest request,
-							  ModelMap model
-		){
-	
+							  @ModelAttribute("mapping1Form") ModelMap model
+		) {
 
+	
+	
 	
 		
 	return new ModelAndView("recibocompra", model);

@@ -124,7 +124,7 @@
        	<form:label for="tempidcine" path="idcine"></form:label>
        	
 		
-		<form:button type="button submit" class="btn btn-primary">Comprar</form:button>
+		<form:button type="button submit" class="btn btn-primary">Siguiente</form:button>
 		
 		</form:form>
 	</main>

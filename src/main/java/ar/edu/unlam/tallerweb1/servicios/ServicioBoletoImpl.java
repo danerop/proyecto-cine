@@ -25,8 +25,6 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		boleto.getButaca().setOcupada(true);
 		boleto.getFuncion().setEntradasDisponibles(boleto.getFuncion().getEntradasDisponibles()-1);
 		this.repositorioBoletoDao.guardarBoleto(boleto);
-//		this.repositorioBoletoDao.buscarBoleto(boleto.getId()).getButaca().setOcupada(true);
-//		this.repositorioBoletoDao.buscarBoleto(boleto.getId()).getFuncion().setEntradasDisponibles(boleto.getFuncion().getEntradasDisponibles()-1);
 	}
 
 	@Override
