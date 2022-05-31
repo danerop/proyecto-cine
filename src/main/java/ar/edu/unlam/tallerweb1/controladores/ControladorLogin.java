@@ -60,7 +60,20 @@ public class ControladorLogin {
 		ModelMap model = new ModelMap();
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+//			switch (usuarioBuscado.getRol().getId()) {
+//			case 1:
+//				
+//				break;
+//			case 2:
+//				
+//				break;
+//			case 3:
+//				
+//				break;
+//			default:
+//				break;
+//			}
+			request.getSession().setAttribute("ROL", usuarioBuscado.getRol().getNombre());
 			request.getSession().setAttribute("usuario", usuarioBuscado);
 			model.put("sesion", request.getAttribute("usuario"));
 			model.put("sesionRol", request.getAttribute("ROL"));
@@ -96,9 +109,9 @@ public class ControladorLogin {
 				usuario.setRol("usuario");
 				usuario.setSuscripcion(s);
 				servicioLogin.insertarUsuario(usuario);
-				modelo.put("correcto", "¡Usuario registrado correctamente! " + usuario.getEmail());
+				modelo.put("correcto", "ï¿½Usuario registrado correctamente! " + usuario.getEmail());
 			} else {
-				modelo.put("error", "Las contraseñas no coinciden");
+				modelo.put("error", "Las contraseï¿½as no coinciden");
 				return new ModelAndView("registro-usuario", modelo);
 			}
 		} else {

@@ -63,7 +63,7 @@
 	<main class="container-fluid contenedorpago">
 	
 		<h3 class="text-center">Elegí tu butaca</h3>
-		<form:form action="comprar-pago?p=${p}&u=${u}" method="POST" modelAttribute="datosCompraBoleto">
+		<form:form action="comprar-pago?p=${p}" method="POST" modelAttribute="datosCompraBoleto">
 		
 		
 		<br>
@@ -124,7 +124,7 @@
        	<form:label for="tempidcine" path="idcine"></form:label>
        	
 		
-		<form:button type="button submit" class="btn btn-primary">Comprar</form:button>
+		<form:button type="button submit" class="btn btn-primary">Siguiente</form:button>
 		
 		</form:form>
 	</main>

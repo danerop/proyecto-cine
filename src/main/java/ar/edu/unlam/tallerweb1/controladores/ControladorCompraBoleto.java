@@ -1,7 +1,13 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.ParseException;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.jboss.logging.Message.Format;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,6 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Butaca;
@@ -48,8 +62,7 @@ public class ControladorCompraBoleto {
 	}
 
 	@RequestMapping(path="/compra", method = RequestMethod.GET )
-	public ModelAndView irACompra(@RequestParam(value="p") Long idPelicula,
-								  @RequestParam(value="u") Long idUsuario
+	public ModelAndView irACompra(@RequestParam(value="p") Long idPelicula
 								  ) {
 		ModelMap modelo = new ModelMap();
 		modelo.put("datosCompraBoleto", new DatosCompraBoleto());
@@ -57,36 +70,30 @@ public class ControladorCompraBoleto {
 		modelo.put("cinesDisponibles", servicioFuncion.obtenerCinesDisponiblesParaFunciones(idPelicula));
 		modelo.put("p", idPelicula);
 		modelo.put("peliculaElegida", servicioPelicula.buscarPeliculaPorID(idPelicula));
-		modelo.put("u", idUsuario);
 		return new ModelAndView("compra", modelo);
 	
 	}
 	@RequestMapping(path="/comprar-butaca", method = RequestMethod.POST)
 	public ModelAndView irAElegirButaca(@RequestParam(value="p") Long idPelicula,
-			  					  		@RequestParam(value="u") Long idUsuario,
 			  					  		@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) throws ParseException {
 		ModelMap model = new ModelMap();
 		model.put("butacas", servicioButaca.obtenerButacasPorSala(datosCompraBoleto.getIdSala()));
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
-		model.put("u", idUsuario);
 		
 		return new ModelAndView("compra-butaca", model);
 	}
 	@RequestMapping(path="/comprar-pago", method = RequestMethod.POST)
 	public ModelAndView irAMetodoDePago(@RequestParam(value="p") Long idPelicula,
-			  					  		@RequestParam(value="u") Long idUsuario,
 			  					  		@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) throws ParseException {
 		ModelMap model = new ModelMap();
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
-		model.put("u", idUsuario);
 		
 		return new ModelAndView("metodo-pago", model);
 	}
 	@RequestMapping(path="/comprar-confirmar", method = RequestMethod.POST)
 	public ModelAndView irAConfirmar(@RequestParam(value="p") Long idPelicula,
-			  					  	 @RequestParam(value="u") Long idUsuario,
 			  					     @ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) throws ParseException {
 		
 		Funcion funcionElegida=servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(datosCompraBoleto.getIdcine(), idPelicula, datosCompraBoleto.getDateSql(), datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());
@@ -98,7 +105,6 @@ public class ControladorCompraBoleto {
 		ModelMap model = new ModelMap();
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
-		model.put("u", idUsuario);
 		model.put("boletoGenerado", boletoAGuardar);
 		
 		return new ModelAndView("confirmacion", model);
@@ -106,26 +112,60 @@ public class ControladorCompraBoleto {
 	
 	@RequestMapping(path="/validar-compra", method = RequestMethod.POST)
 	public ModelAndView irARecibo(@RequestParam(value="p") Long idPelicula,
-			  					  @RequestParam(value="u") Long idUsuario,
-								  @ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) throws ParseException {
-		
-
-		Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(datosCompraBoleto.getIdcine(),idPelicula, datosCompraBoleto.getDateSql(), datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());
+								  @ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto,
+								  HttpServletRequest request,
+								  RedirectAttributes redirectAttributes
+			) {
+		ModelAndView ret=new ModelAndView();
 		ModelMap model = new ModelMap();
-		
-		model.put("datosCompraBoleto", datosCompraBoleto);
-		if (funcionElegida!=null) {
+		if (request.getSession().getAttribute("usuario")!=null) {
 			
-			Boleto boletoAGuardar=new Boleto();
-			boletoAGuardar.setButaca(servicioButaca.obtenerButaca(datosCompraBoleto.getIdButaca()));
-			boletoAGuardar.setFuncion(funcionElegida);
-			boletoAGuardar.setPrecio(funcionElegida.getPrecioMayor());
+			Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(datosCompraBoleto.getIdcine(),idPelicula, datosCompraBoleto.getDateSql(), datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());
+				
+			model.put("msg", "La butaca seleccionada ya ha sido ocupada, por favor intente con otra");
+			redirectAttributes.addFlashAttribute("mapping1Form", model);
+			ret=new ModelAndView("redirect:/inicio", model);
 			
-			servicioBoleto.guardarBoleto(boletoAGuardar);
-			model.put("boletoGenerado", boletoAGuardar);
-		}
+			
+			if (funcionElegida!=null && servicioButaca.obtenerButaca(datosCompraBoleto.getIdButaca()).getOcupada()==false) {
+				
+				Boleto boletoAGuardar=new Boleto();
+				Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+				boletoAGuardar.setButaca(servicioButaca.obtenerButaca(datosCompraBoleto.getIdButaca()));
+				boletoAGuardar.setFuncion(funcionElegida);
+				boletoAGuardar.setPrecio(funcionElegida.getPrecioMayor());
+				boletoAGuardar.setCliente(user);
+				
+				servicioBoleto.guardarBoleto(boletoAGuardar);
+				model.put("boletoGenerado", boletoAGuardar);
+				redirectAttributes.addFlashAttribute("mapping1Form", model);
 
-			
-		return new ModelAndView("recibocompra", model);
+				
+				ret=new ModelAndView("redirect:/recibo?p="+idPelicula);
+			} 
+		} else {
+			model.put("msg", "Debes estar logueado para comprar un boleto");
+			redirectAttributes.addFlashAttribute("mapping1Form", model);
+			ret=new ModelAndView("redirect:/inicio", model);
+		}
+	
+		return ret;
 	}
+
+@RequestMapping(path="/recibo", method = RequestMethod.GET)
+public ModelAndView ReciboGenerado(@RequestParam(value="p") Long idPelicula,							  
+							  HttpServletRequest request,
+							  @ModelAttribute("mapping1Form") ModelMap model
+		) throws IOException, WriterException{
+	ModelMap modelo=new ModelMap();
+	if (model!=null) {
+		modelo=model;
+	}
+	
+	
+	
+		
+	return new ModelAndView("recibocompra", modelo);
 }
+}
+
