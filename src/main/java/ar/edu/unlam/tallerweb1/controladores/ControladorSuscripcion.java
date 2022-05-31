@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,29 +31,36 @@ public class ControladorSuscripcion {
 	}
 
 	@RequestMapping(path = "/suscripcion", method = RequestMethod.GET)
-	public ModelAndView irASuscripcion() {
+	public ModelAndView irASuscripcion(HttpServletRequest request) {
+		
 		ModelMap model = new ModelMap();
-
+		
+		model.put("datosSuscripcion", new DatosSuscripcion());
 		model.put("listaDeSuscripciones", servicioSuscripcion.obtenerTodasLasSuscripciones());
 
 		return new ModelAndView("suscripcion", model);
 	}
 
-	@RequestMapping(path = "/validar-suscripcion", method = RequestMethod.GET)
-	public ModelAndView suscripcionElegida(HttpServletRequest request, 
-										   @RequestParam(value = "s") Long idSuscripcion)
+	@RequestMapping(path = "/procesarSuscripcion", method = RequestMethod.POST)
+	public ModelAndView suscripcionElegida(@ModelAttribute("datosSuscripcion") DatosSuscripcion datosSuscripcion,
+										   HttpServletRequest request, 
+										   @RequestParam(value = "s") Long idSuscripcion,
+										   @RequestParam(value = "u") Long idUsuario)
 										   {
 
 		ModelMap modelo = new ModelMap();
-		
+		Usuario usuario = servicioUsuario.consultarUsuarioPorId(idUsuario);
 		Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
+		
 		Suscripcion sub = servicioSuscripcion.obtenerSuscripcionPorId(idSuscripcion);
+		Suscripcion suscripcion = new Suscripcion();
+	
 		
 		if (usuarioSesion != null) {
-				modelo.put("s", idSuscripcion);
+				/*modelo.put("s", idSuscripcion);
 				modelo.put("suscripcion", idSuscripcion);
-
-				usuarioSesion.setSuscripcion(sub);
+				usuarioSesion.setSuscripcion(sub);*/
+				usuario.setSuscripcion(sub);
 				
 				return new ModelAndView("validar-suscripcion", modelo);
 		}

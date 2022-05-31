@@ -46,6 +46,7 @@
 <h2 align="center" style="color:white; text-decoration: underline;">¡Conocé nuestras suscripciones!</h2>
 
 	<div class="container-fluid">
+	<form:form action="procesarSuscripcion?s=${s}&u=${u}" method="POST" modelAttribute="datosSuscripcion">
      <div class="container p-5">
       <div class="row justify-content-evenly">  
       <c:forEach items="${listaDeSuscripciones}" var="suscripcion" varStatus="sub" begin="1">
@@ -60,7 +61,7 @@
 	              <span class="h2">$${suscripcion.cuota}</span>/mes
 	              <br><br>
 	              <div class="d-grid my-3">
-	              	<a href="validar-suscripcion?s=${suscripcion.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a>
+              	<!-- <a href="validar-suscripcion?s=${suscripcion.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a> -->
 	              </div>
 	              <ul>
 	                <li>¡${suscripcion.cantidadBoletosGratis} entradas mensuales gratis!</li>
@@ -80,7 +81,8 @@
 	              <span class="h2">$${suscripcion.cuota}</span>/mes
 	              <br><br>
 	              <div class="d-grid my-3">
-	              	<a href="validar-suscripcion?s=${suscripcion.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a>
+	              	<form:button type="submit" class="btn btn-outline-dark btn-block" >Seleccionar</form:button>
+	              	<!--<a href="validar-suscripcion?s=${suscripcion.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a>   -->
 	              </div>
 	              <ul>
 	                <li>¡${suscripcion.cantidadBoletosGratis} entradas mensuales gratis!</li>
@@ -94,7 +96,8 @@
        
       </c:forEach>
 	  </div>
-    </div>    
+    </div>
+    </form:form>    
    </div>
 
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
