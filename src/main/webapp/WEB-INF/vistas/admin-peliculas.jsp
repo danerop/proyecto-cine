@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="ISO-8859-1">
   <!-- Bootstrap core CSS -->
@@ -12,6 +13,7 @@
   <link href="css/style.css" rel="stylesheet">
   <title>Controles Administrador</title>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container-fluid">
@@ -61,66 +63,46 @@
 
   <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group mr-2" role="group">
-      <a class="btn btn-secondary cargar-cine" href="http://localhost:8080/proyecto-cine/admin-cargar-cine">Cargar Cine</a>
-      <a class="btn btn-secondary cargar-sala" href="http://localhost:8080/proyecto-cine/admin-cargar-sala">Cargar Sala</a>
-      <a class="btn btn-secondary cargar-pelicula" href="http://localhost:8080/proyecto-cine/admin-cargar-pelicula">Cargar Pelicula</a>
-      <a class="btn btn-secondary cargar-funcion" href="http://localhost:8080/proyecto-cine/admin-cargar-funcion">Cargar Función</a>
+      <a class="btn btn-secondary cargar-cine" href="http://localhost:8080/proyecto-cine/admin-cines">Cines</a>
+      <a class="btn btn-secondary cargar-sala" href="http://localhost:8080/proyecto-cine/admin-salas">Salas</a>
+      <a class="btn btn-secondary cargar-pelicula" href="http://localhost:8080/proyecto-cine/admin-peliculas">Peliculas</a>
+      <a class="btn btn-secondary cargar-funcion" href="http://localhost:8080/proyecto-cine/admin-funciones">Funciones</a>
     </div>
   </div>
-
+  
   <br>
 
   <div class="container formularios bg-light rounded" style="margin-bottom:25px;">
 
-      <div class="formulario-cargar-funcion" style="padding: 1rem;">
-      
-        <c:if test="${not empty mens}">
-  	  		<h5 class="p-3 mb-2 bg-success text-white"> ${mens} </h5>
-  	  	</c:if>
-      
-        <form:form action="agregar-funcion" method="POST" modelAttribute="datosFuncion">
-			<h4>Formulario Para Crear Funcion</h4>
-			<hr class="colorgraph"><br>
-			
-			<%-- Selector de fecha de función --%>
-			<form:label path="fechaHora">Introducir fecha:</form:label>
-			<form:input path="fechaHora" type="date" id="start" name="trip-start"/>
-			<br><br>
-			<form:label path="precioMayor">Precio para adultos (ARS$):</form:label>
-			<form:input path="precioMayor" type="precioMayor" class="form-control" />
-			<br>
-			<form:label path="precioMenor">Precio para menores (ARS$):</form:label>
-			<form:input path="precioMenor" type="precioMenor" class="form-control" />
-			<form:label path="hora">Horario (Formato hora:minutos):</form:label>
-			<form:input path="hora" type="hora" class="form-control" />
-			
-			<br>
-			<%-- De momento va a ser así, pero en el final el selector de sala mostrará solo las salas del cine--%>
-			<form:label path="idCine">Seleccione el cine:</form:label>
-			<form:select path="idCine" class="form-control">
-				<c:forEach items="${listaCines}" var="cine">
-         			<form:option value="${cine.getId()}" label="id: ${cine.getId()} -nombre: ${cine.getNombreLocal()}"/>
-      			</c:forEach>
-			</form:select>
-			<br>
-			<form:label path="idSala">Seleccione la sala:</form:label>
-			<form:select path="idSala" class="form-control">
-				<c:forEach items="${listaSalas}" var="sala">
-         			<form:option value="${sala.getId()}" label="id: ${sala.getId()} -tipo de sala: ${sala.getTipo()} -de cine: ${sala.getCine().getNombreLocal()}"/>
-      			</c:forEach>
-			</form:select>
-			<br>
-			<form:label path="idPelicula">Seleccione la pelicula:</form:label>
-			<form:select path="idPelicula" class="form-control">
-				<c:forEach items="${listaPeliculas}" var="pelicula">
-         			<form:option value="${pelicula.getId()}" label="id: ${pelicula.getId()} -nombre: ${pelicula.getNombre()}"/>
-      			</c:forEach>
-			</form:select>
-			<br>
-			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Función</button>
-		</form:form>
-      </div>
-    
+    <div class="formulario-cargar-pelicula" style="padding: 1rem;">
+
+      <c:if test="${not empty mens}">
+        <h5 class="p-3 mb-2 bg-success text-white"> ${mens} </h5>
+      </c:if>
+
+      <form:form action="agregar-pelicula" method="POST" modelAttribute="datosPelicula">
+        <h4>Formulario Para Crear Pelicula</h4>
+        <hr class="colorgraph"><br>
+
+        <form:label path="nombre">Nombre:</form:label>
+        <form:input path="nombre" id="nombre" type="nombre" class="form-control" />
+        <br>
+        <form:label path="anio">Año:</form:label>
+        <form:input path="anio" id="anio" type="anio" class="form-control" />
+        <br>
+        <form:label path="descripcion">Descripción:</form:label>
+        <form:input path="descripcion" id="descripcion" type="descripcion" class="form-control" />
+        <br>
+        <form:label path="duracion">Duración:</form:label>
+        <form:input path="duracion" id="duracion" type="duracion" class="form-control" />
+        <br>
+        <form:label path="urlImagenPelicula">Url de la portada:</form:label>
+        <form:input path="urlImagenPelicula" type="urlImagenPelicula" id="urlImagenPelicula" class="form-control" />
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" Type="Submit" />Cargar Pelicula</button>
+      </form:form>
+    </div>
+
   </div>
 
 

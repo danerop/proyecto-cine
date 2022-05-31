@@ -51,17 +51,17 @@ public class ControladorAdministrador {
 		
 	}
 	
-	@RequestMapping( path = "/admin-cargar-cine", method = RequestMethod.GET)
+	@RequestMapping( path = "/admin-cines", method = RequestMethod.GET)
 	public ModelAndView irAAdminCargarCine() {
 		ModelMap modelo = new ModelMap();
 		
 		modelo.addAttribute("datosCine", new Cine());
 		modelo.put("listaCines", servicioCine.obtenerTodosLosCines());
 		
-		return new ModelAndView("admin-cargar-cine", modelo);
+		return new ModelAndView("admin-cines", modelo);
 	}
 	
-	@RequestMapping( path = "/admin-cargar-sala", method = RequestMethod.GET)
+	@RequestMapping( path = "/admin-salas", method = RequestMethod.GET)
 	public ModelAndView irAAdminCargarSala() {
 		ModelMap modelo = new ModelMap();
 		
@@ -69,20 +69,20 @@ public class ControladorAdministrador {
 		modelo.put("listaCines", servicioCine.obtenerTodosLosCines());
 		modelo.put("listaSalas", servicioSala.obtenerTodasLasSalas());
 		
-		return new ModelAndView("admin-cargar-sala", modelo);
+		return new ModelAndView("admin-salas", modelo);
 	}
 	
-	@RequestMapping( path = "/admin-cargar-pelicula", method = RequestMethod.GET)
+	@RequestMapping( path = "/admin-peliculas", method = RequestMethod.GET)
 	public ModelAndView irAAdminCargarPelicula() {
 		ModelMap modelo = new ModelMap();
 		
 		modelo.addAttribute("datosPelicula", new Pelicula());
 		modelo.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
 		
-		return new ModelAndView("admin-cargar-pelicula", modelo);
+		return new ModelAndView("admin-peliculas", modelo);
 	}
 	
-	@RequestMapping( path = "/admin-cargar-funcion", method = RequestMethod.GET)
+	@RequestMapping( path = "/admin-funciones", method = RequestMethod.GET)
 	public ModelAndView irAAdminCargarFuncion() {
 		ModelMap modelo = new ModelMap();
 		
@@ -91,7 +91,7 @@ public class ControladorAdministrador {
 		modelo.put("listaSalas", servicioSala.obtenerTodasLasSalas());
 		modelo.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
 		
-		return new ModelAndView("admin-cargar-funcion", modelo);
+		return new ModelAndView("admin-funciones", modelo);
 	}
 	
 	
@@ -112,7 +112,7 @@ public class ControladorAdministrador {
 		model.addAttribute("datosCine", new Cine());
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());
 		model.put("mens", "Cine guardado con exito");
-		return new ModelAndView("admin-cargar-cine", model);
+		return new ModelAndView("admin-cines", model);
 	}
 	@RequestMapping(path= "/agregar-sala", method = RequestMethod.POST)
 	public ModelAndView agregarNuevaSala( @ModelAttribute("datosSala") DatosSala datosSala ) {
@@ -141,7 +141,7 @@ public class ControladorAdministrador {
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());
 		model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
 		model.put("mens", "Sala guardada con exito");
-		return new ModelAndView("admin-cargar-sala", model);
+		return new ModelAndView("admin-salas", model);
 	}
 	@RequestMapping(path = "/agregar-pelicula", method = RequestMethod.POST)
 	public ModelAndView agregarNuevoCine( @ModelAttribute("datosPelicula") Pelicula datosPelicula) {
@@ -160,7 +160,7 @@ public class ControladorAdministrador {
 		model.addAttribute("datosPelicula", new Pelicula());
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
 		model.put("mens", "Película guardada con exito");
-		return new ModelAndView("admin-cargar-pelicula", model);
+		return new ModelAndView("admin-peliculas", model);
 	}
 	@RequestMapping(path = "/agregar-funcion", method = RequestMethod.POST)
 	public ModelAndView agregarNuevaFuncion( @ModelAttribute("datosFuncion") DatosFuncion datosFuncion ) {
@@ -193,7 +193,7 @@ public class ControladorAdministrador {
 		model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
 		model.put("mens", "Función guardada con exito");
-		return new ModelAndView("admin-cargar-funcion", model);
+		return new ModelAndView("admin-funciones", model);
 		
 	}
 }

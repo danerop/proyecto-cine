@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="ISO-8859-1">
   <!-- Bootstrap core CSS -->
@@ -12,6 +13,7 @@
   <link href="css/style.css" rel="stylesheet">
   <title>Controles Administrador</title>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container-fluid">
@@ -61,10 +63,10 @@
 
   <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group mr-2" role="group">
-      <a class="btn btn-secondary cargar-cine" href="http://localhost:8080/proyecto-cine/admin-cargar-cine">Cargar Cine</a>
-      <a class="btn btn-secondary cargar-sala" href="http://localhost:8080/proyecto-cine/admin-cargar-sala">Cargar Sala</a>
-      <a class="btn btn-secondary cargar-pelicula" href="http://localhost:8080/proyecto-cine/admin-cargar-pelicula">Cargar Pelicula</a>
-      <a class="btn btn-secondary cargar-funcion" href="http://localhost:8080/proyecto-cine/admin-cargar-funcion">Cargar Función</a>
+      <a class="btn btn-secondary cargar-cine" href="http://localhost:8080/proyecto-cine/admin-cines">Cines</a>
+      <a class="btn btn-secondary cargar-sala" href="http://localhost:8080/proyecto-cine/admin-salas">Salas</a>
+      <a class="btn btn-secondary cargar-pelicula" href="http://localhost:8080/proyecto-cine/admin-peliculas">Peliculas</a>
+      <a class="btn btn-secondary cargar-funcion" href="http://localhost:8080/proyecto-cine/admin-funciones">Funciones</a>
     </div>
   </div>
 

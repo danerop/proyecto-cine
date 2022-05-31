@@ -4,14 +4,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="ISO-8859-1">
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap theme -->
   <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/tabla-butacas.css">
   <title>Controles Administrador</title>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container-fluid">
@@ -61,47 +64,81 @@
 
   <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group mr-2" role="group">
-      <a class="btn btn-secondary cargar-cine" href="http://localhost:8080/proyecto-cine/admin-cargar-cine">Cargar Cine</a>
-      <a class="btn btn-secondary cargar-sala" href="http://localhost:8080/proyecto-cine/admin-cargar-sala">Cargar Sala</a>
-      <a class="btn btn-secondary cargar-pelicula" href="http://localhost:8080/proyecto-cine/admin-cargar-pelicula">Cargar Pelicula</a>
-      <a class="btn btn-secondary cargar-funcion" href="http://localhost:8080/proyecto-cine/admin-cargar-funcion">Cargar Función</a>
+      <a class="btn btn-secondary cargar-cine" href="http://localhost:8080/proyecto-cine/admin-cines">Cines</a>
+      <a class="btn btn-secondary cargar-sala" href="http://localhost:8080/proyecto-cine/admin-salas">Salas</a>
+      <a class="btn btn-secondary cargar-pelicula" href="http://localhost:8080/proyecto-cine/admin-peliculas">Peliculas</a>
+      <a class="btn btn-secondary cargar-funcion" href="http://localhost:8080/proyecto-cine/admin-funciones">Funciones</a>
     </div>
   </div>
 
   <br>
 
   <div class="container formularios bg-light rounded" style="margin-bottom:25px;">
-  
-      <div class="formulario-cargar-cine" style=" padding: 1rem;">
-		
-	  	<c:if test="${not empty mens}">
-  	  		<h5 class="p-3 mb-2 bg-success text-white"> ${mens} </h5>
-  	  	</c:if>
-  
-		<form:form action="agregar-cine" method="POST" modelAttribute="datosCine">
-			<h4>Formulario Para Crear Cine</h4>
-			<hr class="colorgraph"><br>
-			
-			<form:label path="nombreLocal">Nombre Del Local:</form:label>
-			<form:input path="nombreLocal" id="nombreLocal" type="nombreLocal" class="form-control" />
-			<br>
-			<form:label path="direccion">Dirección:</form:label>
-			<form:input path="direccion" id="direccion" type="direccion" class="form-control" />
-			<br>
-			<form:label path="telefono">Telefono:</form:label>
-			<form:input path="telefono" id="telefono" type="telefono" class="form-control" />
-			<br>
-			<form:label path="email">Email:</form:label>
-			<form:input path="email" id="email" type="email" class="form-control" />
-			<br>
-			<form:label path="urlImagenCine">Url de la portada:</form:label>
-			<form:input path="urlImagenCine" type="urlImagenCine" id="urlImagenCine" class="form-control"/>     		  
-			<br>
-			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Cargar Cine</button>
-		</form:form>
-		
-      </div>
-      
+
+    <div class="formulario-cargar-sala" style="padding: 1rem;">
+
+      <c:if test="${not empty mens}">
+        <h5 class="p-3 mb-2 bg-success text-white"> ${mens} </h5>
+      </c:if>
+
+      <form:form action="agregar-sala" method="POST" modelAttribute="datosSala">
+        <h4>Formulario Para Crear Sala</h4>
+        <hr class="colorgraph"><br>
+
+        <form:label path="idCine">Seleccione el cine:</form:label>
+        <form:select path="idCine" class="form-control">
+          <c:forEach items="${listaCines}" var="cine">
+            <form:option value="${cine.getId()}" label="id: ${cine.getId()} nombre: ${cine.getNombreLocal()}" />
+          </c:forEach>
+        </form:select>
+        <br>
+        <form:label path="tipo">Seleccione el tipo de Sala:</form:label>
+        <form:select path="tipo" class="form-control">
+          <form:option value="1" label="Comun" />
+          <form:option value="2" label="Sala3D" />
+          <form:option value="3" label="Sala4D" />
+          <form:option value="4" label="GoldenClass" />
+        </form:select>
+        <div>
+          <br>
+          Butacas: <br>
+          <button type="button" class="btn btn-lg btn-primary p-3" disabled></button> Butaca disponible
+
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>&nbsp;</td>
+                <c:forEach var="h" begin="1" end="32">
+                  <td class="text-center">${h}</td>
+                </c:forEach>
+              </tr>
+
+              <c:forEach var="fil" begin="1" end="16">
+                <tr>
+                  <td class="align-middle">${fil}</td>
+                  <c:forEach var="col" begin="1" end="32">
+                    <td>
+                      <input type="checkbox" class="btn-check position-fixed" name="butacas"
+                        id="btncheck${col+(32*(fil-1))}" autocomplete="off" value="${col+(32*(fil-1))}">
+                      <form:label class="btn btn-outline-primary p-4" for="btncheck${col+(32*(fil-1))}" path="butacas">
+                        &nbsp;&nbsp;&nbsp;</form:label>
+                    </td>
+                  </c:forEach>
+                </tr>
+              </c:forEach>
+
+            </tbody>
+
+          </table>
+        </div>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" Type="Submit" />Cargar Sala</button>
+      </form:form>
+
+    </div>
+
   </div>
 
 
