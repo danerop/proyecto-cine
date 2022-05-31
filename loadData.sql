@@ -11,15 +11,15 @@ VALUES("Sonic 2", 2022, "descripcion", 150, "img/pelicula/sonic2.jpg"),
       ("La ciudad perdida", 2022, "descripcion", 150, "img/pelicula/ciudadperdida.jpg"),
       ("Llamas de venganza", 2022, "descripcion", 150, "img/pelicula/llamas.jpg");
 
-INSERT INTO rol(id, nombre, descripcion)
-values (1, "admin", "Usuario con gestion de rol"),
-	   (2, "usuario", "Usuario"),
-	   (3, "recepcionista", "Usuario que puede recibir boletos");
+INSERT INTO suscripcion(id, tipo, descuentoEnBoletos, cantidadBoletosGratis, cuota)
+VALUES (1, "comun", 0, 0, 0),
+	   (2, "gold", 25.0, 2, 990.0),
+	   (3, "premium", 50.0, 4, 1250.0);
 
-INSERT INTO usuario(id, activo, email, password, urlImagenUsuario, rol_id)
-values (1, true, "elian@gmail.com", "1234", "img", 1),
-       (2, true, "hector@gmail.com", "1234", "img", 2),
-       (3, true, "braian@gmail.com", "1234", "img", 3);
+INSERT INTO usuario(id, activo, email, password, rol, urlImagenUsuario, suscripcion_id)
+values (1, true, "elian@gmail.com", "1234", "admin", "img", 3),
+       (2, true, "hector@gmail.com", "1234", "usuario", "img", 2),
+       (3, true, "braian@gmail.com", "1234", "admin", "img", 1);
 
 INSERT INTO cine(id, direccion, email, nombreLocal, telefono, urlImagenCine)
 VALUES(1, "cine sonic", "email","CINE NOW","telefono", "url de la imagen"),
@@ -42,10 +42,14 @@ VALUES (1, 50, 1, 1, 1, "2022-05-13", "23:00"),
        (3, 100, 1, 2, 2, "2022-05-19", "20:00");
 
 select * from pelicula;
+select * from suscripcion;
+select * from usuario;
 select * from funcion;
 select * from sala;
 select * from cine;
-select * from usuario;
 select * from boleto;
 select * from rol;
 
+select * from Usuario usuario
+join Suscripcion suscripcion on usuario.suscripcion_id = suscripcion.id
+where suscripcion.tipo = 'gold'; 

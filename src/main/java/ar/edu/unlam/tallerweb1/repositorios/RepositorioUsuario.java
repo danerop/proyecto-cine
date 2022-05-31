@@ -1,9 +1,9 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
-import ar.edu.unlam.tallerweb1.modelo.Rol;
+import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
-import java.util.List;
+import org.hibernate.SessionFactory;
 
 // Interface que define los metodos del Repositorio de Usuarios.
 public interface RepositorioUsuario {
@@ -13,9 +13,11 @@ public interface RepositorioUsuario {
     Usuario buscar(String email);
 	void modificar(Usuario usuario);
 	Usuario buscarUsuarioPorId(Long id);
-	Usuario buscarUsuarioPorRol(String rol);
+	Usuario buscarUsuarioPorRol(Usuario usuario);
 	Usuario consultarUsuario(Usuario usuario);
 	Long insertarUsuario(Usuario usuario);
-	Usuario buscarUsuarioPorRolEmail(String rol, String email);
-	
+	Usuario buscarPorSuscripcion(String tipoSuscripcion);	
+	Usuario buscarUsuarioPorSuscripcionID(Long idSuscripcion);
+	void setSessionFactory(SessionFactory sessionFactory);
+	SessionFactory getSessionFactory();
 }

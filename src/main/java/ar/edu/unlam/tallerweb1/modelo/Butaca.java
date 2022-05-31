@@ -44,6 +44,41 @@ public class Butaca {
 		this.nroUbicacion = nroUbicacion;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((ocupada == null) ? 0 : ocupada.hashCode());
+		result = prime * result + ((sala == null) ? 0 : sala.hashCode());
+		return result;
+	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Butaca other = (Butaca) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (ocupada == null) {
+			if (other.ocupada != null)
+				return false;
+		} else if (!ocupada.equals(other.ocupada))
+			return false;
+		if (sala == null) {
+			if (other.sala != null)
+				return false;
+		} else if (!sala.equals(other.sala))
+			return false;
+		return true;
+	}
 	
 }

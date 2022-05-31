@@ -47,10 +47,9 @@ public class ControladorHome {
 		ModelMap model = new ModelMap();
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		
-		
 		if(user != null) {
 			model.put("usuario", servicioUsuario.consultarUsuario(user));
-			model.put("rol", servicioUsuario.consultarUsuarioPorRolEmail(user.getRol().getNombre(), user.getEmail()));
+			model.put("rol", servicioUsuario.consultarUsuarioPorRol(user));
 			model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
 			return new ModelAndView("inicio", model);
 		}
@@ -58,11 +57,11 @@ public class ControladorHome {
 		return new ModelAndView("inicio", model);
 	}
 	
-	@RequestMapping(path = "/peliculas", method = RequestMethod.GET)
+	/*@RequestMapping(path = "/peliculas", method = RequestMethod.GET)
 	public ModelAndView pelicula(){
 		
 		return new ModelAndView("peliculas");
 	
-	}
+	}*/
 	
 }

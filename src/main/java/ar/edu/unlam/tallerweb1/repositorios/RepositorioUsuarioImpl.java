@@ -1,7 +1,10 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
-import ar.edu.unlam.tallerweb1.modelo.Rol;
+import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+
+import javax.inject.Inject;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -16,12 +19,13 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
 	// Maneja acciones de persistencia, normalmente estara inyectado el session factory de hibernate
 	// el mismo esta difinido en el archivo hibernateContext.xml
+	@Inject
 	private SessionFactory sessionFactory;
 
-    @Autowired
+   /* @Autowired
 	public RepositorioUsuarioImpl(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;
-	}
+	}*/
 
 	@Override
 	public Usuario buscarUsuario(String email, String password) {
@@ -55,18 +59,8 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
 	@Override
 	public Usuario buscarUsuarioPorId(Long id) {
-		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
-				.add(Restrictions.eq("id", id))
-				.uniqueResult();
-	}
-
-	@Override
-	public Usuario buscarUsuarioPorRolEmail(String rol, String email) {
-		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
-				.add(Restrictions.eq("email", email))
-				.createAlias("rol", "rol")
-				.add(Restrictions.eq("rol.nombre", rol))
-				.uniqueResult();
+		Session session = sessionFactory.getCurrentSession();
+		return (Usuario) session.get(Usuario.class, id);
 	}
 	
 	@Override
@@ -85,10 +79,37 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	}
 
 	@Override
-	public Usuario buscarUsuarioPorRol(String rol) {
+	public Usuario buscarUsuarioPorRol(Usuario usuario) {
 		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
-				.createAlias("rol", "rol")
-				.add(Restrictions.eq("rol.nombre", rol))
+				.add(Restrictions.eq("id", usuario.getId()))
+				.add(Restrictions.eq("rol", usuario.getRol()))
 				.uniqueResult();
 	}
+
+	@Override
+	public Usuario buscarPorSuscripcion(String tipoSuscripcion) {
+		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
+				.createAlias("suscripcion", "suscripcionBuscada")
+				.add(Restrictions.eq("suscripcionBuscada.tipo", tipoSuscripcion))
+				.uniqueResult();
+	}
+
+	@Override
+	public SessionFactory getSessionFactory() {
+		return this.sessionFactory;
+	}
+
+	@Override
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		 this.sessionFactory = sessionFactory;
+	}
+
+	@Override
+	public Usuario buscarUsuarioPorSuscripcionID(Long idSuscripcion) {
+		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
+				.createAlias("suscripcion", "suscripcionBuscada")
+				.add(Restrictions.eq("suscripcionBuscada.id", idSuscripcion))
+				.uniqueResult();
+	}
+	
 }

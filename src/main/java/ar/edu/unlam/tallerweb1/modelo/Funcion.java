@@ -88,5 +88,78 @@ public class Funcion {
 	public void setEntradasDisponibles(Integer entradasDisponibles) {
 		this.entradasDisponibles = entradasDisponibles;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cine == null) ? 0 : cine.hashCode());
+		result = prime * result + ((entradasDisponibles == null) ? 0 : entradasDisponibles.hashCode());
+		result = prime * result + ((fechaHora == null) ? 0 : fechaHora.hashCode());
+		result = prime * result + ((hora == null) ? 0 : hora.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((pelicula == null) ? 0 : pelicula.hashCode());
+		result = prime * result + ((precioMayor == null) ? 0 : precioMayor.hashCode());
+		result = prime * result + ((precioMenor == null) ? 0 : precioMenor.hashCode());
+		result = prime * result + ((sala == null) ? 0 : sala.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Funcion other = (Funcion) obj;
+		if (cine == null) {
+			if (other.cine != null)
+				return false;
+		} else if (!cine.equals(other.cine))
+			return false;
+		if (entradasDisponibles == null) {
+			if (other.entradasDisponibles != null)
+				return false;
+		} else if (!entradasDisponibles.equals(other.entradasDisponibles))
+			return false;
+		if (fechaHora == null) {
+			if (other.fechaHora != null)
+				return false;
+		} else if (!fechaHora.equals(other.fechaHora))
+			return false;
+		if (hora == null) {
+			if (other.hora != null)
+				return false;
+		} else if (!hora.equals(other.hora))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (pelicula == null) {
+			if (other.pelicula != null)
+				return false;
+		} else if (!pelicula.equals(other.pelicula))
+			return false;
+		if (precioMayor == null) {
+			if (other.precioMayor != null)
+				return false;
+		} else if (!precioMayor.equals(other.precioMayor))
+			return false;
+		if (precioMenor == null) {
+			if (other.precioMenor != null)
+				return false;
+		} else if (!precioMenor.equals(other.precioMenor))
+			return false;
+		if (sala == null) {
+			if (other.sala != null)
+				return false;
+		} else if (!sala.equals(other.sala))
+			return false;
+		return true;
+	}
 	
 }

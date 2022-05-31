@@ -7,9 +7,8 @@ public interface ServicioLogin {
 
 	Usuario buscarUsuario(String email, String password);
 	Usuario consultarUsuarioPorId(Long id);
-	Usuario consultarUsuarioPorRol(String rol);
+	Usuario consultarUsuarioPorRol(Usuario usuario);
 	Usuario consultarUsuario(Usuario usuario);
 	Long insertarUsuario(Usuario usuario);
-	Usuario consultarUsuarioPorRolEmail(String rol, String email);
-	
+	Usuario consultarUsuarioPorSuscripcion (Long idSuscripcion);
 }

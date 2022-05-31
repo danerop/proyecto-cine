@@ -1,0 +1,26 @@
+@charset "ISO-8859-1";
+
+.card1:hover {
+      background:#ffff80;
+      border:1px solid black;
+    }
+
+.card1:hover .list-group-item{
+  background:#ffff80;
+}
+
+
+.card3:hover {
+  background:#ff8080;
+  border:1px solid black;
+}
+
+.card3:hover .list-group-item{
+  background:#ff8080;
+}
+
+
+.card:hover .btn-outline-dark{
+  color:white;
+  background:#212529;
+}

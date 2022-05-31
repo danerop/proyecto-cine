@@ -60,5 +60,59 @@ public class Cine {
 	public void setUrlImagenCine (String urlImagenCine) {
 		this.urlImagenCine = urlImagenCine;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nombreLocal == null) ? 0 : nombreLocal.hashCode());
+		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
+		result = prime * result + ((urlImagenCine == null) ? 0 : urlImagenCine.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cine other = (Cine) obj;
+		if (direccion == null) {
+			if (other.direccion != null)
+				return false;
+		} else if (!direccion.equals(other.direccion))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (nombreLocal == null) {
+			if (other.nombreLocal != null)
+				return false;
+		} else if (!nombreLocal.equals(other.nombreLocal))
+			return false;
+		if (telefono == null) {
+			if (other.telefono != null)
+				return false;
+		} else if (!telefono.equals(other.telefono))
+			return false;
+		if (urlImagenCine == null) {
+			if (other.urlImagenCine != null)
+				return false;
+		} else if (!urlImagenCine.equals(other.urlImagenCine))
+			return false;
+		return true;
+	}
 }
