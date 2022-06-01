@@ -49,12 +49,12 @@
                                                     <table class="invoice-items" cellpadding="0" cellspacing="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td>Suscripcion: ${usuarioSuscripto.getSuscripcion().getTipo().toUpperCase()}</td>
-                                                            <td class="alignright">${usuarioSuscripto.getSuscripcion().getCuota()}</td>
+                                                            <td>Suscripcion: ${usuarioSuscripto.getSuscripcion().getDetalleSuscripcion().getTipo().toUpperCase()}</td>
+                                                            <td class="alignright">${usuarioSuscripto.getSuscripcion().getDetalleSuscripcion().getCuota()}</td>
                                                         </tr>
                                                         <tr class="total">
                                                             <td class="alignright" width="80%">Total</td>
-                                                            <td class="alignright">${usuarioSuscripto.getSuscripcion().getCuota()}</td>
+                                                            <td class="alignright">${usuarioSuscripto.getSuscripcion().getDetalleSuscripcion().getCuota()}</td>
                                                         </tr>
                                                     </tbody></table>
                                                 </td>

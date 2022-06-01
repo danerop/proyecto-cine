@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.DetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSuscripcion;
 
@@ -23,11 +25,13 @@ public class ControladorSuscripcion {
 
 	private ServicioSuscripcion servicioSuscripcion;
 	private ServicioLogin servicioUsuario;
+	private ServicioDetalleSuscripcion servicioDetalleSuscripcion;
 
 	@Autowired
-	public ControladorSuscripcion(ServicioSuscripcion servicioSuscripcion, ServicioLogin servicioUsuario) {
+	public ControladorSuscripcion(ServicioSuscripcion servicioSuscripcion, ServicioLogin servicioUsuario, ServicioDetalleSuscripcion servicioDetalleSuscripcion) {
 		this.servicioSuscripcion = servicioSuscripcion;
 		this.servicioUsuario = servicioUsuario;
+		this.servicioDetalleSuscripcion = servicioDetalleSuscripcion;
 	}
 
 	@RequestMapping(path = "/suscripcion", method = RequestMethod.GET)
@@ -35,34 +39,27 @@ public class ControladorSuscripcion {
 		
 		ModelMap model = new ModelMap();
 		
-		model.put("listaDeSuscripciones", servicioSuscripcion.obtenerTodasLasSuscripciones());
+		model.put("listaDeDetallesSuscripciones", servicioDetalleSuscripcion.obtenerTodasLasSuscripciones());
 
 		return new ModelAndView("suscripcion", model);
 	}
 
 	@RequestMapping(path = "/pago-suscripcion", method = RequestMethod.GET)
-	public ModelAndView suscripcionElegida(@ModelAttribute("datosSuscripcion") DatosSuscripcion datosSuscripcion,
-										   HttpServletRequest request, 
-										   @RequestParam(value = "s") Long idSuscripcion,
-										   @RequestParam(value = "u") Long idUsuario)
+	public ModelAndView suscripcionElegida(HttpServletRequest request,
+										   @RequestParam(value = "d") Long idDetalleSuscripcion)
 										   {
-
+		
 		ModelMap model = new ModelMap();
-		/*Usuario usuario = servicioUsuario.consultarUsuarioPorId(idUsuario);*/
 		Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
-	
-		/*Suscripcion sub = servicioSuscripcion.obtenerSuscripcionPorId(idSuscripcion);
-		Suscripcion suscripcion = new Suscripcion();*/
+		
+		DatosSuscripcion ds = new DatosSuscripcion();
+		ds.setIdDetalleSuscripcion(idDetalleSuscripcion);
 		
 		if (usuarioSesion != null) {
-				model.put("datosSuscripcion", datosSuscripcion);
-				model.put("s", idSuscripcion);
-				model.put("u", idUsuario);
-				model.put("servicioElegido", servicioSuscripcion.obtenerSuscripcionPorId(idSuscripcion));
-				/*modelo.put("s", idSuscripcion);
-				modelo.put("suscripcion", idSuscripcion);
-				usuarioSesion.setSuscripcion(sub);
-				usuario.setSuscripcion(sub);*/
+				model.addAttribute("datosSuscripcion", ds);
+				model.put("d", idDetalleSuscripcion);
+				model.put("servicioElegido", servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(idDetalleSuscripcion));
+
 				return new ModelAndView("pago-suscripcion", model);
 		}
 			return new ModelAndView("redirect:/login", model);
@@ -71,22 +68,20 @@ public class ControladorSuscripcion {
 
 	@RequestMapping(path = "/procesarSuscripcion", method = RequestMethod.POST)
 	public ModelAndView reciboSuscripcion(@ModelAttribute("datosSuscripcion") DatosSuscripcion datosSuscripcion,
-										   HttpServletRequest request, 
-										   @RequestParam(value = "s") Long idSuscripcion,
-										   @RequestParam(value = "u") Long idUsuario){
+										   HttpServletRequest request){
 				
-				Usuario usuarioSuscripto = servicioUsuario.consultarUsuarioPorId(idUsuario);
-				Suscripcion sub = servicioSuscripcion.obtenerSuscripcionPorId(idSuscripcion);
+				Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
+				Suscripcion s = usuarioSesion.getSuscripcion();
+				DetalleSuscripcion ds = servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(datosSuscripcion.getIdDetalleSuscripcion());
 				
-				usuarioSuscripto.setSuscripcion(sub);
-				servicioUsuario.actualizarUsuario(usuarioSuscripto);
+				s.setCantidadDeBoletosUsados(ds.getCantidadBoletosGratis());
+				s.setDetalleSuscripcion(ds);
+				servicioSuscripcion.modificarSuscripcion(s);
 				
 				ModelMap model = new ModelMap();
 				model.put("datosSuscripcion", datosSuscripcion);
-				model.put("s", idSuscripcion);
-				model.put("u", idUsuario);
-				model.put("usuarioSuscripto", usuarioSuscripto);
-		
+				model.put("usuarioSuscripto", usuarioSesion);
+
 				return new ModelAndView("validar-suscripcion", model);
 	}				
 }

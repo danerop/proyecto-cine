@@ -2,20 +2,12 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 public class DatosSuscripcion {
 
-	private Long idSuscripcion;
-	private Long idUsuario;
-	
-	public Long getIdSuscripcion() {
-		return idSuscripcion;
+	private Long idDetalleSuscripcion;
+
+	public Long getIdDetalleSuscripcion() {
+		return idDetalleSuscripcion;
 	}
-	public void setIdSuscripcion(Long idSuscripcion) {
-		this.idSuscripcion = idSuscripcion;
+	public void setIdDetalleSuscripcion(Long idDetalleSuscripcion) {
+		this.idDetalleSuscripcion = idDetalleSuscripcion;
 	}
-	public Long getIdUsuario() {
-		return idUsuario;
-	}
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-	
 }

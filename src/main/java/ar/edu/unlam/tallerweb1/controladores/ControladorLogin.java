@@ -1,8 +1,12 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import ar.edu.unlam.tallerweb1.modelo.DetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioSuscripcion;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,10 +31,14 @@ public class ControladorLogin {
 	// paquete de los indicados en
 	// applicationContext.xml
 	private ServicioLogin servicioLogin;
+	private ServicioSuscripcion servicioSuscripcion;
+	private ServicioDetalleSuscripcion servicioDetalleSuscripcion;
 
 	@Autowired
-	public ControladorLogin(ServicioLogin servicioLogin) {
+	public ControladorLogin(ServicioLogin servicioLogin, ServicioSuscripcion servicioSuscripcion, ServicioDetalleSuscripcion servicioDetalleSuscripcion) {
 		this.servicioLogin = servicioLogin;
+		this.servicioSuscripcion = servicioSuscripcion;
+		this.servicioDetalleSuscripcion = servicioDetalleSuscripcion;
 	}
 
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es
@@ -59,6 +67,7 @@ public class ControladorLogin {
 	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
+		
 		if (usuarioBuscado != null) {
 //			switch (usuarioBuscado.getRol().getId()) {
 //			case 1:
@@ -73,7 +82,8 @@ public class ControladorLogin {
 //			default:
 //				break;
 //			}
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol().getNombre());
+			
+			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 			request.getSession().setAttribute("usuario", usuarioBuscado);
 			model.put("sesion", request.getAttribute("usuario"));
 			model.put("sesionRol", request.getAttribute("ROL"));
@@ -100,16 +110,21 @@ public class ControladorLogin {
 		// validar password con repassword
 		ModelMap modelo = new ModelMap();
 		Suscripcion s = new Suscripcion();
+		DetalleSuscripcion detalle = servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(1L);
 		
 		if (servicioLogin.consultarUsuario(usuario) == null) {
 			if (usuario.getPassword().equals(repassword)) {
 				// guardo en la base
-				s.setId(1L);
+				s.setDetalleSuscripcion(detalle);
+				
+				servicioSuscripcion.guardarSuscripcion(s);
+		
+				usuario.setSuscripcion(s);
 				usuario.setActivo(true);
 				usuario.setRol("usuario");
-				usuario.setSuscripcion(s);
+
 				servicioLogin.insertarUsuario(usuario);
-				modelo.put("correcto", "�Usuario registrado correctamente! " + usuario.getEmail());
+				modelo.put("correcto", "Usuario registrado correctamente " + usuario.getEmail());
 			} else {
 				modelo.put("error", "Las contrase�as no coinciden");
 				return new ModelAndView("registro-usuario", modelo);

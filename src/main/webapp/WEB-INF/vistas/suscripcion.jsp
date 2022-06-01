@@ -48,19 +48,19 @@
 	<div class="container-fluid">
      <div class="container p-5">
       <div class="row justify-content-evenly">  
-      <c:forEach items="${listaDeSuscripciones}" var="suscripcion" varStatus="sub" begin="1">
+      <c:forEach items="${listaDeDetallesSuscripciones}" var="suscripcion" varStatus="sub" begin="1">
       
       	<c:choose>
 	     <c:when test="${suscripcion.tipo == 'gold'}">
 	         <div class="col-lg-4 col-md-12 mb-4">
 	          <div class="card card1 h-100">
 	            <div class="card-body">
-	              <h2 class="card-title">${suscripcion.tipo}</h2>	<!-- ${listaDeSuscripciones[sub.index].tipo}  -->
+	              <h2 class="card-title">${suscripcion.tipo.toUpperCase()}</h2>	<!-- ${listaDeSuscripciones[sub.index].tipo}  -->
 	              <br>
 	              <span class="h2">$${suscripcion.cuota}</span>/mes
 	              <br><br>
 	              <div class="d-grid my-3">
-              		<a href="pago-suscripcion?s=${suscripcion.id}&u=${usuario.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a>
+              		<a href="pago-suscripcion?d=${suscripcion.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a>
 	              </div>
 	              <ul>
 	                <li>¡${suscripcion.cantidadBoletosGratis} entradas mensuales gratis!</li>
@@ -75,12 +75,12 @@
 	        <div class="col-lg-4 col-md-12 mb-4">
 	          <div class="card card3 h-100">
 	            <div class="card-body">
-	              <h2 class="card-title">${suscripcion.tipo}</h2>
+	              <h2 class="card-title">${suscripcion.tipo.toUpperCase()}</h2>
 	              <br>
 	              <span class="h2">$${suscripcion.cuota}</span>/mes
 	              <br><br>
 	              <div class="d-grid my-3">
-	              	<a href="pago-suscripcion?s=${suscripcion.id}&u=${usuario.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a>
+	              	<a href="pago-suscripcion?d=${suscripcion.id}" class="btn btn-outline-dark btn-block" role="button">Seleccionar</a>
 	              </div>
 	              <ul>
 	                <li>¡${suscripcion.cantidadBoletosGratis} entradas mensuales gratis!</li>

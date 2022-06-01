@@ -49,12 +49,10 @@
   <main>
 	<div class="wrapper">
 		<h4 class="text-uppercase">Detalles del pago</h4>
-		<form:form class="form mt-4" action="procesarSuscripcion?s=${s}&u=${u}" method="POST" modelAttribute="datosSuscripcion">
+		<form:form class="form mt-4" action="procesarSuscripcion?d=${d}" method="POST" modelAttribute="datosSuscripcion">
 		
-		<input type="hidden" value="${datosSuscripcion.getIdUsuario()}" id="tempidusuario" name="idUsuario" path="idUsuario">
-       	<form:label for="tempidusuario" path="idUsuario"></form:label>
-       	<input type="hidden" value="${datosSuscripcion.getIdSuscripcion()}" id="tempidsuscripcion" name="idSuscripcion" path="idSuscripcion">
-       	<form:label for="tempidsuscripcion" path="idSuscripcion"></form:label>
+   		<input type="hidden" value="${datosSuscripcion.getIdDetalleSuscripcion()}" id="tempiddetallesuscripcion" name="idDetalleSuscripcion" path="idDetalleSuscripcion">
+       	<form:label for="tempiddetallesuscripcion" path="idDetalleSuscripcion"></form:label>
        	
 			<div class="form-group">
 				<label for="name" class="text-uppercase">Nombre del titular</label>
@@ -102,10 +100,10 @@
 			</div>
 			<div class="my-3">
 				<!-- <input type="submit" class="text-uppercase btn btn-primary btn-block p-3" value="Suscribirse ${servicioElegido.tipo}"> -->
-				<form:button type="button submit" class="text-uppercase btn btn-primary btn-block p-3">Suscribirse ${servicioElegido.tipo}</form:button> 
+				<form:button type="button submit" class="text-uppercase btn btn-primary btn-block p-3">Suscribirse ${servicioElegido.getTipo()}</form:button> 
 			</div>
 			<div class="py-sm-2 total">
-				<p>TOTAL: ${servicioElegido.cuota} </p>
+				<p>TOTAL: ${servicioElegido.getCuota()} </p>
 			</div>
 			<div id="form-footer">
 				<p>Al realizar su pedido, usted acepta nuestro</p>
