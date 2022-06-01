@@ -73,6 +73,42 @@
 
   <br>
 
+  <div class="container">
+  	<h4 class="text-white">Lista de Salas</h5>
+    <div class="row">
+      <div class="col-4">
+        <!-- Acá estará la lista de los elementos registrados -->
+        <div class="list-group" id="list-tab" role="tablist">
+          <c:forEach items="${listaSalas}" var="sala">
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-sala${sala.getId()}" role="tab">Sala id ${sala.getId()} del cine: ${sala.getCine().getNombreLocal()}</a>  
+          </c:forEach>
+        </div>
+      </div>
+      <div class="col-8">
+        <!-- Acá va a aparecer el detalle -->
+        <div class="tab-content">
+          <c:forEach items="${listaSalas}" var="sala">
+            <div class="tab-pane fade p-3 mb-2 bg-white rounded" id="list-sala${sala.getId()}" role="tabpanel">
+              <div class="row">
+                <div class="col-8">
+                  <span style="font-size: small; font-weight: lighter;">Sala id:${sala.getId()}</span>
+                  <span style="font-size: large; font-weight: bold;">Pertenece a ${sala.getCine().getNombreLocal()}</span>
+                  <p>
+                    Tipo de sala: ${sala.getTipo()}
+                  </p>
+                </div>
+                <div class="col-4">
+                </div>
+              </div>
+            </div>
+          </c:forEach>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
   <div class="container formularios bg-light rounded" style="margin-bottom:25px;">
 
     <div class="formulario-cargar-sala" style="padding: 1rem;">

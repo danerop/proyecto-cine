@@ -90,6 +90,7 @@ public class ControladorAdministrador {
 		modelo.put("listaCines", servicioCine.obtenerTodosLosCines());
 		modelo.put("listaSalas", servicioSala.obtenerTodasLasSalas());
 		modelo.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+		modelo.put("listaFunciones", servicioFuncion.obtenerTodasLasFunciones());
 		
 		return new ModelAndView("admin-funciones", modelo);
 	}
@@ -192,6 +193,7 @@ public class ControladorAdministrador {
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());
 		model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+		model.put("listaFunciones", servicioFuncion.obtenerTodasLasFunciones());
 		model.put("mens", "Función guardada con exito");
 		return new ModelAndView("admin-funciones", model);
 		

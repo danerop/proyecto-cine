@@ -72,6 +72,49 @@
 
   <br>
 
+  <div class="container">
+  	<h4 class="text-white">Lista de Funciones</h5>
+    <div class="row">
+      <div class="col-4">
+        <!-- Acá estará la lista de los elementos registrados -->
+        <div class="list-group" id="list-tab" role="tablist">
+          <c:forEach items="${listaFunciones}" var="funcion">
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-funcion${funcion.getId()}" role="tab">${funcion.getCine().getNombreLocal()} - ${funcion.getPelicula().getNombre()}</a>  
+          </c:forEach>
+        </div>
+      </div>
+      <div class="col-8">
+        <!-- Acá va a aparecer el detalle -->
+        <div class="tab-content">
+          <c:forEach items="${listaFunciones}" var="funcion">
+            <div class="tab-pane fade p-3 mb-2 bg-white rounded" id="list-funcion${funcion.getId()}" role="tabpanel">
+              <div class="row">
+                <div class="col-8">
+                  <span style="font-size: small; font-weight: lighter;">id:${funcion.getId()}</span>
+                  <span style="font-size: large; font-weight: bold;">${funcion.getCine().getNombreLocal()}</span>
+                  <br>
+                  <p>
+                    Cine: ${funcion.getCine().getNombreLocal()} <br>
+                    Pelicula: ${funcion.getPelicula().getNombre()} <br>
+                    Día: ${funcion.getFechaHora()} <br>
+                    Hora: ${funcion.getHora()} <br>
+                    Precio Adulto: ${funcion.getPrecioMayor()} <br>
+                    Precio Menor: ${funcion.getPrecioMenor()} <br>
+                  </p>
+                </div>
+                <div class="col-4">
+                  <img class="img-fluid" src="${funcion.getPelicula().getUrlImagenPelicula()}" alt="imagen de pelicula">
+                </div>
+              </div>
+            </div>
+          </c:forEach>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <br>
+
   <div class="container formularios bg-light rounded" style="margin-bottom:25px;">
 
     <div class="formulario-cargar-funcion" style="padding: 1rem;">
@@ -136,6 +179,13 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+  </script>
+  <script src="js/jquery.min.js"></script>
+  <script>
+  	$('#list-tab a').on('click', function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+	})
   </script>
 </body>
 
