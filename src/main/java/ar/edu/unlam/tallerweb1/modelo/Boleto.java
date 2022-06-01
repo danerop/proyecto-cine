@@ -35,7 +35,7 @@ public class Boleto {
 	
 	private Float precio;
 
-
+	private Boolean usado=false;
 
 	
 	
@@ -122,6 +122,12 @@ public class Boleto {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	public Boolean getUsado() {
+		return usado;
+	}
+	public void setUsado(Boolean usado) {
+		this.usado = usado;
 	}
 	
 }

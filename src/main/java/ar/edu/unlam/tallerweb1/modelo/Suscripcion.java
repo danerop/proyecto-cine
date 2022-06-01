@@ -69,7 +69,6 @@ public class Suscripcion {
 		result = prime * result + ((descuentoEnBoletos == null) ? 0 : descuentoEnBoletos.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
 	}
 	@Override

@@ -68,13 +68,16 @@
 
   <main>
   
- <div class="alert alert-success d-flex align-items-center alert-dismissible" role="alert">
+  <c:if test="${nuevacompra!=null}">
+   <div class="alert alert-success d-flex align-items-center alert-dismissible" role="alert">
   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
   <div>
     Gracias por su compra!
   </div>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+  </c:if>
+
     
     
     <div class="container-fluid contenedorpago">
@@ -92,7 +95,7 @@
 				<button class="btn btn-primary mx-auto d-block">Imprimir</button>
 			</div>
 			<div class="col-6">
-				<img class="img-responsive w-50 mx-auto d-block" alt="codigoqr" src="./img/qr.jpg">
+				<img class="img-responsive w-50 mx-auto d-block" alt="codigoqr" src="./img/boletoqr/boleto${boletoGenerado.getId()}.jpg">
 				<br>
 				<h6 class="text-center">¡Mostrá esté código qr para entrar a la sala!</h6>
 			</div>

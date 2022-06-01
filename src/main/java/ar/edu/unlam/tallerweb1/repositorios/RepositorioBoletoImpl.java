@@ -30,4 +30,14 @@ public class RepositorioBoletoImpl implements RepositorioBoleto{
 				.add(Restrictions.eq("id",id))
 				.uniqueResult();
 	}
+
+	@Override
+	public Boleto buscarBoletUnicoPorDatos(Long idcliente, Long idfuncion, Long idbutaca) {
+		return (Boleto) sessionFactory.getCurrentSession().createCriteria(Boleto.class)
+				.add(Restrictions.eq("cliente.id",idcliente))
+				.add(Restrictions.eq("funcion.id",idfuncion))
+				.add(Restrictions.eq("butaca.id",idbutaca))
+				.uniqueResult();
+	}
+	
 }

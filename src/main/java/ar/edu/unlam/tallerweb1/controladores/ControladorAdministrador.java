@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.Butaca;
 import ar.edu.unlam.tallerweb1.modelo.Cine;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeSala;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
+import ar.edu.unlam.tallerweb1.servicios.ServicioButacaFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
@@ -31,15 +34,17 @@ public class ControladorAdministrador {
 	private ServicioLogin servicioUsuario;
 	private ServicioFuncion servicioFuncion;
 	private ServicioButaca servicioButaca;
+	private ServicioButacaFuncion servicioButacaFuncion;
 	
 	@Autowired
-	public ControladorAdministrador(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala, ServicioLogin servicioUsuario, ServicioFuncion servicioFuncion, ServicioButaca servicioButaca){
+	public ControladorAdministrador(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala, ServicioLogin servicioUsuario, ServicioFuncion servicioFuncion, ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion){
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine = servicioCine;
 		this.servicioSala = servicioSala;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioFuncion = servicioFuncion;
 		this.servicioButaca=servicioButaca;
+		this.servicioButacaFuncion=servicioButacaFuncion;
 	}
 	
 	@RequestMapping( path = "/admin", method = RequestMethod.GET)
@@ -187,6 +192,8 @@ public class ControladorAdministrador {
 		nuevaFuncion.setEntradasDisponibles(servicioButaca.cantidadDeButacasEnSala(salaSeleccionada.getId()));
 		
 		servicioFuncion.guardarFuncion(nuevaFuncion);
+		List<Butaca> butacas=servicioButaca.obtenerButacasPorSala(salaSeleccionada.getId());
+		servicioButacaFuncion.asociarButacasAFuncion(nuevaFuncion, butacas);
 		
 		model.addAttribute("datosFuncion", datosFuncion);
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());

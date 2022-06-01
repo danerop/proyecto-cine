@@ -12,7 +12,6 @@ public class Butaca {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Boolean ocupada = false;
 	private Integer nroUbicacion;
 	
 	@ManyToOne
@@ -31,12 +30,6 @@ public class Butaca {
 	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
-	public Boolean getOcupada() {
-		return ocupada;
-	}
-	public void setOcupada(Boolean ocupada) {
-		this.ocupada = ocupada;
-	}
 	public Integer getNroUbicacion() {
 		return nroUbicacion;
 	}
@@ -49,7 +42,6 @@ public class Butaca {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((ocupada == null) ? 0 : ocupada.hashCode());
 		result = prime * result + ((sala == null) ? 0 : sala.hashCode());
 		return result;
 	}
@@ -67,11 +59,6 @@ public class Butaca {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (ocupada == null) {
-			if (other.ocupada != null)
-				return false;
-		} else if (!ocupada.equals(other.ocupada))
 			return false;
 		if (sala == null) {
 			if (other.sala != null)

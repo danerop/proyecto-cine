@@ -2,6 +2,8 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.text.ParseException;
 
@@ -27,12 +29,14 @@ import com.google.zxing.common.BitMatrix;
 
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Butaca;
+import ar.edu.unlam.tallerweb1.modelo.ButacaFuncion;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
 
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBoleto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
+import ar.edu.unlam.tallerweb1.servicios.ServicioButacaFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
@@ -48,17 +52,19 @@ public class ControladorCompraBoleto {
 	private ServicioPelicula servicioPelicula;
 	private ServicioSala servicioSala;
 	private ServicioButaca servicioButaca;
+	private ServicioButacaFuncion servicioButacaFuncion;
 
 	@Autowired
 	public ControladorCompraBoleto(ServicioFuncion servicioFuncion, ServicioBoleto servicioBoleto,
 			ServicioLogin servicioUsuario, ServicioPelicula servicioPelicula, ServicioSala servicioSala,
-			ServicioButaca servicioButaca) {
+			ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion) {
 		this.servicioFuncion = servicioFuncion;
 		this.servicioBoleto = servicioBoleto;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioPelicula = servicioPelicula;
 		this.servicioSala = servicioSala;
 		this.servicioButaca = servicioButaca;
+		this.servicioButacaFuncion = servicioButacaFuncion;
 	}
 
 	@RequestMapping(path = "/compra", method = RequestMethod.GET)
@@ -75,9 +81,12 @@ public class ControladorCompraBoleto {
 
 	@RequestMapping(path = "/comprar-butaca", method = RequestMethod.POST)
 	public ModelAndView irAElegirButaca(@RequestParam(value = "p") Long idPelicula,
-			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) throws ParseException {
+			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) {
 		ModelMap model = new ModelMap();
-		model.put("butacas", servicioButaca.obtenerButacasPorSala(datosCompraBoleto.getIdSala()));
+		Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(
+				datosCompraBoleto.getIdcine(), idPelicula, datosCompraBoleto.getDateSql(),
+				datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());
+		model.put("butacas", servicioButacaFuncion.obtenerButacasPorFuncion(funcionElegida));
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
 
@@ -86,7 +95,7 @@ public class ControladorCompraBoleto {
 
 	@RequestMapping(path = "/comprar-pago", method = RequestMethod.POST)
 	public ModelAndView irAMetodoDePago(@RequestParam(value = "p") Long idPelicula,
-			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) throws ParseException {
+			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) {
 		ModelMap model = new ModelMap();
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
@@ -96,7 +105,7 @@ public class ControladorCompraBoleto {
 
 	@RequestMapping(path = "/comprar-confirmar", method = RequestMethod.POST)
 	public ModelAndView irAConfirmar(@RequestParam(value = "p") Long idPelicula,
-			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) throws ParseException {
+			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) {
 
 		Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(
 				datosCompraBoleto.getIdcine(), idPelicula, datosCompraBoleto.getDateSql(), datosCompraBoleto.getHora(),
@@ -117,7 +126,7 @@ public class ControladorCompraBoleto {
 	@RequestMapping(path = "/validar-compra", method = RequestMethod.POST)
 	public ModelAndView irARecibo(@RequestParam(value = "p") Long idPelicula,
 			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto, HttpServletRequest request,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes) throws WriterException, IOException {
 		ModelAndView ret = new ModelAndView();
 		ModelMap model = new ModelMap();
 		if (request.getSession().getAttribute("usuario") != null) {
@@ -129,9 +138,12 @@ public class ControladorCompraBoleto {
 			model.put("msg", "La butaca seleccionada ya ha sido ocupada, por favor intente con otra");
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			ret = new ModelAndView("redirect:/inicio", model);
+			
 
 			if (funcionElegida != null
-					&& servicioButaca.obtenerButaca(datosCompraBoleto.getIdButaca()).getOcupada() == false) {
+					&& datosCompraBoleto.getIdButaca()!=null
+					&& servicioButacaFuncion.obtenerPorButacaYFuncion(funcionElegida, datosCompraBoleto.getIdButaca()).getOcupada() == false) {
+			
 
 				Boleto boletoAGuardar = new Boleto();
 				Usuario user = (Usuario) request.getSession().getAttribute("usuario");
@@ -141,10 +153,17 @@ public class ControladorCompraBoleto {
 				boletoAGuardar.setCliente(user);
 
 				servicioBoleto.guardarBoleto(boletoAGuardar);
+				servicioBoleto.generarQr(boletoAGuardar.getId());
+				
+				ButacaFuncion temp=servicioButacaFuncion.obtenerPorButacaYFuncion(boletoAGuardar.getFuncion(), boletoAGuardar.getButaca().getId());
+				temp.setOcupada(true);
+				servicioButacaFuncion.actualizarButacaFuncion(temp);
+				
 				model.put("boletoGenerado", boletoAGuardar);
+				model.put("nuevacompra", true);
 				redirectAttributes.addFlashAttribute("mapping1Form", model);
 
-				ret = new ModelAndView("redirect:/recibo?p=" + idPelicula);
+				ret = new ModelAndView("redirect:/recibo?b=" + boletoAGuardar.getId());
 			}
 		} else {
 			model.put("msg", "Debes estar logueado para comprar un boleto");
@@ -156,12 +175,13 @@ public class ControladorCompraBoleto {
 	}
 
 	@RequestMapping(path = "/recibo", method = RequestMethod.GET)
-	public ModelAndView ReciboGenerado(@RequestParam(value = "p") Long idPelicula, HttpServletRequest request,
+	public ModelAndView ReciboGenerado(@RequestParam(value = "b") Long idBoleto, HttpServletRequest request,
 			@ModelAttribute("mapping1Form") ModelMap model) throws IOException, WriterException {
 		ModelMap modelo = new ModelMap();
 		if (model != null) {
-			modelo = model;
+			modelo.addAllAttributes(model);
 		}
+		modelo.put("boletoGenerado", servicioBoleto.buscarBoleto(idBoleto));
 
 		return new ModelAndView("recibocompra", modelo);
 	}
