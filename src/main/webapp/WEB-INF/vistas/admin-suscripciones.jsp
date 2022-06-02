@@ -74,34 +74,34 @@
   <br>
   
   <div class="container">
-  	<h4 class="text-white">Lista de Cines</h5>
+  	<h4 class="text-white">Lista de Suscripciones</h5>
     <div class="row">
       <div class="col-4">
         <!-- Acá estará la lista de los elementos registrados -->
         <div class="list-group" id="list-tab" role="tablist">
-          <c:forEach items="${listaCines}" var="cine">
-            <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-cine${cine.getId()}" role="tab">${cine.getNombreLocal()}</a>  
+          <c:forEach items="${listaDetalleSuscripciones}" var="suscripcion">
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-suscripcion${suscripcion.getId()}" role="tab">${suscripcion.getTipo()}</a>  
           </c:forEach>
         </div>
       </div>
       <div class="col-8">
         <!-- Acá va a aparecer el detalle -->
         <div class="tab-content">
-          <c:forEach items="${listaCines}" var="cine">
-            <div class="tab-pane fade p-3 mb-2 bg-white rounded" id="list-cine${cine.getId()}" role="tabpanel">
+          <c:forEach items="${listaDetalleSuscripciones}" var="suscripcion">
+            <div class="tab-pane fade p-3 mb-2 bg-white rounded" id="list-suscripcion${suscripcion.getId()}" role="tabpanel">
               <div class="row">
                 <div class="col-8">
-                  <span style="font-size: small; font-weight: lighter;">id:${cine.getId()}</span>
-                  <span style="font-size: large; font-weight: bold;">${cine.getNombreLocal()}</span>
+                  <span style="font-size: small; font-weight: lighter;">id:${suscripcion.getId()}</span>
+                  <span style="font-size: large; font-weight: bold;">${suscripcion.getTipo()}</span>
                   <br>
                   <p>
-                    Dirección: ${cine.getDireccion()} <br>
-                    Telefono: ${cine.getTelefono()} <br>
-                    Email: ${cine.getEmail()} <br>
+                    Descuento: ${suscripcion.getDescuentoEnBoletos()} <br>
+                    Cantidad de Boletos Gratis: ${suscripcion.getCantidadBoletosGratis()} <br>
+                    Cuota: ${suscripcion.getCuota()} <br>
                   </p>
                 </div>
                 <div class="col-4">
-                  <img class="img-fluid" src="${cine.getUrlImagenCine()}" alt="imagen de cine">
+                  
                 </div>
               </div>
             </div>
@@ -115,32 +115,29 @@
 
   <div class="container formularios bg-light rounded" style="margin-bottom:25px;">
 
-    <div class="formulario-cargar-cine" style=" padding: 1rem;">
+    <div class="formulario-cargar-suscripcion" style=" padding: 1rem;">
 
       <c:if test="${not empty mens}">
         <h5 class="p-3 mb-2 bg-success text-white"> ${mens} </h5>
       </c:if>
 
-      <form:form action="agregar-cine" method="POST" modelAttribute="datosCine">
-        <h4>Formulario Para Crear Cine</h4>
+      <form:form action="agregar-suscripcion" method="POST" modelAttribute="datosSuscripcion">
+        <h4>Formulario Para Crear Suscripción</h4>
         <hr class="colorgraph"><br>
 
-        <form:label path="nombreLocal">Nombre Del Local:</form:label>
-        <form:input path="nombreLocal" id="nombreLocal" type="nombreLocal" class="form-control" />
+        <form:label path="tipo">Nombre de suscripción:</form:label>
+        <form:input path="tipo" id="tipo" type="tipo" class="form-control" />
         <br>
-        <form:label path="direccion">Dirección:</form:label>
-        <form:input path="direccion" id="direccion" type="direccion" class="form-control" />
+        <form:label path="descuentoEnBoletos">Descuento en boletos:</form:label>
+        <form:input path="descuentoEnBoletos" id="descuentoEnBoletos" type="descuentoEnBoletos" class="form-control" />
         <br>
-        <form:label path="telefono">Telefono:</form:label>
-        <form:input path="telefono" id="telefono" type="telefono" class="form-control" />
+        <form:label path="cantidadBoletosGratis">Cantidad de boletos gratis al mes:</form:label>
+        <form:input path="cantidadBoletosGratis" id="cantidadBoletosGratis" type="cantidadBoletosGratis" class="form-control" />
         <br>
-        <form:label path="email">Email:</form:label>
-        <form:input path="email" id="email" type="email" class="form-control" />
+        <form:label path="cuota">Cuota:</form:label>
+        <form:input path="cuota" id="cuota" type="cuota" class="form-control" />
         <br>
-        <form:label path="urlImagenCine">Url de la portada:</form:label>
-        <form:input path="urlImagenCine" type="urlImagenCine" id="urlImagenCine" class="form-control" />
-        <br>
-        <button class="btn btn-lg btn-primary btn-block" Type="Submit">Cargar Cine</button>
+        <button class="btn btn-lg btn-primary btn-block" Type="Submit">Cargar Suscripción</button>
       </form:form>
 
     </div>

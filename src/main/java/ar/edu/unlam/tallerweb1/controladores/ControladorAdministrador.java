@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Butaca;
 import ar.edu.unlam.tallerweb1.modelo.Cine;
+import ar.edu.unlam.tallerweb1.modelo.DetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Sala;
@@ -20,6 +21,7 @@ import ar.edu.unlam.tallerweb1.modelo.TipoDeSala;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButacaFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
+import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
@@ -35,16 +37,20 @@ public class ControladorAdministrador {
 	private ServicioFuncion servicioFuncion;
 	private ServicioButaca servicioButaca;
 	private ServicioButacaFuncion servicioButacaFuncion;
+	private ServicioDetalleSuscripcion servicioDetalleSuscripcion;
 	
 	@Autowired
-	public ControladorAdministrador(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala, ServicioLogin servicioUsuario, ServicioFuncion servicioFuncion, ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion){
+	public ControladorAdministrador(ServicioPelicula servicioPelicula, ServicioCine servicioCine,
+			ServicioSala servicioSala, ServicioLogin servicioUsuario, ServicioFuncion servicioFuncion,
+			ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion, ServicioDetalleSuscripcion servicioDetalleSuscripcion){
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine = servicioCine;
 		this.servicioSala = servicioSala;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioFuncion = servicioFuncion;
-		this.servicioButaca=servicioButaca;
-		this.servicioButacaFuncion=servicioButacaFuncion;
+		this.servicioButaca = servicioButaca;
+		this.servicioButacaFuncion = servicioButacaFuncion;
+		this.servicioDetalleSuscripcion = servicioDetalleSuscripcion;
 	}
 	
 	@RequestMapping( path = "/admin", method = RequestMethod.GET)
@@ -100,6 +106,15 @@ public class ControladorAdministrador {
 		return new ModelAndView("admin-funciones", modelo);
 	}
 	
+	@RequestMapping( path = "/admin-suscripciones", method = RequestMethod.GET)
+	public ModelAndView irAAdminCargarSuscripcion() {
+		ModelMap modelo = new ModelMap();
+		
+		modelo.addAttribute("datosSuscripcion", new DetalleSuscripcion());
+		modelo.put("listaDetalleSuscripciones", servicioDetalleSuscripcion.obtenerTodasLasSuscripciones());
+		
+		return new ModelAndView("admin-suscripciones", modelo);
+	}
 	
 	@RequestMapping(path = "/agregar-cine", method = RequestMethod.POST)
 	public ModelAndView agregarNuevoCine( @ModelAttribute("datosCine") Cine datosCine) {
@@ -204,5 +219,23 @@ public class ControladorAdministrador {
 		model.put("mens", "Función guardada con exito");
 		return new ModelAndView("admin-funciones", model);
 		
+	}
+	@RequestMapping(path = "/agregar-suscripcion", method = RequestMethod.POST)
+	public ModelAndView agregarNuevaSuscripcion( @ModelAttribute("datosSuscripcion") DetalleSuscripcion datos) {
+		
+		ModelMap model = new ModelMap();
+		DetalleSuscripcion nuevaSuscripcion = new DetalleSuscripcion();
+		
+		nuevaSuscripcion.setTipo(datos.getTipo());
+		nuevaSuscripcion.setDescuentoEnBoletos(datos.getDescuentoEnBoletos());
+		nuevaSuscripcion.setCantidadBoletosGratis(datos.getCantidadBoletosGratis());
+		nuevaSuscripcion.setCuota(datos.getCuota());
+		
+		servicioDetalleSuscripcion.guardarDetalleSuscripcion(nuevaSuscripcion);
+		
+		model.addAttribute("datosSuscripcion", new DetalleSuscripcion());
+		model.put("listaDetalleSuscripciones", servicioDetalleSuscripcion.obtenerTodasLasSuscripciones());
+		model.put("mens", "Suscripción guardada con exito");
+		return new ModelAndView("admin-suscripciones", model);
 	}
 }
