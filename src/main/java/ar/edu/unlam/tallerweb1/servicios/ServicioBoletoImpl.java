@@ -55,4 +55,11 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		BitMatrix matrix = new MultiFormatWriter().encode(data, BarcodeFormat.QR_CODE, 500, 500);
 		MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(path));
 	}
+
+	@Override
+	public void registrarAsistenciaBoleto(Boleto boleto) {
+		Boleto temp=repositorioBoletoDao.buscarBoleto(boleto.getId());
+		temp.setUsado(true);
+		repositorioBoletoDao.actualizarBoleto(temp);
+	}
 }

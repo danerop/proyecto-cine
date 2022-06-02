@@ -59,24 +59,23 @@ public class ControladorLogin {
 		ModelMap model = new ModelMap();
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
-//			switch (usuarioBuscado.getRol().getId()) {
-//			case 1:
-//				
-//				break;
-//			case 2:
-//				
-//				break;
-//			case 3:
-//				
-//				break;
-//			default:
-//				break;
-//			}
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-			request.getSession().setAttribute("usuario", usuarioBuscado);
-			model.put("sesion", request.getAttribute("usuario"));
-			model.put("sesionRol", request.getAttribute("ROL"));
-			return new ModelAndView("redirect:/inicio", model);
+			switch (usuarioBuscado.getRol()) {
+			case "recepcionista":
+				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+				request.getSession().setAttribute("usuario", usuarioBuscado);
+				return new ModelAndView("redirect:/iniciorecepcionista");
+			case "admin":
+				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+				request.getSession().setAttribute("usuario", usuarioBuscado);
+				return new ModelAndView("redirect:/admin");
+			default:
+				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+				request.getSession().setAttribute("usuario", usuarioBuscado);
+				model.put("sesion", request.getAttribute("usuario"));
+				model.put("sesionRol", request.getAttribute("ROL"));
+				return new ModelAndView("redirect:/inicio", model);
+			}
+
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
 			model.put("error", "Usuario o clave incorrecta");

@@ -13,7 +13,7 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <link rel="stylesheet" href="./css/pago.css">
-<title>Home</title>
+<title>Boleto validado</title>
 </head>
 
 <body>
@@ -48,23 +48,9 @@
 	<main>
 
 		<div class="container-fluid contenedorpago bg-white">
-			<c:if test="${boletoGenerado==null || fechadistinta || fueusado}">
-				<h1 class="text-danger text-center">
-					<i class="bi bi-x-circle-fill display-1"></i> BOLETO NO VALIDO
+				<h1 class="text-success text-center">
+					<i class="bi bi-check-circle-fill display-1"></i> ASISTENCIA REGISTRADA
 				</h1>
-				<br>
-				<h2 class="text-center">${msg}</h2>
-				<c:if test="${boletoGenerado==null}">
-					<div class="d-flex justify-content-center btncompraboleto">
-						<a href="#" class="btn btn-secondary">Volver</a>
-					</div>
-				</c:if>
-			</c:if>
-			<c:if test="${boletoGenerado!=null && !fechadistinta && !fueusado}">
-				<h1 class="text-success">BOLETO VALIDO</h1>
-				<br>
-			</c:if>
-			<c:if test="${boletoGenerado!=null}">
 				<h2>ID Boleto: ${boletoGenerado.getId()}</h2>
 				<br>
 				<h4>Pelicula:
@@ -75,34 +61,15 @@
 					${boletoGenerado.getFuncion().getSala().getTipo() }</h4>
 				<h4>Número de butaca: ${boletoGenerado.getButaca().getId()}</h4>
 				<br>
-				<c:choose>
-					<c:when test="${fechadistinta}">
-						<div class="text-danger">
-							<h4>Fecha: ${boletoGenerado.getFuncion().getFechaHora() }</h4>
-							<h4>Horario: ${boletoGenerado.getFuncion().getHora() }hs</h4>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div>
-							<h4>Fecha: ${boletoGenerado.getFuncion().getFechaHora() }</h4>
-							<h4>Horario: ${boletoGenerado.getFuncion().getHora() }hs</h4>
-						</div>
-					</c:otherwise>
-				</c:choose>
+	
+				<h4>Fecha: ${boletoGenerado.getFuncion().getFechaHora() }</h4>
+				<h4>Horario: ${boletoGenerado.getFuncion().getHora() }hs</h4>
+
 				<br>
 				<h4>IdUsuario: ${boletoGenerado.getCliente().getId()}</h4>
 				<h4>Usuario: ${boletoGenerado.getCliente().getEmail()}</h4>
 				<br>
-				<div class="d-flex justify-content-center btncompraboleto">
-					<a href="#" class="btn btn-secondary">Volver</a>
-					<c:if test="${fechadistinta==false}">
-						<a href="registrar-asistencia-boleto?b=${b}"
-							class="btn btn-primary">Activar</a>
-					</c:if>
-
-				</div>
-
-			</c:if>
+				<h4>BOLETO AHORA USADO</h4>
 		</div>
 
 

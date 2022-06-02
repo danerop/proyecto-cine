@@ -11,5 +11,6 @@ public interface ServicioBoleto {
 	public Boleto buscarBoleto(Long id);
 	public Boleto buscarBoletoUnicoPorDatos(Long idCliente, Long idFuncion, Long idButaca);
 	public void generarQr(Long idBoleto) throws WriterException, IOException;
+	public void registrarAsistenciaBoleto(Boleto boleto);
 	
 }

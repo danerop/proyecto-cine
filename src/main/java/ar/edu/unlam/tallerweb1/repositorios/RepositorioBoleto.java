@@ -7,4 +7,5 @@ public interface RepositorioBoleto {
 	void guardarBoleto(Boleto boleto);
     Boleto buscarBoleto(Long id);
     Boleto buscarBoletUnicoPorDatos(Long idcliente, Long idfuncion, Long idbutaca);
+    public void actualizarBoleto(Boleto boleto);
 }

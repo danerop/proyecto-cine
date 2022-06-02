@@ -39,5 +39,10 @@ public class RepositorioBoletoImpl implements RepositorioBoleto{
 				.add(Restrictions.eq("butaca.id",idbutaca))
 				.uniqueResult();
 	}
+	@Override
+	public void actualizarBoleto(Boleto boleto) {
+		sessionFactory.getCurrentSession().update(boleto);
+		
+	}
 	
 }
