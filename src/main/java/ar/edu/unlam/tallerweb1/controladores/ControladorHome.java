@@ -34,9 +34,10 @@ public class ControladorHome {
 	private ServicioSala servicioSala;
 	private ServicioPelicula servicioPelicula;
 	private ServicioLogin servicioUsuario;
-	
+
 	@Autowired
-	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala, ServicioLogin servicioUsuario){
+	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala,
+			ServicioLogin servicioUsuario) {
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine = servicioCine;
 		this.servicioSala = servicioSala;
@@ -44,15 +45,13 @@ public class ControladorHome {
 	}
 
 	@RequestMapping(path = "/inicio", method = RequestMethod.GET)
-	public ModelAndView inicio(HttpServletRequest request,
-							@ModelAttribute("mapping1Form") ModelMap model2
-			){
-		
+	public ModelAndView inicio(HttpServletRequest request, @ModelAttribute("mapping1Form") ModelMap model2) {
+
 		ModelMap model = new ModelMap();
 		model.addAllAttributes(model2);
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-		
-		if(user != null) {
+
+		if (user != null) {
 			model.put("usuario", servicioUsuario.consultarUsuario(user));
 			model.put("rol", servicioUsuario.consultarUsuarioPorRol(user));
 			model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
@@ -61,12 +60,14 @@ public class ControladorHome {
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
 		return new ModelAndView("inicio", model);
 	}
-	
-	/*@RequestMapping(path = "/peliculas", method = RequestMethod.GET)
-	public ModelAndView pelicula(){
-		
-		return new ModelAndView("peliculas");
-	
-	}*/
-	
+
+	/*
+	 * @RequestMapping(path = "/peliculas", method = RequestMethod.GET) public
+	 * ModelAndView pelicula(){
+	 * 
+	 * return new ModelAndView("peliculas");
+	 * 
+	 * }
+	 */
+
 }

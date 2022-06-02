@@ -69,25 +69,23 @@ public class ControladorLogin {
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
 		
 		if (usuarioBuscado != null) {
-//			switch (usuarioBuscado.getRol().getId()) {
-//			case 1:
-//				
-//				break;
-//			case 2:
-//				
-//				break;
-//			case 3:
-//				
-//				break;
-//			default:
-//				break;
-//			}
-			
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-			request.getSession().setAttribute("usuario", usuarioBuscado);
-			model.put("sesion", request.getAttribute("usuario"));
-			model.put("sesionRol", request.getAttribute("ROL"));
-			return new ModelAndView("redirect:/inicio", model);
+			switch (usuarioBuscado.getRol()) {
+			case "recepcionista":
+				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+				request.getSession().setAttribute("usuario", usuarioBuscado);
+				return new ModelAndView("redirect:/iniciorecepcionista");
+			case "admin":
+				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+				request.getSession().setAttribute("usuario", usuarioBuscado);
+				return new ModelAndView("redirect:/admin");
+			default:
+				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+				request.getSession().setAttribute("usuario", usuarioBuscado);
+				model.put("sesion", request.getAttribute("usuario"));
+				model.put("sesionRol", request.getAttribute("ROL"));
+				return new ModelAndView("redirect:/inicio", model);
+			}
+
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
 			model.put("error", "Usuario o clave incorrecta");
@@ -109,31 +107,23 @@ public class ControladorLogin {
 			@RequestParam(value = "repassword", required = false) String repassword) {
 		// validar password con repassword
 		ModelMap modelo = new ModelMap();
-		Suscripcion s = new Suscripcion();
-		DetalleSuscripcion detalle = servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(1L);
-		
+
 		if (servicioLogin.consultarUsuario(usuario) == null) {
 			if (usuario.getPassword().equals(repassword)) {
 				// guardo en la base
-				s.setDetalleSuscripcion(detalle);
-				
-				servicioSuscripcion.guardarSuscripcion(s);
-		
-				usuario.setSuscripcion(s);
 				usuario.setActivo(true);
 				usuario.setRol("usuario");
-
 				servicioLogin.insertarUsuario(usuario);
 				modelo.put("correcto", "Usuario registrado correctamente " + usuario.getEmail());
 			} else {
-				modelo.put("error", "Las contraseï¿½as no coinciden");
+				modelo.put("error", "Las contraseñas no coinciden");
 				return new ModelAndView("registro-usuario", modelo);
 			}
 		} else {
 			modelo.put("error", "Ya existe el usuario");
 			return new ModelAndView("registro-usuario", modelo);
 		}
-		
+
 		return new ModelAndView("login", modelo);
 	}
 

@@ -68,40 +68,9 @@
 
   <main>
   
-  <c:if test="${nuevacompra!=null}">
-   <div class="alert alert-success d-flex align-items-center alert-dismissible" role="alert">
-  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-  <div>
-    Gracias por su compra!
-  </div>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="container-fluid contenedorpago">
+
 </div>
-  </c:if>
-
-    
-    
-    <div class="container-fluid contenedorpago">
-			<h1 class="text-center">RECIBO</h1>
-			<div class="row">
-			<div class="col-6">
-				<h4>Pelicula: ${boletoGenerado.getFuncion().getPelicula().getNombre()}</h4>
-            	<h4>Fecha: ${boletoGenerado.getFuncion().getFechaHora() }</h4>
-            	<h4>Horario: ${boletoGenerado.getFuncion().getHora() } </h4>
-            	<h4>Cine: ${boletoGenerado.getFuncion().getCine().getNombreLocal() }</h4>
-            	<h4>Sala: ${boletoGenerado.getFuncion().getSala().getId()} -  ${boletoGenerado.getFuncion().getSala().getTipo() }</h4>
-				<h4>Precio: $${boletoGenerado.getPrecio()}</h4>
-				<h4>Número de butaca: ${boletoGenerado.getButaca().getId()}</h4>
-				<br>
-				<button class="btn btn-primary mx-auto d-block">Imprimir</button>
-			</div>
-			<div class="col-6">
-				<img class="img-responsive w-50 mx-auto d-block" alt="codigoqr" src="./img/boletoqr/boleto${boletoGenerado.getId()}.jpg">
-				<br>
-				<h6 class="text-center">¡Mostrá esté código qr para entrar a la sala!</h6>
-			</div>
-			</div>
-
-    </div>
 
 
 

@@ -53,6 +53,6 @@ public class ServicioButacaImpl implements ServicioButaca{
 		
 		return repositorioButacaDao.obtenerButacasPorSala(idSala).size();
 	}
-	
+
 		
 }

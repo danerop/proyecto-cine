@@ -83,14 +83,14 @@
 				<c:forEach var="col" begin="1" end="32">
 				  <td> 
 				  	<c:forEach items="${butacas}" var="butaca">
-						<c:if test="${butaca.getNroUbicacion()==(col+(32*(fil-1)))}">
+						<c:if test="${butaca.getButaca().getNroUbicacion()==(col+(32*(fil-1)))}">
 							<c:choose>
 								<c:when test="${!butaca.getOcupada()}">
-									<input type="radio" class="btn-check position-fixed" name="idButaca" id="btncheck${col+(32*(fil-1))}" autocomplete="off" value="${butaca.getId()}">
-  									<form:label class="btn btn-outline-primary p-4" for="btncheck${col+(32*(fil-1))}" path="idButaca">${butaca.getId()}</form:label>
+									<input type="radio" class="btn-check position-fixed" name="idButaca" id="btncheck${col+(32*(fil-1))}" autocomplete="off" value="${butaca.getButaca().getId()}">
+  									<form:label class="btn btn-outline-primary p-4" for="btncheck${col+(32*(fil-1))}" path="idButaca">${butaca.getButaca().getId()}</form:label>
 								</c:when>
 								<c:otherwise>
-									<button class="btn-check btn btn-danger p-4" disabled>${butaca.getId()}</button>
+									<button class="btn btn-primary p-4" disabled>${butaca.getButaca().getId()}</button>
 								</c:otherwise>
 							</c:choose>
 	
