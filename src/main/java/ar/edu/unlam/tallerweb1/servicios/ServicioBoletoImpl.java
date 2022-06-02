@@ -51,7 +51,10 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	@Override
 	public void generarQr(Long idBoleto) throws WriterException, IOException {
 		String data="http://localhost:8080/proyecto-cine/validar-boleto?b="+idBoleto;
-		String path="C:\\Users\\beybr\\git\\proyecto-cine\\src\\main\\webapp\\img\\boletoqr\\boleto"+idBoleto+".jpg";
+		
+		//de momento hay que cambiar el path cada vez que se cambie de pc...
+		String path="C:\\Users\\kreiz\\Documents\\GIT\\proyecto-cine\\src\\main\\webapp\\img\\boletoqr\\boleto"+idBoleto+".jpg";
+		
 		BitMatrix matrix = new MultiFormatWriter().encode(data, BarcodeFormat.QR_CODE, 500, 500);
 		MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(path));
 	}
