@@ -100,7 +100,7 @@ public class ControladorCompraBoleto {
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
 
-		return new ModelAndView("metodo-pago", model);
+		return new ModelAndView("compra-metodo-pago", model);
 	}
 
 	@RequestMapping(path = "/comprar-confirmar", method = RequestMethod.POST)
@@ -120,7 +120,7 @@ public class ControladorCompraBoleto {
 		model.put("p", idPelicula);
 		model.put("boletoGenerado", boletoAGuardar);
 
-		return new ModelAndView("confirmacion", model);
+		return new ModelAndView("compra-confirmacion", model);
 	}
 
 	@RequestMapping(path = "/validar-compra", method = RequestMethod.POST)
@@ -183,6 +183,6 @@ public class ControladorCompraBoleto {
 		}
 		modelo.put("boletoGenerado", servicioBoleto.buscarBoleto(idBoleto));
 
-		return new ModelAndView("recibocompra", modelo);
+		return new ModelAndView("compra-recibocompra", modelo);
 	}
 }

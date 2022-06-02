@@ -60,7 +60,7 @@ public class ControladorSuscripcion {
 				model.put("d", idDetalleSuscripcion);
 				model.put("servicioElegido", servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(idDetalleSuscripcion));
 
-				return new ModelAndView("pago-suscripcion", model);
+				return new ModelAndView("suscripcion-pago", model);
 		}
 			return new ModelAndView("redirect:/login", model);
 	}
@@ -82,6 +82,6 @@ public class ControladorSuscripcion {
 				model.put("datosSuscripcion", datosSuscripcion);
 				model.put("usuarioSuscripto", usuarioSesion);
 
-				return new ModelAndView("validar-suscripcion", model);
+				return new ModelAndView("suscripcion-validar", model);
 	}				
 }

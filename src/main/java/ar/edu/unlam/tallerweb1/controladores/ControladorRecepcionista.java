@@ -53,7 +53,7 @@ public class ControladorRecepcionista {
 		Usuario temp=(Usuario) request.getSession().getAttribute("usuario");
 		if (request.getSession().getAttribute("usuario") != null && temp.getRol().equals("recepcionista") ) {
 			ModelMap modelo = new ModelMap();
-			return new ModelAndView("inicio-recepcionista", modelo);
+			return new ModelAndView("recepcionista", modelo);
 		}
 		return new ModelAndView("redirect:/inicio");
 
@@ -69,21 +69,21 @@ public class ControladorRecepcionista {
 			if (!boleto.getUsado()) {
 				modelo.put("boletoGenerado", boleto);
 				if (servicioRecepcionista.validarFechaBoleto(boleto)) {
-					return new ModelAndView("validarboleto-recepcionista", modelo);
+					return new ModelAndView("recepcionista-validarboleto", modelo);
 		        }
 		        else {
 		        	modelo.put("msg", "La entrada no es para la fecha actual");
 		        	modelo.put("fechadistinta", true);
-					return new ModelAndView("validarboleto-recepcionista", modelo);
+					return new ModelAndView("recepcionista-validarboleto", modelo);
 				}
 			} else {
 	        	modelo.put("msg", "La entrada ya fue usada");
 	        	modelo.put("fueusado", true);
-	        	return new ModelAndView("validarboleto-recepcionista", modelo);
+	        	return new ModelAndView("recepcionista-validarboleto", modelo);
 			}
 		}
 		modelo.put("msg", "La entrada no existe");
-		return new ModelAndView("validarboleto-recepcionista", modelo);
+		return new ModelAndView("recepcionista-validarboleto", modelo);
 	}
 	
 	@RequestMapping(path = "/registrar-asistencia-boleto", method = RequestMethod.GET)
@@ -103,7 +103,7 @@ public class ControladorRecepcionista {
 		ModelMap modelo = new ModelMap();
 		Boleto boleto=servicioBoleto.buscarBoleto(idBoleto);
 		modelo.put("boletoGenerado", boleto);
-		return new ModelAndView("boletovalidado-recepcionista", modelo);
+		return new ModelAndView("recepcionista-boletovalidado", modelo);
 	}
 	
 }
