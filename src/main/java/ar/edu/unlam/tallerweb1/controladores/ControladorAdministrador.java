@@ -3,6 +3,8 @@ package ar.edu.unlam.tallerweb1.controladores;
 import java.sql.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,6 +20,7 @@ import ar.edu.unlam.tallerweb1.modelo.Funcion;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeSala;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButacaFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
@@ -54,9 +57,13 @@ public class ControladorAdministrador {
 	}
 	
 	@RequestMapping( path = "/admin", method = RequestMethod.GET)
-	public ModelAndView irAAdmin() {
+	public ModelAndView irAAdmin(HttpServletRequest request) {
 		
 		//Acá debería haber una comprobación de si el usuario es un administrador
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (request.getSession().getAttribute("usuario") == null || !user.getRol().equals("admin") ) {
+			return new ModelAndView("redirect:/inicio");
+		}
 		
 		return new ModelAndView("admin");
 		
