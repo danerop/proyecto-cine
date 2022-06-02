@@ -119,6 +119,7 @@ public class ControladorCompraBoleto {
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
 		model.put("boletoGenerado", boletoAGuardar);
+		model.put("funcionElegida", funcionElegida);
 
 		return new ModelAndView("compra-confirmacion", model);
 	}

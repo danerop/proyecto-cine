@@ -4,7 +4,7 @@ INSERT INTO pelicula(nombre, anio, descripcion, duracion, urlImagenPelicula)
 VALUES("Sonic 2", 2022, "descripcion", 150, "img/pelicula/sonic2.jpg"),
 	  ("Dr Strange: Multiverso de la locura", 2022, "descripcion", 150, "img/pelicula/strange.jpg"),
       ("Animales Fantasticos 3", 2022, "descripcion", 150, "img/pelicula/animalesf.jpg"),
-      ("Bombonera: La película del templo", 2022, "descripcion", 150, "img/pelicula/bombonera.jpg"),
+      ("Bombonera: La pelÃ­cula del templo", 2022, "descripcion", 150, "img/pelicula/bombonera.jpg"),
       ("La Medium", 2022, "descripcion", 150, "img/pelicula/lamedium.jpg"),
       ("En la mira", 2022, "descripcion", 150, "img/pelicula/enlamira.jpg"),
       ("El hombre del norte", 2022, "descripcion", 150, "img/pelicula/elhombredelnorte.jpg"),
@@ -40,7 +40,7 @@ VALUES(1,"Comun",1),
 INSERT INTO butaca(id, nroUbicacion, sala_id)
 VALUES(1, 205, 1),
 	  (2, 206, 1),
-	  (3, 100, 1),
+	  (3, 208, 1),
 	  (4, 100, 2),
 	  (5, 100, 3),
 	  (6, 100, 4);
@@ -52,7 +52,10 @@ VALUES(1,50,'2022-06-02',"20:30", 500, 250, 1, 1, 1),
 INSERT INTO butacafuncion(id, ocupada, butaca_id, funcion_id)
 VALUES(1, 1, 1, 1),
 	  (2, 0, 2, 1),
-      (3, 0, 3, 1);
+      (3, 0, 3, 1),
+      (4, 0, 1, 2),
+	  (5, 0, 2, 2),
+      (6, 0, 3, 2);
       
 
 select * from pelicula;

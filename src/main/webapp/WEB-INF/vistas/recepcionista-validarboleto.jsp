@@ -17,34 +17,35 @@
 </head>
 
 <body>
-	<header>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-			<div class="container-fluid">
-				<!--  <div class="d-flex justify-content-evenly">...</div> -->
-				<a class="navbar-brand" href="iniciorecepcionista">LOGO</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav w-100 d-flex justify-content-evenly">
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="iniciorecepcionista">Home</a></li>
-
-						<li class="nav-item"><a class="nav-link" href="cerrarSesion">Cerrar
-								sesión</a></li>
-					</ul>
-					<form class="d-flex">
-						<input class="form-control me-2" type="search"
-							placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">Search</button>
-					</form>
-				</div>
-			</div>
-		</nav>
-	</header>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+      <div class="container-fluid">
+        <!--  <div class="d-flex justify-content-evenly">...</div> -->
+        <a class="navbar-brand" href="inicio">LOGO</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav w-100 d-flex justify-content-evenly">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="inicio">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="suscripcion">Suscripciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cerrarSesion">Iniciar Session</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
 	<main>
 
 		<div class="container-fluid contenedorpago bg-white">
@@ -56,7 +57,7 @@
 				<h2 class="text-center">${msg}</h2>
 				<c:if test="${boletoGenerado==null}">
 					<div class="d-flex justify-content-center btncompraboleto">
-						<a href="#" class="btn btn-secondary">Volver</a>
+						<a href="iniciorecepcionista" class="btn btn-secondary">Volver</a>
 					</div>
 				</c:if>
 			</c:if>
@@ -94,7 +95,7 @@
 				<h4>Usuario: ${boletoGenerado.getCliente().getEmail()}</h4>
 				<br>
 				<div class="d-flex justify-content-center btncompraboleto">
-					<a href="#" class="btn btn-secondary">Volver</a>
+					<a href="iniciorecepcionista" class="btn btn-secondary">Volver</a>
 					<c:if test="${fechadistinta==false}">
 						<a href="registrar-asistencia-boleto?b=${b}"
 							class="btn btn-primary">Activar</a>
