@@ -58,7 +58,7 @@ public class ControladorRecepcionista {
 		return new ModelAndView("redirect:/inicio");
 
 	}
-	@RequestMapping(path = "/validar-boleto", method = RequestMethod.POST)
+	@RequestMapping(path = "/validar-boleto", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView validarBoleto(@RequestParam(value = "b") Long idBoleto) {
 		ModelMap modelo = new ModelMap();
 		modelo.put("b", idBoleto);

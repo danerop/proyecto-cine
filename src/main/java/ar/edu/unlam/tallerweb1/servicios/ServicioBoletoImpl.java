@@ -1,7 +1,11 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import javax.servlet.ServletContext;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,14 +53,15 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		return repositorioBoletoDao.buscarBoletUnicoPorDatos(idCliente, idFuncion, idButaca);
 	}
 	@Override
-	public void generarQr(Long idBoleto) throws WriterException, IOException {
-		String data="http://localhost:8080/proyecto-cine/validar-boleto?b="+idBoleto;
-		
-		//de momento hay que cambiar el path cada vez que se cambie de pc...
-		String path="C:\\Users\\kreiz\\Documents\\GIT\\proyecto-cine\\src\\main\\webapp\\img\\boletoqr\\boleto"+idBoleto+".jpg";
+	public void generarQr(Long idBoleto, String path) throws WriterException, IOException {
+		String data="http://localhost:8080/proyecto-cine/validar-boleto?b=" + idBoleto;
+		String pathCompleta= path+"\\boleto" + idBoleto + ".jpg";
+
+		//direccion del archivo generado (ver consola de eclipse cuando se entre a la pagina de recibo):
+		System.out.println("La direccion del qr es :" + pathCompleta);
 		
 		BitMatrix matrix = new MultiFormatWriter().encode(data, BarcodeFormat.QR_CODE, 500, 500);
-		MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(path));
+		MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(pathCompleta));
 	}
 
 	@Override

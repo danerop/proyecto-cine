@@ -10,7 +10,7 @@ public interface ServicioBoleto {
 	public void guardarBoleto(Boleto boleto);
 	public Boleto buscarBoleto(Long id);
 	public Boleto buscarBoletoUnicoPorDatos(Long idCliente, Long idFuncion, Long idButaca);
-	public void generarQr(Long idBoleto) throws WriterException, IOException;
+	public void generarQr(Long idBoleto, String path) throws WriterException, IOException;
 	public void registrarAsistenciaBoleto(Boleto boleto);
 	
 }

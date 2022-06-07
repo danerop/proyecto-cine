@@ -7,6 +7,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.text.ParseException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.logging.Message.Format;
@@ -154,7 +155,12 @@ public class ControladorCompraBoleto {
 				boletoAGuardar.setCliente(user);
 
 				servicioBoleto.guardarBoleto(boletoAGuardar);
-				servicioBoleto.generarQr(boletoAGuardar.getId());
+				
+				//generacion de path
+				ServletContext sc = request.getSession().getServletContext();
+				String imagespath = sc.getRealPath("/img/boletoqr");
+				
+				servicioBoleto.generarQr(boletoAGuardar.getId(), imagespath);
 				
 				ButacaFuncion temp=servicioButacaFuncion.obtenerPorButacaYFuncion(boletoAGuardar.getFuncion(), boletoAGuardar.getButaca().getId());
 				temp.setOcupada(true);
