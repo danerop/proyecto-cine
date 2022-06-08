@@ -61,7 +61,16 @@ public class ControladorHome {
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
 		return new ModelAndView("inicio", model);
 	}
-
+	
+	@RequestMapping(path = "/mapa", method = RequestMethod.GET)
+	public ModelAndView mapa() {
+		
+		ModelMap model = new ModelMap();
+		
+		model.put("listaCines", servicioCine.obtenerTodosLosCines());
+		return new ModelAndView("mapa", model);
+	}
+	
 	/*
 	 * @RequestMapping(path = "/peliculas", method = RequestMethod.GET) public
 	 * ModelAndView pelicula(){

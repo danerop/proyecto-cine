@@ -134,6 +134,8 @@ public class ControladorAdministrador {
 		nuevoCine.setTelefono(datosCine.getTelefono());
 		nuevoCine.setEmail(datosCine.getEmail());
 		nuevoCine.setUrlImagenCine(datosCine.getUrlImagenCine());
+		nuevoCine.setLatitud(datosCine.getLatitud());
+		nuevoCine.setLongitud(datosCine.getLongitud());
 		
 		servicioCine.guardarCine(nuevoCine);
 		

@@ -30,6 +30,9 @@
               <a class="nav-link active" aria-current="page" href="inicio">Inicio</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="mapa">Mapa de cines</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="suscripcion">Suscripciones</a>
             </li>
             <li class="nav-item">

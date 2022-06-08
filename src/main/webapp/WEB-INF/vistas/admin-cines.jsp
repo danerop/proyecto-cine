@@ -128,6 +128,13 @@
         <form:label path="urlImagenCine">Url de la portada:</form:label>
         <form:input path="urlImagenCine" type="urlImagenCine" id="urlImagenCine" class="form-control" />
         <br>
+        <hr>
+        <h4>Ubicación</h4>
+        <form:label path="latitud">Latitud:</form:label>
+        <form:input path="latitud" id="latitud" type="latitud" class="form-control" />
+        <form:label path="longitud">Longitud:</form:label>
+        <form:input path="longitud" id="longitud" type="longitud" class="form-control" />
+        <br>
         <button class="btn btn-lg btn-primary btn-block" Type="Submit">Cargar Cine</button>
       </form:form>
 
