@@ -50,6 +50,3 @@ select * from sala;
 select * from cine;
 select * from boleto;
 
-select * from Usuario usuario
-join Suscripcion suscripcion on usuario.suscripcion_id = suscripcion.id
-where suscripcion.tipo = 'gold'; 
