@@ -34,27 +34,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav w-100 d-flex justify-content-evenly">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="inicio">Home</a>
+              <a class="nav-link active" aria-current="page" href="inicio">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="peliculas">Peliculas</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Suscripciones
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
+              <a class="nav-link" href="suscripcion">Suscripciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
+              <a class="nav-link" href="cerrarSesion">Iniciar Session</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -68,13 +54,16 @@
 
   <main>
   
- <div class="alert alert-success d-flex align-items-center alert-dismissible" role="alert">
+  <c:if test="${nuevacompra!=null}">
+   <div class="alert alert-success d-flex align-items-center alert-dismissible" role="alert">
   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
   <div>
     Gracias por su compra!
   </div>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+  </c:if>
+
     
     
     <div class="container-fluid contenedorpago">
@@ -92,7 +81,7 @@
 				<button class="btn btn-primary mx-auto d-block">Imprimir</button>
 			</div>
 			<div class="col-6">
-				<img class="img-responsive w-50 mx-auto d-block" alt="codigoqr" src="./img/qr.jpg">
+				<img class="img-responsive w-50 mx-auto d-block" alt="codigoqr" src="./img/boletoqr/boleto${boletoGenerado.getId()}.jpg">
 				<br>
 				<h6 class="text-center">¡Mostrá esté código qr para entrar a la sala!</h6>
 			</div>

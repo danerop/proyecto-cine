@@ -16,7 +16,7 @@
 </head>
 <body>
 	
-	<header>
+  <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
       <div class="container-fluid">
         <!--  <div class="d-flex justify-content-evenly">...</div> -->
@@ -28,27 +28,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav w-100 d-flex justify-content-evenly">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="inicio">Home</a>
+              <a class="nav-link active" aria-current="page" href="inicio">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="peliculas">Peliculas</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Suscripciones
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
+              <a class="nav-link" href="suscripcion">Suscripciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
+              <a class="nav-link" href="cerrarSesion">Iniciar Session</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -67,30 +53,30 @@
 		
 		
 		<br>
-  <div class="table-responsive">
-  <div class="btn-group" role="group" aria-label="Basic example">
-  <table class="table w-auto testo">
+  <div class="table-responsive container">
+  <div class="btn-group container" role="group" aria-label="Basic example">
+  <table class="table w-auto testo container">
 		  <tbody>
 		  		<tr>
 		  		<td>&nbsp;</td>
 		  		<c:forEach var="h" begin="1" end="32">
-				  <td class="text-center p-4">${h}</td>
+				  <td class="text-center p-2">${h}</td>
 				</c:forEach>
 		  		</tr>
 			<c:forEach var="fil" begin="1" end="16">
 			  <tr>
-			  	<td class="align-middle p-4">${fil}</td>
+			  	<td class="align-middle p-2">${fil}</td>
 				<c:forEach var="col" begin="1" end="32">
 				  <td> 
 				  	<c:forEach items="${butacas}" var="butaca">
-						<c:if test="${butaca.getNroUbicacion()==(col+(32*(fil-1)))}">
+						<c:if test="${butaca.getButaca().getNroUbicacion()==(col+(32*(fil-1)))}">
 							<c:choose>
 								<c:when test="${!butaca.getOcupada()}">
-									<input type="radio" class="btn-check position-fixed" name="idButaca" id="btncheck${col+(32*(fil-1))}" autocomplete="off" value="${butaca.getId()}">
-  									<form:label class="btn btn-outline-primary p-4" for="btncheck${col+(32*(fil-1))}" path="idButaca">${butaca.getId()}</form:label>
+									<input type="radio" class="btn-check position-fixed" name="idButaca" id="btncheck${col+(32*(fil-1))}" autocomplete="off" value="${butaca.getButaca().getId()}">
+  									<form:label class="btn btn-outline-primary p-2" for="btncheck${col+(32*(fil-1))}" path="idButaca">${butaca.getButaca().getId()}</form:label>
 								</c:when>
 								<c:otherwise>
-									<button class="btn-check btn btn-danger p-4" disabled>${butaca.getId()}</button>
+									<button class="btn btn-primary p-2" disabled>${butaca.getButaca().getId()}</button>
 								</c:otherwise>
 							</c:choose>
 	

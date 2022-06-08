@@ -11,10 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-
-
-
-
 @Entity
 public class Boleto {
 
@@ -35,7 +31,7 @@ public class Boleto {
 	
 	private Float precio;
 
-
+	private Boolean usado=false;
 
 	
 	
@@ -80,4 +76,55 @@ public class Boleto {
 	public void setPrecio(Float precio) {
 		this.precio = precio;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((butaca == null) ? 0 : butaca.hashCode());
+		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
+		result = prime * result + ((funcion == null) ? 0 : funcion.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((precio == null) ? 0 : precio.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Boleto other = (Boleto) obj;
+		if (butaca == null) {
+			if (other.butaca != null)
+				return false;
+		} else if (!butaca.equals(other.butaca))
+			return false;
+		if (cliente == null) {
+			if (other.cliente != null)
+				return false;
+		} else if (!cliente.equals(other.cliente))
+			return false;
+		if (funcion == null) {
+			if (other.funcion != null)
+				return false;
+		} else if (!funcion.equals(other.funcion))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	public Boolean getUsado() {
+		return usado;
+	}
+	public void setUsado(Boolean usado) {
+		this.usado = usado;
+	}
+	
 }

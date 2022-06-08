@@ -27,27 +27,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav w-100 d-flex justify-content-evenly">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="inicio">Home</a>
+              <a class="nav-link active" aria-current="page" href="inicio">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="peliculas">Peliculas</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Suscripciones
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
+              <a class="nav-link" href="suscripcion">Suscripciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
+              <a class="nav-link" href="cerrarSesion">Iniciar Session</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -61,9 +47,9 @@
 
   <main>
     <div class="container-fluid contenedorpago">
-      <form:form action="validar-compra?p=${p}" method="POST" modelAttribute="datosCompraBoleto">
-        
-        <input type="hidden" value="${datosCompraBoleto.getIdSala()}" id="tempidsala" name="idSala" path="idSala">
+      <form:form action="comprar-confirmar?p=${p}" method="POST" modelAttribute="datosCompraBoleto">
+      	
+      	<input type="hidden" value="${datosCompraBoleto.getIdSala()}" id="tempidsala" name="idSala" path="idSala">
        	<form:label for="tempidsala" path="idSala"></form:label>
        	<input type="hidden" value="${datosCompraBoleto.getIdUsuario()}" id="tempidusuario" name="idUsuario" path="idUsuario">
        	<form:label for="tempidusuario" path="idSala"></form:label>
@@ -77,24 +63,22 @@
        	<form:label for="tempidcine" path="idcine"></form:label>
        	<input type="hidden" value="${datosCompraBoleto.getIdButaca()}" id="tempidbutaca" name="idButaca" path="idButaca">
        	<form:label for="tempidbutaca" path="idButaca"></form:label>
-        
-        <div id="confirmacion">
-          <h1>Confirmas?</h1>
-          <img alt="imgPelicula" src="${peliculaElegida.getUrlImagenPelicula()}">
-				<h2>Pelicula: ${boletoGenerado.getFuncion().getPelicula().getNombre()}</h2>
-            	<h2>Fecha: ${boletoGenerado.getFuncion().getFechaHora() }</h2>
-            	<h2>Horario: ${boletoGenerado.getFuncion().getHora() } </h2>
-            	<h2>Cine: ${boletoGenerado.getFuncion().getCine().getNombreLocal() }</h2>
-            	<h2>Sala: ${boletoGenerado.getFuncion().getSala().getId()} -  ${boletoGenerado.getFuncion().getSala().getTipo() }</h2>
-				<h2>Precio: $${boletoGenerado.getPrecio()}</h2>
-				<h2>Número de butaca: ${boletoGenerado.getButaca().getId()}</h2>
+      	
+          <h1>Metodo pago</h1>
+          <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+
+         
+
+          <!-- zzzzzzzzzzzzzzzzzzzzzzzzzz -->
+
           <div class="d-flex justify-content-center btncompraboleto">
             <button type="button" class="btn btn-secondary">Volver</button>
-            <form:button type="button submit" class="btn btn-primary">Comprar</form:button>
+            <form:button type="button submit" class="btn btn-primary">Siguiente</form:button>
           </div>
         </div>
-
-      </form:form>
+        
+        
+     </form:form>
 
 
     </div>
@@ -114,8 +98,6 @@
   <script src="./js/bootstrap.min.js"></script>
   <script src="./js/pago.js"></script>
   
-
-
 </body>
 
 </html>
