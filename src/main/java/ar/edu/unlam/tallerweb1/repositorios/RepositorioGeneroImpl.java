@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Repository("repositorioGenero")
 public class RepositorioGeneroImpl implements RepositorioGenero {
@@ -41,6 +42,12 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
 	@Override
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+	}
+
+	@Override
+	public Genero obtenerGeneroPorid(Long id) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Genero) session.get(Genero.class, id);
 	}
 
 	
