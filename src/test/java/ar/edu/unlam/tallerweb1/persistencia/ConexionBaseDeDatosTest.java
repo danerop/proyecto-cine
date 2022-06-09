@@ -26,7 +26,6 @@ public class ConexionBaseDeDatosTest extends SpringTest{
     @Transactional @Rollback
     public void crearUsuario(){
     	Suscripcion sub = new Suscripcion();
-    	sub.setTipo("premium");
     	
         Usuario usuario = new Usuario();
         usuario.setEmail("seba@gmail.com");
