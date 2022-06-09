@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1;
+package ar.edu.unlam.tallerweb1.repositorios;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 
+import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.PeliculaGenero;
@@ -23,14 +24,10 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioPelicula;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioPeliculaGenero;
 
 
-public class PeliculaGeneroTest extends SpringTest {
+public class RepositorioPeliculaGeneroTest extends SpringTest {
 
 	@Autowired
 	RepositorioPeliculaGenero repoPeliculaGenero;
-	@Autowired
-	RepositorioPelicula repoPelicula;
-	@Autowired
-	RepositorioGenero repoGenero;
 	
 	@Test
 	@Transactional @Rollback
