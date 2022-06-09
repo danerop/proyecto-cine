@@ -52,17 +52,17 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	public Boleto buscarBoletoUnicoPorDatos(Long idCliente, Long idFuncion, Long idButaca) {
 		return repositorioBoletoDao.buscarBoletUnicoPorDatos(idCliente, idFuncion, idButaca);
 	}
-	@Override
-	public void generarQr(Long idBoleto, String path) throws WriterException, IOException {
-		String data="http://localhost:8080/proyecto-cine/validar-boleto?b=" + idBoleto;
-		String pathCompleta= path+"\\boleto" + idBoleto + ".jpg";
+//	@Override
+//	public void generarQr(Long idBoleto, String path) throws WriterException, IOException {
+//		String data="http://localhost:8080/proyecto-cine/validar-boleto?b=" + idBoleto;
+//		String pathCompleta= path+"\\boleto" + idBoleto + ".jpg";
 
 		//direccion del archivo generado (ver consola de eclipse cuando se entre a la pagina de recibo):
-		System.out.println("La direccion del qr es :" + pathCompleta);
-		
-		BitMatrix matrix = new MultiFormatWriter().encode(data, BarcodeFormat.QR_CODE, 500, 500);
-		MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(pathCompleta));
-	}
+//		System.out.println("La direccion del qr es :" + pathCompleta);
+//		
+//		BitMatrix matrix = new MultiFormatWriter().encode(data, BarcodeFormat.QR_CODE, 500, 500);
+//		MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(pathCompleta));
+//	}
 
 	@Override
 	public void registrarAsistenciaBoleto(Boleto boleto) {

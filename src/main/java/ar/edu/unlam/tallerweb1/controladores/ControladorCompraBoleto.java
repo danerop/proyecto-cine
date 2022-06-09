@@ -157,10 +157,10 @@ public class ControladorCompraBoleto {
 				servicioBoleto.guardarBoleto(boletoAGuardar);
 				
 				//generacion de path
-				ServletContext sc = request.getSession().getServletContext();
-				String imagespath = sc.getRealPath("/img/boletoqr");
-				
-				servicioBoleto.generarQr(boletoAGuardar.getId(), imagespath);
+//				ServletContext sc = request.getSession().getServletContext();
+//				String imagespath = sc.getRealPath("/img/boletoqr");
+//				
+//				servicioBoleto.generarQr(boletoAGuardar.getId(), imagespath);
 				
 				ButacaFuncion temp=servicioButacaFuncion.obtenerPorButacaYFuncion(boletoAGuardar.getFuncion(), boletoAGuardar.getButaca().getId());
 				temp.setOcupada(true);
@@ -189,6 +189,7 @@ public class ControladorCompraBoleto {
 			modelo.addAllAttributes(model);
 		}
 		modelo.put("boletoGenerado", servicioBoleto.buscarBoleto(idBoleto));
+		modelo.put("idBoleto", idBoleto);
 
 		return new ModelAndView("compra-recibocompra", modelo);
 	}

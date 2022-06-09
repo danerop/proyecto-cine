@@ -81,7 +81,7 @@
 				<button class="btn btn-primary mx-auto d-block">Imprimir</button>
 			</div>
 			<div class="col-6">
-				<img class="img-responsive w-50 mx-auto d-block" alt="codigoqr" src="./img/boletoqr/boleto${boletoGenerado.getId()}.jpg">
+				<img class="img-responsive w-50 mx-auto d-block" alt="codigoqr" src="http://api.qrserver.com/v1/create-qr-code/?data=http://localhost:8080/proyecto-cine/validar-boleto?b=${idBoleto}&size=500x500">
 				<br>
 				<h6 class="text-center">¡Mostrá esté código qr para entrar a la sala!</h6>
 			</div>
