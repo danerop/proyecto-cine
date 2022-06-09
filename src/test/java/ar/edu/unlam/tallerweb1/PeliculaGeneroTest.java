@@ -25,8 +25,6 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioPeliculaGenero;
 
 public class PeliculaGeneroTest extends SpringTest {
 
-
-	
 	@Autowired
 	RepositorioPeliculaGenero repoPeliculaGenero;
 	@Autowired
@@ -34,91 +32,6 @@ public class PeliculaGeneroTest extends SpringTest {
 	@Autowired
 	RepositorioGenero repoGenero;
 	
-	
-//	private List<Pelicula> cargarPeliculas() {
-//		List<Pelicula> peliculas = new ArrayList<Pelicula>();
-//		Pelicula pelicula = new Pelicula();
-//		pelicula.setNombre("Toy Story");
-//		repoPelicula.guardarPelicula(pelicula);
-//		peliculas.add(pelicula);
-//		
-//		pelicula = new Pelicula();
-//		pelicula.setNombre("Batman");
-//		repoPelicula.guardarPelicula(pelicula);
-//		peliculas.add(pelicula);
-//		
-//		
-//		pelicula = new Pelicula();
-//		pelicula.setNombre("Spiderman");
-//		repoPelicula.guardarPelicula(pelicula);
-//		peliculas.add(pelicula);
-//		
-//		
-//		
-//		return peliculas;
-//		
-//
-//	}
-//	
-//
-//	private List<Genero> cargarGeneros() {
-//		List<Genero>generosID = new ArrayList<Genero>();
-//		Genero genero = new Genero();
-//		genero.setNombre("Accion");
-//		session().save(genero);
-//		generosID.add(genero);
-//		
-//		genero = new Genero();
-//		genero.setNombre("Comedia");
-//		session().save(genero);
-//		generosID.add(genero);
-//		
-//		genero = new Genero();
-//		genero.setNombre("Terror");
-//		session().save(genero);
-//		generosID.add(genero);
-//		
-//		return generosID;
-//	}
-//	
-//
-//	private List<PeliculaGenero> asociarGenerosALasPeliculas(List<Pelicula>peliculas , List<Genero>generos) {
-//		List<PeliculaGenero>peliculageneros = new ArrayList<PeliculaGenero>();
-//		PeliculaGenero peliculaGenero = new PeliculaGenero();
-//		peliculaGenero.setPelicula(peliculas.get(0));
-//		peliculaGenero.setGenero(generos.get(0));
-//		session().save(peliculaGenero);
-//		peliculageneros.add(peliculaGenero);
-//		
-//		peliculaGenero = new PeliculaGenero();
-//		peliculaGenero.setPelicula(peliculas.get(0));
-//		peliculaGenero.setGenero(generos.get(1));
-//		session().save(peliculaGenero);
-//		peliculageneros.add(peliculaGenero);
-//		
-//		peliculaGenero = new PeliculaGenero();
-//		peliculaGenero.setPelicula(peliculas.get(1));
-//		peliculaGenero.setGenero(generos.get(0));	
-//		session().save(peliculaGenero);
-//		peliculageneros.add(peliculaGenero);
-//		
-//		peliculaGenero = new PeliculaGenero();
-//		peliculaGenero.setPelicula(peliculas.get(1));
-//		peliculaGenero.setGenero(generos.get(1));	
-//		session().save(peliculaGenero);
-//		peliculageneros.add(peliculaGenero);
-//		
-//		peliculaGenero = new PeliculaGenero();
-//		peliculaGenero.setPelicula(peliculas.get(1));
-//		peliculaGenero.setGenero(generos.get(2));	
-//		session().save(peliculaGenero);
-//		peliculageneros.add(peliculaGenero);
-//		
-//		return peliculageneros;
-//		
-//	}
-	
-
 	@Test
 	@Transactional @Rollback
 	public void agregarGeneroAPelicula() {
@@ -126,27 +39,24 @@ public class PeliculaGeneroTest extends SpringTest {
 		Pelicula pelicula = new Pelicula();
 		pelicula.setNombre("Toy Story");
 		session().save(pelicula);
-//		repoPelicula.guardarPelicula(pelicula);
 		
 		Genero genero = new Genero();
 		genero.setNombre("Accion");
 		session().save(genero);
-//		repoGenero.insertarGenero(genero);
+
 		Genero genero2 = new Genero();
 		genero2.setNombre("Comedia");
 		session().save(genero2);
-//		repoGenero.insertarGenero(genero2);
 		
 		PeliculaGenero peliculaGenero = new PeliculaGenero();
 		peliculaGenero.setPelicula(pelicula);
 		peliculaGenero.setGenero(genero);
 		session().save(peliculaGenero);
-//		repoPeliculaGenero.insertarPeliculaGenero(peliculaGenero);
+
 		PeliculaGenero peliculaGenero2 = new PeliculaGenero();
 		peliculaGenero2.setPelicula(pelicula);
 		peliculaGenero2.setGenero(genero2);
 		session().save(peliculaGenero2);
-//		repoPeliculaGenero.insertarPeliculaGenero(peliculaGenero2);
 	
 		assertNotNull(peliculaGenero.getId());
 		assertNotNull(peliculaGenero2.getId());
