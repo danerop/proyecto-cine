@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Cine;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionCine;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
 
 @Controller
@@ -33,7 +34,6 @@ public class ControladorAdminCine {
 		}
 		
 		ModelMap modelo = new ModelMap();
-		
 		modelo.addAttribute("datosCine", new Cine());
 		modelo.put("listaCines", servicioCine.obtenerTodosLosCines());
 		
@@ -44,21 +44,20 @@ public class ControladorAdminCine {
 	public ModelAndView agregarNuevoCine( @ModelAttribute("datosCine") Cine datosCine) {
 		
 		ModelMap model = new ModelMap();
-		Cine nuevoCine = new Cine();
-		
-		nuevoCine.setNombreLocal(datosCine.getNombreLocal());
-		nuevoCine.setDireccion(datosCine.getDireccion());
-		nuevoCine.setTelefono(datosCine.getTelefono());
-		nuevoCine.setEmail(datosCine.getEmail());
-		nuevoCine.setUrlImagenCine(datosCine.getUrlImagenCine());
-		nuevoCine.setLatitud(datosCine.getLatitud());
-		nuevoCine.setLongitud(datosCine.getLongitud());
-		
-		servicioCine.guardarCine(nuevoCine);
-		
 		model.addAttribute("datosCine", new Cine());
+		
+		try {
+			
+			servicioCine.guardarCine(datosCine);
+			
+		} catch (ExceptionCine e) {
+			model.put("listaCines", servicioCine.obtenerTodosLosCines());
+			model.put("msgError", e.getMessage() );
+			return new ModelAndView("admin-cines", model);
+		}
+		
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());
-		model.put("mens", "Cine guardado con exito");
+		model.put("msgExito", "Cine guardado con exito");
 		return new ModelAndView("admin-cines", model);
 	}
 }

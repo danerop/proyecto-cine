@@ -1,6 +1,5 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,7 +25,7 @@ public class Cine {
 	public Cine() {
 		
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
