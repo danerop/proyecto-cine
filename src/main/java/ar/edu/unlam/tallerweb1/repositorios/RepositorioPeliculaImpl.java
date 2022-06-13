@@ -5,6 +5,7 @@ import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
@@ -13,9 +14,13 @@ import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 @Repository("repositorioPelicula")
 public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	
-	@Inject
 	private SessionFactory sessionFactory;
 
+	@Autowired
+	public RepositorioPeliculaImpl(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 	@Override
 	public void guardarPelicula(Pelicula pelicula) {
 		Session session = sessionFactory.getCurrentSession();

@@ -27,7 +27,26 @@ public class ServicioCineImpl implements ServicioCine{
 	}
 
 	@Override
-	public void guardarCine(Cine cine) {
+	public void guardarCine(Cine cine){
+		String msg = "";
+		
+		if(cine.getNombreLocal()=="") {
+			msg= msg+"Rellenar nombre de local <br>";
+		}
+		if(cine.getTelefono()=="") {
+			msg= msg+"Rellenar teléfono <br>";
+		}
+		if(cine.getDireccion()=="") {
+			msg= msg+"Rellenar dirección <br>";
+		}
+		if(cine.getLatitud()==null || cine.getLongitud()==null) {
+			msg= msg+"Rellenar ubicación <br>";
+		}
+		
+		if(msg != "") {
+			throw new ExceptionCine(msg);
+		}
+		
 		repositorioCineDao.guardarCine(cine);
 	}
 

@@ -16,10 +16,10 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
 	
 	private SessionFactory sessionFactory;
 
-	/*@Autowired
+	@Autowired
 	public RepositorioGeneroImpl(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;
-	}*/
+	}
 
 	@Override
 	public void insertarGenero(Genero genero) {

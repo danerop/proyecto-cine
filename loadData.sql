@@ -26,10 +26,10 @@ VALUES (1 , true, "elian@gmail.com", "1234", "admin", "img", 1),
        (2, true, "hector@gmail.com", "1234", "usuario", "img", 2),
        (3, true, "braian@gmail.com", "1234", "recepcionista", "img", 3);
 
-INSERT INTO cine(id, nombreLocal, direccion, email, telefono, urlImagenCine)
-VALUES(1, "CINEMARKO", "Calle Anonima 567", "cinemarko@gmail.com", "4444-3333", "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/90/24/84/cinemark.jpg?w=1200&h=-1&s=1"),
-	  (2, "GRANPANTALLA", "Buitre 452", "granpantalla@gmail.com", "4848-5353", "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Sala_de_cine.jpg/1200px-Sala_de_cine.jpg"),
-	  (3, "IMAX", "Av. Corta 123", "imax@gmail.com", "4141-4523", "https://www.adslzone.net/app/uploads-adslzone.net/2018/04/IMAXNewTheater.jpg");
+INSERT INTO cine(id, nombreLocal, direccion, latitud, longitud, email, telefono, urlImagenCine)
+VALUES(1, "CINEMARKO", "Calle Anonima 567", -34.6356, -58.5420, "cinemarko@gmail.com", "4444-3333", "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/90/24/84/cinemark.jpg?w=1200&h=-1&s=1"),
+	  (2, "GRANPANTALLA", "Buitre 452", -34.5602, -59.1284, "granpantalla@gmail.com", "4848-5353", "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Sala_de_cine.jpg/1200px-Sala_de_cine.jpg"),
+	  (3, "IMAX", "Av. Corta 123", -45.8687, -67.5196, "imax@gmail.com", "4141-4523", "https://www.adslzone.net/app/uploads-adslzone.net/2018/04/IMAXNewTheater.jpg");
 
 INSERT INTO sala(id, tipo, cine_id)
 VALUES(1,"Comun",1),
