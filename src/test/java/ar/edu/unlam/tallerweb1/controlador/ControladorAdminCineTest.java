@@ -6,8 +6,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.controladores.ControladorAdminCine;
@@ -21,7 +24,7 @@ public class ControladorAdminCineTest {
 	private ServicioCine servicioCine = mock(ServicioCine.class);
 	private ControladorAdminCine controladorAdminCine = new ControladorAdminCine(servicioCine);
 	
-	/* test comentado por no poder solucionar problema con httpServletRequest, nullpointerexception...
+//	/* test comentado por no poder solucionar problema con httpServletRequest, nullpointerexception...
 	@Test
 	public void sePuedeAccederALaPaginaSiElUsuarioEsAdmin() {
 		Usuario user = new Usuario();
@@ -29,14 +32,18 @@ public class ControladorAdminCineTest {
 		user.setRol("admin");
 		
 		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
+		HttpSession sessionmock=mock(HttpSession.class);
 		
-		when(mockRequest.getAttribute("usuario")).thenReturn(user);
+		sessionmock.setAttribute("usuario", user);
+		when(mockRequest.getSession()).thenReturn(sessionmock);
+		when(mockRequest.getSession().getAttribute("usuario")).thenReturn(user);
+	
 		
 		ModelAndView mav = controladorAdminCine.irAAdminCargarCine(mockRequest);
 		
 		assertEquals(mav.getViewName(), "admin-cines");
 	}
-	*/
+//	*/
 	
 	@Test
 	public void registroExitosoDeCine() {
