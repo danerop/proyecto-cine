@@ -16,4 +16,6 @@ public interface RepositorioGenero {
 	
 	void setSessionFactory(SessionFactory sessionFactory);
 	
+	Genero obtenerGeneroPorid(Long id);
+	
 }

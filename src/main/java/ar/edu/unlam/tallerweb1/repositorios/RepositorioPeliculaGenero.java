@@ -17,4 +17,5 @@ public interface RepositorioPeliculaGenero {
 	
 	void setSessionFactory(SessionFactory sessionFactory);
 	
+	List<PeliculaGenero> obtenerTodosLosRegistros();
 }

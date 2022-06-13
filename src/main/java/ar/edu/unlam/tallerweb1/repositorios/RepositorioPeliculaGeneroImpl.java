@@ -11,6 +11,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import ar.edu.unlam.tallerweb1.modelo.Cine;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.PeliculaGenero;
@@ -48,4 +49,11 @@ public class RepositorioPeliculaGeneroImpl implements RepositorioPeliculaGenero 
 		this.sessionFactory = sessionFactory;
 		
 	}
+
+	@Override
+	public List<PeliculaGenero> obtenerTodosLosRegistros() {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(PeliculaGenero.class).list();
+	}
+	
 }

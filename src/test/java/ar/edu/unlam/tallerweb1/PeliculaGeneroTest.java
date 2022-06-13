@@ -1,144 +1,209 @@
 package ar.edu.unlam.tallerweb1;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.PeliculaGenero;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioGenero;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioGeneroImpl;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioPelicula;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioPeliculaGenero;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioPeliculaGeneroImpl;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioPeliculaImpl;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioSuscripcion;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioSuscripcionImpl;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioUsuario;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioUsuarioImpl;
+
 
 public class PeliculaGeneroTest extends SpringTest {
 
-	@Inject
-	private SessionFactory sessionFactory;
 
-	RepositorioUsuario repoUsuario = new RepositorioUsuarioImpl();
-	RepositorioSuscripcion repoSuscripcion = new RepositorioSuscripcionImpl();
-	RepositorioPeliculaGenero repoPeliculaGenero = new RepositorioPeliculaGeneroImpl();
-	RepositorioPelicula repoPelicula = new RepositorioPeliculaImpl();
-	RepositorioGenero repoGenero = new RepositorioGeneroImpl();
 	
-	private List<Long> cargarPeliculas() {
-		List<Long> peliculasId = new ArrayList<Long>();
-		Pelicula pelicula = new Pelicula();
-		pelicula.setNombre("Toy Story");
-		peliculasId.add((Long) sessionFactory.getCurrentSession().save(pelicula));
-		
-		pelicula = new Pelicula();
-		pelicula.setNombre("Batman");
-		peliculasId.add((Long) sessionFactory.getCurrentSession().save(pelicula));
-		
-		pelicula = new Pelicula();
-		pelicula.setNombre("Spiderman");
-		peliculasId.add((Long) sessionFactory.getCurrentSession().save(pelicula));
-		
-		return peliculasId;
-	}
+	@Autowired
+	RepositorioPeliculaGenero repoPeliculaGenero;
+	@Autowired
+	RepositorioPelicula repoPelicula;
+	@Autowired
+	RepositorioGenero repoGenero;
 	
-	private List<Long> cargarGeneros() {
-		List<Long>generosID = new ArrayList<Long>();
-		Genero genero = new Genero();
-		genero.setNombre("Accion");
-		generosID.add((Long) sessionFactory.getCurrentSession().save(genero));
-		
-		genero = new Genero();
-		genero.setNombre("Comedia");
-		generosID.add((Long) sessionFactory.getCurrentSession().save(genero));
-		
-		genero = new Genero();
-		genero.setNombre("Terror");
-		generosID.add((Long) sessionFactory.getCurrentSession().save(genero));
-		
-		return generosID;
-	}
 	
-	private void asociarGenerosALasPeliculas(List<Long>peliculasId , List<Long>generosID) {
-		PeliculaGenero peliculaGenero = new PeliculaGenero();
-		peliculaGenero.setPelicula(sessionFactory.getCurrentSession().get(Pelicula.class, peliculasId.get(0)));
-		peliculaGenero.setGenero(sessionFactory.getCurrentSession().get(Genero.class, generosID.get(0)));
-		sessionFactory.getCurrentSession().save(peliculaGenero);
-		
-		peliculaGenero = new PeliculaGenero();
-		peliculaGenero.setPelicula(sessionFactory.getCurrentSession().get(Pelicula.class, peliculasId.get(0)));
-		peliculaGenero.setGenero(sessionFactory.getCurrentSession().get(Genero.class, generosID.get(1)));
-		sessionFactory.getCurrentSession().save(peliculaGenero);
-		
-		peliculaGenero = new PeliculaGenero();
-		peliculaGenero.setPelicula(sessionFactory.getCurrentSession().get(Pelicula.class, peliculasId.get(1)));
-		peliculaGenero.setGenero(sessionFactory.getCurrentSession().get(Genero.class, generosID.get(0)));	
-		sessionFactory.getCurrentSession().save(peliculaGenero);
-		
-		peliculaGenero = new PeliculaGenero();
-		peliculaGenero.setPelicula(sessionFactory.getCurrentSession().get(Pelicula.class, peliculasId.get(1)));
-		peliculaGenero.setGenero(sessionFactory.getCurrentSession().get(Genero.class, generosID.get(1)));	
-		sessionFactory.getCurrentSession().save(peliculaGenero);
-		
-		peliculaGenero = new PeliculaGenero();
-		peliculaGenero.setPelicula(sessionFactory.getCurrentSession().get(Pelicula.class, peliculasId.get(1)));
-		peliculaGenero.setGenero(sessionFactory.getCurrentSession().get(Genero.class, generosID.get(2)));	
-		sessionFactory.getCurrentSession().save(peliculaGenero);
-		
-	}
+//	private List<Pelicula> cargarPeliculas() {
+//		List<Pelicula> peliculas = new ArrayList<Pelicula>();
+//		Pelicula pelicula = new Pelicula();
+//		pelicula.setNombre("Toy Story");
+//		repoPelicula.guardarPelicula(pelicula);
+//		peliculas.add(pelicula);
+//		
+//		pelicula = new Pelicula();
+//		pelicula.setNombre("Batman");
+//		repoPelicula.guardarPelicula(pelicula);
+//		peliculas.add(pelicula);
+//		
+//		
+//		pelicula = new Pelicula();
+//		pelicula.setNombre("Spiderman");
+//		repoPelicula.guardarPelicula(pelicula);
+//		peliculas.add(pelicula);
+//		
+//		
+//		
+//		return peliculas;
+//		
+//
+//	}
+//	
+//
+//	private List<Genero> cargarGeneros() {
+//		List<Genero>generosID = new ArrayList<Genero>();
+//		Genero genero = new Genero();
+//		genero.setNombre("Accion");
+//		session().save(genero);
+//		generosID.add(genero);
+//		
+//		genero = new Genero();
+//		genero.setNombre("Comedia");
+//		session().save(genero);
+//		generosID.add(genero);
+//		
+//		genero = new Genero();
+//		genero.setNombre("Terror");
+//		session().save(genero);
+//		generosID.add(genero);
+//		
+//		return generosID;
+//	}
+//	
+//
+//	private List<PeliculaGenero> asociarGenerosALasPeliculas(List<Pelicula>peliculas , List<Genero>generos) {
+//		List<PeliculaGenero>peliculageneros = new ArrayList<PeliculaGenero>();
+//		PeliculaGenero peliculaGenero = new PeliculaGenero();
+//		peliculaGenero.setPelicula(peliculas.get(0));
+//		peliculaGenero.setGenero(generos.get(0));
+//		session().save(peliculaGenero);
+//		peliculageneros.add(peliculaGenero);
+//		
+//		peliculaGenero = new PeliculaGenero();
+//		peliculaGenero.setPelicula(peliculas.get(0));
+//		peliculaGenero.setGenero(generos.get(1));
+//		session().save(peliculaGenero);
+//		peliculageneros.add(peliculaGenero);
+//		
+//		peliculaGenero = new PeliculaGenero();
+//		peliculaGenero.setPelicula(peliculas.get(1));
+//		peliculaGenero.setGenero(generos.get(0));	
+//		session().save(peliculaGenero);
+//		peliculageneros.add(peliculaGenero);
+//		
+//		peliculaGenero = new PeliculaGenero();
+//		peliculaGenero.setPelicula(peliculas.get(1));
+//		peliculaGenero.setGenero(generos.get(1));	
+//		session().save(peliculaGenero);
+//		peliculageneros.add(peliculaGenero);
+//		
+//		peliculaGenero = new PeliculaGenero();
+//		peliculaGenero.setPelicula(peliculas.get(1));
+//		peliculaGenero.setGenero(generos.get(2));	
+//		session().save(peliculaGenero);
+//		peliculageneros.add(peliculaGenero);
+//		
+//		return peliculageneros;
+//		
+//	}
 	
-	private List<String>obtenerGenerosDeUnaPelicula(Pelicula pelicula){
-		return sessionFactory.getCurrentSession().createCriteria(PeliculaGenero.class)
-                                                 .add(Restrictions.eq("pelicula", pelicula))
-                                                 .createAlias("genero", "tablaGenero")
-                                                 .setProjection(Projections.property("tablaGenero.nombre"))
-                                                 .list();
-	}
-	
+
 	@Test
 	@Transactional @Rollback
-	public void agregarGenerosALasPeliculas() {
+	public void agregarGeneroAPelicula() {
 		
-		List<Long>generos  = cargarGeneros();
-		List<Long>peliculas = cargarPeliculas();
-		asociarGenerosALasPeliculas(peliculas, generos);
+		Pelicula pelicula = new Pelicula();
+		pelicula.setNombre("Toy Story");
+		session().save(pelicula);
+//		repoPelicula.guardarPelicula(pelicula);
 		
-		//El resultado me tiene que dar 3 registros
-		Integer actual = sessionFactory.getCurrentSession().createCriteria(PeliculaGenero.class).list().size();
-		Integer expected = 5;
+		Genero genero = new Genero();
+		genero.setNombre("Accion");
+		session().save(genero);
+//		repoGenero.insertarGenero(genero);
+		Genero genero2 = new Genero();
+		genero2.setNombre("Comedia");
+		session().save(genero2);
+//		repoGenero.insertarGenero(genero2);
 		
+		PeliculaGenero peliculaGenero = new PeliculaGenero();
+		peliculaGenero.setPelicula(pelicula);
+		peliculaGenero.setGenero(genero);
+		session().save(peliculaGenero);
+//		repoPeliculaGenero.insertarPeliculaGenero(peliculaGenero);
+		PeliculaGenero peliculaGenero2 = new PeliculaGenero();
+		peliculaGenero2.setPelicula(pelicula);
+		peliculaGenero2.setGenero(genero2);
+		session().save(peliculaGenero2);
+//		repoPeliculaGenero.insertarPeliculaGenero(peliculaGenero2);
+	
+		assertNotNull(peliculaGenero.getId());
+		assertNotNull(peliculaGenero2.getId());
+		
+		Integer actual = repoPeliculaGenero.obtenerTodosLosRegistros().size();
+		Integer expected = 2;
 		assertEquals(expected , actual);
 	}
 	
+
 	@Test
 	@Transactional @Rollback
 	public void conseguirGenerosDeUnaPelicula() {
-		List<Long>generos  = cargarGeneros();
-		List<Long>peliculas = cargarPeliculas();
-		asociarGenerosALasPeliculas(peliculas, generos);
-		Pelicula pelicula1 = sessionFactory.getCurrentSession().get(Pelicula.class, peliculas.get(0));
-		Pelicula pelicula2 = sessionFactory.getCurrentSession().get(Pelicula.class, peliculas.get(1));
+		//Registros de película
+		Pelicula pelicula = new Pelicula();
+		pelicula.setNombre("Toy Story");
+		session().save(pelicula);
+		Pelicula pelicula2 = new Pelicula();
+		pelicula2.setNombre("Batman");
+		session().save(pelicula2);
+
+		//Registros de género
+		Genero genero = new Genero();
+		genero.setNombre("Accion");
+		session().save(genero);
+		Genero genero2 = new Genero();
+		genero2.setNombre("Comedia");
+		session().save(genero2);
 		
-		List<String>generosDePelicula2 = obtenerGenerosDeUnaPelicula(pelicula2);
+		//Registros de PelículaGénero
+		PeliculaGenero peliculaGenero = new PeliculaGenero();
+		peliculaGenero.setPelicula(pelicula);
+		peliculaGenero.setGenero(genero);
+		session().save(peliculaGenero);
+		PeliculaGenero peliculaGenero2 = new PeliculaGenero();
+		peliculaGenero2.setPelicula(pelicula);
+		peliculaGenero2.setGenero(genero2);
+		session().save(peliculaGenero2);
+		PeliculaGenero peliculaGenero3 = new PeliculaGenero();
+		peliculaGenero3.setPelicula(pelicula2);
+		peliculaGenero3.setGenero(genero);
+		session().save(peliculaGenero3);
+
+		//Validación determinada película pertenece determinados géneros
+		String generoEsperado="Comedia";
+		Boolean esDeEseGenero=repoPeliculaGenero.obtenerGenerosDeUnaPelicula(pelicula).contains(generoEsperado);
+		assertTrue(esDeEseGenero); 
+		String generoEsperado2="Accion";
+		Boolean esDeEseGenero2=repoPeliculaGenero.obtenerGenerosDeUnaPelicula(pelicula).contains(generoEsperado2);
+		assertTrue(esDeEseGenero2);
 		
-		
-		assertEquals("Accion" , generosDePelicula2.get(0));
-		assertEquals(3 , generosDePelicula2.size());
+		//Validación cantidad de registros de géneros asociados a una película
+		Integer cantidadDeGenerosAsociadosEsperada=2;
+		Integer cantidadDeGenerosAsociadosReal=repoPeliculaGenero.obtenerGenerosDeUnaPelicula(pelicula).size();
+		assertEquals(cantidadDeGenerosAsociadosEsperada , cantidadDeGenerosAsociadosReal);
 		
 	}
+	
 
 }
