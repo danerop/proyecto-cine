@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,9 +26,9 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioSuscripcion;
 
 public class ControladorSuscripcionTest {
 
-	private ServicioLogin servicioUsuario;
-	private ServicioSuscripcion servicioSuscripcion;
-	private ServicioDetalleSuscripcion servicioDetalleSuscripcion;
+	private ServicioLogin servicioUsuario = mock(ServicioLogin.class);
+	private ServicioSuscripcion servicioSuscripcion = mock(ServicioSuscripcion.class);
+	private ServicioDetalleSuscripcion servicioDetalleSuscripcion = mock(ServicioDetalleSuscripcion.class);
 	private ControladorSuscripcion controladorSuscripcion = new ControladorSuscripcion(servicioSuscripcion, servicioUsuario, servicioDetalleSuscripcion);
 	private Usuario usuarioMock;
 	private HttpServletRequest requestMock;
@@ -66,14 +67,25 @@ public class ControladorSuscripcionTest {
 		assertThat(mav.getViewName()).isEqualTo("redirect:/login");
 	}
 	
-	/*@Test
+	@Test
 	@Rollback(true)
 	@Transactional
 	public void suscripcionExitosa() {
 		// Preparacion
-		when(requestMock.getSession()).thenReturn(sessionMock);
+		Usuario user=new Usuario();
+		Suscripcion sus=new Suscripcion();
+		DetalleSuscripcion detalle=new DetalleSuscripcion();
 		DatosSuscripcion datos = new DatosSuscripcion();
-		datos.setIdDetalleSuscripcion(2L);
+		sus.setId(1l);
+		sus.setDetalleSuscripcion(detalle);
+		user.setId(1l);
+		user.setSuscripcion(sus);
+		sessionMock.setAttribute("usuario", user);
+		when(requestMock.getSession()).thenReturn(sessionMock);
+		when(requestMock.getSession().getAttribute("usuario")).thenReturn(user);
+		when(servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(Mockito.anyLong())).thenReturn(detalle);
+		
+
 		
 		DetalleSuscripcion ds = new DetalleSuscripcion();
 		ds.setId(2L);
@@ -88,7 +100,7 @@ public class ControladorSuscripcionTest {
 		
 		// Validación
 		assertThat(modelo.getViewName()).isEqualTo("suscripcion-validar");
-	}*/
+	}
 	
 	/*@Test
 	@Rollback(true)

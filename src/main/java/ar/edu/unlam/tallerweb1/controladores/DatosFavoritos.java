@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.util.List;
+
 public class DatosFavoritos {
 
 	private Long idGenero;
@@ -17,4 +19,6 @@ public class DatosFavoritos {
 	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+
+
 }
