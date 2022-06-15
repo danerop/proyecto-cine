@@ -198,7 +198,7 @@ public class ControladorCompraBoletoTest {
 		assertEquals(mav.getViewName(), "redirect:/recibo?b="+null);
 	}
 	@Test
-	public void queQueNoSeGenereUnBoletoSiLaFuncionSeleccionadaNoExiste() {
+	public void queSeRedireccioneAInicioSiLaFuncionSeleccionadaNoExisteCuandoSeIntetaGenerarUnBoleto() {
 		Usuario user = new Usuario();
 		user.setId(1l);
 		user.setRol("usuario");
@@ -224,7 +224,33 @@ public class ControladorCompraBoletoTest {
 		assertEquals("La función de la cual desea reservar boleto no existe", mav.getModel().get("msg"));
 	}
 	@Test
-	public void queQueNoSeGenereUnBoletoSiLaButacaSeleccionadaEstaOcupada() {
+	public void queSeRedireccioneAInicioSiLosDatosDelBoletoNoCoincidenConRegistroButacaFuncionCuandoSeIntetaGenerarUnBoleto() {
+		Usuario user = new Usuario();
+		user.setId(1l);
+		user.setRol("usuario");
+		
+		DatosCompraBoleto datos=new DatosCompraBoleto();
+		Butaca butaca=new Butaca();
+		butaca.setId(1l);
+		
+		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
+		HttpSession sessionmock=mock(HttpSession.class);
+		RedirectAttributes redatt=mock(RedirectAttributes.class);
+		
+		when(mockRequest.getSession()).thenReturn(sessionmock);
+		when(mockRequest.getSession().getAttribute("usuario")).thenReturn(user);
+		when(servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString()
+				, Mockito.anyString(), Mockito.anyLong())).thenReturn(null);
+		when(servicioButaca.obtenerButaca(Mockito.anyLong())).thenReturn(butaca);
+		doThrow(ExceptionDatosBoletoDiferentesARegistroButacaFuncion.class).when(servicioBoleto).guardarBoleto(Mockito.any(Boleto.class), Mockito.any(ButacaFuncion.class));
+
+		ModelAndView mav =  controladorCompraBoleto.irARecibo(1l, mockRequest, datos, redatt);
+		
+		assertEquals("redirect:/inicio", mav.getViewName());
+		assertEquals("Los datos de la butaca seleccionada no corresponden a una válida", mav.getModel().get("msg"));
+	}
+	@Test
+	public void queSeRedireccioneAInicioSiLaButacaSeleccionadaEstaOcupadaCuandoSeIntentaGenerarUnBoleto() {
 		Usuario user = new Usuario();
 		user.setId(1l);
 		user.setRol("usuario");

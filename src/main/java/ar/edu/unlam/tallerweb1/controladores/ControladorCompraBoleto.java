@@ -161,7 +161,11 @@ public class ControladorCompraBoleto {
 			model.put("msg", "La función de la cual desea reservar boleto no existe");
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			return new ModelAndView("redirect:/inicio", model);
-		}  catch (ExceptionButacaYaOcupada e) {
+		} 	catch (ExceptionDatosBoletoDiferentesARegistroButacaFuncion e) {
+			model.put("msg", "Los datos de la butaca seleccionada no corresponden a una válida");
+			redirectAttributes.addFlashAttribute("mapping1Form", model);
+			return new ModelAndView("redirect:/inicio", model);
+		} 	catch (ExceptionButacaYaOcupada e) {
 			model.put("msg", "La butaca seleccionada ya ha sido ocupada, por favor intente con otra");
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			return new ModelAndView("redirect:/inicio", model);

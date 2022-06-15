@@ -42,8 +42,11 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	@Override
 	public void guardarBoleto(Boleto boleto, ButacaFuncion temp) {	
 
-		if (boleto.getFuncion()==null || boleto.getFuncion().getId()==null) {
+		if (boleto.getFuncion()==null || boleto.getFuncion().getId()==null || boleto.getFuncion().getEntradasDisponibles()<=0) {
 			throw new ExceptionFuncionNoEncontrada("La función de la cual desea reservar boleto no existe");
+		}
+		if (temp.getFuncion()!=boleto.getFuncion() || temp.getButaca() != boleto.getButaca()) {
+			throw new ExceptionDatosBoletoDiferentesARegistroButacaFuncion("Los datos de la butaca seleccionada no corresponden a una válida");
 		}
 
 		if (boleto.getButaca()==null || temp==null || temp.getOcupada()==true ) {

@@ -8,11 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.edu.unlam.tallerweb1.modelo.Cine;
-import ar.edu.unlam.tallerweb1.modelo.Funcion;
-import ar.edu.unlam.tallerweb1.modelo.Pelicula;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioCine;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioFuncion;
+import ar.edu.unlam.tallerweb1.modelo.*;
+import ar.edu.unlam.tallerweb1.repositorios.*;
 
 @Service("servicioFuncion")
 @Transactional
@@ -59,17 +56,21 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	@Override
 	public Funcion obtenerFuncionesPorCineFechaHoraSalaYPelicula(Long idCine, Long idPelicula, String fechaHora,
 			String hora, Long idSala) {
-		Date temp=null;
-		if (fechaHora!=null) {
-			temp=Date.valueOf(fechaHora);
+		Date temp=null;	
+		try {
+				temp=Date.valueOf(fechaHora);
+			}catch (IllegalArgumentException e){
+				temp=Date.valueOf("0000-01-01");
+			}
+			 finally {
+					Funcion funcionzz=repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, temp, hora, idSala);
+					return funcionzz;
+			}
+			
 	
-		}
+		
 
-		Funcion funcionzz=repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, temp, hora, idSala);
-//		if (funcionzz==null) {
-//			throw new NullPointerException("Funcion no encontrada");
-//		}
-		return funcionzz;
+
 	}
 
 
