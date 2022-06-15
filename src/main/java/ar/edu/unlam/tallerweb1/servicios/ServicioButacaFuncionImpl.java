@@ -52,5 +52,9 @@ private RepositorioButacaFuncion repositorioButacaDao;
 		
 	}
 	
-	
+	@Override
+	public Boolean isButacaOcupada(Funcion funcion, Long idButaca) {
+		ButacaFuncion temp=repositorioButacaDao.obtenerPorButacaYFuncion(funcion, idButaca);
+		return temp.getOcupada();
+	}
 }
