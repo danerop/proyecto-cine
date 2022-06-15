@@ -9,14 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.controladores.ControladorAdminCine;
 import ar.edu.unlam.tallerweb1.modelo.Cine;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
-import ar.edu.unlam.tallerweb1.servicios.ExceptionCine;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionCineCamposVacios;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
 
 public class ControladorAdminCineTest {
@@ -63,7 +61,7 @@ public class ControladorAdminCineTest {
 		cineNuevo.setNombreLocal("nombre");
 		cineNuevo.setLongitud(-60.0);
 		
-		doThrow(ExceptionCine.class)
+		doThrow(ExceptionCineCamposVacios.class)
 			.when(servicioCine)
 			.guardarCine(cineNuevo);
 		

@@ -2,6 +2,10 @@ package ar.edu.unlam.tallerweb1.repositorios;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -31,27 +35,28 @@ public class RepositorioCineTest extends SpringTest{
 		
 		assertNotNull(cineNuevo.getId());
 	}
-
+	
 	@Test
 	@Transactional @Rollback
 	public void queSeDevuelvanTodosLosCinesRegistrados() {
-		registrarNuevoCine("cine 1", "dir", "tel", 0.0, 0.0);
-		registrarNuevoCine("cine 2", "dir", "tel", 0.0, 0.0);
-		registrarNuevoCine("cine 3", "dir", "tel", 0.0, 0.0);
-		registrarNuevoCine("cine 4", "dir", "tel", 0.0, 0.0);
+		List<Cine> listaCines = new ArrayList<Cine>();
 		
+		agregarNuevoCineALaLista(listaCines, "IMAX");
+		agregarNuevoCineALaLista(listaCines, "CINEMAX");
+		agregarNuevoCineALaLista(listaCines, "OTRO");
+		agregarNuevoCineALaLista(listaCines, "OTRO2");
 		
+		Iterator<Cine> iter = listaCines.iterator();
+		while (iter.hasNext()) {
+		    repositorioCine.guardarCine(iter.next());
+		}
+		
+		assertEquals(listaCines,repositorioCine.obtenerTodosLosCines());
 	}
 	
-	public void registrarNuevoCine(String nom, String dir, String tel, Double lat, Double lon) {
+	public void agregarNuevoCineALaLista(List<Cine> listaCines, String nom) {
 		Cine cine = new Cine();
-		
 		cine.setNombreLocal(nom);
-		cine.setDireccion(dir);
-		cine.setTelefono(tel);
-		cine.setLatitud(lat);
-		cine.setLongitud(lon);
-		
-		repositorioCine.guardarCine(cine);
+		listaCines.add(cine);
 	}
 }

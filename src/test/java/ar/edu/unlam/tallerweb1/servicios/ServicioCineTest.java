@@ -27,7 +27,7 @@ public class ServicioCineTest {
 		verify(repositorioCine).guardarCine(cineNuevo);
 	}
 	
-	@Test (expected = ExceptionCine.class)
+	@Test (expected = ExceptionCineCamposVacios.class)
 	public void registroFallidoDeCinePorFaltaDeDatos() {
 		Cine cineNuevo = new Cine();
 		cineNuevo.setNombreLocal("nombre");

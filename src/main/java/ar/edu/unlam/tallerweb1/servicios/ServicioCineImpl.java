@@ -44,7 +44,7 @@ public class ServicioCineImpl implements ServicioCine{
 		}
 		
 		if(msg != "") {
-			throw new ExceptionCine(msg);
+			throw new ExceptionCineCamposVacios(msg);
 		}
 		
 		repositorioCineDao.guardarCine(cine);
