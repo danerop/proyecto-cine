@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +44,6 @@ public class ControladorFavorito {
 		ModelMap model = new ModelMap();
 		
 		model.put("listaDeGeneros", servicioGenero.obtenerTodosLosGeneros());
-		model.addAllAttributes(servicioGenero.obtenerTodosLosGeneros());
-		model.addAllAttributes(servicioGenero.obtenerTodosLosGeneros());
-		model.addAttribute("listaDeGeneros", servicioGenero.obtenerTodosLosGeneros());
-		model.put("datosFavoritos", datosFavoritos);
 
 		return new ModelAndView("generos", model);
 	}
@@ -53,16 +51,17 @@ public class ControladorFavorito {
 	@RequestMapping(path = "/validarGenerosFavoritos", method = RequestMethod.POST)
 	public ModelAndView guardarGenerosFavoritos(HttpServletRequest request,
 										   		@RequestParam(value = "g") Long idGenero,
-										   		@RequestParam(value = "u") Long idUsuario,
 										   		@ModelAttribute("datosFavoritos") DatosFavoritos datosFavoritos){
 				
 				ModelMap model = new ModelMap();
 				
 				Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
-				/*usuarioSesion.setId(idUsuario);*/
 				
-				Genero genero = new Genero();
-				genero.setId(idGenero);
+				Genero genero = servicioGenero.obtenerGeneroPorid(datosFavoritos.getIdGenero());
+				// genero.setId(idGenero);
+				
+				DatosFavoritos df = new DatosFavoritos();
+				df.setIdGenero(idGenero);
 				
 				Favorito favorito = new Favorito();
 				favorito.setGenero(genero);
@@ -70,10 +69,9 @@ public class ControladorFavorito {
 				servicioFavorito.modificarFavorito(favorito);
 				
 				if (usuarioSesion != null) {
-					model.addAttribute("datosFavoritos", genero);
-					model.addAttribute("datosFavoritos", usuarioSesion);
+					model.addAttribute("datosFavoritos", df);
+					model.addAttribute("g", idGenero);
 					model.put("g", idGenero);
-					model.put("u", idUsuario);
 					model.put("favoritoElegido", servicioFavorito.obtenerFavoritoPorUsuario(usuarioSesion.getId()));
 
 					return new ModelAndView("generos-favoritos", model);

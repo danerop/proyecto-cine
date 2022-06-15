@@ -6,6 +6,7 @@ public class DatosFavoritos {
 
 	private Long idGenero;
 	private Long idUsuario;
+	private List<Long> idGeneros;
 	
 	public Long getIdGenero() {
 		return idGenero;
@@ -19,6 +20,10 @@ public class DatosFavoritos {
 	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-
-
+	public List<Long> getIdGeneros() {
+		return idGeneros;
+	}
+	public void setIdGeneros(List<Long> idGeneros) {
+		this.idGeneros = idGeneros;
+	}
 }

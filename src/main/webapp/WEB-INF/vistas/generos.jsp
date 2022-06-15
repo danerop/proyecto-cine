@@ -19,14 +19,14 @@
 <br><br>
 <main class="container-fluid">
 
-<form:form action="validarGenerosFavoritos?g=${g}&u=${u}" method="POST" modelAttribute="datosFavoritos">
+<form:form action="validarGenerosFavoritos?g=${g}" method="POST" modelAttribute="datosFavoritos">
   <fieldset>
   <legend>Selecciona tus generos favoritos</legend>
     <div>
        <form:select id="generos" path="idGenero" items="${listaDeGeneros}" multiple="multiple"></form:select>
     </div>
     <div>
-      <button value="submit" >Guardar</button>
+      <form:button type="button submit">Guardar</form:button> 
     </div>
   </fieldset>
 </form:form>
