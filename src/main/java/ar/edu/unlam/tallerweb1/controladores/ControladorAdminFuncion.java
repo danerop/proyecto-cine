@@ -66,7 +66,12 @@ public class ControladorAdminFuncion {
 		return new ModelAndView("admin-funciones", modelo);
 	}
 	@RequestMapping(path = "/agregar-funcion", method = RequestMethod.POST)
-	public ModelAndView agregarNuevaFuncion( @ModelAttribute("datosFuncion") DatosFuncion datosFuncion ) {
+	public ModelAndView agregarNuevaFuncion( @ModelAttribute("datosFuncion") DatosFuncion datosFuncion, HttpServletRequest request) {
+		
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (user == null || !user.getRol().equals("admin") ) {
+			return new ModelAndView("redirect:/inicio");
+		}
 		
 		ModelMap model = new ModelMap();
 		Funcion nuevaFuncion = new Funcion();

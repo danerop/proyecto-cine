@@ -32,4 +32,26 @@ public class RepositorioCineTest extends SpringTest{
 		assertNotNull(cineNuevo.getId());
 	}
 
+	@Test
+	@Transactional @Rollback
+	public void queSeDevuelvanTodosLosCinesRegistrados() {
+		registrarNuevoCine("cine 1", "dir", "tel", 0.0, 0.0);
+		registrarNuevoCine("cine 2", "dir", "tel", 0.0, 0.0);
+		registrarNuevoCine("cine 3", "dir", "tel", 0.0, 0.0);
+		registrarNuevoCine("cine 4", "dir", "tel", 0.0, 0.0);
+		
+		
+	}
+	
+	public void registrarNuevoCine(String nom, String dir, String tel, Double lat, Double lon) {
+		Cine cine = new Cine();
+		
+		cine.setNombreLocal(nom);
+		cine.setDireccion(dir);
+		cine.setTelefono(tel);
+		cine.setLatitud(lat);
+		cine.setLongitud(lon);
+		
+		repositorioCine.guardarCine(cine);
+	}
 }

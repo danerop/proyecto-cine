@@ -50,7 +50,12 @@ public class ControladorAdminSala {
 	}
 	
 	@RequestMapping(path= "/agregar-sala", method = RequestMethod.POST)
-	public ModelAndView agregarNuevaSala( @ModelAttribute("datosSala") DatosSala datosSala ) {
+	public ModelAndView agregarNuevaSala( @ModelAttribute("datosSala") DatosSala datosSala, HttpServletRequest request) {
+		
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (user == null || !user.getRol().equals("admin") ) {
+			return new ModelAndView("redirect:/inicio");
+		}
 		
 		ModelMap model = new ModelMap();
 		Sala nuevaSala = new Sala();

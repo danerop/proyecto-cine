@@ -40,7 +40,12 @@ public class ControladorAdminSuscripcion {
 		return new ModelAndView("admin-suscripciones", modelo);
 	}
 	@RequestMapping(path = "/agregar-suscripcion", method = RequestMethod.POST)
-	public ModelAndView agregarNuevaSuscripcion( @ModelAttribute("datosSuscripcion") DetalleSuscripcion datos) {
+	public ModelAndView agregarNuevaSuscripcion( @ModelAttribute("datosSuscripcion") DetalleSuscripcion datos, HttpServletRequest request) {
+		
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (user == null || !user.getRol().equals("admin") ) {
+			return new ModelAndView("redirect:/inicio");
+		}
 		
 		ModelMap model = new ModelMap();
 		DetalleSuscripcion nuevaSuscripcion = new DetalleSuscripcion();

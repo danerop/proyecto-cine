@@ -41,7 +41,12 @@ public class ControladorAdminPelicula {
 	}
 	
 	@RequestMapping(path = "/agregar-pelicula", method = RequestMethod.POST)
-	public ModelAndView agregarNuevoCine( @ModelAttribute("datosPelicula") Pelicula datosPelicula) {
+	public ModelAndView agregarNuevoCine( @ModelAttribute("datosPelicula") Pelicula datosPelicula, HttpServletRequest request) {
+		
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (user == null || !user.getRol().equals("admin") ) {
+			return new ModelAndView("redirect:/inicio");
+		}
 		
 		ModelMap model = new ModelMap();
 		Pelicula nuevaPelicula = new Pelicula();

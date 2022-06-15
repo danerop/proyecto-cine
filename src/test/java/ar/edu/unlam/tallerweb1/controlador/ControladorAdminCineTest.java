@@ -24,26 +24,21 @@ public class ControladorAdminCineTest {
 	private ServicioCine servicioCine = mock(ServicioCine.class);
 	private ControladorAdminCine controladorAdminCine = new ControladorAdminCine(servicioCine);
 	
-//	/* test comentado por no poder solucionar problema con httpServletRequest, nullpointerexception...
 	@Test
 	public void sePuedeAccederALaPaginaSiElUsuarioEsAdmin() {
-		Usuario user = new Usuario();
-		user.setId(1l);
-		user.setRol("admin");
 		
-		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
-		HttpSession sessionmock=mock(HttpSession.class);
-		
-		sessionmock.setAttribute("usuario", user);
-		when(mockRequest.getSession()).thenReturn(sessionmock);
-		when(mockRequest.getSession().getAttribute("usuario")).thenReturn(user);
-	
-		
-		ModelAndView mav = controladorAdminCine.irAAdminCargarCine(mockRequest);
+		ModelAndView mav = controladorAdminCine.irAAdminCargarCine(usuarioDeRol("admin"));
 		
 		assertEquals(mav.getViewName(), "admin-cines");
 	}
-//	*/
+	
+	@Test
+	public void noSePuedeAccederALaPaginaSiElUsuarioNoEsAdmin() {
+		
+		ModelAndView mav = controladorAdminCine.irAAdminCargarCine(usuarioDeRol("usuario"));
+		
+		assertEquals(mav.getViewName(), "redirect:/inicio");
+	}
 	
 	@Test
 	public void registroExitosoDeCine() {
@@ -56,7 +51,7 @@ public class ControladorAdminCineTest {
 		cineNuevo.setLatitud(-30.0);
 		cineNuevo.setLongitud(-60.0);
 		
-		ModelAndView mav = controladorAdminCine.agregarNuevoCine(cineNuevo);
+		ModelAndView mav = controladorAdminCine.agregarNuevoCine(cineNuevo, usuarioDeRol("admin"));
 		
 		//busca si el modelmap tiene el msgExito, si lo tiene entonces se guardó el cine
 		assertNotNull(mav.getModelMap().get("msgExito"));
@@ -72,9 +67,25 @@ public class ControladorAdminCineTest {
 			.when(servicioCine)
 			.guardarCine(cineNuevo);
 		
-		ModelAndView mav = controladorAdminCine.agregarNuevoCine(cineNuevo);
+		ModelAndView mav = controladorAdminCine.agregarNuevoCine(cineNuevo, usuarioDeRol("admin"));
 		
 		assertNull(mav.getModelMap().get("msgExito"));
 	}
 
+	//metodo que devuelve el mock de HttpServletRequest ya completo, solo necesita el rol del usuario
+	public HttpServletRequest usuarioDeRol(String rol) {
+		Usuario user = new Usuario();
+		user.setId(1l);
+		user.setRol(rol);
+		
+		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
+		HttpSession sessionmock=mock(HttpSession.class);
+		
+		sessionmock.setAttribute("usuario", user);
+		when(mockRequest.getSession()).thenReturn(sessionmock);
+		when(mockRequest.getSession().getAttribute("usuario")).thenReturn(user);
+		
+		return mockRequest;
+	}
+	
 }
