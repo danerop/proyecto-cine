@@ -39,10 +39,11 @@ public class ControladorFavorito {
 	}
 	
 	@RequestMapping(path = "/generos", method = RequestMethod.GET)
-	public ModelAndView seleccionarGenerosFavoritos(@ModelAttribute("datosFavoritos") DatosFavoritos datosFavoritos) {
+	public ModelAndView seleccionarGenerosFavoritos() {
 		
 		ModelMap model = new ModelMap();
 		
+		model.addAttribute("datosFavoritos", new DatosFavoritos());
 		model.put("listaDeGeneros", servicioGenero.obtenerTodosLosGeneros());
 
 		return new ModelAndView("generos", model);
@@ -50,13 +51,15 @@ public class ControladorFavorito {
 	
 	@RequestMapping(path = "/validarGenerosFavoritos", method = RequestMethod.POST)
 	public ModelAndView guardarGenerosFavoritos(HttpServletRequest request,
-										   		@RequestParam(value = "g") Long idGenero,
 										   		@ModelAttribute("datosFavoritos") DatosFavoritos datosFavoritos){
 				
 				ModelMap model = new ModelMap();
 				
 				Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
 				
+				System.out.println(datosFavoritos.getIdGeneros().get(0));
+				
+				/*
 				Genero genero = servicioGenero.obtenerGeneroPorid(datosFavoritos.getIdGenero());
 				// genero.setId(idGenero);
 				
@@ -75,7 +78,8 @@ public class ControladorFavorito {
 					model.put("favoritoElegido", servicioFavorito.obtenerFavoritoPorUsuario(usuarioSesion.getId()));
 
 					return new ModelAndView("generos-favoritos", model);
-			}
+				}
+				*/
 				return new ModelAndView("redirect:/login", model);
 	}
 	
