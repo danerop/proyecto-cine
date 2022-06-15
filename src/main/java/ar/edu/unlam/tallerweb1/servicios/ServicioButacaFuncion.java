@@ -11,4 +11,5 @@ public interface ServicioButacaFuncion {
 	List<ButacaFuncion> obtenerButacasPorFuncion(Funcion funcion);
 	ButacaFuncion obtenerPorButacaYFuncion(Funcion funcion, Long idButaca);
 	void actualizarButacaFuncion(ButacaFuncion butacaFuncion);
+	public Boolean isButacaOcupada(Funcion funcion, Long idButaca);
 }

@@ -34,7 +34,6 @@ public class ControladorAdminCineTest {
 		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 		HttpSession sessionmock=mock(HttpSession.class);
 		
-		sessionmock.setAttribute("usuario", user);
 		when(mockRequest.getSession()).thenReturn(sessionmock);
 		when(mockRequest.getSession().getAttribute("usuario")).thenReturn(user);
 	

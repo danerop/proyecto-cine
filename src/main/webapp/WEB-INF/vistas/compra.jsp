@@ -55,7 +55,7 @@
             <h4 class="upspace">Seleccione un cine</h4>
           </label>
           <form:select id="selectcine" class="form-select" aria-label="Default select example" path="idcine">
-             <option selected>Selecciona un cine</option>
+            <form:option path="idcine" value="-1">Seleccione cine</form:option>
             <c:forEach items="${cinesDisponibles}" var="cines">
             	<form:option path="idcine" value="${cines.getId()}">${cines.getNombreLocal()}</form:option>
             </c:forEach>
@@ -100,7 +100,7 @@
           </div>
 
           <div  class="d-flex justify-content-center btncompraboleto">
-			<form:button type="button submit" class="btn btn-primary">Siguiente</form:button>
+			<form:button id="primerSiguiente" type="button submit" class="btn btn-primary">Siguiente</form:button>
           </div>
         </div>
 

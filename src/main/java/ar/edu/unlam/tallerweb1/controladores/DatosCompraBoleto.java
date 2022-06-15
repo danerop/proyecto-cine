@@ -14,10 +14,16 @@ public class DatosCompraBoleto {
 	private Long idButaca;
 	
 	
-	public DatosCompraBoleto(Long idPelicula, Long idUsuario) {
+	public DatosCompraBoleto(Long idCine, String fecha, String hora, Long idPelicula, Long idUsuario, Long idSala,
+			Long idButaca) {
 		super();
+		this.idCine = idCine;
+		this.fecha = fecha;
+		this.hora = hora;
 		this.idPelicula = idPelicula;
 		this.idUsuario = idUsuario;
+		this.idSala = idSala;
+		this.idButaca = idButaca;
 	}
 	public DatosCompraBoleto() {
 		

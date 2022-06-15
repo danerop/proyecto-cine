@@ -57,10 +57,18 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	}
 
 	@Override
-	public Funcion obtenerFuncionesPorCineFechaHoraSalaYPelicula(Long idCine, Long idPelicula, Date fechaHora,
+	public Funcion obtenerFuncionesPorCineFechaHoraSalaYPelicula(Long idCine, Long idPelicula, String fechaHora,
 			String hora, Long idSala) {
-		Funcion funcionzz=repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, fechaHora, hora, idSala);
+		Date temp=null;
+		if (fechaHora!=null) {
+			temp=Date.valueOf(fechaHora);
+	
+		}
 
+		Funcion funcionzz=repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, temp, hora, idSala);
+//		if (funcionzz==null) {
+//			throw new NullPointerException("Funcion no encontrada");
+//		}
 		return funcionzz;
 	}
 
