@@ -39,4 +39,9 @@ public class ServicioGeneroImpl implements ServicioGenero {
 	public List<String> obtenerGenerosDeUnaPelicula(Pelicula pelicula) {
 		return servicioPeliculaGeneroDao.obtenerGenerosDeUnaPelicula(pelicula);
 	}
+
+	@Override
+	public Genero obtenerGeneroPorid(Long id) {
+		return servicioGeneroDao.obtenerGeneroPorid(id);
+	}
 }

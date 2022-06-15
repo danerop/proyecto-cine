@@ -36,7 +36,7 @@
               <a class="nav-link" href="suscripcion">Suscripciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="cerrarSesion">Iniciar Session</a>
+              <a class="nav-link" href="cerrarSesion">Iniciar Sesion</a>
             </li>
           </ul>
           <form class="d-flex">

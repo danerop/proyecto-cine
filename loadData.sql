@@ -55,9 +55,20 @@ VALUES(1, 1, 1, 1),
       (3, 0, 3, 1),
       (4, 0, 1, 2),
 	  (5, 0, 2, 2),
-      (6, 0, 3, 2);
-      
+      (6, 0, 3, 2); 
 
+INSERT INTO genero (id, descripcion, nombre)
+VALUES (1, "accion", "accion"),
+	   (2, "comedia", "comedia"),
+       (3, "terror", "terror"),
+       (4, "ciencia ficcion", "ciencia ficcion"),
+       (5, "suspenso", "suspenso");
+
+INSERT INTO favorito (id, genero_id, usuario_id)
+VALUES (1, 1, 1),
+	   (2, 2, 1);
+       
+select * from favorito;       
 select * from pelicula;
 select * from funcion;
 select * from sala;

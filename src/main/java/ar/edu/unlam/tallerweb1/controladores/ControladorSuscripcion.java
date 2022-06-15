@@ -34,17 +34,6 @@ public class ControladorSuscripcion {
 		this.servicioDetalleSuscripcion = servicioDetalleSuscripcion;
 	}
 
-	@Autowired
-	public ControladorSuscripcion(ServicioSuscripcion servicioSuscripcion) {
-		this.servicioSuscripcion = servicioSuscripcion;
-	}
-
-	@Autowired
-	public ControladorSuscripcion(ServicioSuscripcion servicioSuscripcion, ServicioDetalleSuscripcion servicioDetalleSuscripcion) {
-		this.servicioSuscripcion = servicioSuscripcion;
-		this.servicioDetalleSuscripcion = servicioDetalleSuscripcion;
-	}
-
 	@RequestMapping(path = "/suscripcion", method = RequestMethod.GET)
 	public ModelAndView irASuscripcion() {
 		
