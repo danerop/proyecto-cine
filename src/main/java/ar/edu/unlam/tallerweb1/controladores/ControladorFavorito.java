@@ -57,29 +57,22 @@ public class ControladorFavorito {
 				
 				Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
 				
-				System.out.println(datosFavoritos.getIdGeneros().get(0));
-				
-				/*
-				Genero genero = servicioGenero.obtenerGeneroPorid(datosFavoritos.getIdGenero());
-				// genero.setId(idGenero);
-				
-				DatosFavoritos df = new DatosFavoritos();
-				df.setIdGenero(idGenero);
-				
-				Favorito favorito = new Favorito();
-				favorito.setGenero(genero);
-				favorito.setUsuario(usuarioSesion);
-				servicioFavorito.modificarFavorito(favorito);
-				
 				if (usuarioSesion != null) {
-					model.addAttribute("datosFavoritos", df);
-					model.addAttribute("g", idGenero);
-					model.put("g", idGenero);
-					model.put("favoritoElegido", servicioFavorito.obtenerFavoritoPorUsuario(usuarioSesion.getId()));
-
+					
+					Genero g = new Genero();
+					g.setId(datosFavoritos.getIdGenero());
+					
+					Favorito favorito = new Favorito();
+					favorito.setGenero(g);
+					favorito.setUsuario(usuarioSesion);
+					servicioFavorito.modificarFavorito(favorito);
+					
+					model.addAttribute("datosFavoritos", datosFavoritos);
+					model.put("favoritoElegido", servicioFavorito.buscarFavoritoPorId(favorito.getId()));
+					
 					return new ModelAndView("generos-favoritos", model);
 				}
-				*/
+		
 				return new ModelAndView("redirect:/login", model);
 	}
 	

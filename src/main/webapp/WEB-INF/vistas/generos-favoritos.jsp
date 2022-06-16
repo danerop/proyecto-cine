@@ -3,8 +3,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
+	<meta charset="ISO-8859-1">
+	<!-- Bootstrap core CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" >
+	<!-- Bootstrap theme -->
+	<link href="css/style.css" rel="stylesheet">
     <title>Generos favoritos guardados</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,13 +20,12 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container bcontent">
         <dl class="row">
             <dt class="col-sm-3">Generos</dt>
-            <dd class="col-sm-9">List of Tutorials.</dd>
-            <dt class="col-sm-3">Articles</dt>
-            <dd class="col-sm-9">List of Articles.</dd>
+            <dd class="col-sm-9">${favoritoElegido.getGenero()}</dd>
         </dl>
     </div>
     

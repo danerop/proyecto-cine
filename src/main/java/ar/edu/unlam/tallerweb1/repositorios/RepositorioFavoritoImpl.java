@@ -70,7 +70,7 @@ public class RepositorioFavoritoImpl implements RepositorioFavorito {
 
 	@Override
 	public void modificarFavorito(Favorito favorito) {
-		sessionFactory.getCurrentSession().update(favorito);		
+		sessionFactory.getCurrentSession().saveOrUpdate(favorito);		
 	}
 
 	@Override

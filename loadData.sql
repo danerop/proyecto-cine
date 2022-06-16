@@ -66,7 +66,7 @@ VALUES (1, "accion", "accion"),
 
 INSERT INTO favorito (id, genero_id, usuario_id)
 VALUES (1, 1, 1),
-	   (2, 2, 1);
+	   (2, 1, 1);
        
 select * from favorito;       
 select * from pelicula;

@@ -24,7 +24,7 @@
   <legend>Selecciona tus generos favoritos</legend>
     <div>
        <form:select id="generos" path="idGeneros" multiple="multiple">
-         <c:forEach items= "${listaDeGeneros}" var="generos">
+         <c:forEach items="${listaDeGeneros}" var="generos">
            <form:option value="${generos.getId()}">
              ${generos.getNombre()}
            </form:option>

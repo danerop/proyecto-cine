@@ -17,11 +17,11 @@ public class Favorito {
 	private Long id;
 	
 	@ManyToOne
-	@Cascade(CascadeType.PERSIST)
+	@Cascade(CascadeType.ALL)
 	private Genero genero;
 	
 	@ManyToOne
-	@Cascade(CascadeType.PERSIST)
+	@Cascade(CascadeType.ALL)
 	private Usuario usuario;
 	
 	public Long getId() {
