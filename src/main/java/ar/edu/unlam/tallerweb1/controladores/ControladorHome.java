@@ -26,6 +26,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSala;
 
 @Controller
@@ -35,14 +36,16 @@ public class ControladorHome {
 	private ServicioSala servicioSala;
 	private ServicioPelicula servicioPelicula;
 	private ServicioLogin servicioUsuario;
+	private ServicioNotificacion servicioNotificacion;
 
 	@Autowired
 	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala,
-			ServicioLogin servicioUsuario) {
+			ServicioLogin servicioUsuario, ServicioNotificacion servicioNotificacion) {
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine = servicioCine;
 		this.servicioSala = servicioSala;
 		this.servicioUsuario = servicioUsuario;
+		this.servicioNotificacion=servicioNotificacion;
 	}
 
 	@RequestMapping(path = "/inicio", method = RequestMethod.GET)
@@ -56,6 +59,7 @@ public class ControladorHome {
 			model.put("usuario", servicioUsuario.consultarUsuario(user));
 			model.put("rol", servicioUsuario.consultarUsuarioPorRol(user));
 			model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+			model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 			return new ModelAndView("inicio", model);
 		}
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());

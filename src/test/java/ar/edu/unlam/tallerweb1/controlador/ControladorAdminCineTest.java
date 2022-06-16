@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.controladores.ControladorAdminCine;
@@ -26,6 +28,7 @@ public class ControladorAdminCineTest {
 	
 //	/* test comentado por no poder solucionar problema con httpServletRequest, nullpointerexception...
 	@Test
+	@Transactional @Rollback
 	public void sePuedeAccederALaPaginaSiElUsuarioEsAdmin() {
 		Usuario user = new Usuario();
 		user.setId(1l);
@@ -45,6 +48,7 @@ public class ControladorAdminCineTest {
 //	*/
 	
 	@Test
+	@Transactional @Rollback
 	public void registroExitosoDeCine() {
 		Cine cineNuevo = new Cine();
 		//estos datos están para dar a entender la funcionalidad del test (como los ejemplos de la clase)
@@ -62,6 +66,7 @@ public class ControladorAdminCineTest {
 	}
 	
 	@Test
+	@Transactional @Rollback
 	public void registroFallidoDeCinePorFaltaDeDatos(){
 		Cine cineNuevo = new Cine();
 		cineNuevo.setNombreLocal("nombre");
