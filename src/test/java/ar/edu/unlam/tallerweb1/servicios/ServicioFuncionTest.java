@@ -1,8 +1,7 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.sql.Date;
 import java.util.List;
@@ -25,7 +24,7 @@ public class ServicioFuncionTest {
 		Pelicula peli=new Pelicula();
 		Cine cine=new Cine();
 		Sala sala=new Sala();
-		funcion.setId(1l);
+
 		funcion.setEntradasDisponibles(10);
 		funcion.setFechaHora(Date.valueOf("2022-12-10"));
 		funcion.setHora("18:00");
@@ -39,13 +38,30 @@ public class ServicioFuncionTest {
 		
 		verify(repositorioFuncion, times(1)).guardarFuncion(funcion);
 	}
-	@Test(expected = ExceptionFuncionNoEncontrada.class)
+	
+	@Test
 	public void obtenerFuncionPorId() {
-		Funcion funcionBuscada = new Funcion ();
-		funcionBuscada.setId(2l);
+		Funcion funcion = new Funcion ();
+		Pelicula peli=new Pelicula();
+		Cine cine=new Cine();
+		Sala sala=new Sala();
 		
-		servicioFuncion.buscarFuncion(funcionBuscada.getId());
+		funcion.setEntradasDisponibles(10);
+		funcion.setFechaHora(Date.valueOf("2022-12-10"));
+		funcion.setHora("18:00");
+		funcion.setPrecioMayor((float) 100.0);
+		funcion.setPrecioMenor((float) 50.0);
+		funcion.setCine(cine);
+		funcion.setPelicula(peli);
+		funcion.setSala(sala);
+		
+		servicioFuncion.guardarFuncion(funcion);
+		
+		when(repositorioFuncion.buscarFuncionPorId(any())).thenReturn(funcion);
+		
+		assertEquals(funcion, servicioFuncion.buscarFuncion(funcion.getId()));
 	}
+	
 	@Test
 	@Transactional @Rollback
 	public void obtenerFuncionesPorPelicula() {
@@ -56,6 +72,7 @@ public class ServicioFuncionTest {
 		
 		verify(repositorioFuncion, times(1)).obtenerFuncionesPorPelicula(peli.getId());
 	}
+	
 	@Test
 	@Transactional @Rollback
 	public void obtenerCinesDisponiblesParaFunciones() {
@@ -66,6 +83,7 @@ public class ServicioFuncionTest {
 		
 		verify(repositorioFuncion, times(1)).obtenerCinesDisponiblesParaFunciones(peli.getId());
 	}
+	
 	@Test
 	@Transactional @Rollback
 	public void obtenerFuncionPorCineFechaHoraSalaYPelicula() {
@@ -91,6 +109,7 @@ public class ServicioFuncionTest {
 		
 		verify(repositorioFuncion, times(1)).obtenerFuncionesPorCineFechaHoraSalaYPelicula(cine.getId(), peli.getId(), funcion.getFechaHora(), funcion.getHora(), sala.getId());
 	}
+	
 	@Test
 	@Transactional @Rollback
 	public void queSeSustituyaLaFechaSiSeIntentaobtenerFuncionPorCineFechaHoraSalaYPeliculaConUnaFechaConFormatoInvalido() {

@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.controlador;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.controladores.ControladorAdminFuncion;
 import ar.edu.unlam.tallerweb1.controladores.DatosFuncion;
-import ar.edu.unlam.tallerweb1.modelo.Funcion;
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionFuncionCamposVacios;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButacaFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
@@ -64,7 +63,27 @@ public class ControladorAdminFuncionTest {
 		
 		ModelAndView mav = controladorAdminFuncion.agregarNuevaFuncion(datosFuncion, usuarioDeRol("admin"));
 		
-		assertEquals(mav.getModelMap().get("mens"), "Función guardada con exito");
+		assertNotNull(mav.getModelMap().get("msgExito"));
+	}
+	
+	@Test
+	public void registroFallidoDeFuncionPorCamposObligatoriosVacios() {
+		DatosFuncion datosFuncion = new DatosFuncion();
+		
+		datosFuncion.setIdCine(1l);
+		datosFuncion.setFechaHora("2022-07-01");
+		datosFuncion.setPrecioMenor(500.0f);
+		
+		Sala salaSeleccionada = new Sala();
+		when(servicioSala.buscarSalaPorId(datosFuncion.getIdSala())).thenReturn(new Sala());
+		when(servicioButaca.cantidadDeButacasEnSala(salaSeleccionada.getId())).thenReturn(200);
+		
+		doThrow(ExceptionFuncionCamposVacios.class)
+			.when(servicioFuncion).guardarFuncion(any());
+		
+		ModelAndView mav = controladorAdminFuncion.agregarNuevaFuncion(datosFuncion, usuarioDeRol("admin"));
+		
+		assertNull(mav.getModelMap().get("msgExito"));
 	}
 	
 	public HttpServletRequest usuarioDeRol(String rol) {

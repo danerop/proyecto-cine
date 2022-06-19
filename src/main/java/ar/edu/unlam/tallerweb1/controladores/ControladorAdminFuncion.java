@@ -97,7 +97,7 @@ public class ControladorAdminFuncion {
 			return new ModelAndView("admin-funciones", model);
 		}
 		
-		if(datosFuncion.getFechaHora() == "") {
+		if(datosFuncion.getFechaHora() == "" || datosFuncion.getFechaHora() == null) {
 			model.put("msgError", "no se seleccionó una fecha para la función");
 			CargarModel(model, datosFuncion);
 			return new ModelAndView("admin-funciones", model);
