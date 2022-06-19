@@ -28,7 +28,11 @@ public class ServicioSalaImpl implements ServicioSala{
 
 	@Override
 	public Sala buscarSalaPorId(Long id) {
-		return repositorioSalaDao.buscarSalaPorId(id);
+		Sala sala = repositorioSalaDao.buscarSalaPorId(id);
+		if(sala == null) {
+			throw new ExceptionSalaNoEncontrada("");
+		}
+		return sala;
 	}
 
 	@Override

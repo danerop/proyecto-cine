@@ -2,28 +2,27 @@ package ar.edu.unlam.tallerweb1.repositorios;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.DetalleSuscripcion;
-import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Repository("repositorioDetalleSuscripcion")
 public class RepositorioDetalleSuscripcionImpl implements RepositorioDetalleSuscripcion {
 	
-	@Inject
 	private SessionFactory sessionFactory;
 
+	@Autowired
+	public RepositorioDetalleSuscripcionImpl(SessionFactory sessionFactory){
+		this.sessionFactory = sessionFactory;
+	}
+	
 	@Override
-	public Long guardarDetalleSuscripcion(DetalleSuscripcion detalleSuscripcion) {
+	public void guardarDetalleSuscripcion(DetalleSuscripcion detalleSuscripcion) {
 		Session session = sessionFactory.getCurrentSession();
-		return (Long) session.save(detalleSuscripcion);
+		session.save(detalleSuscripcion);
 	}
 
 	@Override

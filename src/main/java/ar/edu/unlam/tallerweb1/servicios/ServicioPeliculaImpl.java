@@ -28,14 +28,39 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 
 	@Override
 	public Pelicula buscarPeliculaPorID(Long id) {
-		return repositorioPeliculaDao.obtenerPeliculaPorID(id);
+		Pelicula pelicula = repositorioPeliculaDao.obtenerPeliculaPorID(id);
+		if(pelicula == null) {
+			throw new ExceptionPeliculaNoEncontrada("");
+		}
+		return pelicula;
 	}
 
 	@Override
 	public void guardarPelicula(Pelicula pelicula) {
+		String campoNulo = "";
+		
+		if(pelicula.getNombre() == "") {
+			campoNulo = campoNulo + "Rellenar nombre de película <br>";
+		}
+		if(pelicula.getDuracion() == null) {
+			campoNulo = campoNulo + "Rellenar duración <br>";
+		}
+		if(pelicula.getAnio() == null) {
+			campoNulo = campoNulo + "Rellenar año <br>";
+		}
+		if(pelicula.getUrlImagenPelicula() == "") {
+			campoNulo = campoNulo + "Rellenar URL de imagen <br>";
+		}
+		if(campoNulo != "") {
+			throw new ExceptionPeliculaCamposVacios(campoNulo);
+		}
+		if(pelicula.getAnio() <= 1800 || pelicula.getAnio() >= 2100) {
+			throw new ExceptionPeliculaAnioNoValido();
+		}
+		if(pelicula.getDuracion() <= 0) {
+			throw new ExceptionPeliculaDuracionNoValida();
+		}
+		
 		repositorioPeliculaDao.guardarPelicula(pelicula);
 	}
-	
-	
-
 }

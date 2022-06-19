@@ -102,8 +102,8 @@
 
     <div class="formulario-cargar-sala" style="padding: 1rem;">
 
-      <c:if test="${not empty mens}">
-        <h5 class="p-3 mb-2 bg-success text-white"> ${mens} </h5>
+      <c:if test="${not empty msgExito}">
+        <h5 class="p-3 mb-2 bg-success text-white"> ${msgExito} </h5>
       </c:if>
 
       <form:form action="agregar-sala" method="POST" modelAttribute="datosSala">
@@ -159,6 +159,11 @@
           </table>
         </div>
         <br>
+        
+        <c:if test="${not empty msgError}">
+          <h5 class="p-3 mb-2 bg-danger text-white"> ${msgError} </h5>
+      	</c:if>
+        
         <button class="btn btn-lg btn-primary btn-block" Type="Submit" />Cargar Sala</button>
       </form:form>
 

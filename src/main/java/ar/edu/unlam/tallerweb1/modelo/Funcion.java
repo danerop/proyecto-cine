@@ -13,10 +13,9 @@ public class Funcion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Date fechaHora;
+	private String hora;
 	private Float precioMayor;
 	private Float precioMenor;
-
-
 	private Integer entradasDisponibles;
 	
 	@ManyToOne
@@ -27,8 +26,6 @@ public class Funcion {
 	
 	@ManyToOne
 	private Sala sala;
-	
-	private String hora;
 	
 	public Funcion() {
 		
@@ -43,8 +40,8 @@ public class Funcion {
 	public Date getFechaHora() {
 		return fechaHora;
 	}
-	public void setFechaHora(Date fechaHora) {
-		this.fechaHora = fechaHora;
+	public void setFechaHora(Date fecha) {
+		this.fechaHora = fecha;
 	}
 	public Pelicula getPelicula() {
 		return pelicula;

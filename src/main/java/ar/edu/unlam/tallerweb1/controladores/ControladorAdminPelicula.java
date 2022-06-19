@@ -12,6 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaAnioNoValido;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaCamposVacios;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaDuracionNoValida;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 
 @Controller
@@ -49,19 +52,29 @@ public class ControladorAdminPelicula {
 		}
 		
 		ModelMap model = new ModelMap();
-		Pelicula nuevaPelicula = new Pelicula();
 		
-		nuevaPelicula.setNombre(datosPelicula.getNombre());
-		nuevaPelicula.setAnio(datosPelicula.getAnio());
-		nuevaPelicula.setDescripcion(datosPelicula.getDescripcion());
-		nuevaPelicula.setDuracion(datosPelicula.getDuracion());
-		nuevaPelicula.setUrlImagenPelicula(datosPelicula.getUrlImagenPelicula());
-		
-		servicioPelicula.guardarPelicula(nuevaPelicula);
+		try{
+			servicioPelicula.guardarPelicula(datosPelicula);
+		}catch(ExceptionPeliculaCamposVacios e){
+			model.addAttribute("datosPelicula", datosPelicula);
+			model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+			model.put("msgError", e.getMessage());
+			return new ModelAndView("admin-peliculas", model);
+		}catch(ExceptionPeliculaAnioNoValido e){
+			model.addAttribute("datosPelicula", datosPelicula);
+			model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+			model.put("msgError", "El año ingresado no es valido");
+			return new ModelAndView("admin-peliculas", model);
+		}catch(ExceptionPeliculaDuracionNoValida e){
+			model.addAttribute("datosPelicula", datosPelicula);
+			model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+			model.put("msgError", "La duración ingresada no es valida");
+			return new ModelAndView("admin-peliculas", model);
+		}
 		
 		model.addAttribute("datosPelicula", new Pelicula());
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
-		model.put("mens", "Película guardada con exito");
+		model.put("msgExito", "Película guardada con exito");
 		return new ModelAndView("admin-peliculas", model);
 	}
 }

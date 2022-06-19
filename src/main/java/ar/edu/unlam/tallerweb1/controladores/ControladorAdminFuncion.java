@@ -19,6 +19,12 @@ import ar.edu.unlam.tallerweb1.modelo.Funcion;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionCineNoEncontrado;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionFuncionCamposVacios;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionFuncionHoraIncorrecta;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionFuncionPrecioIncorrecto;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaNoEncontrada;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionSalaNoEncontrada;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButacaFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
@@ -56,13 +62,7 @@ public class ControladorAdminFuncion {
 		}
 		
 		ModelMap modelo = new ModelMap();
-		
-		modelo.addAttribute("datosFuncion", new DatosFuncion());
-		modelo.put("listaCines", servicioCine.obtenerTodosLosCines());
-		modelo.put("listaSalas", servicioSala.obtenerTodasLasSalas());
-		modelo.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
-		modelo.put("listaFunciones", servicioFuncion.obtenerTodasLasFunciones());
-		
+		CargarModel(modelo, new DatosFuncion());
 		return new ModelAndView("admin-funciones", modelo);
 	}
 	@RequestMapping(path = "/agregar-funcion", method = RequestMethod.POST)
@@ -79,10 +79,29 @@ public class ControladorAdminFuncion {
 		Sala salaSeleccionada = new Sala();
 		Pelicula peliculaSeleccionada = new Pelicula();
 		
-		cineSeleccionado = servicioCine.buscarCinePorID(datosFuncion.getIdCine());
-		salaSeleccionada = servicioSala.buscarSalaPorId(datosFuncion.getIdSala());
-		peliculaSeleccionada = servicioPelicula.buscarPeliculaPorID(datosFuncion.getIdPelicula());
+		try {
+			cineSeleccionado = servicioCine.buscarCinePorID(datosFuncion.getIdCine());
+			salaSeleccionada = servicioSala.buscarSalaPorId(datosFuncion.getIdSala());
+			peliculaSeleccionada = servicioPelicula.buscarPeliculaPorID(datosFuncion.getIdPelicula());
+		}catch(ExceptionCineNoEncontrado e) {
+			model.put("msgError", "Algo salió mal, el cine no está registrado");
+			CargarModel(model, datosFuncion);
+			return new ModelAndView("admin-funciones", model);
+		}catch(ExceptionSalaNoEncontrada e) {
+			model.put("msgError", "Algo salió mal, la sala no está registrada");
+			CargarModel(model, datosFuncion);
+			return new ModelAndView("admin-funciones", model);
+		}catch(ExceptionPeliculaNoEncontrada e) {
+			model.put("msgError", "Algo salió mal, la película no está registrada");
+			CargarModel(model, datosFuncion);
+			return new ModelAndView("admin-funciones", model);
+		}
 		
+		if(datosFuncion.getFechaHora() == "") {
+			model.put("msgError", "no se seleccionó una fecha para la función");
+			CargarModel(model, datosFuncion);
+			return new ModelAndView("admin-funciones", model);
+		}
 		Date fecha = Date.valueOf(datosFuncion.getFechaHora());
 		
 		nuevaFuncion.setFechaHora(fecha);
@@ -94,17 +113,36 @@ public class ControladorAdminFuncion {
 		nuevaFuncion.setHora(datosFuncion.getHora());
 		nuevaFuncion.setEntradasDisponibles(servicioButaca.cantidadDeButacasEnSala(salaSeleccionada.getId()));
 		
-		servicioFuncion.guardarFuncion(nuevaFuncion);
+		try {
+			servicioFuncion.guardarFuncion(nuevaFuncion);
+		}catch(ExceptionFuncionCamposVacios e) {
+			model.put("msgError", e.getMessage());
+			CargarModel(model, datosFuncion);
+			return new ModelAndView("admin-funciones", model);
+		}catch(ExceptionFuncionHoraIncorrecta e) {
+			model.put("msgError", "La hora ingresada no está en el formato correcto (hh:mm)");
+			CargarModel(model, datosFuncion);
+			return new ModelAndView("admin-funciones", model);
+		}catch(ExceptionFuncionPrecioIncorrecto e) {
+			model.put("msgError", "Algo salió mal, el cine no está registrado");
+			CargarModel(model, datosFuncion);
+			return new ModelAndView("admin-funciones", model);
+		}
+			
 		List<Butaca> butacas=servicioButaca.obtenerButacasPorSala(salaSeleccionada.getId());
 		servicioButacaFuncion.asociarButacasAFuncion(nuevaFuncion, butacas);
 		
-		model.addAttribute("datosFuncion", datosFuncion);
-		model.put("listaCines", servicioCine.obtenerTodosLosCines());
-		model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
-		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
-		model.put("listaFunciones", servicioFuncion.obtenerTodasLasFunciones());
-		model.put("mens", "Función guardada con exito");
+		model.put("msgExito", "Función guardada con exito");
+		CargarModel(model, new DatosFuncion());
 		return new ModelAndView("admin-funciones", model);
 		
+	}
+	
+	public void CargarModel(ModelMap mod, DatosFuncion df) {
+		mod.addAttribute("datosFuncion", df);
+		mod.put("listaCines", servicioCine.obtenerTodosLosCines());
+		mod.put("listaSalas", servicioSala.obtenerTodasLasSalas());
+		mod.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+		mod.put("listaFunciones", servicioFuncion.obtenerTodasLasFunciones());
 	}
 }

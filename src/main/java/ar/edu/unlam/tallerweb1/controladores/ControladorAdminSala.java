@@ -14,6 +14,7 @@ import ar.edu.unlam.tallerweb1.modelo.Cine;
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeSala;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionCineNoEncontrado;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSala;
@@ -62,7 +63,16 @@ public class ControladorAdminSala {
 		Cine cineSeleccionado = new Cine();
 		TipoDeSala tipo = TipoDeSala.Comun;
 		
-		cineSeleccionado = servicioCine.buscarCinePorID(datosSala.getIdCine());
+		try {
+			cineSeleccionado = servicioCine.buscarCinePorID(datosSala.getIdCine());
+		}catch(ExceptionCineNoEncontrado e) {
+			model.addAttribute("datosSala", datosSala);
+			model.put("listaCines", servicioCine.obtenerTodosLosCines());
+			model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
+			model.put("msgError", "Algo salió mal, el cine elegido no está registrado");
+			return new ModelAndView("admin-salas", model);
+		}
+		
 		switch(datosSala.getTipo()) {
 		case 1: tipo = TipoDeSala.Comun; break;
 		case 2: tipo = TipoDeSala.Sala3D; break;
@@ -79,7 +89,7 @@ public class ControladorAdminSala {
 		model.addAttribute("datosSala", new DatosSala());
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());
 		model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
-		model.put("mens", "Sala guardada con exito");
+		model.put("msgExito", "Sala guardada con exito");
 		return new ModelAndView("admin-salas", model);
 	}
 }

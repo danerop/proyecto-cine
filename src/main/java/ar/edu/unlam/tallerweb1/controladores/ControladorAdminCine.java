@@ -50,17 +50,18 @@ public class ControladorAdminCine {
 		}
 		
 		ModelMap model = new ModelMap();
-		model.addAttribute("datosCine", new Cine());
 		
 		try {
 			servicioCine.guardarCine(datosCine);
 			
 		} catch (ExceptionCineCamposVacios e) {
+			model.addAttribute("datosCine", datosCine);
 			model.put("listaCines", servicioCine.obtenerTodosLosCines());
 			model.put("msgError", e.getMessage() );
 			return new ModelAndView("admin-cines", model);
 		}
 		
+		model.addAttribute("datosCine", new Cine());
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());
 		model.put("msgExito", "Cine guardado con exito");
 		return new ModelAndView("admin-cines", model);

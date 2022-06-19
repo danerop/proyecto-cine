@@ -6,7 +6,7 @@ import ar.edu.unlam.tallerweb1.modelo.DetalleSuscripcion;
 
 public interface ServicioDetalleSuscripcion {
 
-	Long guardarDetalleSuscripcion (DetalleSuscripcion detalleSuscripcion);
+	void guardarDetalleSuscripcion (DetalleSuscripcion detalleSuscripcion);
 	void modificarDetalleSuscripcion (DetalleSuscripcion detalleSuscripcion);
 	void eliminarDetalleSuscripcion (DetalleSuscripcion detalleSuscripcion);
 	DetalleSuscripcion obtenerDetalleSuscripcionPorId(Long id);

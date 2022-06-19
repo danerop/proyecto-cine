@@ -104,11 +104,4 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		.setProjection(Projections.distinct(Projections.property("fechaHora")))
 		.list();
 	}	
-
-	
-
-
-
-
-
 }

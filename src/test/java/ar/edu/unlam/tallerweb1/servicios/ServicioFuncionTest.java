@@ -39,6 +39,13 @@ public class ServicioFuncionTest {
 		
 		verify(repositorioFuncion, times(1)).guardarFuncion(funcion);
 	}
+	@Test(expected = ExceptionFuncionNoEncontrada.class)
+	public void obtenerFuncionPorId() {
+		Funcion funcionBuscada = new Funcion ();
+		funcionBuscada.setId(2l);
+		
+		servicioFuncion.buscarFuncion(funcionBuscada.getId());
+	}
 	@Test
 	@Transactional @Rollback
 	public void obtenerFuncionesPorPelicula() {

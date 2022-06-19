@@ -34,5 +34,14 @@ public class ServicioCineTest {
 		
 		servicioCine.guardarCine(cineNuevo);
 	}
+	
+	@Test (expected = ExceptionCineNoEncontrado.class)
+	public void busquedaFallidaPorCineNoRegistrado() {
+		Cine cineABuscar = new Cine ();
+		cineABuscar.setId(2l);
+		cineABuscar.setNombreLocal("cine no registrado");
+		
+		servicioCine.buscarCinePorID(cineABuscar.getId());
+	}
 
 }

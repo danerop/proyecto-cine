@@ -23,7 +23,11 @@ public class ServicioCineImpl implements ServicioCine{
 	
 	@Override
 	public Cine buscarCinePorID(Long id) {
-		return repositorioCineDao.buscarCinePorId(id);
+		Cine cine = repositorioCineDao.buscarCinePorId(id);
+		if(cine == null) {
+			throw new ExceptionCineNoEncontrado("");
+		}
+		return cine;
 	}
 
 	@Override
