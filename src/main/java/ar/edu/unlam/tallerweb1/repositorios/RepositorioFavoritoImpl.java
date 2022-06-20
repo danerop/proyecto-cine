@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -43,6 +45,17 @@ public class RepositorioFavoritoImpl implements RepositorioFavorito {
 		return (List<Favorito>) session.createCriteria(Favorito.class)
 				                       .add(Restrictions.eq("usuario", usuario))
 				                       .list();
+//		Session session = sessionFactory.getCurrentSession();
+//		return (List<Long>) session.createCriteria(Favorito.class)
+//		.add(Restrictions.eq("usuario", usuario))
+//		.setProjection(Projections.property("usuario.id"))
+//		.list();
+//		Session session = sessionFactory.getCurrentSession();
+//		return (List<String>) session.createCriteria(PeliculaGenero.class)
+//							.add(Restrictions.eq("pelicula", pelicula))
+//							.createAlias("genero", "tablaGenero")
+//							.setProjection(Projections.property("tablaGenero.nombre"))
+//							.list();
 	}
 	
 	@Override
@@ -54,9 +67,9 @@ public class RepositorioFavoritoImpl implements RepositorioFavorito {
 	}
 
 	@Override
-	public List<Favorito> obtenerFavoritoPorUsuario(Long idUsuario) {
+	public List<Favorito> obtenerListaDeFavoritosPorUsuario(Long idUsuario) {
 		Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(Favorito.class)
+		return (List<Favorito>) session.createCriteria(Favorito.class)
 		.add(Restrictions.eq("usuario.id", idUsuario))
 		.list();
 	}
@@ -70,7 +83,7 @@ public class RepositorioFavoritoImpl implements RepositorioFavorito {
 
 	@Override
 	public void modificarFavorito(Favorito favorito) {
-		sessionFactory.getCurrentSession().saveOrUpdate(favorito);		
+		sessionFactory.getCurrentSession().update(favorito);
 	}
 
 	@Override
@@ -90,5 +103,18 @@ public class RepositorioFavoritoImpl implements RepositorioFavorito {
 	@Override
 	public SessionFactory getSessionFactory() {
 		return this.sessionFactory;
+	}
+
+	@Override
+	public Favorito obtenerFavoritoPorUsuario(Long idUsuario) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Favorito) session.createCriteria(Favorito.class)
+		.add(Restrictions.eq("usuario.id", idUsuario))
+		.uniqueResult();
+	}
+
+	@Override
+	public void eliminarFavorito(Favorito favorito) {
+		sessionFactory.getCurrentSession().remove(favorito.getUsuario().getId());
 	}
 }

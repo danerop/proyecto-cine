@@ -18,4 +18,7 @@ public interface ServicioGenero {
 	List<String> obtenerGenerosDeUnaPelicula(Pelicula pelicula);
 	
 	Genero obtenerGeneroPorid(Long id);
+	
+	List<Long> obtenerGenerosPorId(Long id);
+
 }

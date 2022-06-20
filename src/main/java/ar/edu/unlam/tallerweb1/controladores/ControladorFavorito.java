@@ -1,7 +1,5 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,48 +30,41 @@ public class ControladorFavorito {
 	private ServicioGenero servicioGenero;
 
 	@Autowired
-	public ControladorFavorito(ServicioFavorito servicioFavorito, ServicioLogin servicioUsuario, ServicioGenero servicioGenero) {
+	public ControladorFavorito(ServicioFavorito servicioFavorito, ServicioLogin servicioUsuario,
+			ServicioGenero servicioGenero) {
 		this.servicioFavorito = servicioFavorito;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioGenero = servicioGenero;
 	}
-	
+
 	@RequestMapping(path = "/generos", method = RequestMethod.GET)
 	public ModelAndView seleccionarGenerosFavoritos() {
-		
+
 		ModelMap model = new ModelMap();
-		
+
 		model.addAttribute("datosFavoritos", new DatosFavoritos());
 		model.put("listaDeGeneros", servicioGenero.obtenerTodosLosGeneros());
 
 		return new ModelAndView("generos", model);
 	}
-	
+
 	@RequestMapping(path = "/validarGenerosFavoritos", method = RequestMethod.POST)
 	public ModelAndView guardarGenerosFavoritos(HttpServletRequest request,
-										   		@ModelAttribute("datosFavoritos") DatosFavoritos datosFavoritos){
-				
-				ModelMap model = new ModelMap();
-				
-				Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
-				
-				if (usuarioSesion != null) {
-					
-					Genero g = new Genero();
-					g.setId(datosFavoritos.getIdGenero());
-					
-					Favorito favorito = new Favorito();
-					favorito.setGenero(g);
-					favorito.setUsuario(usuarioSesion);
-					servicioFavorito.modificarFavorito(favorito);
-					
-					model.addAttribute("datosFavoritos", datosFavoritos);
-					model.put("favoritoElegido", servicioFavorito.buscarFavoritoPorId(favorito.getId()));
-					
-					return new ModelAndView("generos-favoritos", model);
-				}
-		
-				return new ModelAndView("redirect:/login", model);
+			@ModelAttribute("datosFavoritos") DatosFavoritos datosFavoritos) {
+
+		ModelMap model = new ModelMap();
+
+		Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
+
+		if (usuarioSesion != null) {
+			servicioFavorito.modificarGenerosFavoritos(datosFavoritos.getIdGeneros(), usuarioSesion);
+
+			model.addAttribute("datosFavoritos", datosFavoritos);
+			model.put("favoritoElegido", servicioFavorito.obtenerListaDeFavoritosPorUsuario(usuarioSesion.getId()));
+
+			return new ModelAndView("generos-favoritos", model);
+		}
+		return new ModelAndView("redirect:/login", model);
 	}
-	
+
 }

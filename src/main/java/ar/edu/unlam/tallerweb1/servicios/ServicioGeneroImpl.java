@@ -49,4 +49,9 @@ public class ServicioGeneroImpl implements ServicioGenero {
 	public void guardarListaDeGeneros(List<Long> idGeneros) {
 		servicioGeneroDao.agregarListaDeGeneros(idGeneros);
 	}
+
+	@Override
+	public List<Long> obtenerGenerosPorId(Long id) {
+		return servicioGeneroDao.obtenerGenerosPorId(id);
+	}
 }

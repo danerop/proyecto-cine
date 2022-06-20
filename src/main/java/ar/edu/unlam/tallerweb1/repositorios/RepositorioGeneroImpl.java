@@ -55,4 +55,16 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(idGeneros);
 	}
+
+	@Override
+	public List<Long> obtenerGenerosPorId(Long id) {
+		Session session = sessionFactory.getCurrentSession();
+		return (List<Long>) session.get(Genero.class, id);
+	}
+
+	@Override
+	public List<Long> obtenerListaDeGenerosPorId(List<Long> idGeneros) {
+		Session session = sessionFactory.getCurrentSession();
+		return (List<Long>) session.getEntityGraphs(Genero.class).get(idGeneros.size());
+	}
 }

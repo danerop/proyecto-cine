@@ -16,12 +16,12 @@ public interface RepositorioFavorito {
 	Favorito buscarFavoritoPorId(Long id);
 	void insertarFavorito(Favorito favorito);
 	void modificarFavorito(Favorito favorito);
+	void eliminarFavorito(Favorito favorito);
 	List<Favorito> obtenerFavoritosPorGenero(Long idGenero);
-	List<Favorito> obtenerFavoritoPorUsuario(Long idUsuario);
+	List<Favorito> obtenerListaDeFavoritosPorUsuario(Long idUsuario);
 	List<Favorito> obtenerFavoritoPorUsuarioYGenero(Long idUsuario, Long idGenero);
-	
+	Favorito obtenerFavoritoPorUsuario(Long idUsuario);
 	SessionFactory getSessionFactory();
-	
 	void setSessionFactory(SessionFactory sessionFactory);
 	List<Favorito> obtenerFavoritosDeUsuario(Usuario usuario);
 	
