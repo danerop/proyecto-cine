@@ -26,7 +26,9 @@ public class ControladorAdminNotifiacion {
 	}
 
 	@RequestMapping( path = "/admin-notificaciones", method = RequestMethod.GET)
-	public ModelAndView irAAdminCargarNotificaciones(HttpServletRequest request) {
+	public ModelAndView irAAdminCargarNotificaciones(HttpServletRequest request
+		
+			) {
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		if (user == null || !user.getRol().equals("admin") ) {
 			return new ModelAndView("redirect:/inicio");
@@ -57,7 +59,7 @@ public class ControladorAdminNotifiacion {
 		servicioNotificacion.registrarNotificacion(nuevaNotificacion);
 		servicioNotificacion.asociarNotificacionAUsuarios(nuevaNotificacion, datosNotificacion.getIdUsuario());
 //		como mando el msg a otro controlador?
-//		model.put("mens", "Notificacion generada con exito");
+		model.put("mens", "Notificacion generada con exito");
 		return new ModelAndView("redirect:/admin-notificaciones");
 	}
 }
