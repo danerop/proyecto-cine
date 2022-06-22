@@ -45,10 +45,10 @@
               </li>
         	<% } %>
         	<li>
-              <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
+              <form:form action="buscar" method="GET" class="d-flex" modelAttribute="datosBuscar">
+                <form:input class="form-control me-2" path="busqueda"/>
+                <form:button class="btn btn-outline-success" type="submit">Search</form:button>
+              </form:form>
             </li>
           </ul>
         </div>

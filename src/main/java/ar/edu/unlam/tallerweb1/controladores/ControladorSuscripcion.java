@@ -39,6 +39,7 @@ public class ControladorSuscripcion {
 		
 		ModelMap model = new ModelMap();
 		
+		model.addAttribute(new DatosBuscar());
 		model.put("listaDeDetallesSuscripciones", servicioDetalleSuscripcion.obtenerTodasLasSuscripciones());
 
 		return new ModelAndView("suscripcion", model);

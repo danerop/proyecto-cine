@@ -62,7 +62,8 @@ public class ControladorHome {
 		ModelMap model = new ModelMap();
 		model.addAllAttributes(model2);
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-
+		model.addAttribute(new DatosBuscar());
+		
 		if (user != null) {
 			model.put("usuario", servicioUsuario.consultarUsuario(user));
 			model.put("rol", servicioUsuario.consultarUsuarioPorRol(user));
@@ -70,6 +71,7 @@ public class ControladorHome {
 			model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 			return new ModelAndView("inicio", model);
 		}
+		
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
 		return new ModelAndView("inicio", model);
 	}
@@ -105,6 +107,7 @@ public class ControladorHome {
 		model.put("listaCines", listaCines);
 		model.put("listaFuncion", listaFuncion);
 		model.put("pelicula", pelicula);
+		model.addAttribute(new DatosBuscar());
 		
 		if (user != null) {
 			model.put("usuario", servicioUsuario.consultarUsuario(user));
@@ -119,8 +122,9 @@ public class ControladorHome {
 		if (user == null || !user.getRol().equals("usuario") ) {
 			return new ModelAndView("redirect:/inicio");
 		}
-
+		
 		ModelMap model = new ModelMap();
+		model.addAttribute(new DatosBuscar());
 		model.put("boletosadquiridos", servicioBoleto.buscarBoletosDeUnUsuario(user));
 		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		model.put("usuario", servicioUsuario.consultarUsuario(user));

@@ -36,7 +36,6 @@ public class ControladorAdminSuscripcion {
 		}
 		
 		ModelMap modelo = new ModelMap();
-		
 		modelo.addAttribute("datosSuscripcion", new DetalleSuscripcion());
 		modelo.put("listaDetalleSuscripciones", servicioDetalleSuscripcion.obtenerTodasLasSuscripciones());
 		
