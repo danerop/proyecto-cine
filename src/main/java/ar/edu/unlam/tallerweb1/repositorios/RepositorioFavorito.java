@@ -18,11 +18,10 @@ public interface RepositorioFavorito {
 	void modificarFavorito(Favorito favorito);
 	List<Favorito> obtenerFavoritosPorGenero(Long idGenero);
 	List<Favorito> obtenerFavoritoPorUsuario(Long idUsuario);
-	List<Favorito> obtenerFavoritoPorUsuarioYGenero(Long idUsuario, Long idGenero);
+	Favorito obtenerFavoritoPorUsuarioYGenero(Long idUsuario, Long idGenero);
 	
 	SessionFactory getSessionFactory();
 	
 	void setSessionFactory(SessionFactory sessionFactory);
-	List<Favorito> obtenerFavoritosDeUsuario(Usuario usuario);
 	
 }

@@ -15,8 +15,5 @@ public interface ServicioFavorito {
 	void modificarFavorito(Favorito favorito);
 	List<Favorito> obtenerFavoritosPorGenero(Long idGenero);
 	List<Favorito> obtenerFavoritoPorUsuario(Long idUsuario);
-	List<Favorito> obtenerFavoritoPorUsuarioYGenero(Long idUsuario, Long idGenero);
-	List<Favorito> obtenerFavoritosDeUsuario(Usuario usuario);
-	
-	
+	Favorito obtenerFavoritoPorUsuarioYGenero(Long idUsuario, Long idGenero);
 }

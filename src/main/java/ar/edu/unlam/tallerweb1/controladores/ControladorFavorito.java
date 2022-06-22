@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,30 +51,33 @@ public class ControladorFavorito {
 	}
 	
 	@RequestMapping(path = "/validarGenerosFavoritos", method = RequestMethod.POST)
-	public ModelAndView guardarGenerosFavoritos(HttpServletRequest request,
-										   		@ModelAttribute("datosFavoritos") DatosFavoritos datosFavoritos){
+	public ModelAndView guardarGenerosFavoritos(HttpServletRequest request, @ModelAttribute("datosFavoritos") DatosFavoritos datosFavoritos){
 				
-				ModelMap model = new ModelMap();
-				
-				Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
-				
-				if (usuarioSesion != null) {
-					
-					Genero g = new Genero();
-					g.setId(datosFavoritos.getIdGenero());
-					
-					Favorito favorito = new Favorito();
-					favorito.setGenero(g);
-					favorito.setUsuario(usuarioSesion);
-					servicioFavorito.modificarFavorito(favorito);
-					
-					model.addAttribute("datosFavoritos", datosFavoritos);
-					model.put("favoritoElegido", servicioFavorito.buscarFavoritoPorId(favorito.getId()));
-					
-					return new ModelAndView("generos-favoritos", model);
-				}
+		Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
+		if (usuarioSesion == null) {
+			return new ModelAndView("redirect:/login");
+		}
 		
-				return new ModelAndView("redirect:/login", model);
+		ModelMap model = new ModelMap();
+		
+		Iterator<Long> iter = datosFavoritos.getIdGeneros().iterator();
+		
+		while(iter.hasNext()) {
+			Genero genero = servicioGenero.obtenerGeneroPorid(iter.next());
+			
+			Favorito favorito = servicioFavorito.obtenerFavoritoPorUsuarioYGenero(usuarioSesion.getId(), genero.getId());
+			
+			if(favorito == null) {
+				Favorito fav = new Favorito();
+				fav.setGenero(genero);
+				fav.setUsuario(usuarioSesion);
+				servicioFavorito.insertarFavorito(fav);
+			}
+		}
+		
+		model.addAttribute("datosFavoritos", datosFavoritos);
+				
+		return new ModelAndView("generos-favoritos", model);
 	}
 	
 }

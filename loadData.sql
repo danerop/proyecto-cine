@@ -47,7 +47,7 @@ VALUES(1, 205, 1),
       
 INSERT INTO funcion(id, entradasDisponibles, fechaHora, hora, precioMayor, precioMenor, cine_id, pelicula_id, sala_id)
 VALUES(1,50,'2022-06-02',"20:30", 500, 250, 1, 1, 1),
-	  (2,100,'2022-06-22',"19:00", 500, 250, 1, 1, 1);
+	  (2,100,'2022-06-23',"19:00", 500, 250, 1, 1, 1);
 
 INSERT INTO butacafuncion(id, ocupada, butaca_id, funcion_id)
 VALUES(1, 1, 1, 1),
@@ -65,8 +65,9 @@ VALUES (1, "accion", "accion"),
        (5, "suspenso", "suspenso");
 
 INSERT INTO favorito (id, genero_id, usuario_id)
-VALUES (1, 1, 1),
-	   (2, 1, 1);
+VALUES (1, 1, 2),
+	   (2, 3, 2),
+       (3, 2, 2);
        
 select * from favorito;       
 select * from pelicula;

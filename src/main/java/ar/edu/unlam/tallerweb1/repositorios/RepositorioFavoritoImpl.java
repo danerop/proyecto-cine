@@ -36,14 +36,6 @@ public class RepositorioFavoritoImpl implements RepositorioFavorito {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Favorito.class).list();
 	}
-
-	@Override
-	public List<Favorito> obtenerFavoritosDeUsuario(Usuario usuario) {
-		Session session = sessionFactory.getCurrentSession();
-		return (List<Favorito>) session.createCriteria(Favorito.class)
-				                       .add(Restrictions.eq("usuario", usuario))
-				                       .list();
-	}
 	
 	@Override
 	public List<Favorito> obtenerFavoritosPorGenero(Long idGenero) {
@@ -70,16 +62,16 @@ public class RepositorioFavoritoImpl implements RepositorioFavorito {
 
 	@Override
 	public void modificarFavorito(Favorito favorito) {
-		sessionFactory.getCurrentSession().saveOrUpdate(favorito);		
+		sessionFactory.getCurrentSession().update(favorito);		
 	}
 
 	@Override
-	public List<Favorito> obtenerFavoritoPorUsuarioYGenero(Long idUsuario, Long idGenero) {
+	public Favorito obtenerFavoritoPorUsuarioYGenero(Long idUsuario, Long idGenero) {
 		Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(Favorito.class)
-		.add(Restrictions.eq("usuario.id", idUsuario))
-		.add(Restrictions.eq("genero.id", idGenero))
-		.list();
+		return (Favorito) session.createCriteria(Favorito.class)
+				.add(Restrictions.eq("usuario.id", idUsuario))
+				.add(Restrictions.eq("genero.id", idGenero))
+				.uniqueResult();
 	}
 	
 	@Override

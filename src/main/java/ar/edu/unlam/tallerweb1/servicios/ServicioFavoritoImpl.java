@@ -16,7 +16,6 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioFavorito;
 @Transactional
 public class ServicioFavoritoImpl implements ServicioFavorito {
 
-	@Inject
 	private RepositorioFavorito repositorioFavoritoDao;
 	
 	@Autowired
@@ -55,12 +54,7 @@ public class ServicioFavoritoImpl implements ServicioFavorito {
 	}
 
 	@Override
-	public List<Favorito> obtenerFavoritoPorUsuarioYGenero(Long idUsuario, Long idGenero) {
+	public Favorito obtenerFavoritoPorUsuarioYGenero(Long idUsuario, Long idGenero) {
 		return repositorioFavoritoDao.obtenerFavoritoPorUsuarioYGenero(idUsuario, idGenero);
-	}
-
-	@Override
-	public List<Favorito> obtenerFavoritosDeUsuario(Usuario usuario) {
-		return repositorioFavoritoDao.obtenerFavoritosDeUsuario(usuario);
 	}
 }
