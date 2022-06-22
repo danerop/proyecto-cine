@@ -42,7 +42,7 @@ public class ControladorCompraBoleto {
 	@RequestMapping(path = "/compra", method = RequestMethod.GET)
 	public ModelAndView irACompra(@RequestParam(value = "p") Long idPelicula,  HttpServletRequest request) {
 		ModelMap modelo = new ModelMap();
-		List<Funcion> funciones = servicioFuncion.obtenerFuncionesPorPelicula(idPelicula);
+		List<Funcion> funciones = servicioFuncion.obtenerFuncionesFuturasDePelicula(idPelicula);
 		
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		if (user == null || !user.getRol().equals("usuario") || funciones==null) {
@@ -52,7 +52,7 @@ public class ControladorCompraBoleto {
 		
 		modelo.put("datosCompraBoleto", new DatosCompraBoleto());
 		modelo.put("funcionesDisponibles", funciones);
-		modelo.put("cinesDisponibles", servicioFuncion.obtenerCinesDisponiblesParaFunciones(idPelicula));
+		modelo.put("cinesDisponibles", servicioFuncion.obtenerCinesDisponiblesParaFuncionesFuturas(idPelicula));
 		modelo.put("p", idPelicula);
 		modelo.put("peliculaElegida", servicioPelicula.buscarPeliculaPorID(idPelicula));
 		return new ModelAndView("compra", modelo);

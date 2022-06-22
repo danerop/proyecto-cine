@@ -95,7 +95,6 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 	}
 
 	@Override
-
 	public List<Funcion> obtenerFuncionesUnicasPorFecha(Long idPelicula) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Funcion.class)
@@ -103,5 +102,24 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		.add(Restrictions.ne("entradasDisponibles", 0l))
 		.setProjection(Projections.distinct(Projections.property("fechaHora")))
 		.list();
-	}	
+	}
+	
+	@Override
+	public List<Funcion> obtenerFuncionesFuturasDePelicula(Long idPelicula){
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Funcion.class)
+				.add(Restrictions.eq("pelicula.id", idPelicula))
+				.add(Restrictions.ge("fechaHora", new Date(System.currentTimeMillis())))
+				.list();
+	}
+	@Override
+	public List<Cine> obtenerCinesDisponiblesParaFuncionesFuturas(Long idPelicula) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Funcion.class)
+		.add(Restrictions.eq("pelicula.id", idPelicula))
+		.add(Restrictions.ge("fechaHora", new Date(System.currentTimeMillis())))
+		.add(Restrictions.gt("entradasDisponibles", 0))
+		.setProjection(Projections.distinct(Projections.property("cine")))
+		.list();
+	}
 }

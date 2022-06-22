@@ -51,7 +51,7 @@
   <br>
   
   <div class="container">
-    <div class="row">
+    <div class="row bg-white rounded p-3 mb-2">
       <div class="col-5">
         <img class="img-fluid" src="../${pelicula.getUrlImagenPelicula()}" alt="imagen de pelicula">
         <br>
@@ -65,6 +65,13 @@
           Duración: ${pelicula.getDuracion()} min <br>
           Descripción: ${pelicula.getDescripcion()} <br>
         </p>
+        
+        <c:forEach items="${listaCines}" var="cine">
+          <div>${cine.getNombreLocal()}</div>
+        </c:forEach>
+        <c:forEach items="${listaFuncion}" var="funcion">
+          <div>${funcion.getId()}</div>
+        </c:forEach>
       </div>
     </div>
   </div>

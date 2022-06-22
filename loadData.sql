@@ -47,7 +47,7 @@ VALUES(1, 205, 1),
       
 INSERT INTO funcion(id, entradasDisponibles, fechaHora, hora, precioMayor, precioMenor, cine_id, pelicula_id, sala_id)
 VALUES(1,50,'2022-06-02',"20:30", 500, 250, 1, 1, 1),
-	  (2,100,'2022-06-03',"19:00", 500, 250, 1, 1, 1);
+	  (2,100,'2022-06-22',"19:00", 500, 250, 1, 1, 1);
 
 INSERT INTO butacafuncion(id, ocupada, butaca_id, funcion_id)
 VALUES(1, 1, 1, 1),

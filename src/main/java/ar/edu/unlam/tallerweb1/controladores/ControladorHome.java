@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,15 +43,17 @@ public class ControladorHome {
 	private ServicioPelicula servicioPelicula;
 	private ServicioLogin servicioUsuario;
 	private ServicioNotificacion servicioNotificacion;
+	private ServicioFuncion servicioFuncion;
 
 	@Autowired
 	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioBoleto servicioBoleto,
-			ServicioLogin servicioUsuario, ServicioNotificacion servicioNotificacion) {
+			ServicioLogin servicioUsuario, ServicioNotificacion servicioNotificacion, ServicioFuncion servicioFuncion) {
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine = servicioCine;
 		this.servicioBoleto = servicioBoleto;
 		this.servicioUsuario = servicioUsuario;
-		this.servicioNotificacion=servicioNotificacion;
+		this.servicioNotificacion = servicioNotificacion;
+		this.servicioFuncion = servicioFuncion;
 	}
 
 	@RequestMapping(path = "/inicio", method = RequestMethod.GET)
@@ -86,6 +90,7 @@ public class ControladorHome {
 		ModelMap model = new ModelMap();
 		Pelicula pelicula = new Pelicula();
 		List<Funcion> listaFuncion = new ArrayList<Funcion>();
+		List<Cine> listaCines = new ArrayList<Cine>();
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		
 		try {
@@ -94,7 +99,11 @@ public class ControladorHome {
 			return new ModelAndView("redirect:/inicio");
 		}
 		
-		model.put("listaCines", listaFuncion);
+		listaCines = servicioFuncion.obtenerCinesDisponiblesParaFunciones(pelicula.getId());
+		listaFuncion = servicioFuncion.obtenerFuncionesFuturasDePelicula(id);
+		
+		model.put("listaCines", listaCines);
+		model.put("listaFuncion", listaFuncion);
 		model.put("pelicula", pelicula);
 		
 		if (user != null) {
@@ -104,14 +113,6 @@ public class ControladorHome {
 		return new ModelAndView("pelicula", model);
 	}
 	
-	/*
-	 * @RequestMapping(path = "/peliculas", method = RequestMethod.GET) public
-	 * ModelAndView pelicula(){
-	 * 
-	 * return new ModelAndView("peliculas");
-	 * 
-	 * }
-	 */
 	@RequestMapping(path = "/historialcompras", method = RequestMethod.GET)
 	public ModelAndView irAHistorialCompras(HttpServletRequest request) {
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
