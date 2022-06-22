@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,13 @@ public class RepositorioBoletoImpl implements RepositorioBoleto{
 	public void actualizarBoleto(Boleto boleto) {
 		sessionFactory.getCurrentSession().update(boleto);
 		
+	}
+
+	@Override
+	public List<Boleto> buscarBoletosDeUnUsuario(Long idUsuario) {
+		return sessionFactory.getCurrentSession().createCriteria(Boleto.class)
+				.add(Restrictions.eq("cliente.id",idUsuario))
+				.list();
 	}
 	
 }

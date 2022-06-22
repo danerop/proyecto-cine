@@ -22,7 +22,7 @@ import ar.edu.unlam.tallerweb1.modelo.Sala;
 public class RepositorioFuncionTest extends SpringTest{
 
 	@Autowired
-	private RepositorioFuncion repositorioFuncion;
+	private RepositorioFuncion repofuncion;
 	
 	@Test
 	@Transactional @Rollback
@@ -40,7 +40,7 @@ public class RepositorioFuncionTest extends SpringTest{
 		funcion.setPelicula(peli);
 		funcion.setSala(sala);
 		
-		repositorioFuncion.guardarFuncion(funcion);
+		repofuncion.guardarFuncion(funcion);
 		
 		assertNotNull(funcion.getId());
 	}
@@ -59,46 +59,91 @@ public class RepositorioFuncionTest extends SpringTest{
 		
 		Iterator<Funcion> iter = listaFunciones.iterator();
 		while (iter.hasNext()) {
-			repositorioFuncion.guardarFuncion(iter.next());
+			repofuncion.guardarFuncion(iter.next());
 		}
 		
-		assertEquals(listaFunciones, repositorioFuncion.obtenerTodasLasFunciones());
+		assertEquals(listaFunciones, repofuncion.obtenerTodasLasFunciones());
 	}
 	
 	@Test
 	@Transactional @Rollback
-	public void queSeDevuelvanTodasLasFuncionesDeUnaPelicula() {
-		Pelicula peli1 = nuevaPelicula(1l, "peliculaBuscada");
-		Pelicula peli2 = nuevaPelicula(2l, "ejemplo2");
-		Pelicula peli3 = nuevaPelicula(3l, "ejemplo3");
+	public void queSeObtenganFuncionesAsociadasAUnaPelicula() {			
+		Pelicula peli = new Pelicula();
+		session().save(peli);
+		Funcion funcion=new Funcion();
+		Funcion funcion2=new Funcion();
+		Funcion funcion3=new Funcion();
+		funcion.setPelicula(peli);
+		funcion3.setPelicula(peli);
 		
-		List<Funcion> listaFuncionesNoEsperadas = new ArrayList<Funcion>();
-		List<Funcion> listaFuncionesEsperadas = new ArrayList<Funcion>();
-		archivarFuncion(listaFuncionesNoEsperadas, peli3);
-		archivarFuncion(listaFuncionesNoEsperadas, peli2);
-		archivarFuncion(listaFuncionesEsperadas, peli1);
-		archivarFuncion(listaFuncionesEsperadas, peli1);
+		session().save(funcion);
+		session().save(funcion2);
+		session().save(funcion3);
 		
-		Iterator<Funcion> iter = listaFuncionesEsperadas.iterator();
-		while (iter.hasNext()) {
-			repositorioFuncion.guardarFuncion(iter.next());
-		}
-		
-		System.out.println(repositorioFuncion.buscarFuncionPorId(1l));
-		
-		assertEquals(listaFuncionesEsperadas, repositorioFuncion.obtenerFuncionesPorPelicula(peli1.getId()));
+		List<Funcion> listaesperada=repofuncion.obtenerFuncionesPorPelicula(peli.getId());
+		int cantidadEsperada= 2;
+		assertNotNull(listaesperada);
+		assertEquals(cantidadEsperada, listaesperada.size());
+		assertTrue(listaesperada.contains(funcion));
+		assertTrue(listaesperada.contains(funcion3));
+		assertFalse(listaesperada.contains(funcion2));
 	}
-	
-	private void archivarFuncion(List<Funcion> listaFunciones, Pelicula peli) {
-		Funcion fun = new Funcion();
-		fun.setPelicula(peli);
-		listaFunciones.add(fun);
+	@Test
+	@Transactional @Rollback
+	public void queSeObtenganCinesDisponiblesPorPelicula() {			
+		Pelicula peli = new Pelicula();
+		session().save(peli);
+		Cine cine1= new Cine();
+		Cine cine2= new Cine();
+		Cine cine3= new Cine();
+		session().save(cine1);
+		session().save(cine2);
+		session().save(cine3);
+		Funcion funcion=new Funcion();
+		Funcion funcion2=new Funcion();
+		Funcion funcion3=new Funcion();
+		funcion.setCine(cine2);
+		funcion2.setCine(cine2);
+		funcion3.setCine(cine1);
+		funcion.setPelicula(peli);
+		funcion2.setPelicula(peli);
+		funcion3.setPelicula(peli);
+		
+		session().save(funcion);
+		session().save(funcion2);
+		session().save(funcion3);
+		
+		List<Cine> listaesperada= repofuncion.obtenerCinesDisponiblesParaFunciones(peli.getId());
+		int cantidadEsperada= 2;
+		assertNotNull(listaesperada);
+		assertEquals(cantidadEsperada, listaesperada.size());
+		assertTrue(listaesperada.contains(cine1));
+		assertTrue(listaesperada.contains(cine2));
+	}
+	@Test
+	@Transactional @Rollback
+	public void queSeObtengaUnaFuncionUnicaPorCineFechaHoraSalaYPelicula() {			
+		Cine cine=new Cine();
+		Pelicula peli=new Pelicula();
+		Sala sala=new Sala();
+		session().save(peli);
+		session().save(sala);
+		session().save(cine);
+		Funcion funcion=new Funcion();
+		Funcion funcion2=new Funcion();
+		funcion.setCine(cine);
+		funcion.setFechaHora(Date.valueOf("2022-06-17"));
+		funcion.setHora("18:00");
+		funcion.setPelicula(peli);
+		funcion.setSala(sala);
+		
+		session().save(funcion);
+		session().save(funcion2);
+		
+		Funcion funcionEsperada=repofuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(cine.getId(), peli.getId(), funcion.getFechaHora(), funcion.getHora(), sala.getId());
+		assertNotNull(funcionEsperada);
+		assertEquals(funcionEsperada, funcion);
+
 	}
 
-	public Pelicula nuevaPelicula(Long id, String nombre) {
-		Pelicula peli = new Pelicula();
-		peli.setId(id);
-		peli.setNombre(nombre);
-		return peli;
-	}
 }

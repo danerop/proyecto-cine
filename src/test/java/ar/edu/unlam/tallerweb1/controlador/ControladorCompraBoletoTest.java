@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -36,6 +38,7 @@ public class ControladorCompraBoletoTest {
 	
 	
 	@Test
+	@Transactional @Rollback
 	public void queSePuedeAccederSiElUsuarioEstaLogueado() {
 		Usuario user = new Usuario();
 		Funcion funcion=new Funcion();
@@ -87,6 +90,7 @@ public class ControladorCompraBoletoTest {
 		assertEquals("compra-recibocompra", mav6.getViewName());
 	}
 	@Test
+	@Transactional @Rollback
 	public void queSeRerideccioneAHomeSiSeIntetaComprarSinLoguear() {
 		Funcion funcion=new Funcion();
 		Butaca butaca=new Butaca();
@@ -131,6 +135,7 @@ public class ControladorCompraBoletoTest {
 		assertEquals("redirect:/inicio", mav6.getViewName());
 	}
 	@Test
+	@Transactional @Rollback
 	public void queSeRerideccioneACompraSiLaFuncionElegidaNoExiste() {
 		Usuario user = new Usuario();
 		DatosCompraBoleto datos=new DatosCompraBoleto();
@@ -149,6 +154,7 @@ public class ControladorCompraBoletoTest {
 		assertEquals("redirect:/compra?p=1", mav.getViewName());
 	}
 	@Test
+	@Transactional @Rollback
 	public void queSeRedireccioneAInicioSiEstaOcupada() {
 		Usuario user = new Usuario();
 		DatosCompraBoleto datos=new DatosCompraBoleto();
@@ -172,6 +178,7 @@ public class ControladorCompraBoletoTest {
 		assertEquals("La butaca elegida ya fue ocupada", mav.getModel().get("msg"));
 	}
 	@Test
+	@Transactional @Rollback
 	public void queSeRerideccioneAlReciboCuandoSeGenereUnBoleto() {
 		Usuario user = new Usuario();
 		user.setId(1l);
@@ -198,6 +205,7 @@ public class ControladorCompraBoletoTest {
 		assertEquals(mav.getViewName(), "redirect:/recibo?b="+null);
 	}
 	@Test
+	@Transactional @Rollback
 	public void queSeRedireccioneAInicioSiLaFuncionSeleccionadaNoExisteCuandoSeIntetaGenerarUnBoleto() {
 		Usuario user = new Usuario();
 		user.setId(1l);
@@ -224,6 +232,7 @@ public class ControladorCompraBoletoTest {
 		assertEquals("La función de la cual desea reservar boleto no existe", mav.getModel().get("msg"));
 	}
 	@Test
+	@Transactional @Rollback
 	public void queSeRedireccioneAInicioSiLosDatosDelBoletoNoCoincidenConRegistroButacaFuncionCuandoSeIntetaGenerarUnBoleto() {
 		Usuario user = new Usuario();
 		user.setId(1l);
@@ -250,6 +259,7 @@ public class ControladorCompraBoletoTest {
 		assertEquals("Los datos de la butaca seleccionada no corresponden a una válida", mav.getModel().get("msg"));
 	}
 	@Test
+	@Transactional @Rollback
 	public void queSeRedireccioneAInicioSiLaButacaSeleccionadaEstaOcupadaCuandoSeIntentaGenerarUnBoleto() {
 		Usuario user = new Usuario();
 		user.setId(1l);
@@ -276,6 +286,7 @@ public class ControladorCompraBoletoTest {
 		assertEquals("La butaca seleccionada ya ha sido ocupada, por favor intente con otra", mav.getModel().get("msg"));
 	}
 	@Test
+	@Transactional @Rollback
 	public void queSeRedireccioneAInicioCuandoElBoletoNoExiste() {
 		Usuario user = new Usuario();
 		
@@ -298,6 +309,7 @@ public class ControladorCompraBoletoTest {
 
 	}
 	@Test
+	@Transactional @Rollback
 	public void queSeRedireccioneAInicioCuandoSeIntentaAccederAlBoletoDeOtroUsuario() {
 		Usuario user = new Usuario();
 		Usuario anotherUser = new Usuario();

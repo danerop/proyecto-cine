@@ -3,7 +3,6 @@ package ar.edu.unlam.tallerweb1.controladores;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,23 +30,26 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSala;
 
 @Controller
 public class ControladorHome {
 
 	private ServicioCine servicioCine;
-	private ServicioSala servicioSala;
+	private ServicioBoleto servicioBoleto;
 	private ServicioPelicula servicioPelicula;
 	private ServicioLogin servicioUsuario;
+	private ServicioNotificacion servicioNotificacion;
 
 	@Autowired
-	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioSala servicioSala,
-			ServicioLogin servicioUsuario) {
+	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioBoleto servicioBoleto,
+			ServicioLogin servicioUsuario, ServicioNotificacion servicioNotificacion) {
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine = servicioCine;
-		this.servicioSala = servicioSala;
+		this.servicioBoleto = servicioBoleto;
 		this.servicioUsuario = servicioUsuario;
+		this.servicioNotificacion=servicioNotificacion;
 	}
 
 	@RequestMapping(path = "/inicio", method = RequestMethod.GET)
@@ -61,6 +63,7 @@ public class ControladorHome {
 			model.put("usuario", servicioUsuario.consultarUsuario(user));
 			model.put("rol", servicioUsuario.consultarUsuarioPorRol(user));
 			model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+			model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 			return new ModelAndView("inicio", model);
 		}
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
@@ -109,5 +112,18 @@ public class ControladorHome {
 	 * 
 	 * }
 	 */
+	@RequestMapping(path = "/historialcompras", method = RequestMethod.GET)
+	public ModelAndView irAHistorialCompras(HttpServletRequest request) {
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (user == null || !user.getRol().equals("usuario") ) {
+			return new ModelAndView("redirect:/inicio");
+		}
+
+		ModelMap model = new ModelMap();
+		model.put("boletosadquiridos", servicioBoleto.buscarBoletosDeUnUsuario(user));
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
+		model.put("usuario", servicioUsuario.consultarUsuario(user));
+		return new ModelAndView("historial-compras", model);
+	}
 
 }

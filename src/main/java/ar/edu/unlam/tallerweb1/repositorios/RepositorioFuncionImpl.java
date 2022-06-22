@@ -66,7 +66,7 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Funcion.class)
 		.add(Restrictions.eq("pelicula.id", idPelicula))
-		.add(Restrictions.ne("entradasDisponibles", 0))
+//		.add(Restrictions.ne("entradasDisponibles", 0))
 		.list();
 	}
 
@@ -75,7 +75,7 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Funcion.class)
 		.add(Restrictions.eq("pelicula.id", idPelicula))
-		.add(Restrictions.ne("entradasDisponibles", 0))
+//		.add(Restrictions.ne("entradasDisponibles", 0))
 		.setProjection(Projections.distinct(Projections.property("cine")))
 		.list();
 	}
@@ -90,7 +90,7 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		.add(Restrictions.eq("sala.id", idSala))
 		.add(Restrictions.eq("fechaHora", fechaHora))
 		.add(Restrictions.eq("hora", hora))
-		.add(Restrictions.ne("entradasDisponibles", 0))
+//		.add(Restrictions.ne("entradasDisponibles", 0))
 		.uniqueResult();
 	}
 

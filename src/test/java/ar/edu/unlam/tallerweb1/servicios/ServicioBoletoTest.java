@@ -3,10 +3,14 @@ package ar.edu.unlam.tallerweb1.servicios;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mysql.cj.Session;
 
 import ar.edu.unlam.tallerweb1.modelo.*;
 import ar.edu.unlam.tallerweb1.repositorios.*;
@@ -70,13 +74,18 @@ public class ServicioBoletoTest {
 	public void queNoSeGenereUnBoletoSiLaLosDatosNoCoincidenConRegistroButacaFuncion() {
 		Boleto boleto=new Boleto();
 		Funcion funcion=new Funcion();
+		Funcion otraFuncion=new Funcion();
 		Butaca butaca=new Butaca();
 		ButacaFuncion registro=new ButacaFuncion();
-		boleto.setFuncion(funcion);
-		boleto.setButaca(butaca);
+		registro.setId(1l);
+		otraFuncion.setId(2l);
 		funcion.setId(1l);
 		funcion.setEntradasDisponibles(10);
-
+		boleto.setFuncion(funcion);
+		boleto.setButaca(butaca);
+		registro.setButaca(butaca);
+		registro.setFuncion(otraFuncion);
+		
 		
 		servicioBoleto.guardarBoleto(boleto, registro);
 	}
@@ -96,5 +105,15 @@ public class ServicioBoletoTest {
 		registro.setFuncion(funcion);
 		
 		servicioBoleto.guardarBoleto(boleto, registro);
+	}
+	@Test
+	@Transactional @Rollback
+	public void queSePuedaRegistrarAsistenciaBoleto() {
+		Boleto boleto=new Boleto();
+
+		when(repositorioBoleto.buscarBoleto(Mockito.anyLong())).thenReturn(boleto);
+		servicioBoleto.registrarAsistenciaBoleto(boleto);;
+		
+		verify(repositorioBoleto, times(1)).actualizarBoleto(boleto);
 	}
 }

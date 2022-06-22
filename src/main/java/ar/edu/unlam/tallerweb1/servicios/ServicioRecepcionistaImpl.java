@@ -21,4 +21,16 @@ public class ServicioRecepcionistaImpl implements ServicioRecepcionista{
 		return fechaDeBoleto.equals(fechaActual);
 	}
 
+	@Override
+	public void ConsultarBoletoValido(Boleto boleto) {
+		if (boleto==null) {
+			throw new ExceptionBoletoInvalido("Boleto no encontrado");
+		}
+		if (!validarFechaBoleto(boleto)) {
+			throw new ExceptionFechaDistinta("La fecha del boleto no corresponde al dia actual");
+		}
+		if (boleto.getUsado()==true) {
+			throw new ExceptionBoletoYaUsado("El boleto ya fue usado");
+		}
+	}
 }

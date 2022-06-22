@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.controladores.ControladorAdminCine;
@@ -23,6 +27,7 @@ public class ControladorAdminCineTest {
 	private ControladorAdminCine controladorAdminCine = new ControladorAdminCine(servicioCine);
 	
 	@Test
+	@Transactional @Rollback
 	public void sePuedeAccederALaPaginaSiElUsuarioEsAdmin() {
 		
 		ModelAndView mav = controladorAdminCine.irAAdminCargarCine(usuarioDeRol("admin"));
@@ -39,6 +44,7 @@ public class ControladorAdminCineTest {
 	}
 	
 	@Test
+	@Transactional @Rollback
 	public void registroExitosoDeCine() {
 		Cine cineNuevo = new Cine();
 		//estos datos están para dar a entender la funcionalidad del test (como los ejemplos de la clase)
@@ -56,6 +62,7 @@ public class ControladorAdminCineTest {
 	}
 	
 	@Test
+	@Transactional @Rollback
 	public void registroFallidoDeCinePorFaltaDeDatos(){
 		Cine cineNuevo = new Cine();
 		cineNuevo.setNombreLocal("nombre");

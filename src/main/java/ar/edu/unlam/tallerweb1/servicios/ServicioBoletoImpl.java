@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -24,6 +27,7 @@ import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Butaca;
 import ar.edu.unlam.tallerweb1.modelo.ButacaFuncion;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioBoleto;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioFuncion;
 
@@ -45,7 +49,7 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		if (boleto.getFuncion()==null || boleto.getFuncion().getId()==null || boleto.getFuncion().getEntradasDisponibles()<=0) {
 			throw new ExceptionFuncionNoEncontrada("La función de la cual desea reservar boleto no existe");
 		}
-		if (temp.getFuncion()!=boleto.getFuncion() || temp.getButaca() != boleto.getButaca()) {
+		if (temp.getFuncion().getId()!=boleto.getFuncion().getId() || temp.getButaca().getId() != boleto.getButaca().getId()) {
 			throw new ExceptionDatosBoletoDiferentesARegistroButacaFuncion("Los datos de la butaca seleccionada no corresponden a una válida");
 		}
 
@@ -53,6 +57,10 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 			throw new ExceptionButacaYaOcupada("La butaca seleccionada ya ha sido ocupada, por favor intente con otra");
 		}
 		boleto.getFuncion().setEntradasDisponibles(boleto.getFuncion().getEntradasDisponibles()-1);
+        LocalDate dateObj = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fechaActual = dateObj.format(formatter);
+		boleto.setFechaComprado(Date.valueOf(fechaActual));
 		this.repositorioBoletoDao.guardarBoleto(boleto);
 		
 		
@@ -75,5 +83,10 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		Boleto temp=repositorioBoletoDao.buscarBoleto(boleto.getId());
 		temp.setUsado(true);
 		repositorioBoletoDao.actualizarBoleto(temp);
+	}
+
+	@Override
+	public List<Boleto> buscarBoletosDeUnUsuario(Usuario user) {
+		return repositorioBoletoDao.buscarBoletosDeUnUsuario(user.getId());
 	}
 }
