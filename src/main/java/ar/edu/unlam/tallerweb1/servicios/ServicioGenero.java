@@ -11,8 +11,11 @@ public interface ServicioGenero {
 
 	void guardarGenero(Genero genero);
 
+	void guardarListaDeGeneros(List<Long> idGeneros);
+	
 	List<Genero> obtenerTodosLosGeneros();
 	
 	List<String> obtenerGenerosDeUnaPelicula(Pelicula pelicula);
 	
+	Genero obtenerGeneroPorid(Long id);
 }

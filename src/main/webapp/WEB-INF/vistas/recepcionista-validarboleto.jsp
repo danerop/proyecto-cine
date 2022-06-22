@@ -96,10 +96,8 @@
 				<br>
 				<div class="d-flex justify-content-center btncompraboleto">
 					<a href="iniciorecepcionista" class="btn btn-secondary">Volver</a>
-					<c:if test="${fechadistinta==false}">
 						<a href="registrar-asistencia-boleto?b=${b}"
 							class="btn btn-primary">Activar</a>
-					</c:if>
 
 				</div>
 

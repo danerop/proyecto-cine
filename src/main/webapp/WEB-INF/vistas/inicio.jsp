@@ -130,7 +130,11 @@
 		<br>
 	</c:if>
 
-
+	<c:if test="${usuario.getRol() == 'usuario'}">
+	 <a href="generos" class="btn btn-primary" role="button">Seleccionar generos favoritos</a>
+	 <br>
+	</c:if>
+	
 	<select class="form-select-bg-size cine-selection"
 		aria-label="Default select example">
 		<option selected>Selecciona un cine</option>

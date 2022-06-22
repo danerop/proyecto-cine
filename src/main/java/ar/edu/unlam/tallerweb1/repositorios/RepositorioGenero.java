@@ -10,6 +10,8 @@ public interface RepositorioGenero {
 
 	void insertarGenero(Genero genero);
 
+	void agregarListaDeGeneros(List<Long> idGeneros);
+	
 	List<Genero> obtenerTodosLosGeneros();
 
 	SessionFactory getSessionFactory();

@@ -83,5 +83,29 @@ public class ControladorSuscripcion {
 				model.put("usuarioSuscripto", usuarioSesion);
 
 				return new ModelAndView("suscripcion-validar", model);
-	}				
+	}
+	
+	public ServicioSuscripcion getServicioSuscripcion() {
+		return servicioSuscripcion;
+	}
+
+	public void setServicioSuscripcion(ServicioSuscripcion servicioSuscripcion) {
+		this.servicioSuscripcion = servicioSuscripcion;
+	}
+	
+	public ServicioDetalleSuscripcion getServicioDetalleSuscripcion() {
+		return servicioDetalleSuscripcion;
+	}
+
+	public void setServicioDetalleSuscripcion(ServicioDetalleSuscripcion servicioDetalleSuscripcion) {
+		this.servicioDetalleSuscripcion = servicioDetalleSuscripcion;
+	}
+	
+	public ServicioLogin getServicioUsuario() {
+		return servicioUsuario;
+	}
+
+	public void setServicioLogin(ServicioLogin servicioUsuario) {
+		this.servicioUsuario = servicioUsuario;
+	}
 }

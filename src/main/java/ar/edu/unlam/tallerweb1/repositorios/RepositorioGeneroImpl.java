@@ -50,8 +50,9 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
 		return (Genero) session.get(Genero.class, id);
 	}
 
-	
-	
-	
-	
+	@Override
+	public void agregarListaDeGeneros(List<Long> idGeneros) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(idGeneros);
+	}
 }
