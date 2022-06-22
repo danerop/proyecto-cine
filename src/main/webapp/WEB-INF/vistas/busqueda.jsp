@@ -11,7 +11,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap theme -->
   <link href="css/style.css" rel="stylesheet">
-  <title>Inicio</title>
+  <title>Busqueda</title>
 </head>
 
 <body>
@@ -39,59 +39,17 @@
               <a class="nav-link" href="cerrarSesion">Iniciar Session</a>
             </li>
           </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          <form:form action="buscar" method="GET" class="d-flex" modelAttribute="datosBuscar">
+            <form:input class="form-control me-2" path="busqueda"/>
+            <form:button class="btn btn-outline-success" type="submit">Search</form:button>
+          </form:form>
         </div>
       </div>
     </nav>
   </header>
 
-  <c:if test="${msg!=null}">
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>${msg}</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  </c:if>
   <br>
-  <%
-				if (request.getAttribute("usuario") != null) {
-			%>
-  <h2 class="text-center text-light mb-4">Bienvenido,
-    ${usuario.email}.</h2>
-  <h2 class="text-center text-light mb-4">Rol:
-    ${usuario.getRol()}.</h2>
-  <%
-				}
-			%>
-
-  <c:if test="${usuario.getRol() == 'admin'}">
-    <div class="">
-      <a class="btn btn-primary" role="button"
-        href="http://localhost:8080/proyecto-cine/admin?sel=cargar-cine">Controles Administrador</a>
-    </div>
-    <br>
-  </c:if>
-
-
-  <select class="form-select-bg-size cine-selection" aria-label="Default select example">
-    <option selected>Selecciona un cine</option>
-    <option value="1">Hoyts Morón</option>
-    <option value="2">Cinemark San Justo</option>
-    <option value="3">Cinemark Caballito</option>
-  </select>
-  <select class="form-select-bg-size" aria-label="Default select example">
-    <option selected>Selecciona una película</option>
-    <option value="1">Batman</option>
-    <option value="2">Spiderman</option>
-    <option value="3">Uncharted</option>
-  </select>
-  <br>
-  <br>
-  <h3 class="text-center">Películas</h3>
-  <br>
-  <br>
+  
   <div class="container">
     <div class="row justify-content-evenly row-cols-3">
       <!-- d-flex flex-column bd-highlight mb-3  -->
@@ -108,11 +66,11 @@
           </a>
         </div>
       </c:forEach>
-      <br>
     </div>
-    <br>
-
   </div>
+  
+  <br>
+  
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
   </script>
@@ -120,5 +78,4 @@
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
   </script>
 </body>
-
 </html>

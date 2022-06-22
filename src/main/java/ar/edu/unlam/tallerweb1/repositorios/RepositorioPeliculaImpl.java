@@ -5,6 +5,7 @@ import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -50,6 +51,11 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		 this.sessionFactory = sessionFactory;
 	}
 
-
-
+	@Override
+	public List<Pelicula> buscarPeliculasPorNombre(String nombre) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Pelicula.class)
+				.add(Restrictions.like("nombre", nombre))
+				.list();
+	}
 }

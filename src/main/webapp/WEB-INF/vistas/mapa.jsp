@@ -47,24 +47,51 @@
               <a class="nav-link" href="cerrarSesion">Iniciar Session</a>
             </li>
           </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          <form:form action="buscar" method="GET" class="d-flex" modelAttribute="datosBuscar">
+            <form:input class="form-control me-2" path="busqueda"/>
+            <form:button class="btn btn-outline-success" type="submit">Search</form:button>
+          </form:form>
         </div>
       </div>
     </nav>
   </header>
+  
   <br>
+  
   <div class="container">
-    <div id="map" style="width:100%; height:80vh;"></div>
+    <div class="row">
+      <div class="col-4">
+        <h4 class="text-white">Mapa de Cines</h4>
+        <ul class="list-group">
+          <c:forEach items="${listaCines}" var="cine">
+            <li class="list-group-item">
+              <span style="font-size: large; font-weight: bold;">${cine.getNombreLocal()}</span>
+              <p>
+                Dirección: ${cine.getDireccion()} <br>
+                Telefono: ${cine.getTelefono()} <br>
+                Email: ${cine.getEmail()}
+              </p>
+            </li>
+          </c:forEach>
+        </ul>
+      </div>
+      
+      <div class="col-8">
+        <div id="map" style="width:100%; height:80vh;"></div>
+      </div>
+    </div>
   </div>
-	
+  
+  <br>
+  <br>
+  <br>
+  
   <script>
     var map = L.map('map').setView([-39.88, -62.13], 4);
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
+      maxZoom: 15,
+      minZoom: 3,
       attribution: '© OpenStreetMap'
     }).addTo(map);
 

@@ -63,4 +63,12 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 		
 		repositorioPeliculaDao.guardarPelicula(pelicula);
 	}
+
+	@Override
+	public List<Pelicula> buscarPeliculasPorNombre(String busqueda) {
+		
+		busqueda = "%" + busqueda + "%";
+		
+		return repositorioPeliculaDao.buscarPeliculasPorNombre(busqueda);
+	}
 }
