@@ -36,6 +36,8 @@
 								de cines</a></li>
 						<li class="nav-item"><a class="nav-link" href="suscripcion">Suscripciones</a>
 						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="historialcompras">Mis Boletos</a></li>
 						<li class="nav-item"><a class="nav-link" href="cerrarSesion">Iniciar
 								Session</a></li>
 						<li>
@@ -51,10 +53,13 @@
 						<li>
 							<button type="button" class="btn btn-dark position-relative"
 								data-bs-toggle="modal" data-bs-target="#exampleModal">
-								<i class="bi bi-bell-fill text-secondary"></i> <span
-									class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-									99+ <span class="visually-hidden">unread messages</span>
-								</span>
+								<i class="bi bi-bell-fill text-secondary"></i>
+								<c:if test="${notificaciones.size()>0}">
+									<span
+										class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+										${notificaciones.size()} <span class="visually-hidden">unread messages</span>
+									</span>
+								</c:if>
 							</button>
 						</li>
 						<%

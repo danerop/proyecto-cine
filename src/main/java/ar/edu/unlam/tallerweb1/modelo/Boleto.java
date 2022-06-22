@@ -32,6 +32,8 @@ public class Boleto {
 	private Float precio;
 
 	private Boolean usado=false;
+	
+	private Date fechaComprado;
 
 	
 	
@@ -76,7 +78,14 @@ public class Boleto {
 	public void setPrecio(Float precio) {
 		this.precio = precio;
 	}
-
+	
+	
+	public Date getFechaComprado() {
+		return fechaComprado;
+	}
+	public void setFechaComprado(Date fechaComprado) {
+		this.fechaComprado = fechaComprado;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
