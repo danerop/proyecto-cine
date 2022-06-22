@@ -74,13 +74,18 @@ public class ServicioBoletoTest {
 	public void queNoSeGenereUnBoletoSiLaLosDatosNoCoincidenConRegistroButacaFuncion() {
 		Boleto boleto=new Boleto();
 		Funcion funcion=new Funcion();
+		Funcion otraFuncion=new Funcion();
 		Butaca butaca=new Butaca();
 		ButacaFuncion registro=new ButacaFuncion();
-		boleto.setFuncion(funcion);
-		boleto.setButaca(butaca);
+		registro.setId(1l);
+		otraFuncion.setId(2l);
 		funcion.setId(1l);
 		funcion.setEntradasDisponibles(10);
-
+		boleto.setFuncion(funcion);
+		boleto.setButaca(butaca);
+		registro.setButaca(butaca);
+		registro.setFuncion(otraFuncion);
+		
 		
 		servicioBoleto.guardarBoleto(boleto, registro);
 	}
