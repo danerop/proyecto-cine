@@ -64,10 +64,10 @@ VALUES (1, "accion", "accion"),
        (4, "ciencia ficcion", "ciencia ficcion"),
        (5, "suspenso", "suspenso");
 
-INSERT INTO favorito (id, genero_id, usuario_id)
-VALUES (1, 1, 2),
-	   (2, 3, 2),
-       (3, 2, 2);
+INSERT INTO favorito (id, activo, genero_id, usuario_id)
+VALUES (1, true, 1, 2),
+	   (2, true, 3, 2),
+       (3, true, 2, 2);
        
 select * from favorito;       
 select * from pelicula;
