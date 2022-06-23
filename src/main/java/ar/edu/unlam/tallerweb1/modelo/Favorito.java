@@ -24,6 +24,15 @@ public class Favorito {
 	@Cascade(CascadeType.ALL)
 	private Usuario usuario;
 	
+	private Boolean activo=true;
+	
+	
+	public Boolean getActivo() {
+		return activo;
+	}
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
 	public Long getId() {
 		return id;
 	}

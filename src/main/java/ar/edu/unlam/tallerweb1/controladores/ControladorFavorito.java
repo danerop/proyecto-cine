@@ -23,6 +23,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFavorito;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGenero;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSuscripcion;
 
 @Controller
@@ -31,21 +32,29 @@ public class ControladorFavorito {
 	private ServicioFavorito servicioFavorito;
 	private ServicioLogin servicioUsuario;
 	private ServicioGenero servicioGenero;
+	private ServicioNotificacion servicioNotificacion;
 
 	@Autowired
-	public ControladorFavorito(ServicioFavorito servicioFavorito, ServicioLogin servicioUsuario, ServicioGenero servicioGenero) {
+	public ControladorFavorito(ServicioFavorito servicioFavorito, ServicioLogin servicioUsuario, ServicioGenero servicioGenero, ServicioNotificacion servicioNotificacion) {
 		this.servicioFavorito = servicioFavorito;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioGenero = servicioGenero;
+		this.servicioNotificacion= servicioNotificacion;
 	}
 	
 	@RequestMapping(path = "/generos", method = RequestMethod.GET)
-	public ModelAndView seleccionarGenerosFavoritos() {
-		
+	public ModelAndView seleccionarGenerosFavoritos(HttpServletRequest request) {
+		Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
+		if (usuarioSesion == null) {
+			return new ModelAndView("redirect:/login");
+		}
 		ModelMap model = new ModelMap();
 		
+		model.put("usuario", servicioUsuario.consultarUsuario(usuarioSesion));
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(usuarioSesion));
 		model.addAttribute("datosFavoritos", new DatosFavoritos());
 		model.put("listaDeGeneros", servicioGenero.obtenerTodosLosGeneros());
+		model.put("generosFavoritos", servicioFavorito.obtenerFavoritoPorUsuario(usuarioSesion.getId()));
 
 		return new ModelAndView("generos", model);
 	}
@@ -60,24 +69,41 @@ public class ControladorFavorito {
 		
 		ModelMap model = new ModelMap();
 		
-		Iterator<Long> iter = datosFavoritos.getIdGeneros().iterator();
 		
-		while(iter.hasNext()) {
-			Genero genero = servicioGenero.obtenerGeneroPorid(iter.next());
-			
-			Favorito favorito = servicioFavorito.obtenerFavoritoPorUsuarioYGenero(usuarioSesion.getId(), genero.getId());
-			
-			if(favorito == null) {
-				Favorito fav = new Favorito();
-				fav.setGenero(genero);
-				fav.setUsuario(usuarioSesion);
-				servicioFavorito.insertarFavorito(fav);
+		if (datosFavoritos!=null && datosFavoritos.getIdGeneros()!=null && datosFavoritos.getIdGeneros().size()!=0) {
+			Iterator<Long> iter = datosFavoritos.getIdGeneros().iterator();
+			while(iter.hasNext()) {
+				Genero genero = servicioGenero.obtenerGeneroPorid(iter.next());
+				
+				Favorito favorito = servicioFavorito.obtenerFavoritoPorUsuarioYGenero(usuarioSesion.getId(), genero.getId());
+				
+				if(favorito == null) {
+					Favorito fav = new Favorito();
+					fav.setGenero(genero);
+					fav.setUsuario(usuarioSesion);
+					servicioFavorito.insertarFavorito(fav);
+				} else if (favorito.getActivo()==false) {
+					favorito.setActivo(true);
+					servicioFavorito.modificarFavorito(favorito);
+				} {
+					
+				}
 			}
 		}
-		
-		model.addAttribute("datosFavoritos", datosFavoritos);
-				
-		return new ModelAndView("generos-favoritos", model);
+
+
+		return new ModelAndView("redirect:/generos", model);
 	}
-	
+	@RequestMapping(path = "/eliminargenero", method = RequestMethod.GET)
+	public ModelAndView eliminarrGenerosFavoritos(@RequestParam(value = "g") Long idRegistroFavorito, HttpServletRequest request){
+				
+		Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
+		if (usuarioSesion == null) {
+			return new ModelAndView("redirect:/login");
+		}
+		
+		servicioFavorito.inactivar(idRegistroFavorito);
+
+		return new ModelAndView("redirect:/generos");
+	}
 }

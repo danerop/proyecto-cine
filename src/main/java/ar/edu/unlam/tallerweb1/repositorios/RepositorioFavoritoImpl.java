@@ -50,14 +50,13 @@ public class RepositorioFavoritoImpl implements RepositorioFavorito {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Favorito.class)
 		.add(Restrictions.eq("usuario.id", idUsuario))
+		.add(Restrictions.eq("activo", true))
 		.list();
 	}
 
 	@Override
 	public Favorito buscarFavoritoPorId(Long id) {
-		return (Favorito) sessionFactory.getCurrentSession().createCriteria(Favorito.class)
-				.add(Restrictions.eq("id",id))
-				.uniqueResult();
+		return (Favorito) sessionFactory.getCurrentSession().get(Favorito.class, id);
 	}
 
 	@Override

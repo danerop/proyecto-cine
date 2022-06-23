@@ -57,4 +57,14 @@ public class ServicioFavoritoImpl implements ServicioFavorito {
 	public Favorito obtenerFavoritoPorUsuarioYGenero(Long idUsuario, Long idGenero) {
 		return repositorioFavoritoDao.obtenerFavoritoPorUsuarioYGenero(idUsuario, idGenero);
 	}
+
+	@Override
+	public void inactivar(Long idRegistro) {
+		Favorito temp= repositorioFavoritoDao.buscarFavoritoPorId(idRegistro);
+		
+		if (temp.getActivo()==true) {
+			temp.setActivo(false);
+			modificarFavorito(temp);	
+		}
+	}
 }
