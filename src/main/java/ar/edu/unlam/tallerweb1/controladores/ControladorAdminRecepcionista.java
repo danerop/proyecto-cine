@@ -39,7 +39,7 @@ public class ControladorAdminRecepcionista {
 	}
 	
 	@RequestMapping( path = "/agregar-recepcionista", method = RequestMethod.POST)
-	public ModelAndView agregarNuevoRecepcionista( @ModelAttribute("datosLogin") DatosLogin datosLogin, HttpServletRequest request){
+	public ModelAndView agregarNuevoRecepcionista( @ModelAttribute("datosRecepcionista") DatosLogin datosRecepcionista, HttpServletRequest request){
 		
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		if (user == null || !user.getRol().equals("admin") ) {
@@ -48,22 +48,22 @@ public class ControladorAdminRecepcionista {
 		
 		ModelMap modelo = new ModelMap();
 		
-		Usuario recepcionista = new Usuario();
-		recepcionista.setEmail(datosLogin.getEmail());
-		
-		if (servicioLogin.consultarUsuario(recepcionista) == null) {
-			recepcionista.setPassword(datosLogin.getPassword());
+		if (servicioLogin.buscarUsuarioPorEmail(datosRecepcionista.getEmail()) == null) {
+			Usuario recepcionista = new Usuario();
+			recepcionista.setEmail(datosRecepcionista.getEmail());
+			recepcionista.setPassword(datosRecepcionista.getPassword());
 			recepcionista.setActivo(true);
 			recepcionista.setRol("recepcionista");
-			servicioLogin.insertarUsuario(user);
+			servicioLogin.insertarUsuario(recepcionista);
 			
-			modelo.put("correcto", "Recepcionista registrado correctamente" + user.getEmail());
+			modelo.put("msgExito", "Recepcionista registrado correctamente");
 		} else {
 			modelo.put("msgError", "El email ya está en uso");
 			return new ModelAndView("registro-usuario", modelo);
 		}
 		
-		
+		modelo.addAttribute("datosRecepcionista", new DatosLogin());
+		modelo.put("listaRecepcionistas", servicioLogin.obtenerUsuariosPorRol("recepcionista"));
 		return new ModelAndView("admin-recepcionistas", modelo);
 	}
 }

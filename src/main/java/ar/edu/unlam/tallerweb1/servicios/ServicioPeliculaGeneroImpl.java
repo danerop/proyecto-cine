@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.servicios;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,14 @@ public class ServicioPeliculaGeneroImpl implements ServicioPeliculaGenero{
 	}
 
 	@Override
-	public List<Pelicula> obtenerPeliculasRecomendadas(List<Genero> listaGeneros) {
-		return repositorioPeliculaGeneroDao.obtenerPeliculasRecomendadas(listaGeneros);
+	public List<Pelicula> obtenerPeliculasRecomendadas(List<Genero> listaGenerosFav, List<Pelicula> listaPeliculasCompradas) {
+		
+		//List<Genero> listaGenerosComprados = repositorioPeliculaGeneroDao.obtenerGenerosDePeliculasCompradas(listaPeliculasCompradas);
+		//listaGenerosFav.addAll(listaGenerosComprados);
+		
+		//List<Genero> listaGeneros = listaGenerosFav.stream().distinct().collect(Collectors.toList());
+		
+		return repositorioPeliculaGeneroDao.obtenerPeliculasRecomendadasSegunGeneroFavorito(listaGenerosFav);
 	}
 	
 	

@@ -18,5 +18,8 @@ public interface RepositorioPeliculaGenero {
 	void setSessionFactory(SessionFactory sessionFactory);
 	
 	List<PeliculaGenero> obtenerTodosLosRegistros();
-	List<Pelicula> obtenerPeliculasRecomendadas(List<Genero> listaGeneros);
+	List<Genero> obtenerGenerosDePeliculasCompradas(List<Pelicula> listaPeliculas);
+	
+	List<Pelicula> obtenerPeliculasRecomendadasSegunGeneroFavorito(List<Genero> listaGeneros);
+	
 }

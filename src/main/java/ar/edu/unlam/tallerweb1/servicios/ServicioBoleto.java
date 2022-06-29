@@ -14,5 +14,5 @@ public interface ServicioBoleto {
 	public void registrarAsistenciaBoleto(Boleto boleto);
 	public List<Boleto> buscarBoletosDeUnUsuario(Usuario user);
 	
-	public List<Genero> obtenerGenerosDePeliculasCompradasPorUsuario(Usuario user);
+	public List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user);
 }

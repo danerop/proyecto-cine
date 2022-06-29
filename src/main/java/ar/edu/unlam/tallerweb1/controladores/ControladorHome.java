@@ -1,12 +1,9 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Cine;
 import ar.edu.unlam.tallerweb1.modelo.Favorito;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
@@ -36,7 +30,6 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioPeliculaGenero;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
-import ar.edu.unlam.tallerweb1.servicios.ServicioSala;
 
 @Controller
 public class ControladorHome {
@@ -79,15 +72,28 @@ public class ControladorHome {
 		model.put("usuario", servicioUsuario.consultarUsuario(user));
 		model.put("rol", servicioUsuario.consultarUsuarioPorRol(user));
 		
-		//peliculas recomendadas
+		//peliculas recomendadas por generos favoritos
 		Iterator<Favorito> iterFavoritos = servicioFavorito.obtenerFavoritoPorUsuario(user.getId()).iterator();
-		List<Genero> listaGeneros = new ArrayList<Genero>();
+		List<Genero> listaGenerosFAV = new ArrayList<Genero>();
 		
 		while(iterFavoritos.hasNext()) {
-			listaGeneros.add(iterFavoritos.next().getGenero());
+			listaGenerosFAV.add(iterFavoritos.next().getGenero());
 		}
 		
-		model.put("listaPeliculas", servicioPeliculaGenero.obtenerPeliculasRecomendadas(listaGeneros));
+		//peliculas recomendadas por boletos comprados
+		Iterator<Funcion> iterFuncionesCompradas = servicioBoleto.obtenerFuncionesCompradasPorUsuario(user).iterator();
+		
+		List<Pelicula> listaPeliculasCompradas = new ArrayList<Pelicula>();
+		
+		while(iterFuncionesCompradas.hasNext()) {
+			Pelicula pelicula = iterFuncionesCompradas.next().getPelicula();
+			if(!listaPeliculasCompradas.contains(pelicula)) {
+				listaPeliculasCompradas.add(pelicula);
+			}
+			System.out.println(pelicula);
+		}
+		
+		model.put("listaPeliculas", servicioPeliculaGenero.obtenerPeliculasRecomendadas(listaGenerosFAV, listaPeliculasCompradas));
 		
 		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("inicio", model);

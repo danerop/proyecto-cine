@@ -7,6 +7,6 @@ import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 
 public interface ServicioPeliculaGenero {
 
-	List<Pelicula> obtenerPeliculasRecomendadas(List<Genero> listaGeneros);
+	List<Pelicula> obtenerPeliculasRecomendadas(List<Genero> listaGeneros, List<Pelicula> listaPeliculasCompradas);
 	
 }

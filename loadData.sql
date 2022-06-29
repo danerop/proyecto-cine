@@ -1,5 +1,15 @@
 use db;
 
+INSERT INTO genero (id, descripcion, nombre)
+VALUES (1, "accion", "Accion"),
+	   (2, "comedia", "Comedia"),
+       (3, "terror", "Terror"),
+       (4, "ciencia ficcion", "Ciencia Ficcion"),
+       (5, "suspenso", "Suspenso"),
+       (6, "fantacia", "Fantasia"),
+       (7, "aventura", "Aventura"),
+       (8, "documental", "Documental");
+
 INSERT INTO pelicula(nombre, anio, descripcion, duracion, urlImagenPelicula)
 VALUES("Sonic 2", 2022, "descripcion", 150, "img/pelicula/sonic2.jpg"),
 	  ("Dr Strange: Multiverso de la locura", 2022, "descripcion", 150, "img/pelicula/strange.jpg"),
@@ -10,6 +20,17 @@ VALUES("Sonic 2", 2022, "descripcion", 150, "img/pelicula/sonic2.jpg"),
       ("El hombre del norte", 2022, "descripcion", 150, "img/pelicula/elhombredelnorte.jpg"),
       ("La ciudad perdida", 2022, "descripcion", 150, "img/pelicula/ciudadperdida.jpg"),
       ("Llamas de venganza", 2022, "descripcion", 150, "img/pelicula/llamas.jpg");
+
+INSERT INTO peliculagenero(id, pelicula_id, genero_id)
+VALUES(1,1,6),
+	  (2,1,2),
+      (3,2,1),
+      (4,2,2),
+      (5,3,6),
+      (6,4,8),
+      (7,5,5),
+      (8,5,3),
+      (9,6,5);
 
 INSERT INTO detallesuscripcion(id, cantidadBoletosGratis, cuota, descuentoEnBoletos, tipo)
 VALUES(1, 0, 0.0, 0.0, "comun"),
@@ -25,6 +46,11 @@ INSERT INTO usuario(id, activo, email, password, rol, urlImagenUsuario, suscripc
 VALUES (1 , true, "elian@gmail.com", "1234", "admin", "img", 1),
        (2, true, "hector@gmail.com", "1234", "usuario", "img", 2),
        (3, true, "braian@gmail.com", "1234", "recepcionista", "img", 3);
+
+INSERT INTO favorito (id, activo, genero_id, usuario_id)
+VALUES (1, true, 1, 2),
+	   (2, true, 3, 2),
+       (3, true, 2, 1);
 
 INSERT INTO cine(id, nombreLocal, direccion, latitud, longitud, email, telefono, urlImagenCine)
 VALUES(1, "CINEMARKO", "Calle Anonima 567", -34.6356, -58.5420, "cinemarko@gmail.com", "4444-3333", "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/90/24/84/cinemark.jpg?w=1200&h=-1&s=1"),
@@ -56,18 +82,6 @@ VALUES(1, 1, 1, 1),
       (4, 0, 1, 2),
 	  (5, 0, 2, 2),
       (6, 0, 3, 2); 
-
-INSERT INTO genero (id, descripcion, nombre)
-VALUES (1, "accion", "accion"),
-	   (2, "comedia", "comedia"),
-       (3, "terror", "terror"),
-       (4, "ciencia ficcion", "ciencia ficcion"),
-       (5, "suspenso", "suspenso");
-
-INSERT INTO favorito (id, activo, genero_id, usuario_id)
-VALUES (1, true, 1, 2),
-	   (2, true, 3, 2),
-       (3, true, 2, 2);
        
 select * from favorito;       
 select * from pelicula;

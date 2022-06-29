@@ -27,6 +27,8 @@ import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Butaca;
 import ar.edu.unlam.tallerweb1.modelo.ButacaFuncion;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
+import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioBoleto;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioFuncion;
@@ -88,5 +90,10 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	@Override
 	public List<Boleto> buscarBoletosDeUnUsuario(Usuario user) {
 		return repositorioBoletoDao.buscarBoletosDeUnUsuario(user.getId());
+	}
+
+	@Override
+	public List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user) {
+		return repositorioBoletoDao.obtenerFuncionesCompradasPorUsuario(user);
 	}
 }
