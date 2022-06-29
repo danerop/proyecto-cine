@@ -28,17 +28,18 @@ public class ControladorCompraBoleto {
 	private ServicioPelicula servicioPelicula;
 	private ServicioButaca servicioButaca;
 	private ServicioButacaFuncion servicioButacaFuncion;
+	private ServicioSuscripcion servicioSuscripcion;
 
 	@Autowired
 	public ControladorCompraBoleto(ServicioFuncion servicioFuncion, ServicioBoleto servicioBoleto,
-			ServicioPelicula servicioPelicula, ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion) {
+			ServicioPelicula servicioPelicula, ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion, ServicioSuscripcion servicioSuscripcion) {
 		this.servicioFuncion = servicioFuncion;
 		this.servicioBoleto = servicioBoleto;
 		this.servicioPelicula = servicioPelicula;
 		this.servicioButaca = servicioButaca;
 		this.servicioButacaFuncion = servicioButacaFuncion;
+		this.servicioSuscripcion = servicioSuscripcion;
 	}
-
 	@RequestMapping(path = "/compra", method = RequestMethod.GET)
 	public ModelAndView irACompra(@RequestParam(value = "p") Long idPelicula,  HttpServletRequest request) {
 		ModelMap modelo = new ModelMap();
@@ -58,9 +59,9 @@ public class ControladorCompraBoleto {
 		return new ModelAndView("compra", modelo);
 
 	}
-
-	@RequestMapping(path = "/comprar-butaca", method = RequestMethod.POST)
-	public ModelAndView irAElegirButaca(@RequestParam(value = "p") Long idPelicula,	HttpServletRequest request,
+	
+	@RequestMapping(path = "/comprar-tipoentrada", method = RequestMethod.POST)
+	public ModelAndView irASeleccionarTipoEntrada(@RequestParam(value = "p") Long idPelicula, HttpServletRequest request,
 			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) {
 		ModelMap model = new ModelMap();
 		Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(
@@ -71,6 +72,27 @@ public class ControladorCompraBoleto {
 		if (user == null || !user.getRol().equals("usuario")) {
 			return new ModelAndView("redirect:/inicio");
 		}
+		
+		model.put("datosCompraBoleto", datosCompraBoleto);
+		model.put("p", idPelicula);
+		model.put("user", servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
+		model.put("funcionElegida", funcionElegida);
+		return new ModelAndView("compra-tipoboleto", model);
+	}
+	
+	@RequestMapping(path = "/comprar-butaca", method = RequestMethod.POST)
+	public ModelAndView irAElegirButaca(@RequestParam(value = "p") Long idPelicula,	HttpServletRequest request,
+			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) {		
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (user == null || !user.getRol().equals("usuario")) {
+			return new ModelAndView("redirect:/inicio");
+		}
+		
+		
+		Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(
+				datosCompraBoleto.getIdcine(), idPelicula, datosCompraBoleto.getFecha(),
+				datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());		
+		ModelMap model = new ModelMap();
 		if (funcionElegida==null) {
 			model.put("msg", "La butaca seleccionada no es válida");
 			return new ModelAndView("redirect:/compra?p="+idPelicula, model);
@@ -85,21 +107,27 @@ public class ControladorCompraBoleto {
 	@RequestMapping(path = "/comprar-pago", method = RequestMethod.POST)
 	public ModelAndView irAMetodoDePago(@RequestParam(value = "p") Long idPelicula, HttpServletRequest request,
 			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) {
-		ModelMap model = new ModelMap();
 		
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		if (user == null || !user.getRol().equals("usuario")) {
 			return new ModelAndView("redirect:/inicio");
 		}
 		
+		
+
+		
+		
+		ModelMap model = new ModelMap();
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
-
+		model.put("user", servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
 		return new ModelAndView("compra-metodo-pago", model);
 	}
 
 	@RequestMapping(path = "/comprar-confirmar", method = RequestMethod.POST)
-	public ModelAndView irAConfirmar(@RequestParam(value = "p") Long idPelicula, HttpServletRequest request,
+	public ModelAndView irAConfirmar(@RequestParam(value = "p") Long idPelicula, 
+			@RequestParam(name = "ep", defaultValue= "false") Boolean usoEntradaGratis,
+			HttpServletRequest request,
 			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) {
 		ModelMap model = new ModelMap();
 				
@@ -107,23 +135,35 @@ public class ControladorCompraBoleto {
 		if (user == null || !user.getRol().equals("usuario")) {
 			return new ModelAndView("redirect:/inicio");
 		}
+		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioSuscripcion.obtenerUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
+			return new ModelAndView("redirect:/inicio");
+		}
 		
 		Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(
 				datosCompraBoleto.getIdcine(), idPelicula, datosCompraBoleto.getFecha(), datosCompraBoleto.getHora(),
 				datosCompraBoleto.getIdSala());
 		Butaca butaca = servicioButaca.obtenerButaca(datosCompraBoleto.getIdButaca());
+		
 		if (servicioButacaFuncion.isButacaOcupada(funcionElegida, datosCompraBoleto.getIdButaca())==true) {
 			model.put("msg", "La butaca elegida ya fue ocupada");
 			return new ModelAndView("redirect:/inicio", model);
+		}
+		if (!servicioBoleto.validarPrecioDeFuncionDelBoleto(funcionElegida, datosCompraBoleto.getPrecio(), user)) {
+			System.out.println(datosCompraBoleto.getPrecio());
+			System.out.println(funcionElegida.getPrecioMayor());
+			return new ModelAndView("redirect:/inicio");
 		}
 		
 		Boleto boletoAGuardar = new Boleto();
 		boletoAGuardar.setButaca(butaca);
 		boletoAGuardar.setFuncion(funcionElegida);
-		boletoAGuardar.setPrecio(funcionElegida.getPrecioMayor());
+		boletoAGuardar.setCliente(servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
+		boletoAGuardar.setPrecio(servicioBoleto.aplicarDescuento(boletoAGuardar, datosCompraBoleto.getPrecio()));
 
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
+		model.put("user", servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
+		model.put("usoEntradaGratis", usoEntradaGratis);
 		model.put("boletoGenerado", boletoAGuardar);
 		model.put("funcionElegida", funcionElegida);
 
@@ -132,6 +172,7 @@ public class ControladorCompraBoleto {
 
 	@RequestMapping(path = "/validar-compra", method = RequestMethod.POST)
 	public ModelAndView irARecibo(@RequestParam(value = "p") Long idPelicula,
+			@RequestParam(name = "ep", defaultValue= "false") Boolean usoEntradaGratis,
 			HttpServletRequest request, @ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto,
 			RedirectAttributes redirectAttributes) {
 		ModelMap model = new ModelMap();
@@ -149,11 +190,28 @@ public class ControladorCompraBoleto {
 		Boleto boletoAGuardar = new Boleto();
 		boletoAGuardar.setButaca(butaca);
 		boletoAGuardar.setFuncion(funcionElegida);
-		
-		if (funcionElegida!=null) {
-			boletoAGuardar.setPrecio(funcionElegida.getPrecioMayor());
-		}
 		boletoAGuardar.setCliente(user);
+		// COMPROBAR SI HAY SALDO PARA PAGAR Y EL PRECIO ES CORRECTO
+		// medio de pago convencional
+		if (!servicioBoleto.validarPrecioDeFuncionDelBoleto(boletoAGuardar, datosCompraBoleto.getPrecio())) {
+			return new ModelAndView("redirect:/inicio");
+		}
+		boletoAGuardar.setPrecio(servicioBoleto.aplicarDescuento(boletoAGuardar, datosCompraBoleto.getPrecio()));
+		
+		// Uso de entrada gratis
+		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioSuscripcion.obtenerUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
+			model.put("msg", "No te quedan entradas gratis por usar");
+			redirectAttributes.addFlashAttribute("mapping1Form", model);
+			return new ModelAndView("redirect:/inicio", model);
+		}
+		if (usoEntradaGratis) {
+			boletoAGuardar.setFueAdquiridoConEntradaGratis(true);
+			boletoAGuardar.setPrecio(null);
+		}
+		
+		//
+		
+
 		ButacaFuncion temp=servicioButacaFuncion.obtenerPorButacaYFuncion(funcionElegida, butaca.getId());
 		try {
 			servicioBoleto.guardarBoleto(boletoAGuardar, temp);
@@ -170,6 +228,16 @@ public class ControladorCompraBoleto {
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			return new ModelAndView("redirect:/inicio", model);
 		} 
+		
+		//PROCESAR PAGO
+		//medio de pago convencional
+		
+		//usar entrada gratis
+		if (usoEntradaGratis) {
+			servicioSuscripcion.usarEntradaGratis(user);
+		}
+		//
+		
 		
 		model.put("boletoGenerado", boletoAGuardar);
 		model.put("nuevacompra", true);

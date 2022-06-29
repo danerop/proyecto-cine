@@ -12,10 +12,12 @@ public class DatosCompraBoleto {
 	private Long idUsuario;
 	private Long idSala;
 	private Long idButaca;
+	private Float precio;
+
 	
 	
 	public DatosCompraBoleto(Long idCine, String fecha, String hora, Long idPelicula, Long idUsuario, Long idSala,
-			Long idButaca) {
+			Long idButaca, Float  precio) {
 		super();
 		this.idCine = idCine;
 		this.fecha = fecha;
@@ -24,6 +26,7 @@ public class DatosCompraBoleto {
 		this.idUsuario = idUsuario;
 		this.idSala = idSala;
 		this.idButaca = idButaca;
+		this.precio=precio;
 	}
 	public DatosCompraBoleto() {
 		
@@ -74,6 +77,18 @@ public class DatosCompraBoleto {
 	}
 	public void setIdButaca(Long idButaca) {
 		this.idButaca = idButaca;
+	}
+	public Long getIdCine() {
+		return idCine;
+	}
+	public void setIdCine(Long idCine) {
+		this.idCine = idCine;
+	}
+	public Float getPrecio() {
+		return precio;
+	}
+	public void setPrecio(Float precio) {
+		this.precio = precio;
 	}
 	
 }

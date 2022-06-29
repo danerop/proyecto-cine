@@ -94,9 +94,12 @@
 				<input type="hidden" value="${datosCompraBoleto.getIdButaca()}"
 					id="tempidbutaca" name="idButaca" path="idButaca">
 				<form:label for="tempidbutaca" path="idButaca"></form:label>
+				<input type="hidden" value="${datosCompraBoleto.getPrecio()}"
+					id="tempprecio" name="precio" path="precio">
+				<form:label for="tempprecio" path="precio"></form:label>
 
 				<div id="confirmacion">
-					<h1>Confirmas?</h1>
+					<h1>Confirmación</h1>
 
 					<div class="row">
 						<div class="col-3">
@@ -112,15 +115,37 @@
 								${boletoGenerado.getFuncion().getCine().getNombreLocal() }</h2>
 							<h2>Sala: ${boletoGenerado.getFuncion().getSala().getId()} -
 								${boletoGenerado.getFuncion().getSala().getTipo() }</h2>
-							<h2>Precio: $${boletoGenerado.getPrecio()}</h2>
+							<c:if test="${!usoEntradaGratis}">
+								<h2>Precio: $${boletoGenerado.getPrecio()}</h2>
+							</c:if>
 							<h2>Número de butaca: ${boletoGenerado.getButaca().getId()}</h2>
+							<c:if test="${usoEntradaGratis}">
+								<h2 class="text-success">¡Se usara una de tus entradas gratis disponibles!</h2>
+							</c:if>
 						</div>
 					</div>
 
 
 					<div class="d-flex justify-content-center btncompraboleto">
-						<button type="button" class="btn btn-secondary">Volver</button>
-						<form:button type="button submit" class="btn btn-primary">Comprar</form:button>
+						<button type="button" class="btn btn-secondary" onclick="history.back()">Volver</button>
+
+
+						<c:choose>
+							<c:when test="${usoEntradaGratis }">
+								<form:button name="ep" value="true" type="button submit"
+									class="btn btn-primary">
+								Usar entrada gratis <span class="badge bg-success"
+										data-bs-toggle="tooltip" data-bs-placement="right"
+										title="¡Aún te quedan ${user.getSuscripcion().getCantidadDeBoletosGratisRestante()} entradas gratis por usar!">${user.getSuscripcion().getCantidadDeBoletosGratisRestante()}</span>
+
+								</form:button>
+							</c:when>
+							<c:otherwise>
+								<form:button type="button submit" class="btn btn-primary">Comprar</form:button>
+							</c:otherwise>
+						</c:choose>
+
+
 					</div>
 				</div>
 

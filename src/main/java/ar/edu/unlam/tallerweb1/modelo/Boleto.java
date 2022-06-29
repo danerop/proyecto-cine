@@ -34,6 +34,8 @@ public class Boleto {
 	private Boolean usado=false;
 	
 	private Date fechaComprado;
+	
+	private Boolean fueAdquiridoConEntradaGratis=false;
 
 	
 	
@@ -134,6 +136,12 @@ public class Boleto {
 	}
 	public void setUsado(Boolean usado) {
 		this.usado = usado;
+	}
+	public Boolean getFueAdquiridoConEntradaGratis() {
+		return fueAdquiridoConEntradaGratis;
+	}
+	public void setFueAdquiridoConEntradaGratis(Boolean fueAdquiridoConEntradaGratis) {
+		this.fueAdquiridoConEntradaGratis = fueAdquiridoConEntradaGratis;
 	}
 	
 }

@@ -15,4 +15,5 @@ public interface ServicioSuscripcion {
 	Usuario obtenerUsuarioPorId (Long id);
 	Usuario buscarPorSuscripcion(String tipoSuscripcion);
 	List<Suscripcion> obtenerTodasLasSuscripciones();
+	void usarEntradaGratis(Usuario usuario);
 }

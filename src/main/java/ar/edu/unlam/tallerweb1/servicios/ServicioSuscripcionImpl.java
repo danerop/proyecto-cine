@@ -72,4 +72,11 @@ public class ServicioSuscripcionImpl implements ServicioSuscripcion {
 		return repositorioSuscripcionDao.obtenerTodasLasSuscripciones();
 	}
 
+	@Override
+	public void usarEntradaGratis(Usuario usuario) {
+		Suscripcion sustemp=obtenerSuscripcionPorId(usuario.getSuscripcion().getId());
+		sustemp.setCantidadDeBoletosGratisRestantes(sustemp.getCantidadDeBoletosGratisRestante()-1);
+		modificarSuscripcion(sustemp);
+	}
+
 }

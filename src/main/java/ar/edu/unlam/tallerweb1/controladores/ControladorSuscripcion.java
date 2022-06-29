@@ -75,7 +75,7 @@ public class ControladorSuscripcion {
 				Suscripcion s = usuarioSesion.getSuscripcion();
 				DetalleSuscripcion ds = servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(datosSuscripcion.getIdDetalleSuscripcion());
 				
-				s.setCantidadDeBoletosUsados(ds.getCantidadBoletosGratis());
+				s.setCantidadDeBoletosGratisRestantes(ds.getCantidadBoletosGratis());
 				s.setDetalleSuscripcion(ds);
 				servicioSuscripcion.modificarSuscripcion(s);
 				

@@ -95,7 +95,7 @@
 
 	<main>
 		<div class="container-fluid contenedorpago">
-			<form:form action="comprar-confirmar?p=${p}" method="POST"
+			<form:form action="comprar-butaca?p=${p}" method="POST"
 				modelAttribute="datosCompraBoleto">
 
 				<input type="hidden" value="${datosCompraBoleto.getIdSala()}"
@@ -116,50 +116,60 @@
 				<input type="hidden" value="${datosCompraBoleto.getIdcine()}"
 					id="tempidcine" name="idcine" path="idcine">
 				<form:label for="tempidcine" path="idcine"></form:label>
-				<input type="hidden" value="${datosCompraBoleto.getIdButaca()}"
-					id="tempidbutaca" name="idButaca" path="idButaca">
-				<form:label for="tempidbutaca" path="idButaca"></form:label>
-				<input type="hidden" value="${datosCompraBoleto.getPrecio()}"
-					id="tempprecio" name="precio" path="precio">
-				<form:label for="tempprecio" path="precio"></form:label>
 
-				<h1>Metodo pago</h1>
+				<h1>Seleccione tipo boleto</h1>
+				<br>
 				<!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+				<c:choose>
+					<c:when
+						test="${user.getSuscripcion().getDetalleSuscripcion().getDescuentoEnBoletos()>0 }">
+						<div class="fluid-container">
+							<h4>Precios según edad:</h4>
+							<input type="radio" class="btn-check" name="precio" id="tipo1"
+								autocomplete="off" path="precio"
+								value="${funcionElegida.getPrecioMayor()}">
+							<form:label path="precio"
+								class="btn btn-outline-primary col tipoboleto" for="tipo1">
+								<i class="bi bi-ticket-perforated-fill"></i> Mayor de edad: <s class="text-danger">$${funcionElegida.getPrecioMayor()}</s> <span class="badge badge-success text-light bg-success">$${funcionElegida.getPrecioMayor()-funcionElegida.getPrecioMayor()*(user.getSuscripcion().getDetalleSuscripcion().getDescuentoEnBoletos()/100)}</span></form:label>
+
+							<input type="radio" class="btn-check" name="precio" id="tipo2"
+								autocomplete="off" path="precio"
+								value="${funcionElegida.getPrecioMenor()}">
+							<form:label path="precio"
+								class="btn btn-outline-primary col tipoboleto" for="tipo2">
+								<i class="bi bi-ticket-perforated-fill"></i> Menor de edad: <s class="text-danger">$${funcionElegida.getPrecioMenor()}</s>  <span class="badge badge-success text-light bg-success">$${funcionElegida.getPrecioMenor()-funcionElegida.getPrecioMenor()*(user.getSuscripcion().getDetalleSuscripcion().getDescuentoEnBoletos()/100)}</span></form:label>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="fluid-container">
+							<h4>Precios según edad:</h4>
+							<input type="radio" class="btn-check" name="precio" id="tipo1"
+								autocomplete="off" path="precio"
+								value="${funcionElegida.getPrecioMayor()}">
+							<form:label path="precio"
+								class="btn btn-outline-primary col tipoboleto" for="tipo1">
+								<i class="bi bi-ticket-perforated-fill"></i> Mayor de edad: $${funcionElegida.getPrecioMayor()}</form:label>
+
+							<input type="radio" class="btn-check" name="precio" id="tipo2"
+								autocomplete="off" path="precio"
+								value="${funcionElegida.getPrecioMenor()}">
+							<form:label path="precio"
+								class="btn btn-outline-primary col tipoboleto" for="tipo2">
+								<i class="bi bi-ticket-perforated-fill"></i> Menor de edad: $${funcionElegida.getPrecioMenor()}</form:label>
+						</div>
+					</c:otherwise>
+				</c:choose>
 
 
-				<c:if
-					test="${user.getSuscripcion().getDetalleSuscripcion().getId()!=null && user.getSuscripcion().getDetalleSuscripcion().getId()!=1}">
-					<c:choose>
-						<c:when
-							test="${user.getSuscripcion().getCantidadDeBoletosGratisRestante()>0}">
-							<form:button name="ep" value="true" type="button submit"
-								class="btn btn-primary">
-								Usar entrada gratis <span class="badge bg-success" 
-									data-bs-toggle="tooltip" data-bs-placement="right"
-									title="¡Aún te quedan ${user.getSuscripcion().getCantidadDeBoletosGratisRestante()} entradas gratis por usar!">${user.getSuscripcion().getCantidadDeBoletosGratisRestante()}</span>
 
-							</form:button>
-						</c:when>
-						<c:otherwise>
-
-							<button type="button" class="btn btn-primary" disabled>
-								Usar entrada gratis 
-							</button> <span class="badge bg-secondary" 
-									data-bs-toggle="tooltip" data-bs-placement="right"
-									title="¡Ya usaste todas tus entradas gratis del mes!"><i
-									class="bi bi-exclamation-diamond-fill"></i></span>
-
-						</c:otherwise>
-					</c:choose>
-
-				</c:if>
 
 
 				<!-- zzzzzzzzzzzzzzzzzzzzzzzzzz -->
 
 				<div class="d-flex justify-content-center btncompraboleto">
 					<button type="button" class="btn btn-secondary" onclick="history.back()">Volver</button>
-					<form:button type="button submit" class="btn btn-primary">Siguiente</form:button>
+					<form:button type="button submit"
+						class="btn btn-primary primerSiguiente">Siguiente</form:button>
 				</div>
 		</div>
 
@@ -187,7 +197,14 @@
 		
 	</script>
 	<script src="./js/bootstrap.min.js"></script>
-	<script src="./js/pago.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".primerSiguiente").hide();
+			$(".tipoboleto").click(function() {
+				$(".primerSiguiente").show();
+			});
+		});
+	</script>
 
 </body>
 

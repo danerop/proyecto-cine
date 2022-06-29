@@ -140,8 +140,11 @@
 			<input type="hidden" value="${datosCompraBoleto.getIdcine()}"
 				id="tempidcine" name="idcine" path="idcine">
 			<form:label for="tempidcine" path="idcine"></form:label>
+			<input type="hidden" value="${datosCompraBoleto.getPrecio()}"
+				id="tempprecio" name="precio" path="precio">
+			<form:label for="tempprecio" path="precio"></form:label>
 
-
+			<button type="button" class="btn btn-secondary" onclick="history.back()">Volver</button>
 			<form:button type="button submit" class="btn btn-primary">Siguiente</form:button>
 
 		</form:form>

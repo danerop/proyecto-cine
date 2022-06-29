@@ -17,9 +17,9 @@ public class DetalleSuscripcion {
 	private Long id;
 	
 	private String tipo;
-	private Double descuentoEnBoletos;
+	private Float descuentoEnBoletos;
 	private Long cantidadBoletosGratis;
-	private Double cuota;
+	private Float cuota;
 	
 	public Long getId() {
 		return id;
@@ -33,10 +33,10 @@ public class DetalleSuscripcion {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public Double getDescuentoEnBoletos() {
+	public Float getDescuentoEnBoletos() {
 		return descuentoEnBoletos;
 	}
-	public void setDescuentoEnBoletos(Double descuentoEnBoletos) {
+	public void setDescuentoEnBoletos(Float descuentoEnBoletos) {
 		this.descuentoEnBoletos = descuentoEnBoletos;
 	}
 	public Long getCantidadBoletosGratis() {
@@ -45,10 +45,10 @@ public class DetalleSuscripcion {
 	public void setCantidadBoletosGratis(Long cantidadBoletosGratis) {
 		this.cantidadBoletosGratis = cantidadBoletosGratis;
 	}
-	public Double getCuota() {
+	public Float getCuota() {
 		return cuota;
 	}
-	public void setCuota(Double cuota) {
+	public void setCuota(Float cuota) {
 		this.cuota = cuota;
 	}
 }

@@ -70,7 +70,7 @@
 
 	<main>
 		<div class="container-fluid contenedorpago">
-			<form:form action="comprar-butaca?p=${p}" method="POST"
+			<form:form action="comprar-tipoentrada?p=${p}" method="POST"
 				modelAttribute="datosCompraBoleto">
 				<div id="fecha-horario" class="collapse primersig">
 					<h1 class="text-center">Compra</h1>

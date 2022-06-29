@@ -17,10 +17,11 @@ public class Suscripcion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Long cantidadDeBoletosUsados = 0L;
 	
 	@ManyToOne
 	private DetalleSuscripcion detalleSuscripcion;
+	
+	private Long cantidadDeBoletosGratisRestantes=0l;
 	
 	public Long getId() {
 		return id;
@@ -34,10 +35,10 @@ public class Suscripcion {
 	public void setDetalleSuscripcion(DetalleSuscripcion detalleSuscripcion) {
 		this.detalleSuscripcion = detalleSuscripcion;
 	}
-	public Long getCantidadDeBoletosUsados() {
-		return cantidadDeBoletosUsados;
+	public Long getCantidadDeBoletosGratisRestante() {
+		return cantidadDeBoletosGratisRestantes;
 	}
-	public void setCantidadDeBoletosUsados(Long cantidadDeBoletosUsados) {
-		this.cantidadDeBoletosUsados = cantidadDeBoletosUsados;
+	public void setCantidadDeBoletosGratisRestantes(Long cantidadDeBoletosUsados) {
+		this.cantidadDeBoletosGratisRestantes = cantidadDeBoletosUsados;
 	}
 }

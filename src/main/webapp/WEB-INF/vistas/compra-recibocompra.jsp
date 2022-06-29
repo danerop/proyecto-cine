@@ -97,6 +97,7 @@
 			<h1 class="text-center">RECIBO</h1>
 			<div class="row">
 				<div class="col-6">
+					<h2>Número de boleto: ${boletoGenerado.getId()} </h2>
 					<h4>Pelicula:
 						${boletoGenerado.getFuncion().getPelicula().getNombre()}</h4>
 					<h4>Fecha: ${boletoGenerado.getFuncion().getFechaHora() }</h4>
@@ -105,8 +106,13 @@
 						${boletoGenerado.getFuncion().getCine().getNombreLocal() }</h4>
 					<h4>Sala: ${boletoGenerado.getFuncion().getSala().getId()} -
 						${boletoGenerado.getFuncion().getSala().getTipo() }</h4>
+					<c:if test="${!boletoGenerado.getFueAdquiridoConEntradaGratis()}">
 					<h4>Precio: $${boletoGenerado.getPrecio()}</h4>
+					</c:if>
 					<h4>Número de butaca: ${boletoGenerado.getButaca().getId()}</h4>
+					<c:if test="${boletoGenerado.getFueAdquiridoConEntradaGratis()}">
+					<h4 class="text-success">¡Este boleto fue adquirido con una entrada gratuita!</h4>
+					</c:if>
 					<br>
 					<button class="btn btn-primary mx-auto d-block">Imprimir</button>
 				</div>

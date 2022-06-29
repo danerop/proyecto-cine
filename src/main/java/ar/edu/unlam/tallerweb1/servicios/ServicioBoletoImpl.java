@@ -36,11 +36,13 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioFuncion;
 public class ServicioBoletoImpl implements ServicioBoleto{
 	private RepositorioBoleto repositorioBoletoDao;
 	private ServicioButacaFuncion servicioButacaFuncion;
+	private ServicioSuscripcion servicioSuscripcion;
 	
 	@Autowired
-	public ServicioBoletoImpl(RepositorioBoleto repositorioFuncionDao,ServicioButacaFuncion servicioButacaFuncion){
+	public ServicioBoletoImpl(RepositorioBoleto repositorioFuncionDao,ServicioButacaFuncion servicioButacaFuncion, ServicioSuscripcion servicioSuscripcion){
 		this.repositorioBoletoDao = repositorioFuncionDao;
 		this.servicioButacaFuncion=servicioButacaFuncion;
+		this.servicioSuscripcion=servicioSuscripcion;
 	}
 
 	@Override
@@ -56,6 +58,8 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		if (boleto.getButaca()==null || temp==null || temp.getOcupada()==true ) {
 			throw new ExceptionButacaYaOcupada("La butaca seleccionada ya ha sido ocupada, por favor intente con otra");
 		}
+		
+		
 		boleto.getFuncion().setEntradasDisponibles(boleto.getFuncion().getEntradasDisponibles()-1);
         LocalDate dateObj = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -88,5 +92,57 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	@Override
 	public List<Boleto> buscarBoletosDeUnUsuario(Usuario user) {
 		return repositorioBoletoDao.buscarBoletosDeUnUsuario(user.getId());
+	}
+
+	@Override
+	public Float aplicarDescuento(Boleto boleto, Float precio) {
+		Float preciofinal=precio;
+		
+		if (boleto.getCliente()!=null && boleto.getCliente().getSuscripcion()!=null && boleto.getCliente().getSuscripcion().getDetalleSuscripcion()!=null) {
+			if (boleto.getCliente().getSuscripcion().getDetalleSuscripcion().getDescuentoEnBoletos()>0) {
+				Float descuento=(precio*boleto.getCliente().getSuscripcion().getDetalleSuscripcion().getDescuentoEnBoletos())/100;
+				preciofinal-=descuento;
+			}	
+		}
+		
+		return preciofinal;
+	}
+
+	@Override
+	public Boolean validarPrecioDeFuncionDelBoleto(Boleto boleto, Float precio) {
+		Boolean res=false;
+		if (boleto!=null && boleto.getFuncion()!=null && precio!=null) {
+			if (boleto.getFuncion().getPrecioMayor().equals(precio)) {
+				res=true;
+			}
+			if (boleto.getFuncion().getPrecioMenor().equals(precio)) {
+				res=true;
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public Boolean validarPrecioDeFuncionDelBoleto(Funcion funcion, Float precio, Usuario user) {
+		Boolean res=false;
+		if (funcion!=null && precio!=null) {
+			if (funcion.getPrecioMayor().equals(precio)) {
+				res=true;
+			}
+			if (funcion.getPrecioMenor().equals(precio)) {
+				res=true;
+			}
+			Boleto temp=new Boleto();
+			temp.setFuncion(funcion);
+			temp.setCliente(user);
+			if (aplicarDescuento(temp, funcion.getPrecioMayor()).equals(precio)) {
+				res=true;
+			}
+			if (aplicarDescuento(temp, funcion.getPrecioMenor()).equals(precio)) {
+				res=true;
+			}
+		}
+		
+		return res;
 	}
 }

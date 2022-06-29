@@ -113,6 +113,12 @@ public class ControladorLogin {
 				// guardo en la base
 				usuario.setActivo(true);
 				usuario.setRol("usuario");
+				if (servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(1l)!=null && servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(1l).getTipo().equals("comun")) {
+					Suscripcion registrosus=new Suscripcion();
+					registrosus.setDetalleSuscripcion(servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(1l));
+					servicioSuscripcion.guardarSuscripcion(registrosus);
+					usuario.setSuscripcion(registrosus);	
+				}
 				servicioLogin.insertarUsuario(usuario);
 				modelo.put("correcto", "Usuario registrado correctamente " + usuario.getEmail());
 			} else {
