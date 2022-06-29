@@ -13,4 +13,6 @@ public interface ServicioBoleto {
 	public Boleto buscarBoletoUnicoPorDatos(Long idCliente, Long idFuncion, Long idButaca);
 	public void registrarAsistenciaBoleto(Boleto boleto);
 	public List<Boleto> buscarBoletosDeUnUsuario(Usuario user);
+	
+	public List<Genero> obtenerGenerosDePeliculasCompradasPorUsuario(Usuario user);
 }

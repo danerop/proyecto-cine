@@ -26,18 +26,7 @@ public class ServicioPeliculaGeneroImpl implements ServicioPeliculaGenero{
 
 	@Override
 	public List<Pelicula> obtenerPeliculasRecomendadas(List<Genero> listaGeneros) {
-		Iterator<PeliculaGenero> iterPeliculaGenero = repositorioPeliculaGeneroDao.obtenerPeliculasGeneroSegunListaDeGeneros(listaGeneros).iterator();
-		List<Pelicula> listaPeliculas = new ArrayList<Pelicula>();
-		
-		while(iterPeliculaGenero.hasNext()) {
-			Pelicula pelicula = iterPeliculaGenero.next().getPelicula();
-			
-			if(!listaPeliculas.contains(pelicula)){
-				listaPeliculas.add(pelicula);
-			}
-		}
-		
-		return listaPeliculas;
+		return repositorioPeliculaGeneroDao.obtenerPeliculasRecomendadas(listaGeneros);
 	}
 	
 	

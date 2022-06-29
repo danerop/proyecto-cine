@@ -62,10 +62,11 @@ public class RepositorioPeliculaGeneroImpl implements RepositorioPeliculaGenero 
 	}
 
 	@Override
-	public List<PeliculaGenero> obtenerPeliculasGeneroSegunListaDeGeneros(List<Genero> listaGeneros) {
+	public List<Pelicula> obtenerPeliculasRecomendadas(List<Genero> listaGeneros) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(PeliculaGenero.class)
 				.add(Restrictions.in("genero", listaGeneros))
+				.setProjection(Projections.distinct(Projections.property("pelicula")))
 				.list();
 	}
 	
