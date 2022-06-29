@@ -59,7 +59,9 @@ public class ControladorAdminRecepcionista {
 			modelo.put("msgExito", "Recepcionista registrado correctamente");
 		} else {
 			modelo.put("msgError", "El email ya está en uso");
-			return new ModelAndView("registro-usuario", modelo);
+			modelo.addAttribute("datosRecepcionista", new DatosLogin());
+			modelo.put("listaRecepcionistas", servicioLogin.obtenerUsuariosPorRol("recepcionista"));
+			return new ModelAndView("admin-recepcionistas", modelo);
 		}
 		
 		modelo.addAttribute("datosRecepcionista", new DatosLogin());

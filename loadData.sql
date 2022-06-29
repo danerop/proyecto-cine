@@ -37,7 +37,7 @@ VALUES(1, 0, 0.0, 0.0, "comun"),
 	  (2, 2, 900.0, 15.0, "gold"),
       (3, 4, 1250.0, 25.0, "premium");
 
-INSERT INTO suscripcion(id, cantidadDeBoletosUsados, detalleSuscripcion_id)
+INSERT INTO suscripcion(id, cantidadDeBoletosGratisRestantes, detalleSuscripcion_id)
 VALUES (1, 0, 1),
 	   (2, 2, 2),
        (3, 0, 1);

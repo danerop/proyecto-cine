@@ -146,6 +146,7 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		}
 		
 		return res;
+	}
 
 	public List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user) {
 		return repositorioBoletoDao.obtenerFuncionesCompradasPorUsuario(user);

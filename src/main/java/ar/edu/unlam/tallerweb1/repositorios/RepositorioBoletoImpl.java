@@ -67,5 +67,4 @@ public class RepositorioBoletoImpl implements RepositorioBoleto{
 				.setProjection(Projections.distinct(Projections.property("funcion")))
 				.list();
 	}
-	
 }
