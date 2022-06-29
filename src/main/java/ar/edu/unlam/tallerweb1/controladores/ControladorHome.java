@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.controladores;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -21,15 +22,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Cine;
+import ar.edu.unlam.tallerweb1.modelo.Favorito;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
+import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaNoEncontrada;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBoleto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
-
+import ar.edu.unlam.tallerweb1.servicios.ServicioFavorito;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
-
+import ar.edu.unlam.tallerweb1.servicios.ServicioPeliculaGenero;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
@@ -41,19 +44,23 @@ public class ControladorHome {
 	private ServicioCine servicioCine;
 	private ServicioBoleto servicioBoleto;
 	private ServicioPelicula servicioPelicula;
+	private ServicioPeliculaGenero servicioPeliculaGenero;
 	private ServicioLogin servicioUsuario;
 	private ServicioNotificacion servicioNotificacion;
 	private ServicioFuncion servicioFuncion;
+	private ServicioFavorito servicioFavorito;
 
 	@Autowired
 	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioBoleto servicioBoleto,
-			ServicioLogin servicioUsuario, ServicioNotificacion servicioNotificacion, ServicioFuncion servicioFuncion) {
+			ServicioLogin servicioUsuario, ServicioNotificacion servicioNotificacion, ServicioFuncion servicioFuncion, ServicioFavorito servicioFavorito, ServicioPeliculaGenero servicioPeliculaGenero) {
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine = servicioCine;
 		this.servicioBoleto = servicioBoleto;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioNotificacion = servicioNotificacion;
 		this.servicioFuncion = servicioFuncion;
+		this.servicioFavorito = servicioFavorito;
+		this.servicioPeliculaGenero = servicioPeliculaGenero;
 	}
 
 	@RequestMapping(path = "/inicio", method = RequestMethod.GET)
@@ -64,15 +71,25 @@ public class ControladorHome {
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		model.addAttribute(new DatosBuscar());
 		
-		if (user != null) {
-			model.put("usuario", servicioUsuario.consultarUsuario(user));
-			model.put("rol", servicioUsuario.consultarUsuarioPorRol(user));
+		if (user == null) {
 			model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
-			model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 			return new ModelAndView("inicio", model);
 		}
 		
-		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+		model.put("usuario", servicioUsuario.consultarUsuario(user));
+		model.put("rol", servicioUsuario.consultarUsuarioPorRol(user));
+		
+		//peliculas recomendadas
+		Iterator<Favorito> iterFavoritos = servicioFavorito.obtenerFavoritoPorUsuario(user.getId()).iterator();
+		List<Genero> listaGeneros = new ArrayList<Genero>();
+		
+		while(iterFavoritos.hasNext()) {
+			listaGeneros.add(iterFavoritos.next().getGenero());
+		}
+		
+		model.put("listaPeliculas", servicioPeliculaGenero.obtenerPeliculasRecomendadas(listaGeneros));
+		
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("inicio", model);
 	}
 	
