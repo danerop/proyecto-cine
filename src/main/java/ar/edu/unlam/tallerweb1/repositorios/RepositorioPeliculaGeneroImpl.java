@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Cine;
+import ar.edu.unlam.tallerweb1.modelo.Favorito;
+import ar.edu.unlam.tallerweb1.modelo.Funcion;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.PeliculaGenero;
@@ -59,6 +61,20 @@ public class RepositorioPeliculaGeneroImpl implements RepositorioPeliculaGenero 
 	public List<PeliculaGenero> obtenerTodosLosRegistros() {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(PeliculaGenero.class).list();
+	}
+	@Override
+	public PeliculaGenero obtenerRegistroPorPeliculaYGenero(Long idPelicula, Long idGenero) {
+		Session session = sessionFactory.getCurrentSession();
+		return (PeliculaGenero) session.createCriteria(PeliculaGenero.class)
+				.add(Restrictions.eq("pelicula.id", idPelicula))
+				.add(Restrictions.eq("genero.id", idGenero))
+				.uniqueResult();
+	}
+	@Override
+	public PeliculaGenero buscarRegistroPorId(Long id) {
+		return (PeliculaGenero) sessionFactory.getCurrentSession().createCriteria(PeliculaGenero.class)
+				.add(Restrictions.eq("id",id))
+				.uniqueResult();
 	}
 	
 }

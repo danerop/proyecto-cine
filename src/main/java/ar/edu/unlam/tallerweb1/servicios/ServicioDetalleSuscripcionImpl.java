@@ -26,7 +26,7 @@ public class ServicioDetalleSuscripcionImpl implements ServicioDetalleSuscripcio
 		String msg = "";
 		
 		if(ds.getCantidadBoletosGratis() == null){ds.setCantidadBoletosGratis(0l);}
-		if(ds.getDescuentoEnBoletos() == null){ds.setDescuentoEnBoletos(0.0);}
+		if(ds.getDescuentoEnBoletos() == null){ds.setDescuentoEnBoletos((float)0.0);}
 		
 		if(ds.getTipo() == ""){
 			msg = msg + "Rellenar nombre <br>";

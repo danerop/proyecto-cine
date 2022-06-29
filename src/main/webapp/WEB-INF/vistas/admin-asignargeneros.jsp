@@ -65,57 +65,13 @@
 			<a class="btn btn-secondary cargar-notificacion"
 				href="http://localhost:8080/proyecto-cine/admin-notificaciones">Notificación</a>
 			<a class="btn btn-secondary cargar-notificacion"
-				href="http://localhost:8080/proyecto-cine/admin-asignargeneros">Asignar
-				Géneros</a>
+				href="http://localhost:8080/proyecto-cine/admin-asignargeneros">Asignar Géneros</a>
 		</div>
 	</div>
 
 	<br>
 
-	<div class="container">
-		<h4 class="text-white">
-			Lista de Películas
-			</h5>
-			<div class="row">
-				<div class="col-4">
-					<!-- Acá estará la lista de los elementos registrados -->
-					<div class="list-group" id="list-tab" role="tablist">
-						<c:forEach items="${listaPeliculas}" var="pelicula">
-							<a class="list-group-item list-group-item-action"
-								data-toggle="list" href="#list-peliculas${pelicula.getId()}"
-								role="tab">${pelicula.getNombre()} (${pelicula.getAnio()})</a>
-						</c:forEach>
-					</div>
-				</div>
-				<div class="col-8">
-					<!-- Acá va a aparecer el detalle -->
-					<div class="tab-content">
-						<c:forEach items="${listaPeliculas}" var="pelicula">
-							<div class="tab-pane fade p-3 mb-2 bg-white rounded"
-								id="list-peliculas${pelicula.getId()}" role="tabpanel">
-								<div class="row">
-									<div class="col-8">
-										<span style="font-size: small; font-weight: lighter;">id:${pelicula.getId()}</span>
-										<span style="font-size: large; font-weight: bold;">${pelicula.getNombre()}</span>
-										<br>
-										<p>
-											año: ${pelicula.getAnio()} <br> Duración:
-											${pelicula.getDuracion()} min <br> Descripción:
-											${pelicula.getDescripcion()} <br>
-										</p>
-									</div>
-									<div class="col-4">
-										<img class="img-fluid"
-											src="${pelicula.getUrlImagenPelicula()}"
-											alt="imagen de pelicula">
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
-				</div>
-			</div>
-	</div>
+
 
 	<br>
 
@@ -128,37 +84,93 @@
 				<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
 			</c:if>
 
-			<form:form action="agregar-pelicula" method="POST"
-				modelAttribute="datosPelicula">
-				<h4>Formulario Para Crear Pelicula</h4>
-				<hr class="colorgraph">
+
+			<%-- comienzo --%>
+			<h2>Asignar generos a pelicula</h2>
+			<form:form action="validarGenerosAsignados" method="POST"
+				modelAttribute="datosAsignarGeneroPelicula">
+
+				<div class="container">
+					<h4 class="">Selecccione una película</h4>
+					<div class="row">
+						<div class="col-4">
+							<!-- Acá estará la lista de los elementos registrados -->
+							<div class="list-group" id="list-tab" role="tablist">
+								<c:forEach items="${listaPeliculas}" var="pelicula">
+									<form:radiobutton class="d-none" name="pelicula"
+										id="peli-${pelicula.getId()}" path="idPelicula"
+										value="${pelicula.getId()}" />
+
+									<form:label path="idPelicula" for="peli-${pelicula.getId()}"
+										class="list-group-item list-group-item-action templist"
+										data-toggle="list" href="#list-peliculas${pelicula.getId()}"
+										role="tab" value="${pelicula.getId()}">${pelicula.getNombre()} (${pelicula.getAnio()})</form:label>
+
+
+								</c:forEach>
+							</div>
+						</div>
+						<div class="col-8">
+							<!-- Acá va a aparecer el detalle -->
+							<div class="tab-content">
+								<c:forEach items="${listaPeliculas}" var="pelicula">
+									<div class="tab-pane fade p-3 mb-2 bg-white rounded"
+										id="list-peliculas${pelicula.getId()}" role="tabpanel">
+										<div class="row">
+											<div class="col-8">
+												<span style="font-size: small; font-weight: lighter;">id:${pelicula.getId()}</span>
+												<span style="font-size: large; font-weight: bold;">${pelicula.getNombre()}</span>
+												<br>
+												<p>
+													año: ${pelicula.getAnio()} <br> Duración:
+													${pelicula.getDuracion()} min <br> Descripción:
+													${pelicula.getDescripcion()} <br> Generos:
+													<c:forEach items="${registrosGeneroPelicula}"
+														var="registro">
+														<c:if
+															test="${pelicula.getId()==registro.getPelicula().getId() && registro.getActivo()}">
+															<div class="d-inline-block rounded-3 p-1 bg-primary">${registro.getGenero().getNombre()}
+																<a href="eliminargeneropelicula?g=${registro.getId()}"
+																	type="button" class="btn-close enabled"
+																	aria-label="Close"></a>
+															</div>
+														</c:if>
+
+													</c:forEach>
+												</p>
+											</div>
+											<div class="col-4">
+												<img class="img-fluid"
+													src="${pelicula.getUrlImagenPelicula()}"
+													alt="imagen de pelicula">
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<%-- fin --%>
+
+
 				<br>
 
-				<form:label path="nombre">Nombre:</form:label>
-				<form:input path="nombre" id="nombre" type="nombre"
-					class="form-control" />
-				<br>
-				<form:label path="anio">Año:</form:label>
-				<form:input path="anio" id="anio" type="anio" class="form-control" />
-				<br>
-				<form:label path="descripcion">Descripción:</form:label>
-				<form:input path="descripcion" id="descripcion" type="descripcion"
-					class="form-control" />
-				<br>
-				<form:label path="duracion">Duración:</form:label>
-				<form:input path="duracion" id="duracion" type="duracion"
-					class="form-control" />
-				<br>
-				<form:label path="urlImagenPelicula">Url de la portada:</form:label>
-				<form:input path="urlImagenPelicula" type="urlImagenPelicula"
-					id="urlImagenPelicula" class="form-control" />
-				<br>
 
-				<c:if test="${not empty msgError}">
-					<h5 class="p-3 mb-2 bg-danger text-white">${msgError}</h5>
-				</c:if>
+				<div>
+					<h4 class="">Seleccione géneros</h4>
+					<br>
+					<form:select id="generos" path="idsGeneros" multiple="multiple">
+						<c:forEach items="${listaDeGeneros}" var="generos">
+							<form:option value="${generos.getId()}">
+           						  ${generos.getNombre()}
+           					</form:option>
+						</c:forEach>
+					</form:select>
+				</div>
 
-				<button class="btn btn-lg btn-primary btn-block" Type="Submit" />Cargar Pelicula</button>
+				<button class="btn btn-lg btn-primary btn-block" Type="Submit" />Asignar generos</button>
 			</form:form>
 		</div>
 
@@ -179,8 +191,7 @@
 	</script>
 	<script src="js/jquery.min.js"></script>
 	<script>
-		$('#list-tab a').on('click', function(e) {
-			e.preventDefault()
+		$('#list-tab label').on('click', function(e) {
 			$(this).tab('show')
 		})
 	</script>
