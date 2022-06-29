@@ -60,5 +60,23 @@ public class RepositorioPeliculaGeneroImpl implements RepositorioPeliculaGenero 
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(PeliculaGenero.class).list();
 	}
+
+	@Override
+	public List<Genero> obtenerGenerosDePeliculasCompradas(List<Pelicula> listaPeliculas) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(PeliculaGenero.class)
+				.add(Restrictions.in("pelicula", listaPeliculas))
+				.setProjection(Projections.property("genero"))
+				.list();
+	}
 	
+	@Override
+	public List<Pelicula> obtenerPeliculasRecomendadasSegunGeneroFavorito(List<Genero> listaGeneros) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(PeliculaGenero.class)
+				.add(Restrictions.in("genero", listaGeneros))
+				.setProjection(Projections.distinct(Projections.property("pelicula")))
+				.list();
+	}
+
 }

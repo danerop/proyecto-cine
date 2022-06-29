@@ -23,5 +23,4 @@ public interface RepositorioFavorito {
 	SessionFactory getSessionFactory();
 	
 	void setSessionFactory(SessionFactory sessionFactory);
-	
 }

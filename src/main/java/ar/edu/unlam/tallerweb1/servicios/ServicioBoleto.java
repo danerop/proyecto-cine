@@ -13,7 +13,12 @@ public interface ServicioBoleto {
 	public Boleto buscarBoletoUnicoPorDatos(Long idCliente, Long idFuncion, Long idButaca);
 	public void registrarAsistenciaBoleto(Boleto boleto);
 	public List<Boleto> buscarBoletosDeUnUsuario(Usuario user);
+
 	public Float aplicarDescuento(Boleto boleto, Float precio);
 	public Boolean validarPrecioDeFuncionDelBoleto(Boleto boleto, Float precio);
 	public Boolean validarPrecioDeFuncionDelBoleto(Funcion funcion, Float precio, Usuario user);	
+
+	
+	public List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user);
+
 }

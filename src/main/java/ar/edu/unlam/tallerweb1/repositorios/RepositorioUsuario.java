@@ -23,4 +23,6 @@ public interface RepositorioUsuario {
 	void setSessionFactory(SessionFactory sessionFactory);
 	SessionFactory getSessionFactory();
 	List<Usuario> obtenerTodosLosUsuariosActivos();
+	
+	List<Usuario> obtenerUsuariosPorRol(String rol);
 }

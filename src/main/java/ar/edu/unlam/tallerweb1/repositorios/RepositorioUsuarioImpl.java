@@ -122,5 +122,13 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 				.add(Restrictions.eq("activo", true))
 				.list();
 	}
+
+	@Override
+	public List<Usuario> obtenerUsuariosPorRol(String rol) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Usuario.class)
+				.add(Restrictions.eq("rol", rol))
+				.list();
+	}
 	
 }

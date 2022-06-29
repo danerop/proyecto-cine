@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,44 +19,54 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 @Transactional
 public class ServicioLoginImpl implements ServicioLogin {
 
-	private RepositorioUsuario servicioLoginDao;
+	private RepositorioUsuario repositorioLoginDao;
 
 	@Autowired
 	public ServicioLoginImpl(RepositorioUsuario servicioLoginDao){
-		this.servicioLoginDao = servicioLoginDao;
+		this.repositorioLoginDao = servicioLoginDao;
 	}
 
 	@Override
 	public Usuario buscarUsuario(String email, String password) {
-		return servicioLoginDao.buscarUsuario(email, password);
+		return repositorioLoginDao.buscarUsuario(email, password);
 	}
 
 	@Override
 	public Usuario consultarUsuarioPorId(Long id) {
-		return servicioLoginDao.buscarUsuarioPorId(id);
+		return repositorioLoginDao.buscarUsuarioPorId(id);
 	}
 
 	@Override
 	public Usuario consultarUsuario(Usuario usuario) {
-		return servicioLoginDao.consultarUsuario(usuario);
+		return repositorioLoginDao.consultarUsuario(usuario);
 	}
 	@Override
 	public Long insertarUsuario(Usuario usuario) {
-		return servicioLoginDao.insertarUsuario(usuario);
+		return repositorioLoginDao.insertarUsuario(usuario);
 	}
 
 	@Override
 	public Usuario consultarUsuarioPorRol(Usuario usuario) {
-		return servicioLoginDao.buscarUsuarioPorRol(usuario);
+		return repositorioLoginDao.buscarUsuarioPorRol(usuario);
 	}
 
 	@Override
 	public Usuario consultarUsuarioPorSuscripcion(Long idSuscripcion) {
-		return servicioLoginDao.buscarUsuarioPorSuscripcionID(idSuscripcion);
+		return repositorioLoginDao.buscarUsuarioPorSuscripcionID(idSuscripcion);
 	}
 
 	@Override
 	public void actualizarUsuario(Usuario usuario) {
-		servicioLoginDao.modificar(usuario);
+		repositorioLoginDao.modificar(usuario);
+	}
+
+	@Override
+	public List<Usuario> obtenerUsuariosPorRol(String rol) {
+		return repositorioLoginDao.obtenerUsuariosPorRol(rol);
+	}
+
+	@Override
+	public Usuario buscarUsuarioPorEmail(String email) {
+		return repositorioLoginDao.buscar(email);
 	}
 }

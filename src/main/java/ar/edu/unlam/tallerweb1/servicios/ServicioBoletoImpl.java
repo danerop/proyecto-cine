@@ -27,6 +27,8 @@ import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Butaca;
 import ar.edu.unlam.tallerweb1.modelo.ButacaFuncion;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
+import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioBoleto;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioFuncion;
@@ -49,10 +51,10 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	public void guardarBoleto(Boleto boleto, ButacaFuncion temp) {	
 
 		if (boleto.getFuncion()==null || boleto.getFuncion().getId()==null || boleto.getFuncion().getEntradasDisponibles()<=0) {
-			throw new ExceptionFuncionNoEncontrada("La función de la cual desea reservar boleto no existe");
+			throw new ExceptionFuncionNoEncontrada("La funciï¿½n de la cual desea reservar boleto no existe");
 		}
 		if (temp.getFuncion().getId()!=boleto.getFuncion().getId() || temp.getButaca().getId() != boleto.getButaca().getId()) {
-			throw new ExceptionDatosBoletoDiferentesARegistroButacaFuncion("Los datos de la butaca seleccionada no corresponden a una válida");
+			throw new ExceptionDatosBoletoDiferentesARegistroButacaFuncion("Los datos de la butaca seleccionada no corresponden a una vï¿½lida");
 		}
 
 		if (boleto.getButaca()==null || temp==null || temp.getOcupada()==true ) {
@@ -144,5 +146,9 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		}
 		
 		return res;
+
+	public List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user) {
+		return repositorioBoletoDao.obtenerFuncionesCompradasPorUsuario(user);
+
 	}
 }
