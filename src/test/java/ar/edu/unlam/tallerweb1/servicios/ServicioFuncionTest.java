@@ -68,9 +68,9 @@ public class ServicioFuncionTest {
 		Pelicula peli=new Pelicula();
 		peli.setId(1l);
 		
-		servicioFuncion.obtenerFuncionesPorPelicula(peli.getId());
+		servicioFuncion.obtenerFuncionesFuturasDePelicula(peli.getId());
 		
-		verify(repositorioFuncion, times(1)).obtenerFuncionesPorPelicula(peli.getId());
+		verify(repositorioFuncion, times(1)).obtenerFuncionesFuturasDePelicula(peli.getId());
 	}
 	
 	@Test
@@ -79,9 +79,9 @@ public class ServicioFuncionTest {
 		Pelicula peli=new Pelicula();
 		peli.setId(1l);
 		
-		servicioFuncion.obtenerCinesDisponiblesParaFunciones(peli.getId());
+		servicioFuncion.obtenerCinesDisponiblesParaFuncionesFuturas(peli.getId());
 		
-		verify(repositorioFuncion, times(1)).obtenerCinesDisponiblesParaFunciones(peli.getId());
+		verify(repositorioFuncion, times(1)).obtenerCinesDisponiblesParaFuncionesFuturas(peli.getId());
 	}
 	
 	@Test

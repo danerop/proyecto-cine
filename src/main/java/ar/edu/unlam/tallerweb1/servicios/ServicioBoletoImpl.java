@@ -36,13 +36,11 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioFuncion;
 public class ServicioBoletoImpl implements ServicioBoleto{
 	private RepositorioBoleto repositorioBoletoDao;
 	private ServicioButacaFuncion servicioButacaFuncion;
-	private ServicioSuscripcion servicioSuscripcion;
 	
 	@Autowired
-	public ServicioBoletoImpl(RepositorioBoleto repositorioFuncionDao,ServicioButacaFuncion servicioButacaFuncion, ServicioSuscripcion servicioSuscripcion){
+	public ServicioBoletoImpl(RepositorioBoleto repositorioFuncionDao,ServicioButacaFuncion servicioButacaFuncion){
 		this.repositorioBoletoDao = repositorioFuncionDao;
 		this.servicioButacaFuncion=servicioButacaFuncion;
-		this.servicioSuscripcion=servicioSuscripcion;
 	}
 
 	@Override
