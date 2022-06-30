@@ -73,12 +73,16 @@ public class ControladorHome {
 		model.put("rol", servicioUsuario.consultarUsuarioPorRol(user));
 		
 		//peliculas recomendadas por generos favoritos
-		Iterator<Favorito> iterFavoritos = servicioFavorito.obtenerFavoritoPorUsuario(user.getId()).iterator();
 		List<Genero> listaGenerosFAV = new ArrayList<Genero>();
-		
-		while(iterFavoritos.hasNext()) {
-			listaGenerosFAV.add(iterFavoritos.next().getGenero());
+		if (servicioFavorito.obtenerFavoritoPorUsuario(user.getId())!=null && servicioFavorito.obtenerFavoritoPorUsuario(user.getId()).size()>1) {
+			Iterator<Favorito> iterFavoritos = servicioFavorito.obtenerFavoritoPorUsuario(user.getId()).iterator();
+			
+			
+			while(iterFavoritos.hasNext()) {
+				listaGenerosFAV.add(iterFavoritos.next().getGenero());
+			}
 		}
+
 		
 		//peliculas recomendadas por boletos comprados
 		Iterator<Funcion> iterFuncionesCompradas = servicioBoleto.obtenerFuncionesCompradasPorUsuario(user).iterator();
@@ -93,7 +97,11 @@ public class ControladorHome {
 			System.out.println(pelicula);
 		}
 		
-		model.put("listaPeliculas", servicioPeliculaGenero.obtenerPeliculasRecomendadas(listaGenerosFAV, listaPeliculasCompradas));
+		if (servicioFavorito.obtenerFavoritoPorUsuario(user.getId())!=null && servicioFavorito.obtenerFavoritoPorUsuario(user.getId()).size()>1) {
+			model.put("listaPeliculas", servicioPeliculaGenero.obtenerPeliculasRecomendadas(listaGenerosFAV, listaPeliculasCompradas));
+		} else {
+			model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+		}
 		
 		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("inicio", model);

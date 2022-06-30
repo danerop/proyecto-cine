@@ -70,7 +70,7 @@ public class RepositorioPeliculaGeneroImpl implements RepositorioPeliculaGenero 
 				.add(Restrictions.in("pelicula", listaPeliculas))
 				.setProjection(Projections.property("genero"))
 				.list();
-
+	}
 	@Override
 	public PeliculaGenero obtenerRegistroPorPeliculaYGenero(Long idPelicula, Long idGenero) {
 		Session session = sessionFactory.getCurrentSession();
