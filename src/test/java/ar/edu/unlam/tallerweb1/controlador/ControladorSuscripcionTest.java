@@ -25,7 +25,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSuscripcion;
 
 public class ControladorSuscripcionTest {
-
+ 
 	private ServicioLogin servicioUsuario = mock(ServicioLogin.class);
 	private ServicioSuscripcion servicioSuscripcion = mock(ServicioSuscripcion.class);
 	private ServicioDetalleSuscripcion servicioDetalleSuscripcion = mock(ServicioDetalleSuscripcion.class);
@@ -92,7 +92,7 @@ public class ControladorSuscripcionTest {
 		
 		Suscripcion s = new Suscripcion();
 		s.setDetalleSuscripcion(ds);
-		s.setCantidadDeBoletosUsados(ds.getCantidadBoletosGratis());
+		s.setCantidadDeBoletosGratisRestantes(ds.getCantidadBoletosGratis());
 		
 		
 		// Ejecución 

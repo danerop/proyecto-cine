@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -115,5 +116,27 @@ public class ServicioBoletoTest {
 		servicioBoleto.registrarAsistenciaBoleto(boleto);;
 		
 		verify(repositorioBoleto, times(1)).actualizarBoleto(boleto);
+	}
+	@Test
+	@Transactional @Rollback
+	public void queSeApliquenDescuentosCorrectamente() {
+		Boleto boleto=new Boleto();
+		Usuario cliente=new Usuario();
+		Suscripcion sus=new Suscripcion();
+		DetalleSuscripcion detalleSus=new DetalleSuscripcion();
+		detalleSus.setDescuentoEnBoletos((float)0);
+		sus.setDetalleSuscripcion(detalleSus);
+		cliente.setSuscripcion(sus);
+		boleto.setCliente(cliente);
+		
+		Float precio=(float)1500.0;
+		Float precionConDescuento20Porciento=(float)1200;
+		
+		Float precioFinalSinDescuento=servicioBoleto.aplicarDescuento(boleto, precio);
+		detalleSus.setDescuentoEnBoletos((float)20);
+		Float precioFinalConDescuento20porciento=servicioBoleto.aplicarDescuento(boleto, precio);
+		
+		assertEquals(precio, precioFinalSinDescuento);
+		assertEquals(precionConDescuento20Porciento, precioFinalConDescuento20porciento);
 	}
 }

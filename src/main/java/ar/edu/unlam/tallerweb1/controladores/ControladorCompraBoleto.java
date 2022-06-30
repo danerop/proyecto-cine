@@ -134,9 +134,11 @@ public class ControladorCompraBoleto {
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		if (user == null || !user.getRol().equals("usuario")) {
 			return new ModelAndView("redirect:/inicio");
-		}
+		} 
 		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioSuscripcion.obtenerUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
-			return new ModelAndView("redirect:/inicio");
+			model.put("msg", "No se cuenta con más entradas gratis para usar");
+			return new ModelAndView("redirect:/inicio", model);
+			
 		}
 		
 		Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(
@@ -149,8 +151,6 @@ public class ControladorCompraBoleto {
 			return new ModelAndView("redirect:/inicio", model);
 		}
 		if (!servicioBoleto.validarPrecioDeFuncionDelBoleto(funcionElegida, datosCompraBoleto.getPrecio(), user)) {
-			System.out.println(datosCompraBoleto.getPrecio());
-			System.out.println(funcionElegida.getPrecioMayor());
 			return new ModelAndView("redirect:/inicio");
 		}
 		

@@ -29,6 +29,8 @@ public class PeliculaGenero {
 	@ManyToOne
 	private Genero genero;
 
+	private Boolean activo=true;
+	
 	public Long getId() {
 		return id;
 	}
@@ -94,4 +96,13 @@ public class PeliculaGenero {
 			return false;
 		return true;
 	}
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+	
 }
