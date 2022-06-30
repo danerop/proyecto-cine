@@ -85,12 +85,12 @@
   
   <div class="container">
     <div class="row bg-white rounded p-3 mb-2">
-      <div class="col-5">
+      <div class="col-4">
         <img class="img-fluid" src="../${pelicula.getUrlImagenPelicula()}" alt="imagen de pelicula">
         <br>
         <a href="../compra?p=${pelicula.getId()}" class="btn btn-primary" role="button">COMPRAR</a>
       </div>
-      <div class="col-7">
+      <div class="col-8">
         <span style="font-size: large; font-weight: bold;">${pelicula.getNombre()}</span>
         <br>
         <p>
@@ -99,12 +99,37 @@
           Descripción: ${pelicula.getDescripcion()} <br>
         </p>
         
-        <c:forEach items="${listaCines}" var="cine">
-          <div>${cine.getNombreLocal()}</div>
-        </c:forEach>
-        <c:forEach items="${listaFuncion}" var="funcion">
-          <div>${funcion.getId()}</div>
-        </c:forEach>
+        <div class="">
+          <h4>Cines que la proyectan:</h4>
+          <div class="row">
+            <c:forEach items="${listaCines}" var="cine">
+              <div class="col-4 bg-light rounded p-3 mb-2">
+                <h5>${cine.getNombreLocal()}</h5>
+                <p style="font-size: 12px;">
+                  Dirección: ${cine.getDireccion()} <br>
+                  Telefono: ${cine.getTelefono()} <br>
+                  Email: ${cine.getEmail()} <br>
+                </p>
+              </div>
+            </c:forEach>
+          </div>
+        </div>
+        
+        <div class="">
+          <h4>Próximas Funciones:</h4>
+          <div class="row">
+            <c:forEach items="${listaFuncion}" var="funcion">
+              <div class="col-4 bg-light rounded p-3 mb-2">
+                <h5>${funcion.getFechaHora()} ${funcion.getHora()}</h5>
+                <p style="font-size: 12px;">
+                  Cine: ${funcion.getCine().getNombreLocal()} <br>
+                  Sala: ${funcion.getSala().getTipo()} <br>
+                </p>
+              </div>
+            </c:forEach>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>

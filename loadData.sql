@@ -6,7 +6,7 @@ VALUES (1, "accion", "Accion"),
        (3, "terror", "Terror"),
        (4, "ciencia ficcion", "Ciencia Ficcion"),
        (5, "suspenso", "Suspenso"),
-       (6, "fantacia", "Fantasia"),
+       (6, "fantasia", "Fantasia"),
        (7, "aventura", "Aventura"),
        (8, "documental", "Documental");
 
@@ -30,7 +30,11 @@ VALUES(1,1,6),
       (6,4,8),
       (7,5,5),
       (8,5,3),
-      (9,6,5);
+      (9,6,5),
+      (10,7,1),
+      (11,7,7),
+      (12,8,7),
+      (13,9,6);
 
 INSERT INTO detallesuscripcion(id, cantidadBoletosGratis, cuota, descuentoEnBoletos, tipo)
 VALUES(1, 0, 0.0, 0.0, "comun"),
@@ -61,7 +65,11 @@ INSERT INTO sala(id, tipo, cine_id)
 VALUES(1,"Comun",1),
 	  (2,"GoldenClass",1),
 	  (3,"Sala3D",1),
-	  (4,"Sala4D",2);
+	  (4,"Sala4D",2),
+      (5,"Comun",2),
+      (6,"Comun",3),
+      (7,"GoldenClass",3),
+      (8,"Sala3D",3);
       
 INSERT INTO butaca(id, nroUbicacion, sala_id)
 VALUES(1, 205, 1),
@@ -72,8 +80,12 @@ VALUES(1, 205, 1),
 	  (6, 100, 4);
       
 INSERT INTO funcion(id, entradasDisponibles, fechaHora, hora, precioMayor, precioMenor, cine_id, pelicula_id, sala_id)
-VALUES(1,50,'2022-06-02',"20:30", 500, 250, 1, 1, 1),
-	  (2,100,'2022-06-23',"19:00", 500, 250, 1, 1, 1);
+VALUES(1,50,'2022-08-02',"20:30", 500, 250, 1, 1, 1),
+	  (2,100,'2022-08-23',"19:00", 500, 250, 1, 1, 1),
+      (3,100,'2022-08-24',"22:00", 500, 250, 2, 1, 4),
+      (4,100,'2022-07-02',"22:00", 600, 300, 2, 2, 5),
+      (5,100,'2022-07-03',"22:00", 500, 250, 3, 3, 6),
+      (6,100,'2022-07-07',"22:00", 800, 500, 3, 2, 7);
 
 INSERT INTO butacafuncion(id, ocupada, butaca_id, funcion_id)
 VALUES(1, 1, 1, 1),
