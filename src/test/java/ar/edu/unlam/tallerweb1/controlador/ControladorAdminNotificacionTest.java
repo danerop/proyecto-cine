@@ -41,7 +41,7 @@ public class ControladorAdminNotificacionTest extends SpringTest{
 	
 	
 		DatosNotificacion datosNotificacion = new DatosNotificacion();
-		List<Long> listaIdUsuarios = new ArrayList();
+		List<Long> listaIdUsuarios = new ArrayList<Long>();
 		listaIdUsuarios.add(user.getId());
 		datosNotificacion.setIdUsuario(listaIdUsuarios);
 		datosNotificacion.setTexto("texto titulo");

@@ -11,7 +11,6 @@ import org.springframework.test.annotation.Rollback;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
-import ar.edu.unlam.tallerweb1.modelo.Butaca;
 
 public class RepositorioBoletoTest  extends SpringTest{
 	

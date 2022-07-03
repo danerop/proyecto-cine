@@ -60,50 +60,5 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public List<Usuario> obtenerUsuariosActivos() {
 		return repositorioUsuarioDao.obtenerUsuariosActivos();
 	}
-	
-	
-	/*
-	@Override
-	public Usuario buscarUsuario(String email, String password) {
-		return repositorioUsuarioDao.buscarUsuario(email, password);
-	}
 
-	@Override
-	public Usuario consultarUsuarioPorId(Long id) {
-		return repositorioUsuarioDao.buscarUsuarioPorId(id);
-	}
-
-	@Override
-	public Usuario consultarUsuario(Usuario usuario) {
-		return repositorioUsuarioDao.consultarUsuario(usuario);
-	}
-	@Override
-	public Long insertarUsuario(Usuario usuario) {
-		return repositorioUsuarioDao.insertarUsuario(usuario);
-	}
-
-	@Override
-	public Usuario consultarUsuarioPorRol(Usuario usuario) {
-		return repositorioUsuarioDao.buscarUsuarioPorRol(usuario);
-	}
-
-	@Override
-	public Usuario consultarUsuarioPorSuscripcion(Long idSuscripcion) {
-		return repositorioUsuarioDao.buscarUsuarioPorSuscripcionID(idSuscripcion);
-	}
-
-	@Override
-	public void actualizarUsuario(Usuario usuario) {
-		repositorioUsuarioDao.modificar(usuario);
-	}
-
-	@Override
-	public List<Usuario> obtenerUsuariosPorRol(String rol) {
-		return repositorioUsuarioDao.obtenerUsuariosPorRol(rol);
-	}
-
-	@Override
-	public Usuario buscarUsuarioPorEmail(String email) {
-		return repositorioUsuarioDao.buscar(email);
-	}*/
 }

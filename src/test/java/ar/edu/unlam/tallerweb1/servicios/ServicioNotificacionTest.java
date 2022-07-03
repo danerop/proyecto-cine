@@ -14,7 +14,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.modelo.*;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioButaca;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioNotificacion;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioNotificacionUsuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioUsuario;
@@ -42,7 +41,7 @@ public class ServicioNotificacionTest {
 		
 		servicioNotificacion.obtenerListaUsuariosActivos();
 		
-		verify(repoUsuario, times(1)).obtenerTodosLosUsuariosActivos();
+		verify(repoUsuario, times(1)).obtenerUsuariosActivos();
 	}	
 	@Test
 	@Transactional @Rollback
@@ -72,7 +71,7 @@ public class ServicioNotificacionTest {
 		user.setId(1l);
 		user2.setId(2l);
 		user3.setId(3l);
-		List<Long> idUsuarios=new ArrayList();
+		List<Long> idUsuarios=new ArrayList<Long>();
 		idUsuarios.add(user.getId());
 		idUsuarios.add(user2.getId());
 		idUsuarios.add(user3.getId());

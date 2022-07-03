@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.sql.Date;
-import java.util.List;
 
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;

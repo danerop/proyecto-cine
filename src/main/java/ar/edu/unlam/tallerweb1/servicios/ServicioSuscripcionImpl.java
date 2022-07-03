@@ -10,19 +10,16 @@ import org.springframework.stereotype.Service;
 import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioSuscripcion;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioUsuario;
 
 @Service("servicioSuscripcion")
 @Transactional
 public class ServicioSuscripcionImpl implements ServicioSuscripcion {
 	
 	private RepositorioSuscripcion repositorioSuscripcionDao;
-	private RepositorioUsuario repositorioUsuarioDao;
 	
 	@Autowired
-	public ServicioSuscripcionImpl(RepositorioSuscripcion repositorioSuscripcionDao, RepositorioUsuario repositorioUsuarioDao) {
+	public ServicioSuscripcionImpl(RepositorioSuscripcion repositorioSuscripcionDao) {
 		this.repositorioSuscripcionDao = repositorioSuscripcionDao;
-		this.repositorioUsuarioDao = repositorioUsuarioDao;
 	}
 	
 	@Override

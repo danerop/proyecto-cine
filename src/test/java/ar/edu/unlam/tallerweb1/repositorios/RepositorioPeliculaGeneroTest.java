@@ -1,15 +1,8 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.inject.Inject;
 import javax.transaction.Transactional;
-
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +12,6 @@ import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.PeliculaGenero;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioGenero;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioPelicula;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioPeliculaGenero;
-
 
 public class RepositorioPeliculaGeneroTest extends SpringTest {
 

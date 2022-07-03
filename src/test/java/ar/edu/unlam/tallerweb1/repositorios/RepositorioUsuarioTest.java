@@ -39,12 +39,12 @@ public class RepositorioUsuarioTest extends SpringTest{
 		Usuario user=new Usuario();
 		Usuario user2=new Usuario();
 		Usuario user3=new Usuario();
-		user.activar();
-		user2.activar();
+		user.setActivo(true);
+		user2.setActivo(true);
 		session().save(user);
 		session().save(user2);
 
-		List<Usuario> listaEsperada=repositorioUsuario.obtenerTodosLosUsuariosActivos();
+		List<Usuario> listaEsperada=repositorioUsuario.obtenerUsuariosActivos();
 		
 		assertNotNull(listaEsperada);
 		assertTrue(listaEsperada.contains(user));
