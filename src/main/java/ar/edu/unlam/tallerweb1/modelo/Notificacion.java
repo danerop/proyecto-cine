@@ -16,8 +16,7 @@ public class Notificacion {
 	private String texto;
 	private Date fecha;
 	
-	
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -42,6 +41,4 @@ public class Notificacion {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	
-	
 }

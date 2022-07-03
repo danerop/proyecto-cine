@@ -1,7 +1,5 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
-import java.sql.Date;
-
 public class DatosFuncion {
 	private Long id;
 	private String fechaHora;

@@ -28,7 +28,6 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioFavorito;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPeliculaGenero;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 
 @Controller
@@ -38,18 +37,16 @@ public class ControladorHome {
 	private ServicioBoleto servicioBoleto;
 	private ServicioPelicula servicioPelicula;
 	private ServicioPeliculaGenero servicioPeliculaGenero;
-	private ServicioLogin servicioUsuario;
 	private ServicioNotificacion servicioNotificacion;
 	private ServicioFuncion servicioFuncion;
 	private ServicioFavorito servicioFavorito;
 
 	@Autowired
 	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioBoleto servicioBoleto,
-			ServicioLogin servicioUsuario, ServicioNotificacion servicioNotificacion, ServicioFuncion servicioFuncion, ServicioFavorito servicioFavorito, ServicioPeliculaGenero servicioPeliculaGenero) {
+			ServicioNotificacion servicioNotificacion, ServicioFuncion servicioFuncion, ServicioFavorito servicioFavorito, ServicioPeliculaGenero servicioPeliculaGenero) {
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine = servicioCine;
 		this.servicioBoleto = servicioBoleto;
-		this.servicioUsuario = servicioUsuario;
 		this.servicioNotificacion = servicioNotificacion;
 		this.servicioFuncion = servicioFuncion;
 		this.servicioFavorito = servicioFavorito;
@@ -69,8 +66,8 @@ public class ControladorHome {
 			return new ModelAndView("inicio", model);
 		}
 		
-		model.put("usuario", servicioUsuario.consultarUsuario(user));
-		model.put("rol", servicioUsuario.consultarUsuarioPorRol(user));
+		model.put("usuario", user);
+		model.put("rol", user.getRol());
 		
 		//peliculas recomendadas por generos favoritos
 		List<Genero> listaGenerosFAV = new ArrayList<Genero>();
@@ -141,7 +138,7 @@ public class ControladorHome {
 		model.addAttribute(new DatosBuscar());
 		
 		if (user != null) {
-			model.put("usuario", servicioUsuario.consultarUsuario(user));
+			model.put("usuario", user);
 			return new ModelAndView("pelicula", model);
 		}
 		return new ModelAndView("pelicula", model);
@@ -158,7 +155,7 @@ public class ControladorHome {
 		model.addAttribute(new DatosBuscar());
 		model.put("boletosadquiridos", servicioBoleto.buscarBoletosDeUnUsuario(user));
 		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
-		model.put("usuario", servicioUsuario.consultarUsuario(user));
+		model.put("usuario", user);
 		return new ModelAndView("historial-compras", model);
 	}
 

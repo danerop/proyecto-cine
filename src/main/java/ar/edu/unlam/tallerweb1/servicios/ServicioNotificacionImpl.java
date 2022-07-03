@@ -1,6 +1,5 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -55,7 +54,7 @@ public class ServicioNotificacionImpl implements ServicioNotificacion{
 
 	@Override
 	public List<Usuario> obtenerListaUsuariosActivos() {
-		return repositorioUsuarioDao.obtenerTodosLosUsuariosActivos();
+		return repositorioUsuarioDao.obtenerUsuariosActivos();
 	}
 
 	@Override

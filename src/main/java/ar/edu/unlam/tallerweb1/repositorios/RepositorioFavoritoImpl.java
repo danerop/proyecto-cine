@@ -9,12 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Favorito;
-import ar.edu.unlam.tallerweb1.modelo.Funcion;
-import ar.edu.unlam.tallerweb1.modelo.Genero;
-import ar.edu.unlam.tallerweb1.modelo.Pelicula;
-import ar.edu.unlam.tallerweb1.modelo.PeliculaGenero;
-import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Repository("repositorioFavorito")
 public class RepositorioFavoritoImpl implements RepositorioFavorito {

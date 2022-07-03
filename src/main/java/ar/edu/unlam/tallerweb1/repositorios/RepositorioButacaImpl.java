@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Butaca;
-import ar.edu.unlam.tallerweb1.modelo.ButacaFuncion;
-import ar.edu.unlam.tallerweb1.modelo.Funcion;
 
 @Repository("repositorioButaca")
 public class RepositorioButacaImpl implements RepositorioButaca{

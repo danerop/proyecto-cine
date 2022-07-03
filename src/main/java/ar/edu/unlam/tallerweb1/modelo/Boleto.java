@@ -4,7 +4,6 @@ import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +36,6 @@ public class Boleto {
 	
 	private Boolean fueAdquiridoConEntradaGratis=false;
 
-	
 	
 	public Boleto(Long nroBoleto, Usuario cliente, Funcion funcion, Float precio, Date fecha, Sala sala, Butaca butaca) {
 		super();
@@ -80,14 +78,13 @@ public class Boleto {
 	public void setPrecio(Float precio) {
 		this.precio = precio;
 	}
-	
-	
 	public Date getFechaComprado() {
 		return fechaComprado;
 	}
 	public void setFechaComprado(Date fechaComprado) {
 		this.fechaComprado = fechaComprado;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

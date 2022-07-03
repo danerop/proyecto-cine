@@ -11,4 +11,5 @@ public interface ServicioDetalleSuscripcion {
 	void eliminarDetalleSuscripcion (DetalleSuscripcion detalleSuscripcion);
 	DetalleSuscripcion obtenerDetalleSuscripcionPorId(Long id);
 	List<DetalleSuscripcion> obtenerTodasLasSuscripciones();
+	
 }

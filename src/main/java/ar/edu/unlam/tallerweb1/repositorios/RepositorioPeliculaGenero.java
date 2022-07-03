@@ -12,18 +12,11 @@ public interface RepositorioPeliculaGenero {
 
 	void insertarPeliculaGenero(PeliculaGenero peliculaGenero);
 	List<String> obtenerGenerosDeUnaPelicula(Pelicula pelicula);
-	
 	SessionFactory getSessionFactory();
-	
 	void setSessionFactory(SessionFactory sessionFactory);
-	
 	List<PeliculaGenero> obtenerTodosLosRegistros();
-
 	List<Genero> obtenerGenerosDePeliculasCompradas(List<Pelicula> listaPeliculas);
-	
 	List<Pelicula> obtenerPeliculasRecomendadasSegunGeneroFavorito(List<Genero> listaGeneros);
-	
-
 	PeliculaGenero obtenerRegistroPorPeliculaYGenero(Long idPelicula, Long idGenero);
 	PeliculaGenero buscarRegistroPorId(Long id);
 

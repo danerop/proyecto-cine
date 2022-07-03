@@ -49,25 +49,18 @@
 	<h3 class="text-center">Controles Administrador</h3>
 	<br>
 
-	<div class="btn-toolbar justify-content-center" role="toolbar"
-		aria-label="Toolbar with button groups">
-		<div class="btn-group mr-2" role="group">
-			<a class="btn btn-secondary cargar-cine"
-				href="http://localhost:8080/proyecto-cine/admin-cines">Cines</a> <a
-				class="btn btn-secondary cargar-sala"
-				href="http://localhost:8080/proyecto-cine/admin-salas">Salas</a> <a
-				class="btn btn-secondary cargar-pelicula"
-				href="http://localhost:8080/proyecto-cine/admin-peliculas">Peliculas</a>
-			<a class="btn btn-secondary cargar-funcion"
-				href="http://localhost:8080/proyecto-cine/admin-funciones">Funciones</a>
-			<a class="btn btn-secondary cargar-suscripcion"
-				href="http://localhost:8080/proyecto-cine/admin-suscripciones">Suscripciones</a>
-			<a class="btn btn-secondary cargar-notificacion"
-				href="http://localhost:8080/proyecto-cine/admin-notificaciones">Notificación</a>
-			<a class="btn btn-secondary cargar-notificacion"
-				href="http://localhost:8080/proyecto-cine/admin-asignargeneros">Asignar Géneros</a>
-		</div>
-	</div>
+  <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group">
+      <a class="btn btn-secondary cargar-cine" href="http://localhost:8080/proyecto-cine/admin-cines">Cines</a>
+      <a class="btn btn-secondary cargar-sala" href="http://localhost:8080/proyecto-cine/admin-salas">Salas</a>
+      <a class="btn btn-secondary cargar-pelicula" href="http://localhost:8080/proyecto-cine/admin-peliculas">Películas</a>
+      <a class="btn btn-secondary cargar-funcion" href="http://localhost:8080/proyecto-cine/admin-funciones">Funciones</a>
+      <a class="btn btn-secondary cargar-suscripcion" href="http://localhost:8080/proyecto-cine/admin-suscripciones">Suscripciones</a>
+      <a class="btn btn-secondary cargar-notificacion" href="http://localhost:8080/proyecto-cine/admin-notificaciones">Notificación</a>
+      <a class="btn btn-secondary cargar-notificacion" href="http://localhost:8080/proyecto-cine/admin-recepcionistas">Recepcionistas</a>
+	  <a class="btn btn-secondary cargar-notificacion" href="http://localhost:8080/proyecto-cine/admin-asignargeneros">Asignar Géneros</a>
+    </div>
+  </div>
 
 	<br>
 

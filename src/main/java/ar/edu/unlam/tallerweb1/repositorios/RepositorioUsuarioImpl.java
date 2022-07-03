@@ -1,12 +1,8 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
-import ar.edu.unlam.tallerweb1.modelo.Funcion;
-import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,14 +18,65 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
 	// Maneja acciones de persistencia, normalmente estara inyectado el session factory de hibernate
 	// el mismo esta difinido en el archivo hibernateContext.xml
-	@Inject
 	private SessionFactory sessionFactory;
 
-   /* @Autowired
+	@Autowired
 	public RepositorioUsuarioImpl(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;
-	}*/
+	}
 
+	@Override
+	public Usuario buscarUsuarioPorId(Long id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(Usuario.class, id);
+	}
+
+	@Override
+	public Usuario buscarUsuarioPorEmail(String email) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Usuario) session.createCriteria(Usuario.class)
+				.add(Restrictions.eq("email", email))
+				.uniqueResult();
+	}
+
+	@Override
+	public Usuario consultarUsuario(Usuario usuario) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Usuario) session.createCriteria(Usuario.class)
+				.add(Restrictions.eq("email", usuario.getEmail()))
+				.add(Restrictions.eq("password", usuario.getPassword()))
+				.uniqueResult();
+	}
+	
+	@Override
+	public void actualizarUsuario(Usuario usuario) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(usuario);		
+	}
+
+	@Override
+	public void guardarUsuario(Usuario usuario) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(usuario);
+	}
+
+	@Override
+	public List<Usuario> obtenerUsuariosPorRol(String rol) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Usuario.class)
+				.add(Restrictions.eq("rol", rol))
+				.list();
+	}
+
+	@Override
+	public List<Usuario> obtenerUsuariosActivos() {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Usuario.class)
+				.add(Restrictions.eq("activo", true))
+				.list();
+	}
+	
+	/*
 	@Override
 	public Usuario buscarUsuario(String email, String password) {
 
@@ -129,6 +176,6 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 		return session.createCriteria(Usuario.class)
 				.add(Restrictions.eq("rol", rol))
 				.list();
-	}
+	}*/
 	
 }

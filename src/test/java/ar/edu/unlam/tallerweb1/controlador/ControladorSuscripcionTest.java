@@ -21,19 +21,19 @@ import ar.edu.unlam.tallerweb1.modelo.DetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleSuscripcion;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSuscripcion;
 
 public class ControladorSuscripcionTest {
  
-	private ServicioLogin servicioUsuario = mock(ServicioLogin.class);
+	private ServicioUsuario servicioUsuario = mock(ServicioUsuario.class);
 	private ServicioSuscripcion servicioSuscripcion = mock(ServicioSuscripcion.class);
 	private ServicioDetalleSuscripcion servicioDetalleSuscripcion = mock(ServicioDetalleSuscripcion.class);
 	private ControladorSuscripcion controladorSuscripcion = new ControladorSuscripcion(servicioSuscripcion, servicioUsuario, servicioDetalleSuscripcion);
 	private Usuario usuarioMock;
 	private HttpServletRequest requestMock;
 	private HttpSession sessionMock;
-	private ServicioLogin servicioUsuarioMock;
+	private ServicioUsuario servicioUsuarioMock;
 	private ServicioSuscripcion servicioSuscripcionMock;
 	private ServicioDetalleSuscripcion servicioDetalleSuscripcionMock;
 	
@@ -46,7 +46,7 @@ public class ControladorSuscripcionTest {
 		controladorSuscripcion.setServicioSuscripcion(servicioSuscripcion);
 		servicioDetalleSuscripcionMock = mock(ServicioDetalleSuscripcion.class);
 		controladorSuscripcion.setServicioDetalleSuscripcion(servicioDetalleSuscripcion);
-		servicioUsuarioMock = mock(ServicioLogin.class);
+		servicioUsuarioMock = mock(ServicioUsuario.class);
 		controladorSuscripcion.setServicioLogin(servicioUsuario);
 	}
 

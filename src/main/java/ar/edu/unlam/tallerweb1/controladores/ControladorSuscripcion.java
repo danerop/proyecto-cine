@@ -1,6 +1,5 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,20 +16,17 @@ import ar.edu.unlam.tallerweb1.modelo.DetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleSuscripcion;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSuscripcion;
 
 @Controller
 public class ControladorSuscripcion {
 
 	private ServicioSuscripcion servicioSuscripcion;
-	private ServicioLogin servicioUsuario;
 	private ServicioDetalleSuscripcion servicioDetalleSuscripcion;
 
 	@Autowired
-	public ControladorSuscripcion(ServicioSuscripcion servicioSuscripcion, ServicioLogin servicioUsuario, ServicioDetalleSuscripcion servicioDetalleSuscripcion) {
+	public ControladorSuscripcion(ServicioSuscripcion servicioSuscripcion, ServicioDetalleSuscripcion servicioDetalleSuscripcion) {
 		this.servicioSuscripcion = servicioSuscripcion;
-		this.servicioUsuario = servicioUsuario;
 		this.servicioDetalleSuscripcion = servicioDetalleSuscripcion;
 	}
 
@@ -86,27 +82,4 @@ public class ControladorSuscripcion {
 				return new ModelAndView("suscripcion-validar", model);
 	}
 	
-	public ServicioSuscripcion getServicioSuscripcion() {
-		return servicioSuscripcion;
-	}
-
-	public void setServicioSuscripcion(ServicioSuscripcion servicioSuscripcion) {
-		this.servicioSuscripcion = servicioSuscripcion;
-	}
-	
-	public ServicioDetalleSuscripcion getServicioDetalleSuscripcion() {
-		return servicioDetalleSuscripcion;
-	}
-
-	public void setServicioDetalleSuscripcion(ServicioDetalleSuscripcion servicioDetalleSuscripcion) {
-		this.servicioDetalleSuscripcion = servicioDetalleSuscripcion;
-	}
-	
-	public ServicioLogin getServicioUsuario() {
-		return servicioUsuario;
-	}
-
-	public void setServicioLogin(ServicioLogin servicioUsuario) {
-		this.servicioUsuario = servicioUsuario;
-	}
 }

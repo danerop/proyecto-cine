@@ -1,11 +1,9 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-import java.sql.Date;
 import java.util.List;
 
 import ar.edu.unlam.tallerweb1.modelo.Cine;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
-import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 
 public interface ServicioFuncion {
 	
@@ -19,4 +17,5 @@ public interface ServicioFuncion {
 	
 	List<Funcion> obtenerFuncionesFuturasDePelicula(Long idPelicula);
 	List<Cine> obtenerCinesDisponiblesParaFuncionesFuturas(Long idPelicula);
+	
 }

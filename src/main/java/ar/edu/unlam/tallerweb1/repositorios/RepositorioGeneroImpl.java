@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Genero;
-import ar.edu.unlam.tallerweb1.modelo.Pelicula;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Repository("repositorioGenero")
 public class RepositorioGeneroImpl implements RepositorioGenero {

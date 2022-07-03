@@ -1,37 +1,19 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
-import ar.edu.unlam.tallerweb1.modelo.Butaca;
 import ar.edu.unlam.tallerweb1.modelo.ButacaFuncion;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
-import ar.edu.unlam.tallerweb1.modelo.Genero;
-import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioBoleto;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioFuncion;
 
 @Service("servicioBoleto")
 @Transactional
@@ -49,10 +31,10 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	public void guardarBoleto(Boleto boleto, ButacaFuncion temp) {	
 
 		if (boleto.getFuncion()==null || boleto.getFuncion().getId()==null || boleto.getFuncion().getEntradasDisponibles()<=0) {
-			throw new ExceptionFuncionNoEncontrada("La funciï¿½n de la cual desea reservar boleto no existe");
+			throw new ExceptionFuncionNoEncontrada("La función de la cual desea reservar boleto no existe");
 		}
 		if (temp.getFuncion().getId()!=boleto.getFuncion().getId() || temp.getButaca().getId() != boleto.getButaca().getId()) {
-			throw new ExceptionDatosBoletoDiferentesARegistroButacaFuncion("Los datos de la butaca seleccionada no corresponden a una vï¿½lida");
+			throw new ExceptionDatosBoletoDiferentesARegistroButacaFuncion("Los datos de la butaca seleccionada no corresponden a una valida");
 		}
 
 		if (boleto.getButaca()==null || temp==null || temp.getOcupada()==true ) {

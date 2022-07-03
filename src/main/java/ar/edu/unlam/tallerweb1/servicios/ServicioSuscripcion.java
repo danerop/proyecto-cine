@@ -11,9 +11,7 @@ public interface ServicioSuscripcion {
 	void modificarSuscripcion (Suscripcion suscripcion);
 	void eliminarSuscripcion (Suscripcion suscripcion);
 	Suscripcion obtenerSuscripcionPorId(Long id);
-	Long guardarUsuario (Usuario usuario);
-	Usuario obtenerUsuarioPorId (Long id);
-	Usuario buscarPorSuscripcion(String tipoSuscripcion);
 	List<Suscripcion> obtenerTodasLasSuscripciones();
 	void usarEntradaGratis(Usuario usuario);
+	
 }

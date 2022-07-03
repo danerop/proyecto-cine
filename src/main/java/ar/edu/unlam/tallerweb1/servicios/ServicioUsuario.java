@@ -5,8 +5,8 @@ import java.util.List;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 // Interface que define los metodos del Servicio de Usuarios.
-public interface ServicioLogin {
-
+public interface ServicioUsuario {
+	/*
 	Usuario buscarUsuario(String email, String password);
 	Usuario consultarUsuarioPorId(Long id);
 	Usuario consultarUsuarioPorRol(Usuario usuario);
@@ -17,4 +17,12 @@ public interface ServicioLogin {
 	
 	List<Usuario> obtenerUsuariosPorRol(String rol);
 	Usuario buscarUsuarioPorEmail(String email);
+	*/
+	Usuario buscarUsuarioPorId(Long id);
+	Usuario buscarUsuarioPorEmail(String email);
+	Usuario consultarUsuario(Usuario usuario);
+	void actualizarUsuario(Usuario usuario);
+	void guardarUsuario(Usuario usuario);
+	List<Usuario> obtenerUsuariosPorRol(String rol);
+	List<Usuario> obtenerUsuariosActivos();
 }

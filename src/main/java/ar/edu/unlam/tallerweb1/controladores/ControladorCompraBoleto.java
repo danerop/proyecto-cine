@@ -1,6 +1,5 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ar.edu.unlam.tallerweb1.modelo.*;
 import ar.edu.unlam.tallerweb1.servicios.*;
 
-
 @Controller
 public class ControladorCompraBoleto {
 
@@ -29,16 +27,19 @@ public class ControladorCompraBoleto {
 	private ServicioButaca servicioButaca;
 	private ServicioButacaFuncion servicioButacaFuncion;
 	private ServicioSuscripcion servicioSuscripcion;
+	private ServicioUsuario servicioUsuario;
 
 	@Autowired
 	public ControladorCompraBoleto(ServicioFuncion servicioFuncion, ServicioBoleto servicioBoleto,
-			ServicioPelicula servicioPelicula, ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion, ServicioSuscripcion servicioSuscripcion) {
+			ServicioPelicula servicioPelicula, ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion,
+			ServicioSuscripcion servicioSuscripcion, ServicioUsuario servicioUsuario) {
 		this.servicioFuncion = servicioFuncion;
 		this.servicioBoleto = servicioBoleto;
 		this.servicioPelicula = servicioPelicula;
 		this.servicioButaca = servicioButaca;
 		this.servicioButacaFuncion = servicioButacaFuncion;
 		this.servicioSuscripcion = servicioSuscripcion;
+		this.servicioUsuario = servicioUsuario;
 	}
 	@RequestMapping(path = "/compra", method = RequestMethod.GET)
 	public ModelAndView irACompra(@RequestParam(value = "p") Long idPelicula,  HttpServletRequest request) {
@@ -75,7 +76,7 @@ public class ControladorCompraBoleto {
 		
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
-		model.put("user", servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
+		model.put("user", servicioUsuario.buscarUsuarioPorId(user.getId()));
 		model.put("funcionElegida", funcionElegida);
 		return new ModelAndView("compra-tipoboleto", model);
 	}
@@ -112,15 +113,11 @@ public class ControladorCompraBoleto {
 		if (user == null || !user.getRol().equals("usuario")) {
 			return new ModelAndView("redirect:/inicio");
 		}
-		
-		
 
-		
-		
 		ModelMap model = new ModelMap();
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
-		model.put("user", servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
+		model.put("user", servicioUsuario.buscarUsuarioPorId(user.getId()));
 		return new ModelAndView("compra-metodo-pago", model);
 	}
 
@@ -135,7 +132,7 @@ public class ControladorCompraBoleto {
 		if (user == null || !user.getRol().equals("usuario")) {
 			return new ModelAndView("redirect:/inicio");
 		} 
-		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioSuscripcion.obtenerUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
+		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioUsuario.buscarUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
 			model.put("msg", "No se cuenta con más entradas gratis para usar");
 			return new ModelAndView("redirect:/inicio", model);
 			
@@ -157,12 +154,12 @@ public class ControladorCompraBoleto {
 		Boleto boletoAGuardar = new Boleto();
 		boletoAGuardar.setButaca(butaca);
 		boletoAGuardar.setFuncion(funcionElegida);
-		boletoAGuardar.setCliente(servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
+		boletoAGuardar.setCliente(servicioUsuario.buscarUsuarioPorId(user.getId()));
 		boletoAGuardar.setPrecio(servicioBoleto.aplicarDescuento(boletoAGuardar, datosCompraBoleto.getPrecio()));
 
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
-		model.put("user", servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
+		model.put("user", servicioUsuario.buscarUsuarioPorId(user.getId()));
 		model.put("usoEntradaGratis", usoEntradaGratis);
 		model.put("boletoGenerado", boletoAGuardar);
 		model.put("funcionElegida", funcionElegida);
@@ -199,7 +196,7 @@ public class ControladorCompraBoleto {
 		boletoAGuardar.setPrecio(servicioBoleto.aplicarDescuento(boletoAGuardar, datosCompraBoleto.getPrecio()));
 		
 		// Uso de entrada gratis
-		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioSuscripcion.obtenerUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
+		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioUsuario.buscarUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
 			model.put("msg", "No te quedan entradas gratis por usar");
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			return new ModelAndView("redirect:/inicio", model);

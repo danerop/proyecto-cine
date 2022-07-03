@@ -74,7 +74,5 @@ public class ServicioDetalleSuscripcionImpl implements ServicioDetalleSuscripcio
 	public List<DetalleSuscripcion> obtenerTodasLasSuscripciones() {
 		return repositorioDetalleSuscripcionDao.obtenerTodosLosDetallesSuscripcion();
 	}
-
-	
 	
 }

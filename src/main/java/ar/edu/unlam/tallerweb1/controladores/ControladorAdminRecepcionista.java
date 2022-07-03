@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
 @Controller
 public class ControladorAdminRecepcionista {
 
-	private ServicioLogin servicioLogin;
+	private ServicioUsuario servicioUsuario;
 	
 	@Autowired
-	public ControladorAdminRecepcionista(ServicioLogin servicioLogin) {
-		this.servicioLogin = servicioLogin;
+	public ControladorAdminRecepcionista(ServicioUsuario servicioUsuario) {
+		this.servicioUsuario = servicioUsuario;
 	}
 	
 	@RequestMapping( path = "/admin-recepcionistas", method = RequestMethod.GET)
@@ -33,7 +33,7 @@ public class ControladorAdminRecepcionista {
 		
 		ModelMap modelo = new ModelMap();
 		modelo.addAttribute("datosRecepcionista", new DatosLogin());
-		modelo.put("listaRecepcionistas", servicioLogin.obtenerUsuariosPorRol("recepcionista"));
+		modelo.put("listaRecepcionistas", servicioUsuario.obtenerUsuariosPorRol("recepcionista"));
 		
 		return new ModelAndView("admin-recepcionistas", modelo);
 	}
@@ -48,24 +48,24 @@ public class ControladorAdminRecepcionista {
 		
 		ModelMap modelo = new ModelMap();
 		
-		if (servicioLogin.buscarUsuarioPorEmail(datosRecepcionista.getEmail()) == null) {
+		if (servicioUsuario.buscarUsuarioPorEmail(datosRecepcionista.getEmail()) == null) {
 			Usuario recepcionista = new Usuario();
 			recepcionista.setEmail(datosRecepcionista.getEmail());
 			recepcionista.setPassword(datosRecepcionista.getPassword());
 			recepcionista.setActivo(true);
 			recepcionista.setRol("recepcionista");
-			servicioLogin.insertarUsuario(recepcionista);
+			servicioUsuario.guardarUsuario(recepcionista);
 			
 			modelo.put("msgExito", "Recepcionista registrado correctamente");
 		} else {
 			modelo.put("msgError", "El email ya está en uso");
 			modelo.addAttribute("datosRecepcionista", new DatosLogin());
-			modelo.put("listaRecepcionistas", servicioLogin.obtenerUsuariosPorRol("recepcionista"));
+			modelo.put("listaRecepcionistas", servicioUsuario.obtenerUsuariosPorRol("recepcionista"));
 			return new ModelAndView("admin-recepcionistas", modelo);
 		}
 		
 		modelo.addAttribute("datosRecepcionista", new DatosLogin());
-		modelo.put("listaRecepcionistas", servicioLogin.obtenerUsuariosPorRol("recepcionista"));
+		modelo.put("listaRecepcionistas", servicioUsuario.obtenerUsuariosPorRol("recepcionista"));
 		return new ModelAndView("admin-recepcionistas", modelo);
 	}
 }

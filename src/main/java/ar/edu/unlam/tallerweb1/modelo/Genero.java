@@ -1,7 +1,5 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +32,7 @@ public class Genero {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -72,7 +71,5 @@ public class Genero {
 	@Override
 	public String toString() {
 		return "Genero [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
-	}
-
-	
+	}	
 }

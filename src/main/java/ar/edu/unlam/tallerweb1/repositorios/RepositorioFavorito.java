@@ -5,10 +5,6 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import ar.edu.unlam.tallerweb1.modelo.Favorito;
-import ar.edu.unlam.tallerweb1.modelo.Genero;
-import ar.edu.unlam.tallerweb1.modelo.Pelicula;
-import ar.edu.unlam.tallerweb1.modelo.PeliculaGenero;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 public interface RepositorioFavorito {
 	

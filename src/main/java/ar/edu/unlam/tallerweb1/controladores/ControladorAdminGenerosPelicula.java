@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.unlam.tallerweb1.modelo.Favorito;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.PeliculaGenero;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGenero;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 
 @Controller
@@ -27,14 +25,13 @@ public class ControladorAdminGenerosPelicula {
 	 
 	private ServicioPelicula servicioPelicula;
 	private ServicioGenero servicioGenero;
-	private ServicioLogin servicioUsuario;
 	
 	@Autowired
-	public ControladorAdminGenerosPelicula(ServicioPelicula servicioPelicula, ServicioGenero servicioGenero, ServicioLogin servicioUsuario) {
+	public ControladorAdminGenerosPelicula(ServicioPelicula servicioPelicula, ServicioGenero servicioGenero) {
 		this.servicioGenero=servicioGenero;
 		this.servicioPelicula=servicioPelicula;
-		this.servicioUsuario=servicioUsuario;
 	}
+	
 	@RequestMapping( path = "/admin-asignargeneros", method = RequestMethod.GET)
 	public ModelAndView irAAdminAsignarGeneros(HttpServletRequest request) {
 		

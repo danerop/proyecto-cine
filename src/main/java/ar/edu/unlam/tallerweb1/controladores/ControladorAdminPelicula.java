@@ -15,8 +15,6 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaAnioNoValido;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaCamposVacios;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaDuracionNoValida;
-import ar.edu.unlam.tallerweb1.servicios.ServicioGenero;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 
 @Controller
