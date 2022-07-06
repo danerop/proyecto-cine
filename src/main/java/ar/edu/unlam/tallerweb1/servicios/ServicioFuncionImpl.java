@@ -112,4 +112,5 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		Funcion funcionzz=repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, temp, hora, idSala);
 		return funcionzz;	
 	}
+	
 }

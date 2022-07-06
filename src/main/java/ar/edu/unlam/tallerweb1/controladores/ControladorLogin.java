@@ -107,7 +107,7 @@ public class ControladorLogin {
 		// validar password con repassword
 		ModelMap modelo = new ModelMap();
 
-		if (servicioUsuario.consultarUsuario(usuario) == null) {
+		if (servicioUsuario.buscarUsuarioPorEmail(usuario.getPassword()) == null) {
 			if (usuario.getPassword().equals(repassword)) {
 				// guardo en la base
 				usuario.setActivo(true);

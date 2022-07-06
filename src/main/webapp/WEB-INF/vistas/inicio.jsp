@@ -103,11 +103,61 @@
     </div>
   <% } %>
   
-  <br>
-  <br>
-  <h3 class="text-center">Películas</h3>
-  <br>
-  <br>
+<c:if test="${PeliculasGenerosFavoritos.size() > 0}">
+  <br><br>
+  <h3 class="text-center">Películas Recomendadas según tus generos favoritos</h3>
+  <br><br>
+  
+  <div class="container">
+    <div class="row justify-content-evenly row-cols-3">
+      <!-- d-flex flex-column bd-highlight mb-3  -->
+      <c:forEach items="${PeliculasGenerosFavoritos}" var="pelicula">
+        <div class="col d-flex justify-content-evenly" style="margin-bottom: 50px;">
+          <a href="peliculas/${pelicula.getId()}" style="text-decoration: none;">
+            <div class="card" style="width: 14rem;">
+              <img src="${pelicula.getUrlImagenPelicula()}" class="card-img-top" alt="${pelicula.getNombre()}">
+              <div class="card-body" style="text-align: center; background-color: black; height: 60px;">
+                <h5 class="card-title" style="font-size: 15px; color: white;">${pelicula.getNombre()}</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+      </c:forEach>
+      <br>
+    </div>
+    <br>
+  </div>
+</c:if>
+  
+<c:if test="${PeliculasGenerosVistos.size() > 0}">
+  <br><br>
+  <h3 class="text-center">Películas Recomendadas según tus compras</h3>
+  <br><br>
+  
+  <div class="container">
+    <div class="row justify-content-evenly row-cols-3">
+      <!-- d-flex flex-column bd-highlight mb-3  -->
+      <c:forEach items="${PeliculasGenerosVistos}" var="pelicula">
+        <div class="col d-flex justify-content-evenly" style="margin-bottom: 50px;">
+          <a href="peliculas/${pelicula.getId()}" style="text-decoration: none;">
+            <div class="card" style="width: 14rem;">
+              <img src="${pelicula.getUrlImagenPelicula()}" class="card-img-top" alt="${pelicula.getNombre()}">
+              <div class="card-body" style="text-align: center; background-color: black; height: 60px;">
+                <h5 class="card-title" style="font-size: 15px; color: white;">${pelicula.getNombre()}</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+      </c:forEach>
+      <br>
+    </div>
+    <br>
+  </div>
+</c:if>
+
+  <br><br>
+  <h3 class="text-center">Nuestra Cartelera</h3>
+  <br><br>
   
   <div class="container">
     <div class="row justify-content-evenly row-cols-3">
@@ -122,7 +172,6 @@
               </div>
             </div>
           </a>
-          <!-- 	<img src="${pelicula.getUrlImagenPelicula()}" class="img-thumbnail peliculaItem" alt="..."> -->
         </div>
       </c:forEach>
       <br>

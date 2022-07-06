@@ -46,7 +46,7 @@ public class ControladorFavorito {
 		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(usuarioSesion));
 		model.addAttribute("datosFavoritos", new DatosFavoritos());
 		model.put("listaDeGeneros", servicioGenero.obtenerTodosLosGeneros());
-		model.put("generosFavoritos", servicioFavorito.obtenerFavoritoPorUsuario(usuarioSesion.getId()));
+		model.put("generosFavoritos", servicioFavorito.obtenerFavoritosPorUsuario(usuarioSesion.getId()));
 
 		return new ModelAndView("generos", model);
 	}

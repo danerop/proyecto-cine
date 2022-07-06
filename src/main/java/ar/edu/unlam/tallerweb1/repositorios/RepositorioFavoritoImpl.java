@@ -1,14 +1,18 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Favorito;
+import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Repository("repositorioFavorito")
 public class RepositorioFavoritoImpl implements RepositorioFavorito {
@@ -40,7 +44,7 @@ public class RepositorioFavoritoImpl implements RepositorioFavorito {
 	}
 
 	@Override
-	public List<Favorito> obtenerFavoritoPorUsuario(Long idUsuario) {
+	public List<Favorito> obtenerFavoritosPorUsuario(Long idUsuario) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Favorito.class)
 		.add(Restrictions.eq("usuario.id", idUsuario))
@@ -66,14 +70,19 @@ public class RepositorioFavoritoImpl implements RepositorioFavorito {
 				.add(Restrictions.eq("genero.id", idGenero))
 				.uniqueResult();
 	}
-	
-	@Override
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
 
 	@Override
-	public SessionFactory getSessionFactory() {
-		return this.sessionFactory;
+	public List<Genero> obtenerGenerosFavoritosDeUsuario(Usuario usuario) {
+		if(obtenerFavoritosPorUsuario(usuario.getId()).size() == 0) {
+			return new ArrayList<Genero>();
+		}
+		
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Favorito.class)
+				.add(Restrictions.eq("usuario", usuario))
+				.add(Restrictions.eq("activo", true))
+				.setProjection(Projections.distinct(Projections.property("genero")))
+				.list();
 	}
+	
 }

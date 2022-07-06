@@ -17,5 +17,6 @@ public interface ServicioBoleto {
 	public Boolean validarPrecioDeFuncionDelBoleto(Funcion funcion, Float precio, Usuario user);	
 
 	public List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user);
+	public List<Pelicula> obtenerPeliculasDeFuncionesCompradasPorUsuario(Usuario user);
 
 }

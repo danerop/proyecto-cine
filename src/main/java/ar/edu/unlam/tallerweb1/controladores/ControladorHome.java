@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,15 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Cine;
-import ar.edu.unlam.tallerweb1.modelo.Favorito;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
-import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaNoEncontrada;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBoleto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
-import ar.edu.unlam.tallerweb1.servicios.ServicioFavorito;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPeliculaGenero;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
@@ -39,68 +35,43 @@ public class ControladorHome {
 	private ServicioPeliculaGenero servicioPeliculaGenero;
 	private ServicioNotificacion servicioNotificacion;
 	private ServicioFuncion servicioFuncion;
-	private ServicioFavorito servicioFavorito;
 
 	@Autowired
 	public ControladorHome(ServicioPelicula servicioPelicula, ServicioCine servicioCine, ServicioBoleto servicioBoleto,
-			ServicioNotificacion servicioNotificacion, ServicioFuncion servicioFuncion, ServicioFavorito servicioFavorito, ServicioPeliculaGenero servicioPeliculaGenero) {
+			ServicioNotificacion servicioNotificacion, ServicioFuncion servicioFuncion, ServicioPeliculaGenero servicioPeliculaGenero) {
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine = servicioCine;
 		this.servicioBoleto = servicioBoleto;
 		this.servicioNotificacion = servicioNotificacion;
 		this.servicioFuncion = servicioFuncion;
-		this.servicioFavorito = servicioFavorito;
 		this.servicioPeliculaGenero = servicioPeliculaGenero;
 	}
 
 	@RequestMapping(path = "/inicio", method = RequestMethod.GET)
 	public ModelAndView inicio(HttpServletRequest request, @ModelAttribute("mapping1Form") ModelMap model2) {
-
+		
 		ModelMap model = new ModelMap();
 		model.addAllAttributes(model2);
-		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		model.addAttribute(new DatosBuscar());
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		
 		if (user == null) {
+			//usuario no logueado
 			model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
 			return new ModelAndView("inicio", model);
 		}
 		
+		//usuario logueado
 		model.put("usuario", user);
 		model.put("rol", user.getRol());
-		
-		//peliculas recomendadas por generos favoritos
-		List<Genero> listaGenerosFAV = new ArrayList<Genero>();
-		if (servicioFavorito.obtenerFavoritoPorUsuario(user.getId())!=null && servicioFavorito.obtenerFavoritoPorUsuario(user.getId()).size()>1) {
-			Iterator<Favorito> iterFavoritos = servicioFavorito.obtenerFavoritoPorUsuario(user.getId()).iterator();
-			
-			
-			while(iterFavoritos.hasNext()) {
-				listaGenerosFAV.add(iterFavoritos.next().getGenero());
-			}
-		}
-
-		
-		//peliculas recomendadas por boletos comprados
-		Iterator<Funcion> iterFuncionesCompradas = servicioBoleto.obtenerFuncionesCompradasPorUsuario(user).iterator();
-		
-		List<Pelicula> listaPeliculasCompradas = new ArrayList<Pelicula>();
-		
-		while(iterFuncionesCompradas.hasNext()) {
-			Pelicula pelicula = iterFuncionesCompradas.next().getPelicula();
-			if(!listaPeliculasCompradas.contains(pelicula)) {
-				listaPeliculasCompradas.add(pelicula);
-			}
-			System.out.println(pelicula);
-		}
-		
-		if (servicioFavorito.obtenerFavoritoPorUsuario(user.getId())!=null && servicioFavorito.obtenerFavoritoPorUsuario(user.getId()).size()>1) {
-			model.put("listaPeliculas", servicioPeliculaGenero.obtenerPeliculasRecomendadas(listaGenerosFAV, listaPeliculasCompradas));
-		} else {
-			model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
-		}
-		
 		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
+		
+		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+		
+		//peliculas recomendadas
+		model.put("PeliculasGenerosFavoritos", servicioPeliculaGenero.obtenerPeliculasRecomendadasPorGenerosFavoritos(user));
+		model.put("PeliculasGenerosVistos", servicioPeliculaGenero.obtenerPeliculasRecomendadasPorBoletosComprados(user));
+		
 		return new ModelAndView("inicio", model);
 	}
 	

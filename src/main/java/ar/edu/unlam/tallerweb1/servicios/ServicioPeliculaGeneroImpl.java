@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioPeliculaGenero;
 
 @Service("servicioPeliculaGenero")
@@ -15,21 +16,32 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioPeliculaGenero;
 public class ServicioPeliculaGeneroImpl implements ServicioPeliculaGenero{
 	
 	private RepositorioPeliculaGenero repositorioPeliculaGeneroDao;
+	private ServicioFavorito servicioFavorito;
+	private ServicioBoleto servicioBoleto;
 	
 	@Autowired
-	public ServicioPeliculaGeneroImpl(RepositorioPeliculaGenero repositorioPeliculaGeneroDao) {
+	public ServicioPeliculaGeneroImpl(RepositorioPeliculaGenero repositorioPeliculaGeneroDao, ServicioFavorito servicioFavorito, ServicioBoleto servicioBoleto) {
 		this.repositorioPeliculaGeneroDao = repositorioPeliculaGeneroDao;
+		this.servicioFavorito = servicioFavorito;
+		this.servicioBoleto = servicioBoleto;
 	}
 
 	@Override
-	public List<Pelicula> obtenerPeliculasRecomendadas(List<Genero> listaGenerosFav, List<Pelicula> listaPeliculasCompradas) {
+	public List<Pelicula> obtenerPeliculasRecomendadasPorGenerosFavoritos(Usuario user) {
 		
-		//List<Genero> listaGenerosComprados = repositorioPeliculaGeneroDao.obtenerGenerosDePeliculasCompradas(listaPeliculasCompradas);
-		//listaGenerosFav.addAll(listaGenerosComprados);
+		List<Genero> generos = servicioFavorito.obtenerGenerosFavoritosDeUsuario(user);
 		
-		//List<Genero> listaGeneros = listaGenerosFav.stream().distinct().collect(Collectors.toList());
+		return repositorioPeliculaGeneroDao.obtenerPeliculasSegunGeneros(generos);
+	}
+
+	@Override
+	public List<Pelicula> obtenerPeliculasRecomendadasPorBoletosComprados(Usuario user) {
 		
-		return repositorioPeliculaGeneroDao.obtenerPeliculasRecomendadasSegunGeneroFavorito(listaGenerosFav);
+		List<Pelicula> peliculas = servicioBoleto.obtenerPeliculasDeFuncionesCompradasPorUsuario(user);
+		
+		List<Genero> generos = repositorioPeliculaGeneroDao.obtenerGenerosDePeliculasCompradas(peliculas);
+				
+		return repositorioPeliculaGeneroDao.obtenerPeliculasSegunGenerosDistintasDeLista(generos, peliculas);
 	}
 
 }

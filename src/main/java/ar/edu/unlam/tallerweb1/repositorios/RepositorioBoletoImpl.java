@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
+import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Repository("repositorioBoleto")
@@ -63,6 +65,24 @@ public class RepositorioBoletoImpl implements RepositorioBoleto{
 		return session.createCriteria(Boleto.class)
 				.add(Restrictions.eq("cliente", user))
 				.setProjection(Projections.distinct(Projections.property("funcion")))
+				.list();
+	}
+
+	@Override
+	public List<Pelicula> obtenerPeliculasDeFuncionesCompradasPorUsuario(Usuario user) {
+		if(obtenerFuncionesCompradasPorUsuario(user).size() == 0) {
+			return new ArrayList<Pelicula>();
+		}
+		
+		Session session = sessionFactory.getCurrentSession();
+		List<Long> funciones = session.createCriteria(Boleto.class)
+				.add(Restrictions.eq("cliente", user))
+				.setProjection(Projections.distinct(Projections.property("funcion.id")))
+				.list();
+		
+		return session.createCriteria(Funcion.class)
+				.add(Restrictions.in("id", funciones))
+				.setProjection(Projections.distinct(Projections.property("pelicula")))
 				.list();
 	}
 }

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.modelo.Favorito;
+import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioFavorito;
 
 @Service("servicioFavorito")
@@ -47,8 +49,8 @@ public class ServicioFavoritoImpl implements ServicioFavorito {
 	}
 
 	@Override
-	public List<Favorito> obtenerFavoritoPorUsuario(Long idUsuario) {
-		return repositorioFavoritoDao.obtenerFavoritoPorUsuario(idUsuario);
+	public List<Favorito> obtenerFavoritosPorUsuario(Long idUsuario) {
+		return repositorioFavoritoDao.obtenerFavoritosPorUsuario(idUsuario);
 	}
 
 	@Override
@@ -64,5 +66,10 @@ public class ServicioFavoritoImpl implements ServicioFavorito {
 			temp.setActivo(false);
 			modificarFavorito(temp);	
 		}
+	}
+
+	@Override
+	public List<Genero> obtenerGenerosFavoritosDeUsuario(Usuario usuario) {
+		return repositorioFavoritoDao.obtenerGenerosFavoritosDeUsuario(usuario);
 	}
 }

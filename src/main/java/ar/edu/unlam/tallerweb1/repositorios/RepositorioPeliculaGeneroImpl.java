@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -41,17 +42,6 @@ public class RepositorioPeliculaGeneroImpl implements RepositorioPeliculaGenero 
 	}
 
 	@Override
-	public SessionFactory getSessionFactory() {
-		return this.sessionFactory;
-	}
-
-	@Override
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-		
-	}
-
-	@Override
 	public List<PeliculaGenero> obtenerTodosLosRegistros() {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(PeliculaGenero.class).list();
@@ -59,6 +49,10 @@ public class RepositorioPeliculaGeneroImpl implements RepositorioPeliculaGenero 
 
 	@Override
 	public List<Genero> obtenerGenerosDePeliculasCompradas(List<Pelicula> listaPeliculas) {
+		if(listaPeliculas.size()==0) {
+			return new ArrayList<Genero>();
+		}
+		
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(PeliculaGenero.class)
 				.add(Restrictions.in("pelicula", listaPeliculas))
@@ -78,15 +72,34 @@ public class RepositorioPeliculaGeneroImpl implements RepositorioPeliculaGenero 
 		return (PeliculaGenero) sessionFactory.getCurrentSession().createCriteria(PeliculaGenero.class)
 				.add(Restrictions.eq("id",id))
 				.uniqueResult();
-
 	}
 	
 	@Override
-	public List<Pelicula> obtenerPeliculasRecomendadasSegunGeneroFavorito(List<Genero> listaGeneros) {
+	public List<Pelicula> obtenerPeliculasSegunGeneros(List<Genero> listaGeneros) {
+		if(listaGeneros.size()==0) {
+			return new ArrayList<Pelicula>();
+		}
+		
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(PeliculaGenero.class)
 				.add(Restrictions.in("genero", listaGeneros))
 				.setProjection(Projections.distinct(Projections.property("pelicula")))
+				.setMaxResults(5)
+				.list();
+	}
+
+	@Override
+	public List<Pelicula> obtenerPeliculasSegunGenerosDistintasDeLista(List<Genero> generos, List<Pelicula> peliculas) {
+		if(generos.size()==0) {
+			return new ArrayList<Pelicula>();
+		}
+		
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(PeliculaGenero.class)
+				.add(Restrictions.in("genero", generos))
+				.add(Restrictions.not(Restrictions.in("pelicula", peliculas)))
+				.setProjection(Projections.distinct(Projections.property("pelicula")))
+				.setMaxResults(5)
 				.list();
 	}
 

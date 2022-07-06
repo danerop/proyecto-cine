@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.ButacaFuncion;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
+import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioBoleto;
 
@@ -131,5 +132,10 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	public List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user) {
 		return repositorioBoletoDao.obtenerFuncionesCompradasPorUsuario(user);
 
+	}
+
+	@Override
+	public List<Pelicula> obtenerPeliculasDeFuncionesCompradasPorUsuario(Usuario user) {
+		return repositorioBoletoDao.obtenerPeliculasDeFuncionesCompradasPorUsuario(user);
 	}
 }
