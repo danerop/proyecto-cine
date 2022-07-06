@@ -1,7 +1,10 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
+import ar.edu.unlam.tallerweb1.modelo.Funcion;
 import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -110,6 +113,22 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 				.createAlias("suscripcion", "suscripcionBuscada")
 				.add(Restrictions.eq("suscripcionBuscada.id", idSuscripcion))
 				.uniqueResult();
+	}
+
+	@Override
+	public List<Usuario> obtenerTodosLosUsuariosActivos() {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Usuario.class)
+				.add(Restrictions.eq("activo", true))
+				.list();
+	}
+
+	@Override
+	public List<Usuario> obtenerUsuariosPorRol(String rol) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Usuario.class)
+				.add(Restrictions.eq("rol", rol))
+				.list();
 	}
 	
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.repositorios.RepositorioSala;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioSuscripcion;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioUsuario;
 
@@ -22,6 +23,11 @@ public class ServicioSuscripcionImpl implements ServicioSuscripcion {
 	
 	@Inject 
 	private RepositorioUsuario repositorioUsuarioDao;
+	
+	@Autowired
+	public ServicioSuscripcionImpl(RepositorioSuscripcion repositorioSuscripcionDao) {
+		this.repositorioSuscripcionDao = repositorioSuscripcionDao;
+	}
 	
 	@Override
 	public Long guardarSuscripcion(Suscripcion suscripcion) {
@@ -64,6 +70,13 @@ public class ServicioSuscripcionImpl implements ServicioSuscripcion {
 	@Override
 	public List<Suscripcion> obtenerTodasLasSuscripciones() {
 		return repositorioSuscripcionDao.obtenerTodasLasSuscripciones();
+	}
+
+	@Override
+	public void usarEntradaGratis(Usuario usuario) {
+		Suscripcion sustemp=obtenerSuscripcionPorId(usuario.getSuscripcion().getId());
+		sustemp.setCantidadDeBoletosGratisRestantes(sustemp.getCantidadDeBoletosGratisRestante()-1);
+		modificarSuscripcion(sustemp);
 	}
 
 }

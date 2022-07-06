@@ -15,6 +15,8 @@ public interface ServicioFuncion {
 	List<Funcion> obtenerFuncionesPorCine(Long idCine);
 	List<Funcion> obtenerFuncionesPorPelicula(Long idPelicula);
 	List<Cine> obtenerCinesDisponiblesParaFunciones(Long idPelicula);
-	Funcion obtenerFuncionesPorCineFechaHoraSalaYPelicula(Long idCine, Long idPelicula, Date fechaHora, String hora,Long idSala);
+	Funcion obtenerFuncionesPorCineFechaHoraSalaYPelicula(Long idCine, Long idPelicula, String fechaHora, String hora,Long idSala);
 	
+	List<Funcion> obtenerFuncionesFuturasDePelicula(Long idPelicula);
+	List<Cine> obtenerCinesDisponiblesParaFuncionesFuturas(Long idPelicula);
 }

@@ -1,12 +1,19 @@
 package ar.edu.unlam.tallerweb1.repositorios;
 
+import java.util.List;
+
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
+import ar.edu.unlam.tallerweb1.modelo.Genero;
+import ar.edu.unlam.tallerweb1.modelo.Pelicula;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Repository("repositorioBoleto")
 public class RepositorioBoletoImpl implements RepositorioBoleto{
@@ -44,5 +51,20 @@ public class RepositorioBoletoImpl implements RepositorioBoleto{
 		sessionFactory.getCurrentSession().update(boleto);
 		
 	}
-	
+
+	@Override
+	public List<Boleto> buscarBoletosDeUnUsuario(Long idUsuario) {
+		return sessionFactory.getCurrentSession().createCriteria(Boleto.class)
+				.add(Restrictions.eq("cliente.id",idUsuario))
+				.list();
+	}
+
+	@Override
+	public List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Boleto.class)
+				.add(Restrictions.eq("cliente", user))
+				.setProjection(Projections.distinct(Projections.property("funcion")))
+				.list();
+	}
 }

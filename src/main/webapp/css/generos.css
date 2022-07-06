@@ -1,0 +1,26 @@
+@charset "ISO-8859-1";
+
+form {
+  width: 600px;
+  margin: 0 auto;
+}
+
+div {
+  margin-bottom: 10px;
+  color: white;
+  margin-left: 10px;
+}
+
+fieldset {
+  background: #808080;
+  border: 5px solid #000000;
+}
+
+legend {
+  padding: 10px;
+  background: #000000;
+  color: white;
+}
+input {
+	padding-right: 10px;
+}

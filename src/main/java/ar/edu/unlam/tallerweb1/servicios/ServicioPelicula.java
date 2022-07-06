@@ -9,5 +9,6 @@ public interface ServicioPelicula {
 	List<Pelicula> obtenerTodosLasPeliculas();
 	Pelicula buscarPeliculaPorID(Long id);
 	void guardarPelicula(Pelicula pelicula);
+	List<Pelicula> buscarPeliculasPorNombre(String busqueda);
 	
 }

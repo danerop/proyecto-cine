@@ -17,4 +17,6 @@ public interface RepositorioPelicula {
 	void setSessionFactory(SessionFactory sessionFactory);
 
 	SessionFactory getSessionFactory();
+	
+	List<Pelicula> buscarPeliculasPorNombre(String nombre);
 }

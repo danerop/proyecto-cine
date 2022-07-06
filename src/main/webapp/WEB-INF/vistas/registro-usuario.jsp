@@ -12,7 +12,7 @@
 	<div class="container">
 
 
-		<h2 class="text-center text-white mt-5"">Bienvenidoo a CineApp</h2>
+		<h2 class="text-center text-white mt-5">Bienvenido a CineApp</h2>
 
 		<div class="container-fluid bg-image" id="loginbox">
 			<div class="container my-5 p-4 col-12 col-md-6 col-lg-4"

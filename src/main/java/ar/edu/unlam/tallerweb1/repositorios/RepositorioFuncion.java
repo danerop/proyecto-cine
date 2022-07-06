@@ -6,6 +6,7 @@ import java.util.List;
 
 import ar.edu.unlam.tallerweb1.modelo.Cine;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
+import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 
 public interface RepositorioFuncion {
 	
@@ -20,8 +21,8 @@ public interface RepositorioFuncion {
 	Funcion obtenerFuncionesPorCineFechaHoraSalaYPelicula(Long idCine, Long idPelicula, Date fechaHora, String hora, Long idSala);
 	
 	List<Funcion> obtenerFuncionesUnicasPorFecha(Long idPelicula);
-
 	
-	
+	List<Funcion> obtenerFuncionesFuturasDePelicula(Long idPelicula);
+	List<Cine> obtenerCinesDisponiblesParaFuncionesFuturas(Long idPelicula);
 
 }

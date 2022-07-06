@@ -39,6 +39,7 @@ public class ControladorSuscripcion {
 		
 		ModelMap model = new ModelMap();
 		
+		model.addAttribute(new DatosBuscar());
 		model.put("listaDeDetallesSuscripciones", servicioDetalleSuscripcion.obtenerTodasLasSuscripciones());
 
 		return new ModelAndView("suscripcion", model);
@@ -60,7 +61,7 @@ public class ControladorSuscripcion {
 				model.put("d", idDetalleSuscripcion);
 				model.put("servicioElegido", servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(idDetalleSuscripcion));
 
-				return new ModelAndView("pago-suscripcion", model);
+				return new ModelAndView("suscripcion-pago", model);
 		}
 			return new ModelAndView("redirect:/login", model);
 	}
@@ -74,7 +75,7 @@ public class ControladorSuscripcion {
 				Suscripcion s = usuarioSesion.getSuscripcion();
 				DetalleSuscripcion ds = servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(datosSuscripcion.getIdDetalleSuscripcion());
 				
-				s.setCantidadDeBoletosUsados(ds.getCantidadBoletosGratis());
+				s.setCantidadDeBoletosGratisRestantes(ds.getCantidadBoletosGratis());
 				s.setDetalleSuscripcion(ds);
 				servicioSuscripcion.modificarSuscripcion(s);
 				
@@ -82,6 +83,30 @@ public class ControladorSuscripcion {
 				model.put("datosSuscripcion", datosSuscripcion);
 				model.put("usuarioSuscripto", usuarioSesion);
 
-				return new ModelAndView("validar-suscripcion", model);
-	}				
+				return new ModelAndView("suscripcion-validar", model);
+	}
+	
+	public ServicioSuscripcion getServicioSuscripcion() {
+		return servicioSuscripcion;
+	}
+
+	public void setServicioSuscripcion(ServicioSuscripcion servicioSuscripcion) {
+		this.servicioSuscripcion = servicioSuscripcion;
+	}
+	
+	public ServicioDetalleSuscripcion getServicioDetalleSuscripcion() {
+		return servicioDetalleSuscripcion;
+	}
+
+	public void setServicioDetalleSuscripcion(ServicioDetalleSuscripcion servicioDetalleSuscripcion) {
+		this.servicioDetalleSuscripcion = servicioDetalleSuscripcion;
+	}
+	
+	public ServicioLogin getServicioUsuario() {
+		return servicioUsuario;
+	}
+
+	public void setServicioLogin(ServicioLogin servicioUsuario) {
+		this.servicioUsuario = servicioUsuario;
+	}
 }

@@ -3,6 +3,8 @@ package ar.edu.unlam.tallerweb1.repositorios;
 import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 
 // Interface que define los metodos del Repositorio de Usuarios.
@@ -20,4 +22,7 @@ public interface RepositorioUsuario {
 	Usuario buscarUsuarioPorSuscripcionID(Long idSuscripcion);
 	void setSessionFactory(SessionFactory sessionFactory);
 	SessionFactory getSessionFactory();
+	List<Usuario> obtenerTodosLosUsuariosActivos();
+	
+	List<Usuario> obtenerUsuariosPorRol(String rol);
 }

@@ -16,6 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionBoletoInvalido;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionBoletoYaUsado;
+import ar.edu.unlam.tallerweb1.servicios.ExceptionFechaDistinta;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBoleto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
@@ -27,24 +30,12 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioSala;
 @Controller
 public class ControladorRecepcionista {
 
-	private ServicioFuncion servicioFuncion;
 	private ServicioBoleto servicioBoleto;
-	private ServicioLogin servicioUsuario;
-	private ServicioPelicula servicioPelicula;
-	private ServicioSala servicioSala;
-	private ServicioButaca servicioButaca;
 	private ServicioRecepcionista servicioRecepcionista;
 
 	@Autowired
-	public ControladorRecepcionista(ServicioFuncion servicioFuncion, ServicioBoleto servicioBoleto,
-			ServicioLogin servicioUsuario, ServicioPelicula servicioPelicula, ServicioSala servicioSala,
-			ServicioButaca servicioButaca, ServicioRecepcionista servicioRecepcionista) {
-		this.servicioFuncion = servicioFuncion;
+	public ControladorRecepcionista(ServicioBoleto servicioBoleto, ServicioRecepcionista servicioRecepcionista) {
 		this.servicioBoleto = servicioBoleto;
-		this.servicioUsuario = servicioUsuario;
-		this.servicioPelicula = servicioPelicula;
-		this.servicioSala = servicioSala;
-		this.servicioButaca = servicioButaca;
 		this.servicioRecepcionista= servicioRecepcionista;
 	}
 	
@@ -53,57 +44,89 @@ public class ControladorRecepcionista {
 		Usuario temp=(Usuario) request.getSession().getAttribute("usuario");
 		if (request.getSession().getAttribute("usuario") != null && temp.getRol().equals("recepcionista") ) {
 			ModelMap modelo = new ModelMap();
-			return new ModelAndView("inicio-recepcionista", modelo);
+			return new ModelAndView("recepcionista", modelo);
 		}
 		return new ModelAndView("redirect:/inicio");
 
 	}
-	@RequestMapping(path = "/validar-boleto", method = RequestMethod.POST)
-	public ModelAndView validarBoleto(@RequestParam(value = "b") Long idBoleto) {
+	@RequestMapping(path = "/validar-boleto", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView validarBoleto(@RequestParam(value = "b") Long idBoleto,
+			HttpServletRequest request) {
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (user == null || !user.getRol().equals("recepcionista") ) {
+			return new ModelAndView("redirect:/inicio");
+		}
 		ModelMap modelo = new ModelMap();
 		modelo.put("b", idBoleto);
 		Boleto boleto=servicioBoleto.buscarBoleto(idBoleto);
 		modelo.put("boletoGenerado", null);
-		if (boleto!=null) {
-        	modelo.put("fechadistinta", false);
-			if (!boleto.getUsado()) {
-				modelo.put("boletoGenerado", boleto);
-				if (servicioRecepcionista.validarFechaBoleto(boleto)) {
-					return new ModelAndView("validarboleto-recepcionista", modelo);
-		        }
-		        else {
-		        	modelo.put("msg", "La entrada no es para la fecha actual");
-		        	modelo.put("fechadistinta", true);
-					return new ModelAndView("validarboleto-recepcionista", modelo);
-				}
-			} else {
-	        	modelo.put("msg", "La entrada ya fue usada");
-	        	modelo.put("fueusado", true);
-	        	return new ModelAndView("validarboleto-recepcionista", modelo);
-			}
+		try {
+			servicioRecepcionista.ConsultarBoletoValido(boleto);
+		} catch (ExceptionBoletoInvalido e) {
+			modelo.put("msg", "La entrada no existe");
+			return new ModelAndView("recepcionista-validarboleto", modelo);
+		} catch (ExceptionFechaDistinta e) {
+        	modelo.put("msg", "La entrada no es para la fecha actual");
+        	modelo.put("fechadistinta", true);
+			return new ModelAndView("recepcionista-validarboleto", modelo);
+		} catch (ExceptionBoletoYaUsado e) {
+        	modelo.put("msg", "La entrada ya fue usada");
+        	modelo.put("fueusado", true);
+        	return new ModelAndView("recepcionista-validarboleto", modelo);
 		}
-		modelo.put("msg", "La entrada no existe");
-		return new ModelAndView("validarboleto-recepcionista", modelo);
+		modelo.put("boletoGenerado", boleto);
+		return new ModelAndView("recepcionista-validarboleto", modelo);
+		
+//		if (boleto!=null) {
+//        	modelo.put("fechadistinta", false);
+//			if (!boleto.getUsado()) {
+//				modelo.put("boletoGenerado", boleto);
+//				if (servicioRecepcionista.validarFechaBoleto(boleto)) {
+//					return new ModelAndView("recepcionista-validarboleto", modelo);
+//		        }
+//		        else {
+//		        	modelo.put("msg", "La entrada no es para la fecha actual");
+//		        	modelo.put("fechadistinta", true);
+//					return new ModelAndView("recepcionista-validarboleto", modelo);
+//				}
+//			} else {
+//	        	modelo.put("msg", "La entrada ya fue usada");
+//	        	modelo.put("fueusado", true);
+//	        	return new ModelAndView("recepcionista-validarboleto", modelo);
+//			}
+//		}
+//		modelo.put("msg", "La entrada no existe");
+//		return new ModelAndView("recepcionista-validarboleto", modelo);
 	}
 	
 	@RequestMapping(path = "/registrar-asistencia-boleto", method = RequestMethod.GET)
-	public ModelAndView registrarAsistenciaBoleto(@RequestParam(value = "b") Long idBoleto) {
+	public ModelAndView registrarAsistenciaBoleto(@RequestParam(value = "b") Long idBoleto, HttpServletRequest request) {
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (user == null || !user.getRol().equals("recepcionista") ) {
+			return new ModelAndView("redirect:/inicio");
+		}
+		
 		ModelMap modelo = new ModelMap();
 		modelo.put("b", idBoleto);
 		Boleto boleto=servicioBoleto.buscarBoleto(idBoleto);
 		if (boleto!=null && boleto.getUsado()==false) {
 			servicioBoleto.registrarAsistenciaBoleto(boleto);
-			return new ModelAndView("redirect:boleto-validado", modelo);
+			return new ModelAndView("redirect:/boleto-validado", modelo);
 		}
-		return new ModelAndView("redirect:iniciorecepcionista");
+		return new ModelAndView("redirect:/iniciorecepcionista");
 	}
 	
 	@RequestMapping(path = "/boleto-validado", method = RequestMethod.GET)
-	public ModelAndView irABoletoValidado(@RequestParam(value = "b") Long idBoleto) {
+	public ModelAndView irABoletoValidado(@RequestParam(value = "b") Long idBoleto, HttpServletRequest request) {
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (user == null || !user.getRol().equals("recepcionista") ) {
+			return new ModelAndView("redirect:/inicio");
+		}
+		
 		ModelMap modelo = new ModelMap();
 		Boleto boleto=servicioBoleto.buscarBoleto(idBoleto);
 		modelo.put("boletoGenerado", boleto);
-		return new ModelAndView("boletovalidado-recepcionista", modelo);
+		return new ModelAndView("recepcionista-boletovalidado", modelo);
 	}
 	
 }

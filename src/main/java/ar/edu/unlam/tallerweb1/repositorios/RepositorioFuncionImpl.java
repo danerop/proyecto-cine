@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Cine;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
+import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 
 @Repository("RepositorioFuncion")
 public class RepositorioFuncionImpl implements RepositorioFuncion {
@@ -66,7 +67,7 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Funcion.class)
 		.add(Restrictions.eq("pelicula.id", idPelicula))
-		.add(Restrictions.ne("entradasDisponibles", 0))
+//		.add(Restrictions.ne("entradasDisponibles", 0))
 		.list();
 	}
 
@@ -75,7 +76,7 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Funcion.class)
 		.add(Restrictions.eq("pelicula.id", idPelicula))
-		.add(Restrictions.ne("entradasDisponibles", 0))
+//		.add(Restrictions.ne("entradasDisponibles", 0))
 		.setProjection(Projections.distinct(Projections.property("cine")))
 		.list();
 	}
@@ -90,12 +91,11 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		.add(Restrictions.eq("sala.id", idSala))
 		.add(Restrictions.eq("fechaHora", fechaHora))
 		.add(Restrictions.eq("hora", hora))
-		.add(Restrictions.ne("entradasDisponibles", 0))
+//		.add(Restrictions.ne("entradasDisponibles", 0))
 		.uniqueResult();
 	}
 
 	@Override
-
 	public List<Funcion> obtenerFuncionesUnicasPorFecha(Long idPelicula) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Funcion.class)
@@ -103,12 +103,24 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		.add(Restrictions.ne("entradasDisponibles", 0l))
 		.setProjection(Projections.distinct(Projections.property("fechaHora")))
 		.list();
-	}	
-
+	}
 	
-
-
-
-
-
+	@Override
+	public List<Funcion> obtenerFuncionesFuturasDePelicula(Long idPelicula){
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Funcion.class)
+				.add(Restrictions.eq("pelicula.id", idPelicula))
+				.add(Restrictions.ge("fechaHora", new Date(System.currentTimeMillis())))
+				.list();
+	}
+	@Override
+	public List<Cine> obtenerCinesDisponiblesParaFuncionesFuturas(Long idPelicula) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Funcion.class)
+		.add(Restrictions.eq("pelicula.id", idPelicula))
+		.add(Restrictions.ge("fechaHora", new Date(System.currentTimeMillis())))
+		.add(Restrictions.gt("entradasDisponibles", 0))
+		.setProjection(Projections.distinct(Projections.property("cine")))
+		.list();
+	}
 }
