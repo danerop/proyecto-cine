@@ -12,8 +12,9 @@ public interface RepositorioBoleto {
 	void guardarBoleto(Boleto boleto);
     Boleto buscarBoleto(Long id);
     Boleto buscarBoletUnicoPorDatos(Long idcliente, Long idfuncion, Long idbutaca);
-    public void actualizarBoleto(Boleto boleto);
-    public List<Boleto> buscarBoletosDeUnUsuario(Long idUsuario);
+    void actualizarBoleto(Boleto boleto);
+    List<Boleto> buscarBoletosDeUnUsuario(Long idUsuario);
 	List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user);
 	List<Pelicula> obtenerPeliculasDeFuncionesCompradasPorUsuario(Usuario user);
+	Long obtenerCantidadUsuariosQueVieronLaPelicula(Pelicula pelicula);
 }

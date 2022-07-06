@@ -106,6 +106,7 @@ public class ControladorHome {
 		model.put("listaCines", listaCines);
 		model.put("listaFuncion", listaFuncion);
 		model.put("pelicula", pelicula);
+		model.put("usuarioQueLaVieron", servicioBoleto.obtenerCantidadUsuariosQueVieronLaPelicula(pelicula));
 		model.addAttribute(new DatosBuscar());
 		
 		if (user != null) {

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.TransientObjectException;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,4 +86,23 @@ public class RepositorioBoletoImpl implements RepositorioBoleto{
 				.setProjection(Projections.distinct(Projections.property("pelicula")))
 				.list();
 	}
+
+	@Override
+	public Long obtenerCantidadUsuariosQueVieronLaPelicula(Pelicula pelicula) {
+		Session session = sessionFactory.getCurrentSession();
+		List<Funcion> funciones = session.createCriteria(Funcion.class)
+				.add(Restrictions.eq("pelicula", pelicula))
+				.list();
+		
+		List<Long> usuarios =  session.createCriteria(Boleto.class)
+				.add(Restrictions.in("funcion", funciones))
+				.setProjection(Projections.distinct(Projections.property("cliente.id")))
+				.list();
+		
+		return (Long) session.createCriteria(Usuario.class)
+				.add(Restrictions.in("id", usuarios))
+				.setProjection(Projections.rowCount())
+				.uniqueResult();
+	}
+
 }

@@ -18,5 +18,6 @@ public interface ServicioBoleto {
 
 	public List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user);
 	public List<Pelicula> obtenerPeliculasDeFuncionesCompradasPorUsuario(Usuario user);
+	public Long obtenerCantidadUsuariosQueVieronLaPelicula(Pelicula pelicula);
 
 }

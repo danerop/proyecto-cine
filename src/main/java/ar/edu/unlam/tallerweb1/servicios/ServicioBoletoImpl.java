@@ -19,6 +19,7 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioBoleto;
 @Service("servicioBoleto")
 @Transactional
 public class ServicioBoletoImpl implements ServicioBoleto{
+	
 	private RepositorioBoleto repositorioBoletoDao;
 	private ServicioButacaFuncion servicioButacaFuncion;
 	
@@ -137,5 +138,18 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	@Override
 	public List<Pelicula> obtenerPeliculasDeFuncionesCompradasPorUsuario(Usuario user) {
 		return repositorioBoletoDao.obtenerPeliculasDeFuncionesCompradasPorUsuario(user);
+	}
+
+	@Override
+	public Long obtenerCantidadUsuariosQueVieronLaPelicula(Pelicula pelicula) {
+		Long cant = 0l;
+		
+		try {
+			cant = repositorioBoletoDao.obtenerCantidadUsuariosQueVieronLaPelicula(pelicula);
+		}catch(Exception e) {
+			return 0l;
+		}
+		
+		return cant;
 	}
 }
