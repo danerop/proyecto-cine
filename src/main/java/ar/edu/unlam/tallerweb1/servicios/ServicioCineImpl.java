@@ -29,9 +29,9 @@ public class ServicioCineImpl implements ServicioCine{
 		}
 		return cine;
 	}
-
+	
 	@Override
-	public void guardarCine(Cine cine){
+	public void validarCine(Cine cine) {
 		String msg = "";
 		
 		if(cine.getNombreLocal()=="") {
@@ -50,6 +50,18 @@ public class ServicioCineImpl implements ServicioCine{
 		if(msg != "") {
 			throw new ExceptionCineCamposVacios(msg);
 		}
+	}
+
+	@Override
+	public void actualizarCine(Cine datosCine) {
+		validarCine(datosCine);
+		
+		repositorioCineDao.actualizarCine(datosCine);
+	}
+	
+	@Override
+	public void guardarCine(Cine cine){
+		validarCine(cine);
 		
 		repositorioCineDao.guardarCine(cine);
 	}

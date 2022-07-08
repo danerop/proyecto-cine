@@ -12,4 +12,5 @@ public interface ServicioDetalleSuscripcion {
 	DetalleSuscripcion obtenerDetalleSuscripcionPorId(Long id);
 	List<DetalleSuscripcion> obtenerTodasLasSuscripciones();
 	
+	void validarDetalleSuscripcion (DetalleSuscripcion detalleSuscripcion);
 }

@@ -64,98 +64,52 @@
 
 	<br>
 
+	<c:if test="${not empty msgExito}">
+		<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
+	</c:if>
+
+
 	<div class="container">
-		<h4 class="text-white">
-			Lista de Películas
-			</h5>
-			<div class="row">
-				<div class="col-4">
-					<!-- Acá estará la lista de los elementos registrados -->
-					<div class="list-group" id="list-tab" role="tablist">
-						<c:forEach items="${listaPeliculas}" var="pelicula">
-							<a class="list-group-item list-group-item-action"
-								data-toggle="list" href="#list-peliculas${pelicula.getId()}"
-								role="tab">${pelicula.getNombre()} (${pelicula.getAnio()})</a>
-						</c:forEach>
-					</div>
-				</div>
-				<div class="col-8">
-					<!-- Acá va a aparecer el detalle -->
-					<div class="tab-content">
-						<c:forEach items="${listaPeliculas}" var="pelicula">
-							<div class="tab-pane fade p-3 mb-2 bg-white rounded"
-								id="list-peliculas${pelicula.getId()}" role="tabpanel">
-								<div class="row">
-									<div class="col-8">
-										<span style="font-size: small; font-weight: lighter;">id:${pelicula.getId()}</span>
-										<span style="font-size: large; font-weight: bold;">${pelicula.getNombre()}</span>
-										<br>
-										<p>
-											año: ${pelicula.getAnio()} <br> Duración:
-											${pelicula.getDuracion()} min <br> Descripción:
-											${pelicula.getDescripcion()} <br>
-										</p>
-									</div>
-									<div class="col-4">
-										<img class="img-fluid"
-											src="${pelicula.getUrlImagenPelicula()}"
-											alt="imagen de pelicula">
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
+		<div class="">
+			<span class="text-white">Lista de Peliculas</span>
+			<a class="" href="form-pelicula-nueva">Agregar</a>
+		</div>
+		<div class="row">
+			<div class="col-4">
+				<!-- Acá estará la lista de los elementos registrados -->
+				<div class="list-group" id="list-tab" role="tablist">
+					<c:forEach items="${listaPeliculas}" var="pelicula">
+						<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-peliculas${pelicula.getId()}" role="tab">${pelicula.getNombre()} (${pelicula.getAnio()})</a>
+					</c:forEach>
 				</div>
 			</div>
-	</div>
-
-	<br>
-
-	<div class="container formularios bg-light rounded"
-		style="margin-bottom: 25px;">
-
-		<div class="formulario-cargar-pelicula" style="padding: 1rem;">
-
-			<c:if test="${not empty msgExito}">
-				<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
-			</c:if>
-
-			<form:form action="agregar-pelicula" method="POST"
-				modelAttribute="datosPelicula">
-				<h4>Formulario Para Crear Pelicula</h4>
-				<hr class="colorgraph">
-				<br>
-
-				<form:label path="nombre">Nombre:</form:label>
-				<form:input path="nombre" id="nombre" type="nombre"
-					class="form-control" />
-				<br>
-				<form:label path="anio">Año:</form:label>
-				<form:input path="anio" id="anio" type="anio" class="form-control" />
-				<br>
-				<form:label path="descripcion">Descripción:</form:label>
-				<form:input path="descripcion" id="descripcion" type="descripcion"
-					class="form-control" />
-				<br>
-				<form:label path="duracion">Duración:</form:label>
-				<form:input path="duracion" id="duracion" type="duracion"
-					class="form-control" />
-				<br>
-				<form:label path="urlImagenPelicula">Url de la portada:</form:label>
-				<form:input path="urlImagenPelicula" type="urlImagenPelicula"
-					id="urlImagenPelicula" class="form-control" />
-				<br>
-
-				<c:if test="${not empty msgError}">
-					<h5 class="p-3 mb-2 bg-danger text-white">${msgError}</h5>
-				</c:if>
-
-				<button class="btn btn-lg btn-primary btn-block" Type="Submit" />Cargar Pelicula</button>
-			</form:form>
+			<div class="col-8">
+				<!-- Acá va a aparecer el detalle -->
+				<div class="tab-content">
+					<c:forEach items="${listaPeliculas}" var="pelicula">
+						<div class="tab-pane fade p-3 mb-2 bg-white rounded" id="list-peliculas${pelicula.getId()}" role="tabpanel">
+							<div class="row">
+								<div class="col-8">
+									<span style="font-size: small; font-weight: lighter;">id:${pelicula.getId()}</span>
+									<span style="font-size: large; font-weight: bold;">${pelicula.getNombre()}</span>
+									<br>
+									<p>
+										año: ${pelicula.getAnio()} <br>
+										Duración: ${pelicula.getDuracion()} min <br>
+										Descripción: ${pelicula.getDescripcion()} <br>
+									</p>
+								</div>
+								<div class="col-4">
+									<a class="" href="editar-pelicula-vieja?id=${pelicula.getId()}">Editar</a>
+									<img class="img-fluid" src="${pelicula.getUrlImagenPelicula()}" alt="imagen de pelicula">
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
 		</div>
-
 	</div>
-
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"

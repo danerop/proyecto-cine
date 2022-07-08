@@ -28,18 +28,9 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav w-100 d-flex justify-content-evenly">
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="admin">Inicio Administración</a></li>
-						<li class="nav-item"><a class="nav-link" href="suscripcion">Suscripciones</a>
-						</li>
-						<li class="nav-item"><a class="nav-link" href="cerrarSesion">Iniciar
-								Session</a></li>
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="admin">Inicio Administración</a></li>
+						<li class="nav-item"><a class="nav-link" href="cerrarSesion">Cerrar Session</a></li>
 					</ul>
-					<form class="d-flex">
-						<input class="form-control me-2" type="search"
-							placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">Search</button>
-					</form>
 				</div>
 			</div>
 		</nav>
@@ -63,50 +54,42 @@
   </div>
 
 	<br>
+	
+	<div class="container formularios bg-light rounded" style="margin-bottom: 25px;">
 
-	<div class="container">
-		<div class="">
-			<span class="text-white">Lista de Suscripciones</span>
-			<a class="" href="form-suscripcion-nueva">Agregar</a>
+		<div class="formulario-cargar-pelicula" style="padding: 1rem;">
+
+			<form:form action="${elementoNuevo == true ? 'registrar-pelicula-nueva' : 'actualizar-pelicula-vieja?id='.concat(datosPelicula.getId())}" method="POST" modelAttribute="datosPelicula">
+				<h4>Formulario Para Crear Pelicula</h4>
+				<hr class="colorgraph">
+				<br>
+
+				<form:label path="nombre">Nombre:</form:label>
+				<form:input path="nombre" id="nombre" type="nombre" class="form-control" />
+				<br>
+				<form:label path="anio">Año:</form:label>
+				<form:input path="anio" id="anio" type="anio" class="form-control" />
+				<br>
+				<form:label path="descripcion">Descripción:</form:label>
+				<form:input path="descripcion" id="descripcion" type="descripcion" class="form-control" />
+				<br>
+				<form:label path="duracion">Duración:</form:label>
+				<form:input path="duracion" id="duracion" type="duracion" class="form-control" />
+				<br>
+				<form:label path="urlImagenPelicula">Url de la portada:</form:label>
+				<form:input path="urlImagenPelicula" type="urlImagenPelicula" id="urlImagenPelicula" class="form-control" />
+				<br>
+
+				<c:if test="${not empty msgError}">
+					<h5 class="p-3 mb-2 bg-danger text-white">${msgError}</h5>
+				</c:if>
+
+				<button class="btn btn-lg btn-primary btn-block" Type="Submit">Enviar</button>
+			</form:form>
 		</div>
-		<div class="row">
-			<div class="col-4">
-				<!-- Acá estará la lista de los elementos registrados -->
-				<div class="list-group" id="list-tab" role="tablist">
-					<c:forEach items="${listaDetalleSuscripciones}" var="suscripcion">
-						<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-suscripcion${suscripcion.getId()}" role="tab">${suscripcion.getTipo()}</a>
-					</c:forEach>
-				</div>
-			</div>
-			<div class="col-8">
-				<!-- Acá va a aparecer el detalle -->
-				<div class="tab-content">
-					<c:forEach items="${listaDetalleSuscripciones}" var="suscripcion">
-						<div class="tab-pane fade p-3 mb-2 bg-white rounded" id="list-suscripcion${suscripcion.getId()}" role="tabpanel">
-							<div class="row">
-								<div class="col-8">
-									<span style="font-size: small; font-weight: lighter;">id:${suscripcion.getId()}</span>
-									<span style="font-size: large; font-weight: bold;">${suscripcion.getTipo()}</span>
-									<br>
-									<p>
-										Descuento: ${suscripcion.getDescuentoEnBoletos()} <br>
-										Cantidad de Boletos Gratis: ${suscripcion.getCantidadBoletosGratis()} <br>
-										Cuota: ${suscripcion.getCuota()} <br>
-									</p>
-								</div>
-								<div class="col-4">
-									<a class="" href="editar-suscripcion-vieja?id=${suscripcion.getId()}">Editar</a>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</div>
-			</div>
-		</div>
+
 	</div>
-
-
-
+	
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
 		integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
@@ -118,13 +101,6 @@
 		integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
 		crossorigin="anonymous">
 		
-	</script>
-	<script src="js/jquery.min.js"></script>
-	<script>
-		$('#list-tab a').on('click', function(e) {
-			e.preventDefault()
-			$(this).tab('show')
-		})
 	</script>
 </body>
 

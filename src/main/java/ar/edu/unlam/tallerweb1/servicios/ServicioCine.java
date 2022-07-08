@@ -8,6 +8,8 @@ public interface ServicioCine {
 	
 	List<Cine> obtenerTodosLosCines();
 	Cine buscarCinePorID(Long id);
-	void guardarCine(Cine cine) throws ExceptionCineCamposVacios;
+	void validarCine(Cine cine);
+	void guardarCine(Cine cine);
+	void actualizarCine(Cine datosCine);
 
 }

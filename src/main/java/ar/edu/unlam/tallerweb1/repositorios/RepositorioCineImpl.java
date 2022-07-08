@@ -37,6 +37,11 @@ public class RepositorioCineImpl implements RepositorioCine {
 	public void guardarCine(Cine cine) {
 		sessionFactory.getCurrentSession().save(cine);
 	}
+
+	@Override
+	public void actualizarCine(Cine datosCine) {
+		sessionFactory.getCurrentSession().update(datosCine);
+	}
 	
 	
 }
