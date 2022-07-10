@@ -38,4 +38,9 @@ public class RepositorioSalaImpl implements RepositorioSala{
 		sessionFactory.getCurrentSession().save(sala);
 	}
 
+	@Override
+	public void actualizarSala(Sala sala) {
+		sessionFactory.getCurrentSession().update(sala);
+	}
+
 }

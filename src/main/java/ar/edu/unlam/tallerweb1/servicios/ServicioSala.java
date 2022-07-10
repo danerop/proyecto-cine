@@ -8,5 +8,5 @@ public interface ServicioSala {
 	List<Sala> obtenerTodasLasSalas();
 	Sala buscarSalaPorId(Long id);
 	void guardarSala(Sala sala);
-	
+	void actualizarSala(Sala sala);
 }

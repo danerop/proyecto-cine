@@ -64,16 +64,16 @@
 
 	<br>
 
-	<c:if test="${not empty msgExito}">
-		<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
-	</c:if>
-
-
 	<div class="container">
+		<c:if test="${not empty msgExito}">
+			<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
+		</c:if>
+		
 		<div class="">
 			<span class="text-white">Lista de Peliculas</span>
 			<a class="" href="form-pelicula-nueva">Agregar</a>
 		</div>
+		
 		<div class="row">
 			<div class="col-4">
 				<!-- Acá estará la lista de los elementos registrados -->

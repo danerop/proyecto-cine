@@ -64,11 +64,11 @@
 
 	<br>
 
-	<c:if test="${not empty msgExito}">
-		<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
-	</c:if>
-
 	<div class="container">
+		<c:if test="${not empty msgExito}">
+			<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
+		</c:if>
+		
 		<div class="">
 			<span class="text-white">Lista de Cines</span>
 			<a class="" href="form-cine-nuevo">Agregar</a>

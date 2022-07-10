@@ -41,6 +41,9 @@ public class RepositorioButacaImpl implements RepositorioButaca{
 				.uniqueResult();
 	}
 
-
+	@Override
+	public void borrarButaca(Butaca bb) {
+		sessionFactory.getCurrentSession().delete(bb);
+	}
 	
 }

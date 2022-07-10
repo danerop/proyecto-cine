@@ -6,7 +6,7 @@ public class DatosSala {
 	private Long id;
 	private Integer tipo;
 	private Long idCine;
-	private List<Integer>butacas;
+	private List<Integer> butacas;
 	
 	public Long getId() {
 		return id;

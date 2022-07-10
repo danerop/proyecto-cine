@@ -8,4 +8,5 @@ public interface RepositorioButaca {
 	List<Butaca> obtenerButacasPorSala(Long idSala);
 	void guardarButaca(Butaca butaca);
 	Butaca obtenerButaca(Long idButaca);
+	void borrarButaca(Butaca bb);
 }

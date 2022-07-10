@@ -12,5 +12,7 @@ public interface ServicioButaca {
 	void guardarButacas(List<Integer> ubicaciones, Sala sala);
 	Butaca obtenerButaca(Long idSala);
 	Integer cantidadDeButacasEnSala(Long idSala);
+	List<Integer> obtenerIntegersButacasPorSala(Sala salaAEditar);
+	void actualizarButacas(List<Integer> butacas, Sala nuevaSala);
 	
 }
