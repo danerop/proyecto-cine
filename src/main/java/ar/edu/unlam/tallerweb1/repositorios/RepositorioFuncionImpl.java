@@ -122,4 +122,9 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		.list();
 	}
 
+	@Override
+	public void actualizarFuncion(Funcion funcion) {
+		sessionFactory.getCurrentSession().update(funcion);
+	}
+
 }

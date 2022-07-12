@@ -65,128 +65,54 @@
 	<br>
 
 	<div class="container">
-		<h4 class="text-white">
-			Lista de Funciones
-			</h5>
-			<div class="row">
-				<div class="col-4">
-					<!-- Acá estará la lista de los elementos registrados -->
-					<div class="list-group" id="list-tab" role="tablist">
-						<c:forEach items="${listaFunciones}" var="funcion">
-							<a class="list-group-item list-group-item-action"
-								data-toggle="list" href="#list-funcion${funcion.getId()}"
-								role="tab">${funcion.getCine().getNombreLocal()} -
-								${funcion.getPelicula().getNombre()}</a>
-						</c:forEach>
-					</div>
-				</div>
-				<div class="col-8">
-					<!-- Acá va a aparecer el detalle -->
-					<div class="tab-content">
-						<c:forEach items="${listaFunciones}" var="funcion">
-							<div class="tab-pane fade p-3 mb-2 bg-white rounded"
-								id="list-funcion${funcion.getId()}" role="tabpanel">
-								<div class="row">
-									<div class="col-8">
-										<span style="font-size: small; font-weight: lighter;">id:${funcion.getId()}</span>
-										<span style="font-size: large; font-weight: bold;">${funcion.getCine().getNombreLocal()}</span>
-										<br>
-										<p>
-											Cine: ${funcion.getCine().getNombreLocal()} <br>
-											Pelicula: ${funcion.getPelicula().getNombre()} <br> Día:
-											${funcion.getFechaHora()} <br> Hora:
-											${funcion.getHora()} <br> Precio Adulto:
-											${funcion.getPrecioMayor()} <br> Precio Menor:
-											${funcion.getPrecioMenor()} <br>
-										</p>
-									</div>
-									<div class="col-4">
-										<img class="img-fluid"
-											src="${funcion.getPelicula().getUrlImagenPelicula()}"
-											alt="imagen de pelicula">
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
+		<c:if test="${not empty msgExito}">
+			<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
+		</c:if>
+		
+		<div class="">
+			<span class="text-white">Lista de Funciones</span>
+			<a class="" href="form-funcion-nueva">Agregar</a>
+		</div>
+		
+		<div class="row">
+			<div class="col-4">
+				<!-- Acá estará la lista de los elementos registrados -->
+				<div class="list-group" id="list-tab" role="tablist">
+					<c:forEach items="${listaFunciones}" var="funcion">
+						<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-funcion${funcion.getId()}" role="tab">${funcion.getCine().getNombreLocal()} - ${funcion.getPelicula().getNombre()}</a>
+					</c:forEach>
 				</div>
 			</div>
-	</div>
-
-	<br>
-
-	<div class="container formularios bg-light rounded"
-		style="margin-bottom: 25px;">
-
-		<div class="formulario-cargar-funcion" style="padding: 1rem;">
-
-			<c:if test="${not empty msgExito}">
-				<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
-			</c:if>
-
-			<form:form action="agregar-funcion" method="POST"
-				modelAttribute="datosFuncion">
-				<h4>Formulario Para Crear Funcion</h4>
-				<hr class="colorgraph">
-				<br>
-
-				<form:label path="idCine">Seleccione el cine:</form:label>
-				<form:select path="idCine" class="form-control">
-					<c:forEach items="${listaCines}" var="cine">
-						<form:option value="${cine.getId()}"
-							label="id: ${cine.getId()} -nombre: ${cine.getNombreLocal()}" />
+			<div class="col-8">
+				<!-- Acá va a aparecer el detalle -->
+				<div class="tab-content">
+					<c:forEach items="${listaFunciones}" var="funcion">
+						<div class="tab-pane fade p-3 mb-2 bg-white rounded" id="list-funcion${funcion.getId()}" role="tabpanel">
+							<div class="row">
+								<div class="col-8">
+									<span style="font-size: small; font-weight: lighter;">id:${funcion.getId()}</span>
+									<span style="font-size: large; font-weight: bold;">${funcion.getCine().getNombreLocal()}</span>
+									<br>
+									<p>
+										Cine: ${funcion.getCine().getNombreLocal()} <br>
+										Pelicula: ${funcion.getPelicula().getNombre()} <br>
+										Día: ${funcion.getFechaHora()} <br>
+										Hora: ${funcion.getHora()} <br>
+										Precio Adulto: ${funcion.getPrecioMayor()} <br>
+										Precio Menor: ${funcion.getPrecioMenor()} <br>
+									</p>
+								</div>
+								<div class="col-4">
+									<a class="" href="editar-funcion-vieja?id=${funcion.getId()}">Editar</a>
+									<img class="img-fluid" src="${funcion.getPelicula().getUrlImagenPelicula()}" alt="imagen de pelicula">
+								</div>
+							</div>
+						</div>
 					</c:forEach>
-				</form:select>
-				<br>
-
-				<form:label path="idSala">Seleccione la sala:</form:label>
-				<form:select path="idSala" class="form-control">
-					<c:forEach items="${listaSalas}" var="sala">
-						<form:option value="${sala.getId()}"
-							label="id: ${sala.getId()} -tipo de sala: ${sala.getTipo()} -de cine: ${sala.getCine().getNombreLocal()}" />
-					</c:forEach>
-				</form:select>
-				<br>
-
-				<form:label path="idPelicula">Seleccione la pelicula:</form:label>
-				<form:select path="idPelicula" class="form-control">
-					<c:forEach items="${listaPeliculas}" var="pelicula">
-						<form:option value="${pelicula.getId()}"
-							label="id: ${pelicula.getId()} -nombre: ${pelicula.getNombre()}" />
-					</c:forEach>
-				</form:select>
-				<br>
-
-				<form:label path="fechaHora">Introducir fecha:</form:label>
-				<form:input path="fechaHora" type="date" id="start"
-					name="trip-start" />
-				<br>
-				<br>
-
-				<form:label path="hora">Horario (Formato hora:minutos):</form:label>
-				<form:input path="hora" type="hora" class="form-control" />
-				<br>
-
-				<form:label path="precioMayor">Precio para adultos (ARS$):</form:label>
-				<form:input path="precioMayor" type="precioMayor"
-					class="form-control" />
-				<br>
-
-				<form:label path="precioMenor">Precio para menores (ARS$):</form:label>
-				<form:input path="precioMenor" type="precioMenor"
-					class="form-control" />
-				<br>
-
-				<c:if test="${not empty msgError}">
-					<h5 class="p-3 mb-2 bg-danger text-white">${msgError}</h5>
-				</c:if>
-
-				<button class="btn btn-lg btn-primary btn-block" Type="Submit" />Cargar Función</button>
-			</form:form>
+				</div>
+			</div>
 		</div>
-
 	</div>
-
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
