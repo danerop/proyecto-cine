@@ -16,4 +16,5 @@ public interface RepositorioBoleto {
     public void actualizarBoleto(Boleto boleto);
     public List<Boleto> buscarBoletosDeUnUsuario(Long idUsuario);
 	List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user);
+	void eliminarBoleto(Boleto boleto);
 }

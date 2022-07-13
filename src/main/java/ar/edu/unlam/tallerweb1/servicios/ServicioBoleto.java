@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import com.google.zxing.WriterException;
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
 
 import ar.edu.unlam.tallerweb1.modelo.*;
 
@@ -20,5 +22,9 @@ public interface ServicioBoleto {
 
 	
 	public List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user);
+	
+	public String metodopago(Boleto boleto) throws MPException, MPApiException;
+	void cancelarCompraBoleto(Boleto boletoacancelar);
+	void actualizarrBoleto(Boleto boletoactualizar);
 
 }

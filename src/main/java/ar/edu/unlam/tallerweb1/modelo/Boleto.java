@@ -21,11 +21,11 @@ public class Boleto {
 	@ManyToOne
 	private Usuario cliente;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="FUNCION_ID")
 	private Funcion funcion;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="BUTACA_ID")
 	private Butaca butaca;
 	
@@ -36,6 +36,10 @@ public class Boleto {
 	private Date fechaComprado;
 	
 	private Boolean fueAdquiridoConEntradaGratis=false;
+	
+	private Boolean temporal=false;
+	
+	private String idpago;
 
 	
 	
@@ -87,6 +91,20 @@ public class Boleto {
 	}
 	public void setFechaComprado(Date fechaComprado) {
 		this.fechaComprado = fechaComprado;
+	}
+
+	public Boolean getTemporal() {
+		return temporal;
+	}
+	public void setTemporal(Boolean temporal) {
+		this.temporal = temporal;
+	}
+	
+	public String getIdpago() {
+		return idpago;
+	}
+	public void setIdpago(String idpago) {
+		this.idpago = idpago;
 	}
 	@Override
 	public int hashCode() {

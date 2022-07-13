@@ -51,11 +51,17 @@ public class RepositorioBoletoImpl implements RepositorioBoleto{
 		sessionFactory.getCurrentSession().update(boleto);
 		
 	}
+	@Override
+	public void eliminarBoleto(Boleto boleto) {
+		sessionFactory.getCurrentSession().delete(boleto);;
+		
+	}
 
 	@Override
 	public List<Boleto> buscarBoletosDeUnUsuario(Long idUsuario) {
 		return sessionFactory.getCurrentSession().createCriteria(Boleto.class)
 				.add(Restrictions.eq("cliente.id",idUsuario))
+				.add(Restrictions.eq("temporal", false))
 				.list();
 	}
 
@@ -64,6 +70,7 @@ public class RepositorioBoletoImpl implements RepositorioBoleto{
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Boleto.class)
 				.add(Restrictions.eq("cliente", user))
+				.add(Restrictions.eq("temporal", false))
 				.setProjection(Projections.distinct(Projections.property("funcion")))
 				.list();
 	}

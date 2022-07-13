@@ -12,9 +12,18 @@
 <title>Compra Boleto</title>
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/pago.css">
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path
+		d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+  </symbol>
+
+
 </head>
 
 <body>
+
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
 			<div class="container-fluid">
@@ -67,79 +76,29 @@
 			</div>
 		</nav>
 	</header>
-
 	<main>
+
+
+
+
+
 		<div class="container-fluid contenedorpago">
 
+			<div>
+			<h1 class="text-center">Ya estabas comprando un boleto</h1>
+			<h3>¿Quieres continuar la compra?</h3>
+			<div>
+			<a class="btn btn-secondary" href="compraboleto-cancelar?p=${idnuevapeli}">Cancelar vieja compra</a>
+			<a class="btn btn-primary" href="comprar-confirmar">Continuar vieja compra</a>
+			</div>
+			</div>
+			 
 
-			<div id="confirmacion">
-				<h1>Confirmación</h1>
-
-				<div class="row">
-					<div class="col-3">
-						<img alt="imgPelicula"
-							src="${funcionElegida.getPelicula().getUrlImagenPelicula()}">
-					</div>
-					<div class="col-9">
-						<h2>Pelicula:
-							${boletoGenerado.getFuncion().getPelicula().getNombre()}</h2>
-						<h2>Fecha: ${boletoGenerado.getFuncion().getFechaHora() }</h2>
-						<h2>Horario: ${boletoGenerado.getFuncion().getHora() }</h2>
-						<h2>Cine:
-							${boletoGenerado.getFuncion().getCine().getNombreLocal() }</h2>
-						<h2>Sala: ${boletoGenerado.getFuncion().getSala().getId()} -
-							${boletoGenerado.getFuncion().getSala().getTipo() }</h2>
-
-						<h2>Precio: $${boletoGenerado.getPrecio()}</h2>
-
-						<h2>Número de butaca: ${boletoGenerado.getButaca().getId()}</h2>
-						<%-- 						<c:if test="${usoEntradaGratis}">
-								<h2 class="text-success">¡Se usara una de tus entradas
-									gratis disponibles!</h2>
-							</c:if> --%>
-					</div>
-				</div>
-
-
-				<div class="d-flex justify-content-center btncompraboleto">
-					<button type="button" class="btn btn-secondary"
-						onclick="history.back()">Volver</button>
-
-
-					<c:if
-						test="${user.getSuscripcion().getDetalleSuscripcion().getId()!=null && user.getSuscripcion().getDetalleSuscripcion().getId()!=1}">
-						<c:choose>
-							<c:when
-								test="${user.getSuscripcion().getCantidadDeBoletosGratisRestante()>0}">
-								<a href="validar-compra?ep=true" class="btn btn-primary">
-									Usar entrada gratis <span class="badge bg-success"
-									data-bs-toggle="tooltip" data-bs-placement="right"
-									title="¡Aún te quedan ${user.getSuscripcion().getCantidadDeBoletosGratisRestante()} entradas gratis por usar!">${user.getSuscripcion().getCantidadDeBoletosGratisRestante()}</span>
-								</a>
-
-							</c:when>
-							<c:otherwise>
-
-								<button type="button" class="btn btn-primary" disabled>
-									Usar entrada gratis</button>
-								<span class="badge bg-secondary" data-bs-toggle="tooltip"
-									data-bs-placement="right"
-									title="¡Ya usaste todas tus entradas gratis del mes!"><i
-									class="bi bi-exclamation-diamond-fill"></i></span>
-
-							</c:otherwise>
-						</c:choose>
-
-					</c:if>
-
-					<div class="botonmp"></div>
-
-
-				</div>
+		</div>
 
 
 
-				<div class="d-none preferencia">${producto}</div>
+
 	</main>
 
 	<footer> </footer>
@@ -150,30 +109,6 @@
 		crossorigin="anonymous"></script>
 	<script src="./js/bootstrap.min.js"></script>
 	<script src="./js/pago.js"></script>
-
-
-	<script src="https://sdk.mercadopago.com/js/v2"></script>
-	<script>
-		let idpref = $(".preferencia").html();
-		// Agrega credenciales de SDK
-		const mp = new MercadoPago("TEST-3e3a930f-e8b4-48d7-98f2-adc0ad1e336d",
-				{
-					locale : "es-AR",
-				});
-		// Inicializa el checkout
-		mp.checkout({
-			preference : {
-				id : idpref,
-			},
-			render : {
-				container : ".botonmp", // Indica el nombre de la clase donde se mostrará el botón de pago
-				label : "Comprar", // Cambia el texto del botón de pago (opcional)
-			},
-		});
-	</script>
-
-
-
 </body>
 
 </html>

@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.edu.unlam.tallerweb1.controladores.DatosCompraBoleto;
+
 // Clase que modela el concepto de Usuario, la anotacion @Entity le avisa a hibernate que esta clase es persistible
 // el paquete ar.edu.unlam.tallerweb1.modelo esta indicado en el archivo hibernateCOntext.xml para que hibernate
 // busque entities en el
@@ -28,6 +30,8 @@ public class Usuario {
 	private Boolean activo = false;
 	private String urlImagenUsuario;
 	private String rol;
+	@OneToOne
+	private Boleto temp;
 	
 	@OneToOne
 	@Cascade(CascadeType.PERSIST)
@@ -85,7 +89,14 @@ public class Usuario {
 	public void setSuscripcion(Suscripcion suscripcion) {
 		this.suscripcion = suscripcion;
 	}
+	
 
+	public Boleto getTemp() {
+		return temp;
+	}
+	public void setTemp(Boleto temp) {
+		this.temp = temp;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
