@@ -14,6 +14,7 @@ public class NotificacionUsuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Cascade(CascadeType.PERSIST)
 	@ManyToOne
 	private Notificacion notificacion;
@@ -22,6 +23,7 @@ public class NotificacionUsuario {
 	@ManyToOne
 	private Usuario usuario;
 
+	
 	public Long getId() {
 		return id;
 	}
@@ -45,6 +47,4 @@ public class NotificacionUsuario {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
-	
 }

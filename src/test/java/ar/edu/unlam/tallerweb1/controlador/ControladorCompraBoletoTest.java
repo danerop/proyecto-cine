@@ -1,8 +1,6 @@
 package ar.edu.unlam.tallerweb1.controlador;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +30,10 @@ public class ControladorCompraBoletoTest {
 	private ServicioPelicula servicioPelicula = mock(ServicioPelicula.class);
 	private ServicioButaca servicioButaca = mock(ServicioButaca.class);
 	private ServicioButacaFuncion servicioButacaFuncion = mock(ServicioButacaFuncion.class);
-	private ServicioSuscripcion servicioSuscripcion=mock(ServicioSuscripcion.class);
+	private ServicioSuscripcion servicioSuscripcion = mock(ServicioSuscripcion.class);
+	private ServicioUsuario servicioUsuario = mock(ServicioUsuario.class);
 	private ControladorCompraBoleto controladorCompraBoleto = new ControladorCompraBoleto(servicioFuncion, servicioBoleto, servicioPelicula
-			,servicioButaca, servicioButacaFuncion, servicioSuscripcion);
+			,servicioButaca, servicioButacaFuncion, servicioSuscripcion, servicioUsuario);
 	
 	
 	@Test
@@ -374,7 +372,7 @@ public class ControladorCompraBoletoTest {
 		when(servicioButacaFuncion.isButacaOcupada(Mockito.any(Funcion.class), Mockito.anyLong())).thenReturn(true);
 		when(servicioBoleto.validarPrecioDeFuncionDelBoleto(Mockito.any(Funcion.class), Mockito.anyFloat(), Mockito.any(Usuario.class))).thenReturn(true);
 		when(servicioBoleto.validarPrecioDeFuncionDelBoleto(Mockito.any(Boleto.class), Mockito.anyFloat())).thenReturn(true);
-		when(servicioSuscripcion.obtenerUsuarioPorId(Mockito.anyLong())).thenReturn(user);
+		when(servicioUsuario.buscarUsuarioPorId(Mockito.anyLong())).thenReturn(user);
 		
 		ModelAndView mav =  controladorCompraBoleto.irAConfirmar(1l,true, mockRequest, datos);
 		
@@ -404,7 +402,7 @@ public class ControladorCompraBoletoTest {
 		when(servicioButacaFuncion.isButacaOcupada(Mockito.any(Funcion.class), Mockito.anyLong())).thenReturn(false);
 		when(servicioBoleto.validarPrecioDeFuncionDelBoleto(Mockito.any(Funcion.class), Mockito.anyFloat(), Mockito.any(Usuario.class))).thenReturn(true);
 		when(servicioBoleto.validarPrecioDeFuncionDelBoleto(Mockito.any(Boleto.class), Mockito.anyFloat())).thenReturn(true);
-		when(servicioSuscripcion.obtenerUsuarioPorId(Mockito.anyLong())).thenReturn(user);
+		when(servicioUsuario.buscarUsuarioPorId(Mockito.anyLong())).thenReturn(user);
 		
 		ModelAndView mav =  controladorCompraBoleto.irAConfirmar(1l,true, mockRequest, datos);
 		
@@ -437,7 +435,7 @@ public class ControladorCompraBoletoTest {
 		when(servicioButaca.obtenerButaca(Mockito.anyLong())).thenReturn(butaca);
 		when(servicioBoleto.validarPrecioDeFuncionDelBoleto(Mockito.any(Funcion.class), Mockito.anyFloat(), Mockito.any(Usuario.class))).thenReturn(true);
 		when(servicioBoleto.validarPrecioDeFuncionDelBoleto(Mockito.any(Boleto.class), Mockito.anyFloat())).thenReturn(true);
-		when(servicioSuscripcion.obtenerUsuarioPorId(Mockito.anyLong())).thenReturn(user);
+		when(servicioUsuario.buscarUsuarioPorId(Mockito.anyLong())).thenReturn(user);
 		
 		ModelAndView mav =  controladorCompraBoleto.irARecibo(1l,true, mockRequest, datos, redatt);
 		
@@ -470,7 +468,7 @@ public class ControladorCompraBoletoTest {
 		when(servicioButaca.obtenerButaca(Mockito.anyLong())).thenReturn(butaca);
 		when(servicioBoleto.validarPrecioDeFuncionDelBoleto(Mockito.any(Funcion.class), Mockito.anyFloat(), Mockito.any(Usuario.class))).thenReturn(true);
 		when(servicioBoleto.validarPrecioDeFuncionDelBoleto(Mockito.any(Boleto.class), Mockito.anyFloat())).thenReturn(true);
-		when(servicioSuscripcion.obtenerUsuarioPorId(Mockito.anyLong())).thenReturn(user);
+		when(servicioUsuario.buscarUsuarioPorId(Mockito.anyLong())).thenReturn(user);
 		
 		ModelAndView mav =  controladorCompraBoleto.irARecibo(1l,true, mockRequest, datos, redatt);
 		

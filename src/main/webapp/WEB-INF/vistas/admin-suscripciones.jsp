@@ -49,115 +49,67 @@
 	<h3 class="text-center">Controles Administrador</h3>
 	<br>
 
-	<div class="btn-toolbar justify-content-center" role="toolbar"
-		aria-label="Toolbar with button groups">
-		<div class="btn-group mr-2" role="group">
-			<a class="btn btn-secondary cargar-cine"
-				href="http://localhost:8080/proyecto-cine/admin-cines">Cines</a> <a
-				class="btn btn-secondary cargar-sala"
-				href="http://localhost:8080/proyecto-cine/admin-salas">Salas</a> <a
-				class="btn btn-secondary cargar-pelicula"
-				href="http://localhost:8080/proyecto-cine/admin-peliculas">Peliculas</a>
-			<a class="btn btn-secondary cargar-funcion"
-				href="http://localhost:8080/proyecto-cine/admin-funciones">Funciones</a>
-			<a class="btn btn-secondary cargar-suscripcion"
-				href="http://localhost:8080/proyecto-cine/admin-suscripciones">Suscripciones</a>
-			<a class="btn btn-secondary cargar-notificacion"
-				href="http://localhost:8080/proyecto-cine/admin-notificaciones">Notificación</a>
-			<a class="btn btn-secondary cargar-notificacion"
-				href="http://localhost:8080/proyecto-cine/admin-asignargeneros">Asignar
-				Géneros</a>
-		</div>
-	</div>
+  <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group">
+      <a class="btn btn-secondary cargar-cine" href="http://localhost:8080/proyecto-cine/admin-cines">Cines</a>
+      <a class="btn btn-secondary cargar-sala" href="http://localhost:8080/proyecto-cine/admin-salas">Salas</a>
+      <a class="btn btn-secondary cargar-pelicula" href="http://localhost:8080/proyecto-cine/admin-peliculas">Películas</a>
+      <a class="btn btn-secondary cargar-funcion" href="http://localhost:8080/proyecto-cine/admin-funciones">Funciones</a>
+      <a class="btn btn-secondary cargar-suscripcion" href="http://localhost:8080/proyecto-cine/admin-suscripciones">Suscripciones</a>
+      <a class="btn btn-secondary cargar-notificacion" href="http://localhost:8080/proyecto-cine/admin-notificaciones">Notificación</a>
+      <a class="btn btn-secondary cargar-notificacion" href="http://localhost:8080/proyecto-cine/admin-recepcionistas">Recepcionistas</a>
+	  <a class="btn btn-secondary cargar-notificacion" href="http://localhost:8080/proyecto-cine/admin-asignargeneros">Asignar Géneros</a>
+    </div>
+  </div>
 
 	<br>
 
 	<div class="container">
-		<h4 class="text-white">
-			Lista de Suscripciones
-			</h5>
-			<div class="row">
-				<div class="col-4">
-					<!-- Acá estará la lista de los elementos registrados -->
-					<div class="list-group" id="list-tab" role="tablist">
-						<c:forEach items="${listaDetalleSuscripciones}" var="suscripcion">
-							<a class="list-group-item list-group-item-action"
-								data-toggle="list"
-								href="#list-suscripcion${suscripcion.getId()}" role="tab">${suscripcion.getTipo()}</a>
-						</c:forEach>
-					</div>
-				</div>
-				<div class="col-8">
-					<!-- Acá va a aparecer el detalle -->
-					<div class="tab-content">
-						<c:forEach items="${listaDetalleSuscripciones}" var="suscripcion">
-							<div class="tab-pane fade p-3 mb-2 bg-white rounded"
-								id="list-suscripcion${suscripcion.getId()}" role="tabpanel">
-								<div class="row">
-									<div class="col-8">
-										<span style="font-size: small; font-weight: lighter;">id:${suscripcion.getId()}</span>
-										<span style="font-size: large; font-weight: bold;">${suscripcion.getTipo()}</span>
-										<br>
-										<p>
-											Descuento: ${suscripcion.getDescuentoEnBoletos()} <br>
-											Cantidad de Boletos Gratis:
-											${suscripcion.getCantidadBoletosGratis()} <br> Cuota:
-											${suscripcion.getCuota()} <br>
-										</p>
-									</div>
-									<div class="col-4"></div>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
+		<c:if test="${not empty msgExito}">
+			<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
+		</c:if>
+		
+		<div class="">
+			<span class="text-white">Lista de Suscripciones</span>
+			<a class="" href="form-suscripcion-nueva">Agregar</a>
+		</div>
+		
+		<div class="row">
+			<div class="col-4">
+				<!-- Acá estará la lista de los elementos registrados -->
+				<div class="list-group" id="list-tab" role="tablist">
+					<c:forEach items="${listaDetalleSuscripciones}" var="suscripcion">
+						<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-suscripcion${suscripcion.getId()}" role="tab">${suscripcion.getTipo()}</a>
+					</c:forEach>
 				</div>
 			</div>
-	</div>
-
-	<br>
-
-	<div class="container formularios bg-light rounded"
-		style="margin-bottom: 25px;">
-
-		<div class="formulario-cargar-suscripcion" style="padding: 1rem;">
-
-			<c:if test="${not empty msgExito}">
-				<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
-			</c:if>
-
-			<form:form action="agregar-suscripcion" method="POST"
-				modelAttribute="datosSuscripcion">
-				<h4>Formulario Para Crear Suscripción</h4>
-				<hr class="colorgraph">
-				<br>
-
-				<form:label path="tipo">Nombre de suscripción:</form:label>
-				<form:input path="tipo" id="tipo" type="tipo" class="form-control" />
-				<br>
-				<form:label path="descuentoEnBoletos">Descuento en boletos:</form:label>
-				<form:input path="descuentoEnBoletos" id="descuentoEnBoletos"
-					type="descuentoEnBoletos" class="form-control" />
-				<br>
-				<form:label path="cantidadBoletosGratis">Cantidad de boletos gratis al mes:</form:label>
-				<form:input path="cantidadBoletosGratis" id="cantidadBoletosGratis"
-					type="cantidadBoletosGratis" class="form-control" />
-				<br>
-				<form:label path="cuota">Cuota:</form:label>
-				<form:input path="cuota" id="cuota" type="cuota"
-					class="form-control" />
-				<br>
-
-				<c:if test="${not empty msgError}">
-					<h5 class="p-3 mb-2 bg-danger text-white">${msgError}</h5>
-				</c:if>
-
-				<button class="btn btn-lg btn-primary btn-block" Type="Submit">Cargar
-					Suscripción</button>
-			</form:form>
-
+			<div class="col-8">
+				<!-- Acá va a aparecer el detalle -->
+				<div class="tab-content">
+					<c:forEach items="${listaDetalleSuscripciones}" var="suscripcion">
+						<div class="tab-pane fade p-3 mb-2 bg-white rounded" id="list-suscripcion${suscripcion.getId()}" role="tabpanel">
+							<div class="row">
+								<div class="col-8">
+									<span style="font-size: small; font-weight: lighter;">id:${suscripcion.getId()}</span>
+									<span style="font-size: large; font-weight: bold;">${suscripcion.getTipo()}</span>
+									<br>
+									<p>
+										Descuento: ${suscripcion.getDescuentoEnBoletos()} <br>
+										Cantidad de Boletos Gratis: ${suscripcion.getCantidadBoletosGratis()} <br>
+										Cuota: ${suscripcion.getCuota()} <br>
+									</p>
+								</div>
+								<div class="col-4">
+									<a class="" href="editar-suscripcion-vieja?id=${suscripcion.getId()}">Editar</a>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
 		</div>
-
 	</div>
+
 
 
 	<script

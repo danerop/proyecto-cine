@@ -19,7 +19,7 @@ public class Sala {
 	@Enumerated(EnumType.STRING)
 	private TipoDeSala tipo;
 
-	@ManyToOne			/*ManyToMany*/
+	@ManyToOne
 	private Cine cine;
 	
 	

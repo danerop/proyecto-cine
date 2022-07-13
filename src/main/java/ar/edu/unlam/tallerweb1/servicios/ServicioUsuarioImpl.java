@@ -15,58 +15,50 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 // La anotacion @Transactional indica que se debe iniciar una transaccion de base de datos ante la invocacion de cada metodo del servicio,
 // dicha transaccion esta asociada al transaction manager definido en el archivo spring-servlet.xml y el mismo asociado al session factory definido
 // en hibernateCOntext.xml. De esta manera todos los metodos de cualquier dao invocados dentro de un servicio se ejecutan en la misma transaccion
-@Service("servicioLogin")
+@Service("servicioUsuario")
 @Transactional
-public class ServicioLoginImpl implements ServicioLogin {
+public class ServicioUsuarioImpl implements ServicioUsuario {
 
-	private RepositorioUsuario repositorioLoginDao;
+	private RepositorioUsuario repositorioUsuarioDao;
 
 	@Autowired
-	public ServicioLoginImpl(RepositorioUsuario servicioLoginDao){
-		this.repositorioLoginDao = servicioLoginDao;
+	public ServicioUsuarioImpl(RepositorioUsuario repositorioUsuarioDao){
+		this.repositorioUsuarioDao = repositorioUsuarioDao;
 	}
 
 	@Override
-	public Usuario buscarUsuario(String email, String password) {
-		return repositorioLoginDao.buscarUsuario(email, password);
-	}
-
-	@Override
-	public Usuario consultarUsuarioPorId(Long id) {
-		return repositorioLoginDao.buscarUsuarioPorId(id);
-	}
-
-	@Override
-	public Usuario consultarUsuario(Usuario usuario) {
-		return repositorioLoginDao.consultarUsuario(usuario);
-	}
-	@Override
-	public Long insertarUsuario(Usuario usuario) {
-		return repositorioLoginDao.insertarUsuario(usuario);
-	}
-
-	@Override
-	public Usuario consultarUsuarioPorRol(Usuario usuario) {
-		return repositorioLoginDao.buscarUsuarioPorRol(usuario);
-	}
-
-	@Override
-	public Usuario consultarUsuarioPorSuscripcion(Long idSuscripcion) {
-		return repositorioLoginDao.buscarUsuarioPorSuscripcionID(idSuscripcion);
-	}
-
-	@Override
-	public void actualizarUsuario(Usuario usuario) {
-		repositorioLoginDao.modificar(usuario);
-	}
-
-	@Override
-	public List<Usuario> obtenerUsuariosPorRol(String rol) {
-		return repositorioLoginDao.obtenerUsuariosPorRol(rol);
+	public Usuario buscarUsuarioPorId(Long id) {
+		return repositorioUsuarioDao.buscarUsuarioPorId(id);
 	}
 
 	@Override
 	public Usuario buscarUsuarioPorEmail(String email) {
-		return repositorioLoginDao.buscar(email);
+		return repositorioUsuarioDao.buscarUsuarioPorEmail(email);
 	}
+
+	@Override
+	public Usuario consultarUsuario(Usuario usuario) {
+		return repositorioUsuarioDao.consultarUsuario(usuario);
+	}
+	
+	@Override
+	public void actualizarUsuario(Usuario usuario) {
+		repositorioUsuarioDao.actualizarUsuario(usuario);
+	}
+
+	@Override
+	public void guardarUsuario(Usuario usuario) {
+		repositorioUsuarioDao.guardarUsuario(usuario);
+	}
+
+	@Override
+	public List<Usuario> obtenerUsuariosPorRol(String rol) {
+		return repositorioUsuarioDao.obtenerUsuariosPorRol(rol);
+	}
+
+	@Override
+	public List<Usuario> obtenerUsuariosActivos() {
+		return repositorioUsuarioDao.obtenerUsuariosActivos();
+	}
+
 }

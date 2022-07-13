@@ -1,6 +1,5 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,6 @@ import com.mercadopago.exceptions.MPException;
 import ar.edu.unlam.tallerweb1.modelo.*;
 import ar.edu.unlam.tallerweb1.servicios.*;
 
-
 @Controller
 public class ControladorCompraBoleto {
 
@@ -31,11 +29,13 @@ public class ControladorCompraBoleto {
 	private ServicioButaca servicioButaca;
 	private ServicioButacaFuncion servicioButacaFuncion;
 	private ServicioSuscripcion servicioSuscripcion;
-	private ServicioLogin servicioUsuario;
-	
+	private ServicioUsuario servicioUsuario;
+
 	@Autowired
 	public ControladorCompraBoleto(ServicioFuncion servicioFuncion, ServicioBoleto servicioBoleto,
-			ServicioPelicula servicioPelicula, ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion, ServicioSuscripcion servicioSuscripcion, ServicioLogin servicioUsuario) {
+			ServicioPelicula servicioPelicula, ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion,
+			ServicioSuscripcion servicioSuscripcion, ServicioUsuario servicioUsuario) {
+
 		this.servicioFuncion = servicioFuncion;
 		this.servicioBoleto = servicioBoleto;
 		this.servicioPelicula = servicioPelicula;
@@ -84,7 +84,7 @@ public class ControladorCompraBoleto {
 		
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
-		model.put("user", servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
+		model.put("user", servicioUsuario.buscarUsuarioPorId(user.getId()));
 		model.put("funcionElegida", funcionElegida);
 		return new ModelAndView("compra-tipoboleto", model);
 	}
@@ -103,7 +103,7 @@ public class ControladorCompraBoleto {
 				datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());		
 		ModelMap model = new ModelMap();
 		if (funcionElegida==null) {
-			model.put("msg", "La butaca seleccionada no es válida");
+			model.put("msg", "La butaca seleccionada no es vï¿½lida");
 			return new ModelAndView("redirect:/compra?p="+idPelicula, model);
 		}
 		model.put("butacas", servicioButacaFuncion.obtenerButacasPorFuncion(funcionElegida));
@@ -117,6 +117,7 @@ public class ControladorCompraBoleto {
 	public ModelAndView irAMetodoDePago(@RequestParam(value = "p") Long idPelicula, HttpServletRequest request,
 			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto, RedirectAttributes redirectAttributes ) {
 		
+
 		ModelMap model = new ModelMap();
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		if (user == null || !user.getRol().equals("usuario")) {
@@ -143,16 +144,18 @@ public class ControladorCompraBoleto {
 		boletoAGuardar.setPrecio(servicioBoleto.aplicarDescuento(boletoAGuardar, datosCompraBoleto.getPrecio()));
 		boletoAGuardar.setTemporal(true);
 		
+
 		//guardar boleto
+
 		ButacaFuncion temp=servicioButacaFuncion.obtenerPorButacaYFuncion(funcionElegida, butaca.getId());
 		try {
 			servicioBoleto.guardarBoleto(boletoAGuardar, temp);
 		}  catch (ExceptionFuncionNoEncontrada e) {
-			model.put("msg", "La función de la cual desea reservar boleto no existe");
+			model.put("msg", "La funciï¿½n de la cual desea reservar boleto no existe");
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			return new ModelAndView("redirect:/inicio", model);
 		} 	catch (ExceptionDatosBoletoDiferentesARegistroButacaFuncion e) {
-			model.put("msg", "Los datos de la butaca seleccionada no corresponden a una válida");
+			model.put("msg", "Los datos de la butaca seleccionada no corresponden a una vï¿½lida");
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			return new ModelAndView("redirect:/inicio", model);
 		} 	catch (ExceptionButacaYaOcupada e) {

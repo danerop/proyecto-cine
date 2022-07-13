@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,30 +13,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.unlam.tallerweb1.modelo.DetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Favorito;
 import ar.edu.unlam.tallerweb1.modelo.Genero;
-import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
-import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFavorito;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGenero;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
-import ar.edu.unlam.tallerweb1.servicios.ServicioSuscripcion;
 
 @Controller
 public class ControladorFavorito {
 
 	private ServicioFavorito servicioFavorito;
-	private ServicioLogin servicioUsuario;
 	private ServicioGenero servicioGenero;
 	private ServicioNotificacion servicioNotificacion;
 
 	@Autowired
-	public ControladorFavorito(ServicioFavorito servicioFavorito, ServicioLogin servicioUsuario, ServicioGenero servicioGenero, ServicioNotificacion servicioNotificacion) {
+	public ControladorFavorito(ServicioFavorito servicioFavorito, ServicioGenero servicioGenero, ServicioNotificacion servicioNotificacion) {
 		this.servicioFavorito = servicioFavorito;
-		this.servicioUsuario = servicioUsuario;
 		this.servicioGenero = servicioGenero;
 		this.servicioNotificacion= servicioNotificacion;
 	}
@@ -50,11 +42,11 @@ public class ControladorFavorito {
 		}
 		ModelMap model = new ModelMap();
 		
-		model.put("usuario", servicioUsuario.consultarUsuario(usuarioSesion));
+		model.put("usuario", usuarioSesion);
 		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(usuarioSesion));
 		model.addAttribute("datosFavoritos", new DatosFavoritos());
 		model.put("listaDeGeneros", servicioGenero.obtenerTodosLosGeneros());
-		model.put("generosFavoritos", servicioFavorito.obtenerFavoritoPorUsuario(usuarioSesion.getId()));
+		model.put("generosFavoritos", servicioFavorito.obtenerFavoritosPorUsuario(usuarioSesion.getId()));
 
 		return new ModelAndView("generos", model);
 	}

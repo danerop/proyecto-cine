@@ -1,9 +1,5 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +16,7 @@ import ar.edu.unlam.tallerweb1.servicios.ExceptionBoletoInvalido;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionBoletoYaUsado;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionFechaDistinta;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBoleto;
-import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
-import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
-import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.servicios.ServicioRecepcionista;
-import ar.edu.unlam.tallerweb1.servicios.ServicioSala;
 
 @Controller
 public class ControladorRecepcionista {

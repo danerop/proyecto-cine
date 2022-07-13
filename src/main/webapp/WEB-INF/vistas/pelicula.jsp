@@ -94,9 +94,13 @@
         <span style="font-size: large; font-weight: bold;">${pelicula.getNombre()}</span>
         <br>
         <p>
-          año: ${pelicula.getAnio()} <br>
+          Año: ${pelicula.getAnio()} <br>
           Duración: ${pelicula.getDuracion()} min <br>
           Descripción: ${pelicula.getDescripcion()} <br>
+          <br>
+          <c:if test="${usuarioQueLaVieron > 0}">
+            <span class="">¡La vieron ${usuarioQueLaVieron} usuarios!</span>
+          </c:if>
         </p>
         
         <div class="">

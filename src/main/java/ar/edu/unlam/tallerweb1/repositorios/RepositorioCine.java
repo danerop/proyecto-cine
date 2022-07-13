@@ -8,5 +8,6 @@ public interface RepositorioCine {
 	List<Cine> obtenerTodosLosCines();
 	Cine buscarCinePorId(Long id);
 	void guardarCine(Cine cine);
+	void actualizarCine(Cine datosCine);
 	
 }

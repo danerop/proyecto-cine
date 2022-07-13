@@ -9,19 +9,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.edu.unlam.tallerweb1.modelo.*;
 import ar.edu.unlam.tallerweb1.servicios.*;
 
 @Controller
-public class ControladorAdminNotifiacion {
+public class ControladorAdminNotificacion {
 	
 	private ServicioNotificacion servicioNotificacion;
 
 	
 	@Autowired
-	public ControladorAdminNotifiacion(ServicioNotificacion servicioNotificacion) {
+	public ControladorAdminNotificacion(ServicioNotificacion servicioNotificacion) {
 		this.servicioNotificacion = servicioNotificacion;
 	}
 

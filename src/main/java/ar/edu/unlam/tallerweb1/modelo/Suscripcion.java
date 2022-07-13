@@ -5,10 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Suscripcion {
@@ -17,11 +13,11 @@ public class Suscripcion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	
 	@ManyToOne
 	private DetalleSuscripcion detalleSuscripcion;
 	
-	private Long cantidadDeBoletosGratisRestantes=0l;
+	private Long cantidadDeBoletosGratisRestantes = 0l;
+	
 	
 	public Long getId() {
 		return id;

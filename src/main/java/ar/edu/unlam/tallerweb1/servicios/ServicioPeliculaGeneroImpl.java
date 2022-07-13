@@ -1,9 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
-import ar.edu.unlam.tallerweb1.modelo.PeliculaGenero;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioPeliculaGenero;
 
 @Service("servicioPeliculaGenero")
@@ -19,22 +16,32 @@ import ar.edu.unlam.tallerweb1.repositorios.RepositorioPeliculaGenero;
 public class ServicioPeliculaGeneroImpl implements ServicioPeliculaGenero{
 	
 	private RepositorioPeliculaGenero repositorioPeliculaGeneroDao;
+	private ServicioFavorito servicioFavorito;
+	private ServicioBoleto servicioBoleto;
 	
 	@Autowired
-	public ServicioPeliculaGeneroImpl(RepositorioPeliculaGenero repositorioPeliculaGeneroDao) {
+	public ServicioPeliculaGeneroImpl(RepositorioPeliculaGenero repositorioPeliculaGeneroDao, ServicioFavorito servicioFavorito, ServicioBoleto servicioBoleto) {
 		this.repositorioPeliculaGeneroDao = repositorioPeliculaGeneroDao;
+		this.servicioFavorito = servicioFavorito;
+		this.servicioBoleto = servicioBoleto;
 	}
 
 	@Override
-	public List<Pelicula> obtenerPeliculasRecomendadas(List<Genero> listaGenerosFav, List<Pelicula> listaPeliculasCompradas) {
+	public List<Pelicula> obtenerPeliculasRecomendadasPorGenerosFavoritos(Usuario user) {
 		
-		//List<Genero> listaGenerosComprados = repositorioPeliculaGeneroDao.obtenerGenerosDePeliculasCompradas(listaPeliculasCompradas);
-		//listaGenerosFav.addAll(listaGenerosComprados);
+		List<Genero> generos = servicioFavorito.obtenerGenerosFavoritosDeUsuario(user);
 		
-		//List<Genero> listaGeneros = listaGenerosFav.stream().distinct().collect(Collectors.toList());
-		
-		return repositorioPeliculaGeneroDao.obtenerPeliculasRecomendadasSegunGeneroFavorito(listaGenerosFav);
+		return repositorioPeliculaGeneroDao.obtenerPeliculasSegunGeneros(generos);
 	}
-	
-	
+
+	@Override
+	public List<Pelicula> obtenerPeliculasRecomendadasPorBoletosComprados(Usuario user) {
+		
+		List<Pelicula> peliculas = servicioBoleto.obtenerPeliculasDeFuncionesCompradasPorUsuario(user);
+		
+		List<Genero> generos = repositorioPeliculaGeneroDao.obtenerGenerosDePeliculasCompradas(peliculas);
+				
+		return repositorioPeliculaGeneroDao.obtenerPeliculasSegunGenerosDistintasDeLista(generos, peliculas);
+	}
+
 }

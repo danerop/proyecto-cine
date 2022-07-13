@@ -101,7 +101,6 @@ public class Funcion {
 		result = prime * result + ((sala == null) ? 0 : sala.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

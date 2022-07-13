@@ -1,8 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -109,9 +107,10 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 			temp=Date.valueOf(fechaHora);
 		}catch (IllegalArgumentException e){
 			temp=Date.valueOf("0000-01-01");
-		}finally {
-			Funcion funcionzz=repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, temp, hora, idSala);
-			return funcionzz;
 		}
+		
+		Funcion funcionzz=repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, temp, hora, idSala);
+		return funcionzz;	
 	}
+	
 }

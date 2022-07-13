@@ -39,5 +39,10 @@ public class ServicioSalaImpl implements ServicioSala{
 	public void guardarSala(Sala sala) {
 		repositorioSalaDao.guardarSala(sala);
 	}
+
+	@Override
+	public void actualizarSala(Sala sala) {
+		repositorioSalaDao.actualizarSala(sala);		
+	}
 	
 }

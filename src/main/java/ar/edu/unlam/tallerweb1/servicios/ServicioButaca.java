@@ -6,9 +6,13 @@ import ar.edu.unlam.tallerweb1.modelo.Butaca;
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 
 public interface ServicioButaca {
+	
 	List<Butaca> obtenerButacasPorSala(Long idSala);
 	void guardarButaca(Butaca butaca);
 	void guardarButacas(List<Integer> ubicaciones, Sala sala);
 	Butaca obtenerButaca(Long idSala);
 	Integer cantidadDeButacasEnSala(Long idSala);
+	List<Integer> obtenerIntegersButacasPorSala(Sala salaAEditar);
+	void actualizarButacas(List<Integer> butacas, Sala nuevaSala);
+	
 }

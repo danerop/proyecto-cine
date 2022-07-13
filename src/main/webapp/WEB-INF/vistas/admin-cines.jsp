@@ -49,128 +49,65 @@
 	<h3 class="text-center">Controles Administrador</h3>
 	<br>
 
-	<div class="btn-toolbar justify-content-center" role="toolbar"
-		aria-label="Toolbar with button groups">
-		<div class="btn-group mr-2" role="group">
-			<a class="btn btn-secondary cargar-cine"
-				href="http://localhost:8080/proyecto-cine/admin-cines">Cines</a> <a
-				class="btn btn-secondary cargar-sala"
-				href="http://localhost:8080/proyecto-cine/admin-salas">Salas</a> <a
-				class="btn btn-secondary cargar-pelicula"
-				href="http://localhost:8080/proyecto-cine/admin-peliculas">Peliculas</a>
-			<a class="btn btn-secondary cargar-funcion"
-				href="http://localhost:8080/proyecto-cine/admin-funciones">Funciones</a>
-			<a class="btn btn-secondary cargar-suscripcion"
-				href="http://localhost:8080/proyecto-cine/admin-suscripciones">Suscripciones</a>
-			<a class="btn btn-secondary cargar-notificacion"
-				href="http://localhost:8080/proyecto-cine/admin-notificaciones">Notificación</a>
-			<a class="btn btn-secondary cargar-notificacion"
-				href="http://localhost:8080/proyecto-cine/admin-asignargeneros">Asignar
-				Géneros</a>
-		</div>
-	</div>
+  <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group">
+      <a class="btn btn-secondary cargar-cine" href="http://localhost:8080/proyecto-cine/admin-cines">Cines</a>
+      <a class="btn btn-secondary cargar-sala" href="http://localhost:8080/proyecto-cine/admin-salas">Salas</a>
+      <a class="btn btn-secondary cargar-pelicula" href="http://localhost:8080/proyecto-cine/admin-peliculas">Películas</a>
+      <a class="btn btn-secondary cargar-funcion" href="http://localhost:8080/proyecto-cine/admin-funciones">Funciones</a>
+      <a class="btn btn-secondary cargar-suscripcion" href="http://localhost:8080/proyecto-cine/admin-suscripciones">Suscripciones</a>
+      <a class="btn btn-secondary cargar-notificacion" href="http://localhost:8080/proyecto-cine/admin-notificaciones">Notificación</a>
+      <a class="btn btn-secondary cargar-notificacion" href="http://localhost:8080/proyecto-cine/admin-recepcionistas">Recepcionistas</a>
+	  <a class="btn btn-secondary cargar-notificacion" href="http://localhost:8080/proyecto-cine/admin-asignargeneros">Asignar Géneros</a>
+    </div>
+  </div>
 
 	<br>
 
 	<div class="container">
-		<h4 class="text-white">
-			Lista de Cines
-			</h5>
-			<div class="row">
-				<div class="col-4">
-					<!-- Acá estará la lista de los elementos registrados -->
-					<div class="list-group" id="list-tab" role="tablist">
-						<c:forEach items="${listaCines}" var="cine">
-							<a class="list-group-item list-group-item-action"
-								data-toggle="list" href="#list-cine${cine.getId()}" role="tab">${cine.getNombreLocal()}</a>
-						</c:forEach>
-					</div>
-				</div>
-				<div class="col-8">
-					<!-- Acá va a aparecer el detalle -->
-					<div class="tab-content">
-						<c:forEach items="${listaCines}" var="cine">
-							<div class="tab-pane fade p-3 mb-2 bg-white rounded"
-								id="list-cine${cine.getId()}" role="tabpanel">
-								<div class="row">
-									<div class="col-8">
-										<span style="font-size: small; font-weight: lighter;">id:${cine.getId()}</span>
-										<span style="font-size: large; font-weight: bold;">${cine.getNombreLocal()}</span>
-										<br>
-										<p>
-											Dirección: ${cine.getDireccion()} <br> Telefono:
-											${cine.getTelefono()} <br> Email: ${cine.getEmail()} <br>
-										</p>
-									</div>
-									<div class="col-4">
-										<img class="img-fluid" src="${cine.getUrlImagenCine()}"
-											alt="imagen de cine">
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
+		<c:if test="${not empty msgExito}">
+			<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
+		</c:if>
+		
+		<div class="">
+			<span class="text-white">Lista de Cines</span>
+			<a class="" href="form-cine-nuevo">Agregar</a>
+		</div>
+		
+		<div class="row">
+			<div class="col-4">
+				<!-- Acá estará la lista de los elementos registrados -->
+				<div class="list-group" id="list-tab" role="tablist">
+					<c:forEach items="${listaCines}" var="cine">
+						<a class="list-group-item list-group-item-action" data-toggle="list" href="#list-cine${cine.getId()}" role="tab">${cine.getNombreLocal()}</a>
+					</c:forEach>
 				</div>
 			</div>
-	</div>
-
-	<br>
-
-	<div class="container formularios bg-light rounded"
-		style="margin-bottom: 25px;">
-
-		<div class="formulario-cargar-cine" style="padding: 1rem;">
-
-			<c:if test="${not empty msgExito}">
-				<h5 class="p-3 mb-2 bg-success text-white">${msgExito}</h5>
-			</c:if>
-
-			<form:form action="agregar-cine" method="POST"
-				modelAttribute="datosCine">
-				<h4>Formulario Para Crear Cine</h4>
-				<hr class="colorgraph">
-				<br>
-
-				<form:label path="nombreLocal">Nombre Del Local:</form:label>
-				<form:input path="nombreLocal" id="nombreLocal" type="nombreLocal"
-					class="form-control" />
-				<br>
-				<form:label path="direccion">Dirección:</form:label>
-				<form:input path="direccion" id="direccion" type="direccion"
-					class="form-control" />
-				<br>
-				<form:label path="telefono">Telefono:</form:label>
-				<form:input path="telefono" id="telefono" type="telefono"
-					class="form-control" />
-				<br>
-				<form:label path="email">Email:</form:label>
-				<form:input path="email" id="email" type="email"
-					class="form-control" />
-				<br>
-				<form:label path="urlImagenCine">Url de la portada:</form:label>
-				<form:input path="urlImagenCine" type="urlImagenCine"
-					id="urlImagenCine" class="form-control" />
-				<br>
-				<hr>
-				<h4>Ubicación</h4>
-				<form:label path="latitud">Latitud:</form:label>
-				<form:input path="latitud" id="latitud" type="latitud"
-					class="form-control" />
-				<form:label path="longitud">Longitud:</form:label>
-				<form:input path="longitud" id="longitud" type="longitud"
-					class="form-control" />
-				<br>
-
-				<c:if test="${not empty msgError}">
-					<h5 class="p-3 mb-2 bg-danger text-white">${msgError}</h5>
-				</c:if>
-
-				<button class="btn btn-lg btn-primary btn-block" Type="Submit">Cargar
-					Cine</button>
-			</form:form>
-
+			<div class="col-8">
+				<!-- Acá va a aparecer el detalle -->
+				<div class="tab-content">
+					<c:forEach items="${listaCines}" var="cine">
+						<div class="tab-pane fade p-3 mb-2 bg-white rounded" id="list-cine${cine.getId()}" role="tabpanel">
+							<div class="row">
+								<div class="col-8">
+									<span style="font-size: small; font-weight: lighter;">id:${cine.getId()}</span>
+									<span style="font-size: large; font-weight: bold;">${cine.getNombreLocal()}</span>
+									<br>
+									<p>
+										Dirección: ${cine.getDireccion()} <br> Telefono:
+										${cine.getTelefono()} <br> Email: ${cine.getEmail()} <br>
+									</p>
+								</div>
+								<div class="col-4">
+									<a class="" href="editar-cine-viejo?id=${cine.getId()}">Editar</a>
+									<img class="img-fluid" src="${cine.getUrlImagenCine()}"	alt="imagen de cine">
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
 		</div>
-
 	</div>
 
 	<script

@@ -11,8 +11,10 @@ public class ButacaFuncion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@ManyToOne
 	private Funcion funcion;
+	
 	@ManyToOne 
 	private Butaca butaca;
 	private Boolean ocupada = false;

@@ -2,9 +2,6 @@ package ar.edu.unlam.tallerweb1.servicios;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -15,7 +12,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.modelo.*;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioPelicula;
 
 public class ServicioRecepcionistaTest {
 	private ServicioRecepcionista servicioRecep = new ServicioRecepcionistaImpl();
