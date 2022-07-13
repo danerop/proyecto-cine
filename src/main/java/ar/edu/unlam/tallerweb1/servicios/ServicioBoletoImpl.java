@@ -198,7 +198,7 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		servicioButacaFuncion.actualizarButacaFuncion(temp);
 		
 		repositorioBoletoDao.eliminarBoleto(boletoacancelar);
-
+	}
 
 	@Override
 	public List<Pelicula> obtenerPeliculasDeFuncionesCompradasPorUsuario(Usuario user) {

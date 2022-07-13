@@ -50,7 +50,7 @@ public class ControladorCompraBoleto {
 		List<Funcion> funciones = servicioFuncion.obtenerFuncionesFuturasDePelicula(idPelicula);
 		
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-		user=servicioUsuario.consultarUsuarioPorId(user.getId());
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
 		if (user == null || !user.getRol().equals("usuario") || funciones==null) {
 			return new ModelAndView("redirect:/inicio");
 		}
@@ -164,7 +164,7 @@ public class ControladorCompraBoleto {
 			return new ModelAndView("redirect:/inicio", model);
 		} 
 
-		Usuario usuarioaactualizar = servicioSuscripcion.obtenerUsuarioPorId(user.getId());
+		Usuario usuarioaactualizar = servicioUsuario.buscarUsuarioPorId(user.getId());
 		usuarioaactualizar.setTemp(boletoAGuardar);
 		servicioUsuario.actualizarUsuario(usuarioaactualizar);
 		
@@ -185,11 +185,11 @@ public class ControladorCompraBoleto {
 		
 
 		
-		Boleto boletoAGuardar = servicioUsuario.consultarUsuarioPorId(user.getId()).getTemp();
+		Boleto boletoAGuardar = servicioUsuario.buscarUsuarioPorId(user.getId()).getTemp();
 	
 
 		model.put("p", boletoAGuardar.getFuncion().getPelicula().getId());
-		model.put("user", servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
+		model.put("user", servicioUsuario.buscarUsuarioPorId(user.getId()));
 		model.put("boletoGenerado", boletoAGuardar);
 		model.put("funcionElegida", boletoAGuardar.getFuncion());
 		
@@ -209,7 +209,7 @@ public class ControladorCompraBoleto {
 			RedirectAttributes redirectAttributes) {
 		ModelMap model = new ModelMap();
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-		user=servicioUsuario.consultarUsuarioPorId(user.getId());
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
 		if (user == null || !user.getRol().equals("usuario")) {
 			model.put("msg", "Debes estar logueado para comprar un boleto");
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
@@ -222,7 +222,7 @@ public class ControladorCompraBoleto {
 
 		
 		//usar entrada gratis
-		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioSuscripcion.obtenerUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
+		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioUsuario.buscarUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
 			model.put("msg", "No te quedan entradas gratis por usar");
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			return new ModelAndView("redirect:/inicio", model);
@@ -284,7 +284,7 @@ public class ControladorCompraBoleto {
 			@RequestParam(value = "status") String estadopago
 			){
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-		user=servicioUsuario.consultarUsuarioPorId(user.getId());
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
 		if (user == null || !user.getRol().equals("usuario")) {
 			return new ModelAndView("redirect:/inicio");
 		}
@@ -308,7 +308,7 @@ public class ControladorCompraBoleto {
 			){
 		ModelMap model = new ModelMap();
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-		user=servicioUsuario.consultarUsuarioPorId(user.getId());
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
 		if (user == null || !user.getRol().equals("usuario")) {
 			return new ModelAndView("redirect:/inicio");
 		}
@@ -331,7 +331,7 @@ public class ControladorCompraBoleto {
 			){
 		ModelMap model = new ModelMap();
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-		user=servicioUsuario.consultarUsuarioPorId(user.getId());
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
 		if (user == null || !user.getRol().equals("usuario")) {
 			return new ModelAndView("redirect:/inicio");
 		}
