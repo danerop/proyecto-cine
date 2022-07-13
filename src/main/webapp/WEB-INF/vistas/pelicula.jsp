@@ -52,6 +52,7 @@
 							</button>
 
 							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="margin-top: 50px;">
+								<a class="dropdown-item" href="../generos">Mis Generos Favoritos</a>
 								<a class="dropdown-item" href="../historialcompras">Mis Boletos</a>
 								<a class="dropdown-item" href="../cerrarSesion">Cerrar Session</a>
 							</div>
@@ -101,7 +102,7 @@
   <div class="container">
     <div class="row bg-white rounded p-3 mb-2">
       <div class="col-4">
-        <img class="img-fluid" src="../${pelicula.getUrlImagenPelicula()}" alt="imagen de pelicula">
+        <img class="img-fluid" src="${pelicula.getUrlImagenPelicula()}" alt="imagen de pelicula">
         <br>
         <a href="../compra?p=${pelicula.getId()}" class="btn btn-primary" role="button">COMPRAR</a>
       </div>

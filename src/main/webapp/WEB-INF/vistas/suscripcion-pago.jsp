@@ -52,6 +52,7 @@
 							</button>
 
 							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="margin-top: 50px;">
+								<a class="dropdown-item" href="generos">Mis Generos Favoritos</a>
 								<a class="dropdown-item" href="historialcompras">Mis Boletos</a>
 								<a class="dropdown-item" href="cerrarSesion">Cerrar Session</a>
 							</div>
