@@ -274,9 +274,6 @@ public class ControladorAdminFuncion {
 			model.put("elementoNuevo", false);
 			return new ModelAndView("admin-funciones-form", model);
 		}
-			
-		List<Butaca> butacas=servicioButaca.obtenerButacasPorSala(salaSeleccionada.getId());
-		servicioButacaFuncion.asociarButacasAFuncion(nuevaFuncion, butacas);
 		
 		model.put("msgExito", "Función actualizada con exito");
 		model.put("listaFunciones", servicioFuncion.obtenerTodasLasFunciones());

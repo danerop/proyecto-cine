@@ -31,55 +31,57 @@ public class ControladorSuscripcion {
 	}
 
 	@RequestMapping(path = "/suscripcion", method = RequestMethod.GET)
-	public ModelAndView irASuscripcion() {
+	public ModelAndView irASuscripcion(HttpServletRequest request) {
 		
 		ModelMap model = new ModelMap();
 		
 		model.addAttribute(new DatosBuscar());
 		model.put("listaDeDetallesSuscripciones", servicioDetalleSuscripcion.obtenerTodasLasSuscripciones());
-
+		model.put("usuario", (Usuario) request.getSession().getAttribute("usuario"));
+		
 		return new ModelAndView("suscripcion", model);
 	}
 
 	@RequestMapping(path = "/pago-suscripcion", method = RequestMethod.GET)
 	public ModelAndView suscripcionElegida(HttpServletRequest request,
-										   @RequestParam(value = "d") Long idDetalleSuscripcion)
-										   {
+										   @RequestParam(value = "d") Long idDetalleSuscripcion){
 		
 		ModelMap model = new ModelMap();
+		model.addAttribute(new DatosBuscar());
 		Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
 		
 		DatosSuscripcion ds = new DatosSuscripcion();
 		ds.setIdDetalleSuscripcion(idDetalleSuscripcion);
 		
 		if (usuarioSesion != null) {
-				model.addAttribute("datosSuscripcion", ds);
-				model.put("d", idDetalleSuscripcion);
-				model.put("servicioElegido", servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(idDetalleSuscripcion));
-
-				return new ModelAndView("suscripcion-pago", model);
+			model.addAttribute("datosSuscripcion", ds);
+			model.put("d", idDetalleSuscripcion);
+			model.put("servicioElegido", servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(idDetalleSuscripcion));
+			model.put("usuario", usuarioSesion);
+			
+			return new ModelAndView("suscripcion-pago", model);
 		}
-			return new ModelAndView("redirect:/login", model);
+		return new ModelAndView("redirect:/login", model);
 	}
 	
 
 	@RequestMapping(path = "/procesarSuscripcion", method = RequestMethod.POST)
 	public ModelAndView reciboSuscripcion(@ModelAttribute("datosSuscripcion") DatosSuscripcion datosSuscripcion,
 										   HttpServletRequest request){
-				
-				Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
-				Suscripcion s = usuarioSesion.getSuscripcion();
-				DetalleSuscripcion ds = servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(datosSuscripcion.getIdDetalleSuscripcion());
-				
-				s.setCantidadDeBoletosGratisRestantes(ds.getCantidadBoletosGratis());
-				s.setDetalleSuscripcion(ds);
-				servicioSuscripcion.modificarSuscripcion(s);
-				
-				ModelMap model = new ModelMap();
-				model.put("datosSuscripcion", datosSuscripcion);
-				model.put("usuarioSuscripto", usuarioSesion);
+		
+		Usuario usuarioSesion = (Usuario) request.getSession().getAttribute("usuario");
+		Suscripcion s = usuarioSesion.getSuscripcion();
+		DetalleSuscripcion ds = servicioDetalleSuscripcion.obtenerDetalleSuscripcionPorId(datosSuscripcion.getIdDetalleSuscripcion());
+		
+		s.setCantidadDeBoletosGratisRestantes(ds.getCantidadBoletosGratis());
+		s.setDetalleSuscripcion(ds);		
+		servicioSuscripcion.modificarSuscripcion(s);
+		
+		ModelMap model = new ModelMap();
+		model.put("datosSuscripcion", datosSuscripcion);
+		model.put("usuarioSuscripto", usuarioSesion);
 
-				return new ModelAndView("suscripcion-validar", model);
+		return new ModelAndView("suscripcion-validar", model);
 	}
 	
 }

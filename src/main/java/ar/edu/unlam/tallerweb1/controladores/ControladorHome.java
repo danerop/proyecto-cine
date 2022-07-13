@@ -76,12 +76,16 @@ public class ControladorHome {
 	}
 	
 	@RequestMapping(path = "/mapa", method = RequestMethod.GET)
-	public ModelAndView mapa() {
+	public ModelAndView mapa(HttpServletRequest request) {
 		
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		ModelMap model = new ModelMap();
 		
 		model.addAttribute(new DatosBuscar());
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
+		
 		return new ModelAndView("mapa", model);
 	}
 	
@@ -103,6 +107,8 @@ public class ControladorHome {
 		listaCines = servicioFuncion.obtenerCinesDisponiblesParaFunciones(pelicula.getId());
 		listaFuncion = servicioFuncion.obtenerFuncionesFuturasDePelicula(id);
 		
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		model.put("listaCines", listaCines);
 		model.put("listaFuncion", listaFuncion);
 		model.put("pelicula", pelicula);
