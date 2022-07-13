@@ -99,7 +99,7 @@
 									</p>
 								</div>
 								<div class="col-4">
-									<img src="${recepcionista.getUrlImagenUsuario()}">
+									<img class="img-fluid" alt="imagen de perfil" src="${recepcionista.getUrlImagenUsuario()}">
 								</div>
 							</div>
 						</div>
