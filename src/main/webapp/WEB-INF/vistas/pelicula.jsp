@@ -103,7 +103,7 @@
     <div class="row bg-white rounded p-3 mb-2">
       <div class="col-4">
         <img class="img-fluid" src="${pelicula.getUrlImagenPelicula()}" alt="imagen de pelicula">
-        <br>
+        <br><br>
         <a href="../compra?p=${pelicula.getId()}" class="btn btn-primary" role="button">COMPRAR</a>
       </div>
       <div class="col-8">

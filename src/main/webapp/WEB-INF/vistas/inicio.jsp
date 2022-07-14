@@ -133,18 +133,16 @@
 				<c:forEach items="${PeliculasGenerosFavoritos}" var="pelicula">
 					<div class="col d-flex justify-content-evenly" style="margin-bottom: 50px;">
 						<a href="peliculas/${pelicula.getId()}" style="text-decoration: none;">
-							<div class="card" style="width: 14rem;">
+							<div class="card" style="width: 18rem;">
 								<img src="${pelicula.getUrlImagenPelicula()}" class="card-img-top" alt="${pelicula.getNombre()}">
-								<div class="card-body" style="text-align: center; background-color: black; height: 60px;">
-									<h5 class="card-title" style="font-size: 15px; color: white;">${pelicula.getNombre()}</h5>
+								<div class="card-body" style="text-align: center; background-color: black;">
+									<h5 class="card-title" style="font-size: 18px; color: white;">${pelicula.getNombre()}</h5>
 								</div>
 							</div>
 						</a>
 					</div>
 				</c:forEach>
-				<br>
 			</div>
-			<br>
 		</div>
 	</c:if>
 
@@ -158,18 +156,16 @@
 				<c:forEach items="${PeliculasGenerosVistos}" var="pelicula">
 					<div class="col d-flex justify-content-evenly" style="margin-bottom: 50px;">
 						<a href="peliculas/${pelicula.getId()}" style="text-decoration: none;">
-							<div class="card" style="width: 14rem;">
+							<div class="card" style="width: 18rem;">
 								<img src="${pelicula.getUrlImagenPelicula()}" class="card-img-top" alt="${pelicula.getNombre()}">
-								<div class="card-body" style="text-align: center; background-color: black; height: 60px;">
-									<h5 class="card-title" style="font-size: 15px; color: white;">${pelicula.getNombre()}</h5>
+								<div class="card-body" style="text-align: center; background-color: black;">
+									<h5 class="card-title" style="font-size: 18px; color: white;">${pelicula.getNombre()}</h5>
 								</div>
 							</div>
 						</a>
 					</div>
 				</c:forEach>
-				<br>
 			</div>
-			<br>
 		</div>
 	</c:if>
 
@@ -184,18 +180,16 @@
 			<c:forEach items="${listaPeliculas}" var="pelicula">
 				<div class="col d-flex justify-content-evenly" style="margin-bottom: 50px;">
 					<a href="peliculas/${pelicula.getId()}" style="text-decoration: none;">
-						<div class="card" style="width: 14rem;">
+						<div class="card" style="width: 18rem;">
 							<img src="${pelicula.getUrlImagenPelicula()}" class="card-img-top" alt="${pelicula.getNombre()}">
-							<div class="card-body" style="text-align: center; background-color: black; height: 60px;">
-								<h5 class="card-title" style="font-size: 15px; color: white;">${pelicula.getNombre()}</h5>
+							<div class="card-body" style="text-align: center; background-color: black;">
+								<h5 class="card-title" style="font-size: 18px; color: white;">${pelicula.getNombre()}</h5>
 							</div>
 						</div>
 					</a>
 				</div>
 			</c:forEach>
-			<br>
 		</div>
-		<br>
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>

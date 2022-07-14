@@ -3,8 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -119,28 +118,26 @@
 							</tr>
 							<c:forEach var="fil" begin="1" end="16">
 								<tr>
-									<td class="align-middle p-2">${fil}</td>
+									<td class="align-middle p-2" style="padding:2px; width:42px;">${fil}</td>
 									<c:forEach var="col" begin="1" end="32">
-										<td><c:forEach items="${butacas}" var="butaca">
-												<c:if
-													test="${butaca.getButaca().getNroUbicacion()==(col+(32*(fil-1)))}">
+										<td style="padding:2px; width:42px;">
+											<c:forEach items="${butacas}" var="butaca">
+												<c:if test="${butaca.getButaca().getNroUbicacion()==(col+(32*(fil-1)))}">
 													<c:choose>
 														<c:when test="${!butaca.getOcupada()}">
 															<input type="radio" class="btn-check position-fixed"
 																name="idButaca" id="btncheck${col+(32*(fil-1))}"
 																autocomplete="off" value="${butaca.getButaca().getId()}">
-															<form:label class="btn btn-outline-primary p-2"
-																for="btncheck${col+(32*(fil-1))}" path="idButaca">${butaca.getButaca().getNroUbicacion()}</form:label>
+															<form:label class="btn btn-outline-primary p-2" for="btncheck${col+(32*(fil-1))}" 
+															path="idButaca" style="width:42px;">${butaca.getButaca().getNroUbicacion()}</form:label>
 														</c:when>
 														<c:otherwise>
-															<button class="btn btn-primary p-2" disabled>${butaca.getButaca().getNroUbicacion()}</button>
+															<button class="btn btn-primary p-2" style="width:42px;" disabled>${butaca.getButaca().getNroUbicacion()}</button>
 														</c:otherwise>
 													</c:choose>
-
 												</c:if>
-
-
-											</c:forEach></td>
+											</c:forEach>
+										</td>
 									</c:forEach>
 								</tr>
 							</c:forEach>
