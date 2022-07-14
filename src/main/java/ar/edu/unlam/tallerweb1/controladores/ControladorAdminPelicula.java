@@ -17,16 +17,19 @@ import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaAnioNoValido;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaCamposVacios;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaDuracionNoValida;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionPeliculaNoEncontrada;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 
 @Controller
 public class ControladorAdminPelicula {
 
 	private ServicioPelicula servicioPelicula;
+	private ServicioNotificacion servicioNotificacion;
 	
 	@Autowired
-	public ControladorAdminPelicula(ServicioPelicula servicioPelicula){
+	public ControladorAdminPelicula(ServicioPelicula servicioPelicula, ServicioNotificacion servicioNotificacion){
 		this.servicioPelicula = servicioPelicula;
+		this.servicioNotificacion = servicioNotificacion;
 	}
 	
 	@RequestMapping( path = "/admin-peliculas", method = RequestMethod.GET)
@@ -39,6 +42,8 @@ public class ControladorAdminPelicula {
 		
 		ModelMap model = new ModelMap();
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		
 		return new ModelAndView("admin-peliculas", model);
 	}
@@ -90,6 +95,8 @@ public class ControladorAdminPelicula {
 		
 		model.put("msgExito", "Pelicula guardada con exito");
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("admin-peliculas", model);
 	}
 	
@@ -151,6 +158,8 @@ public class ControladorAdminPelicula {
 		
 		model.put("msgExito", "Pelicula actualizada con exito");
 		model.put("listaPeliculas", servicioPelicula.obtenerTodosLasPeliculas());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("admin-peliculas", model);
 	}
 }

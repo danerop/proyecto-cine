@@ -11,16 +11,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
 @Controller
 public class ControladorAdminRecepcionista {
 
 	private ServicioUsuario servicioUsuario;
+	private ServicioNotificacion servicioNotificacion;
 	
 	@Autowired
-	public ControladorAdminRecepcionista(ServicioUsuario servicioUsuario) {
+	public ControladorAdminRecepcionista(ServicioUsuario servicioUsuario, ServicioNotificacion servicioNotificacion) {
 		this.servicioUsuario = servicioUsuario;
+		this.servicioNotificacion = servicioNotificacion;
 	}
 	
 	@RequestMapping( path = "/admin-recepcionistas", method = RequestMethod.GET)
@@ -31,14 +34,29 @@ public class ControladorAdminRecepcionista {
 			return new ModelAndView("redirect:/inicio");
 		}
 		
-		ModelMap modelo = new ModelMap();
-		modelo.addAttribute("datosRecepcionista", new DatosLogin());
-		modelo.put("listaRecepcionistas", servicioUsuario.obtenerUsuariosPorRol("recepcionista"));
+		ModelMap model = new ModelMap();
+		model.put("listaRecepcionistas", servicioUsuario.obtenerUsuariosPorRol("recepcionista"));
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		
-		return new ModelAndView("admin-recepcionistas", modelo);
+		return new ModelAndView("admin-recepcionistas", model);
 	}
 	
-	@RequestMapping( path = "/agregar-recepcionista", method = RequestMethod.POST)
+	@RequestMapping(path = "/form-recepcionista-nuevo", method = RequestMethod.GET)
+	public ModelAndView crearRecepcionista (HttpServletRequest request) {
+		
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (user == null || !user.getRol().equals("admin") ) {
+			return new ModelAndView("redirect:/inicio");
+		}
+		
+		ModelMap model = new ModelMap();
+		model.addAttribute("datosRecepcionista", new DatosLogin());
+		
+		return new ModelAndView("admin-recepcionistas-form", model);
+	}
+	
+	@RequestMapping( path = "/registrar-recepcionista-nuevo", method = RequestMethod.POST)
 	public ModelAndView agregarNuevoRecepcionista( @ModelAttribute("datosRecepcionista") DatosLogin datosRecepcionista, HttpServletRequest request){
 		
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
@@ -46,7 +64,7 @@ public class ControladorAdminRecepcionista {
 			return new ModelAndView("redirect:/inicio");
 		}
 		
-		ModelMap modelo = new ModelMap();
+		ModelMap model = new ModelMap();
 		
 		if (servicioUsuario.buscarUsuarioPorEmail(datosRecepcionista.getEmail()) == null) {
 			Usuario recepcionista = new Usuario();
@@ -56,16 +74,16 @@ public class ControladorAdminRecepcionista {
 			recepcionista.setRol("recepcionista");
 			servicioUsuario.guardarUsuario(recepcionista);
 			
-			modelo.put("msgExito", "Recepcionista registrado correctamente");
+			model.put("msgExito", "Recepcionista registrado correctamente");
 		} else {
-			modelo.put("msgError", "El email ya está en uso");
-			modelo.addAttribute("datosRecepcionista", new DatosLogin());
-			modelo.put("listaRecepcionistas", servicioUsuario.obtenerUsuariosPorRol("recepcionista"));
-			return new ModelAndView("admin-recepcionistas", modelo);
+			model.put("msgError", "El email ya está en uso");
+			model.addAttribute("datosRecepcionista", datosRecepcionista);
+			return new ModelAndView("admin-recepcionistas-form", model);
 		}
 		
-		modelo.addAttribute("datosRecepcionista", new DatosLogin());
-		modelo.put("listaRecepcionistas", servicioUsuario.obtenerUsuariosPorRol("recepcionista"));
-		return new ModelAndView("admin-recepcionistas", modelo);
+		model.put("listaRecepcionistas", servicioUsuario.obtenerUsuariosPorRol("recepcionista"));
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
+		return new ModelAndView("admin-recepcionistas", model);
 	}
 }

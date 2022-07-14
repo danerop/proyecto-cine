@@ -16,15 +16,18 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionCineCamposVacios;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionCineNoEncontrado;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 
 @Controller
 public class ControladorAdminCine {
 	
 	private ServicioCine servicioCine;
+	private ServicioNotificacion servicioNotificacion;
 	
 	@Autowired
-	public ControladorAdminCine(ServicioCine servicioCine) {
+	public ControladorAdminCine(ServicioCine servicioCine, ServicioNotificacion servicioNotificacion) {
 		this.servicioCine = servicioCine;
+		this.servicioNotificacion = servicioNotificacion;
 	}
 	
 	@RequestMapping( path = "/admin-cines", method = RequestMethod.GET)
@@ -36,6 +39,8 @@ public class ControladorAdminCine {
 		}
 		
 		ModelMap model = new ModelMap();
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());
 		
 		return new ModelAndView("admin-cines", model);
@@ -76,6 +81,8 @@ public class ControladorAdminCine {
 			return new ModelAndView("admin-cines-form", model);
 		}
 		
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		model.put("msgExito", "Cine guardado con exito");
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());
 		return new ModelAndView("admin-cines", model);
@@ -127,6 +134,8 @@ public class ControladorAdminCine {
 			return new ModelAndView("admin-cines-form", model);
 		}
 		
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		model.put("msgExito", "Cine actualizado con exito");
 		model.put("listaCines", servicioCine.obtenerTodosLosCines());
 		return new ModelAndView("admin-cines", model);

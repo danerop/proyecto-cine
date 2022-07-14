@@ -16,6 +16,7 @@ import ar.edu.unlam.tallerweb1.servicios.ExceptionBoletoInvalido;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionBoletoYaUsado;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionFechaDistinta;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBoleto;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioRecepcionista;
 
 @Controller
@@ -23,11 +24,13 @@ public class ControladorRecepcionista {
 
 	private ServicioBoleto servicioBoleto;
 	private ServicioRecepcionista servicioRecepcionista;
+	private ServicioNotificacion servicioNotificacion;
 
 	@Autowired
-	public ControladorRecepcionista(ServicioBoleto servicioBoleto, ServicioRecepcionista servicioRecepcionista) {
+	public ControladorRecepcionista(ServicioBoleto servicioBoleto, ServicioRecepcionista servicioRecepcionista, ServicioNotificacion servicioNotificacion) {
 		this.servicioBoleto = servicioBoleto;
-		this.servicioRecepcionista= servicioRecepcionista;
+		this.servicioRecepcionista = servicioRecepcionista;
+		this.servicioNotificacion = servicioNotificacion;
 	}
 	
 	@RequestMapping(path = "/iniciorecepcionista",method = RequestMethod.GET)
@@ -35,6 +38,8 @@ public class ControladorRecepcionista {
 		Usuario temp=(Usuario) request.getSession().getAttribute("usuario");
 		if (request.getSession().getAttribute("usuario") != null && temp.getRol().equals("recepcionista") ) {
 			ModelMap modelo = new ModelMap();
+			modelo.put("usuario", temp);
+			modelo.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(temp));
 			return new ModelAndView("recepcionista", modelo);
 		}
 		return new ModelAndView("redirect:/inicio");
@@ -66,6 +71,8 @@ public class ControladorRecepcionista {
         	return new ModelAndView("recepcionista-validarboleto", modelo);
 		}
 		modelo.put("boletoGenerado", boleto);
+		modelo.put("usuario", user);
+		modelo.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("recepcionista-validarboleto", modelo);
 		
 //		if (boleto!=null) {
@@ -117,6 +124,8 @@ public class ControladorRecepcionista {
 		ModelMap modelo = new ModelMap();
 		Boleto boleto=servicioBoleto.buscarBoleto(idBoleto);
 		modelo.put("boletoGenerado", boleto);
+		modelo.put("usuario", user);
+		modelo.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("recepcionista-boletovalidado", modelo);
 	}
 	

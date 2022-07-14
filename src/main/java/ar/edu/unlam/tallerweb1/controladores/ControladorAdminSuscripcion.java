@@ -18,15 +18,18 @@ import ar.edu.unlam.tallerweb1.servicios.ExceptionDetalleSuscripcionCamposVacios
 import ar.edu.unlam.tallerweb1.servicios.ExceptionDetalleSuscripcionDescuentoNoValido;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionDetalleSuscripcionNoEncontrada;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleSuscripcion;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 
 @Controller
 public class ControladorAdminSuscripcion {
 
 	private ServicioDetalleSuscripcion servicioDetalleSuscripcion;
+	private ServicioNotificacion servicioNotificacion;
 	
 	@Autowired
-	public ControladorAdminSuscripcion(ServicioDetalleSuscripcion servicioDetalleSuscripcion) {
+	public ControladorAdminSuscripcion(ServicioDetalleSuscripcion servicioDetalleSuscripcion, ServicioNotificacion servicioNotificacion) {
 		this.servicioDetalleSuscripcion = servicioDetalleSuscripcion;
+		this.servicioNotificacion = servicioNotificacion;
 	}
 	
 	@RequestMapping( path = "/admin-suscripciones", method = RequestMethod.GET)
@@ -39,6 +42,8 @@ public class ControladorAdminSuscripcion {
 		
 		ModelMap model = new ModelMap();
 		model.put("listaDetalleSuscripciones", servicioDetalleSuscripcion.obtenerTodasLasSuscripciones());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		
 		return new ModelAndView("admin-suscripciones", model);
 	}
@@ -90,6 +95,8 @@ public class ControladorAdminSuscripcion {
 		
 		model.put("listaDetalleSuscripciones", servicioDetalleSuscripcion.obtenerTodasLasSuscripciones());
 		model.put("msgExito", "Suscripción guardada con exito");
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("admin-suscripciones", model);
 	}
 	
@@ -151,6 +158,8 @@ public class ControladorAdminSuscripcion {
 		
 		model.put("listaDetalleSuscripciones", servicioDetalleSuscripcion.obtenerTodasLasSuscripciones());
 		model.put("msgExito", "Suscripción guardada con exito");
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("admin-suscripciones", model);
 	}
 }

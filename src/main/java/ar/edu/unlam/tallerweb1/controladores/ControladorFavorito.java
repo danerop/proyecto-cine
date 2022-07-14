@@ -42,6 +42,7 @@ public class ControladorFavorito {
 		}
 		ModelMap model = new ModelMap();
 		
+		model.addAttribute(new DatosBuscar());
 		model.put("usuario", usuarioSesion);
 		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(usuarioSesion));
 		model.addAttribute("datosFavoritos", new DatosFavoritos());

@@ -29,24 +29,39 @@ public class ControladorAdminNotificacion {
 		
 			) {
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-		if (user == null || !user.getRol().equals("admin") ) {
+		if (user == null || !user.getRol().equals("admin")) {
 			return new ModelAndView("redirect:/inicio");
 		}
 		
-		ModelMap modelo = new ModelMap();
-		modelo.addAttribute("datosNotificacion", new DatosNotificacion());
-		modelo.put("listaNotificaciones", servicioNotificacion.obtenerTodasLasNotificaciones());
-		modelo.put("listaUsuarios", servicioNotificacion.obtenerListaUsuariosActivos());
-		return new ModelAndView("admin-notificaciones", modelo);
+		ModelMap model = new ModelMap();
+		model.put("listaNotificaciones", servicioNotificacion.obtenerTodasLasNotificaciones());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
+		return new ModelAndView("admin-notificaciones", model);
 	}
-	@RequestMapping(path = "/agregar-notificacion", method = RequestMethod.POST)
+	
+	@RequestMapping(path = "/form-notificacion-nueva", method = RequestMethod.GET)
+	public ModelAndView crearNotificacion(HttpServletRequest request) {
+		
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		if (user == null || !user.getRol().equals("admin")) {
+			return new ModelAndView("redirect:/inicio");
+		}
+		
+		ModelMap model = new ModelMap();
+		model.addAttribute("datosNotificacion", new DatosNotificacion());
+		model.put("listaUsuarios", servicioNotificacion.obtenerListaUsuariosActivos());
+		
+		return new ModelAndView("admin-notificaciones-form", model);
+	}
+	
+	@RequestMapping(path = "/registrar-notificacion-nueva", method = RequestMethod.POST)
 	public ModelAndView agregarNuevaNotificacion( @ModelAttribute("datosNotificacion") DatosNotificacion datosNotificacion, 
 			HttpServletRequest request) {
 		ModelMap model = new ModelMap();
-	
 		
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-		if (user == null || !user.getRol().equals("admin") || datosNotificacion==null ) {
+		if (user == null || !user.getRol().equals("admin")) {
 			return new ModelAndView("redirect:/inicio");
 		}
 		
@@ -57,8 +72,11 @@ public class ControladorAdminNotificacion {
 		
 		servicioNotificacion.registrarNotificacion(nuevaNotificacion);
 		servicioNotificacion.asociarNotificacionAUsuarios(nuevaNotificacion, datosNotificacion.getIdUsuario());
-//		como mando el msg a otro controlador?
-		model.put("mens", "Notificacion generada con exito");
-		return new ModelAndView("redirect:/admin-notificaciones");
+		
+		model.put("listaNotificaciones", servicioNotificacion.obtenerTodasLasNotificaciones());
+		model.put("msgExito", "Notificacion generada con exito");
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
+		return new ModelAndView("admin-notificaciones", model);
 	}
 }

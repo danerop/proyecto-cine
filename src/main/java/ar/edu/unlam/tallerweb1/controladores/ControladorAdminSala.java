@@ -19,6 +19,7 @@ import ar.edu.unlam.tallerweb1.servicios.ExceptionCineNoEncontrado;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionSalaNoEncontrada;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSala;
 
 @Controller
@@ -27,12 +28,14 @@ public class ControladorAdminSala {
 	private ServicioCine servicioCine;
 	private ServicioSala servicioSala;
 	private ServicioButaca servicioButaca;
+	private ServicioNotificacion servicioNotificacion;
 	
 	@Autowired
-	public ControladorAdminSala(ServicioCine servicioCine, ServicioSala servicioSala, ServicioButaca servicioButaca) {
+	public ControladorAdminSala(ServicioCine servicioCine, ServicioSala servicioSala, ServicioButaca servicioButaca, ServicioNotificacion servicioNotificacion) {
 		this.servicioCine = servicioCine;
 		this.servicioSala = servicioSala;
 		this.servicioButaca = servicioButaca;
+		this.servicioNotificacion = servicioNotificacion;
 	}
 	
 	@RequestMapping( path = "/admin-salas", method = RequestMethod.GET)
@@ -46,6 +49,8 @@ public class ControladorAdminSala {
 		ModelMap model = new ModelMap();
 		
 		model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		
 		return new ModelAndView("admin-salas", model);
 	}
@@ -111,6 +116,8 @@ public class ControladorAdminSala {
 		
 		model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
 		model.put("msgExito", "Sala guardada con exito");
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("admin-salas", model);
 	}
 	
@@ -191,6 +198,8 @@ public class ControladorAdminSala {
 		
 		model.put("listaSalas", servicioSala.obtenerTodasLasSalas());
 		model.put("msgExito", "Sala actualizada con exito");
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("admin-salas", model);
 	}
 }

@@ -30,11 +30,12 @@ public class ControladorCompraBoleto {
 	private ServicioButacaFuncion servicioButacaFuncion;
 	private ServicioSuscripcion servicioSuscripcion;
 	private ServicioUsuario servicioUsuario;
+	private ServicioNotificacion servicioNotificacion;
 
 	@Autowired
 	public ControladorCompraBoleto(ServicioFuncion servicioFuncion, ServicioBoleto servicioBoleto,
 			ServicioPelicula servicioPelicula, ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion,
-			ServicioSuscripcion servicioSuscripcion, ServicioUsuario servicioUsuario) {
+			ServicioSuscripcion servicioSuscripcion, ServicioUsuario servicioUsuario, ServicioNotificacion servicioNotificacion) {
 
 		this.servicioFuncion = servicioFuncion;
 		this.servicioBoleto = servicioBoleto;
@@ -43,6 +44,7 @@ public class ControladorCompraBoleto {
 		this.servicioButacaFuncion = servicioButacaFuncion;
 		this.servicioSuscripcion = servicioSuscripcion;
 		this.servicioUsuario = servicioUsuario;
+		this.servicioNotificacion = servicioNotificacion;
 	}
 	@RequestMapping(path = "/compra", method = RequestMethod.GET)
 	public ModelAndView irACompra(@RequestParam(value = "p") Long idPelicula,  HttpServletRequest request) {
@@ -59,7 +61,9 @@ public class ControladorCompraBoleto {
 			return new ModelAndView("redirect:/compraboletoerror?p="+idPelicula);
 		}
 		
-		
+		modelo.addAttribute(new DatosBuscar());
+		modelo.put("usuario", user);
+		modelo.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		modelo.put("datosCompraBoleto", new DatosCompraBoleto());
 		modelo.put("funcionesDisponibles", funciones);
 		modelo.put("cinesDisponibles", servicioFuncion.obtenerCinesDisponiblesParaFuncionesFuturas(idPelicula));
@@ -82,6 +86,9 @@ public class ControladorCompraBoleto {
 			return new ModelAndView("redirect:/inicio");
 		}
 		
+		model.addAttribute(new DatosBuscar());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
 		model.put("user", servicioUsuario.buscarUsuarioPorId(user.getId()));
@@ -106,6 +113,10 @@ public class ControladorCompraBoleto {
 			model.put("msg", "La butaca seleccionada no es v�lida");
 			return new ModelAndView("redirect:/compra?p="+idPelicula, model);
 		}
+		
+		model.addAttribute(new DatosBuscar());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		model.put("butacas", servicioButacaFuncion.obtenerButacasPorFuncion(funcionElegida));
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
@@ -125,8 +136,6 @@ public class ControladorCompraBoleto {
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			return new ModelAndView("redirect:/inicio", model);
 		}
-		
-		
 		
 		Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(
 				datosCompraBoleto.getIdcine(), idPelicula, datosCompraBoleto.getFecha(),
@@ -187,7 +196,9 @@ public class ControladorCompraBoleto {
 		
 		Boleto boletoAGuardar = servicioUsuario.buscarUsuarioPorId(user.getId()).getTemp();
 	
-
+		model.addAttribute(new DatosBuscar());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		model.put("p", boletoAGuardar.getFuncion().getPelicula().getId());
 		model.put("user", servicioUsuario.buscarUsuarioPorId(user.getId()));
 		model.put("boletoGenerado", boletoAGuardar);
@@ -238,7 +249,8 @@ public class ControladorCompraBoleto {
 		}
 		//
 		
-		
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		model.put("boletoGenerado", boletoAValidar);
 		model.put("nuevacompra", true);
 		redirectAttributes.addFlashAttribute("mapping1Form", model);
@@ -268,6 +280,10 @@ public class ControladorCompraBoleto {
 		if (model != null) {
 			modelo.addAllAttributes(model);
 		}
+		
+		modelo.addAttribute(new DatosBuscar());
+		modelo.put("usuario", user);
+		modelo.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		modelo.put("boletoGenerado", boleto);
 		modelo.put("idBoleto", idBoleto);
 
@@ -321,14 +337,15 @@ public class ControladorCompraBoleto {
 			model.put("boleto", user.getTemp());
 		}
 		
-		
+		model.addAttribute(new DatosBuscar());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		return new ModelAndView("compra-errores", model);
 	}
 	@RequestMapping(path = "/compraboleto-cancelar", method = RequestMethod.GET)
 	public ModelAndView cancelarnCompra(	
 			@RequestParam(value = "p") Long idPelicula,
-			HttpServletRequest request 
-			){
+			HttpServletRequest request ){
 		ModelMap model = new ModelMap();
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		user=servicioUsuario.buscarUsuarioPorId(user.getId());
