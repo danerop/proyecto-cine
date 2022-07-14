@@ -1,3 +1,4 @@
+create database db;
 use db;
 
 INSERT INTO genero (id, nombre, descripcion)
@@ -46,10 +47,10 @@ VALUES (1, 0, 1),
 	   (2, 0, 1),
        (3, 0, 1);
 
-INSERT INTO usuario(id, activo, email, nombre, password, rol, urlImagenUsuario, suscripcion_id)
-VALUES (1, true, "elian@gmail.com", "Elian Admin", "1234", "admin", "img/perfil/img-perfil-basico.png", 1),
-       (2, true, "hector@gmail.com", "Hector Mercado", "1234", "usuario", "img/perfil/img-perfil-basico.png", 2),
-       (3, true, "braian@gmail.com", "Braian Medina", "1234", "recepcionista", "img/perfil/img-perfil-basico.png", 3);
+INSERT INTO usuario(id, activo, email, nombre, password, rol, urlImagenUsuario, suscripcion_id, modoautomatico)
+VALUES (1, true, "elian@gmail.com", "Elian Admin", "1234", "admin", "img/perfil/img-perfil-basico.png", 1, false),
+       (2, true, "hector@gmail.com", "Hector Mercado", "1234", "usuario", "img/perfil/img-perfil-basico.png", 2, false),
+       (3, true, "braian@gmail.com", "Braian Medina", "1234", "recepcionista", "img/perfil/img-perfil-basico.png", 3, false);
 
 INSERT INTO favorito (id, activo, genero_id, usuario_id)
 VALUES (1, true, 1, 2),

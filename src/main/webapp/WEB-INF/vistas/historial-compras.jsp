@@ -103,7 +103,7 @@
 			<div class="row">
 				<div class="col-4">
 					<div class="container-fluid">
-						<img class="col6" alt="peli"
+						<img class="col6 img-fluid" alt="peli"
 							src="${boletosadquiridos.get(boletosadquiridos.size()-1).getFuncion().getPelicula().getUrlImagenPelicula()}">
 						<div class="col6">
 							Pelicula:
@@ -127,7 +127,7 @@
 				<div class="col-4">
 					<c:if test="${boletosadquiridos.size()>=2}">
 						<div class="container-fluid border-end border-start border-dark">
-							<img class="col" alt="peli"
+							<img class="col img-fluid" alt="peli"
 								src="${boletosadquiridos.get(boletosadquiridos.size()-2).getFuncion().getPelicula().getUrlImagenPelicula()}">
 							<div class="col">
 								Pelicula:

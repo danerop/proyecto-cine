@@ -94,42 +94,42 @@
 				</div>
 				<div class="col-6">
 					<div class="text-center">
-						<c:if test="${!user.getModoautomatico()}">
+						<c:if test="${!usuario.getModoautomatico()}">
 							<h4>Modo autom�tico: desactivado</h4>
 							<a class="btn btn-primary" href="cambiarmodoautomatico">Activar
 								modo autom�tico</a>
 						</c:if>
-						<c:if test="${user.getModoautomatico()}">
+						<c:if test="${usuario.getModoautomatico()}">
 							<h4>Modo autom�tico: activado</h4>
 							<a class="btn btn-secondary" href="cambiarmodoautomatico">Desactivar
 								modo autom�tico</a>
 
-							<c:if test="${user.getFuncionModoAutomatico()!=null}">
+							<c:if test="${usuario.getFuncionModoAutomatico()!=null}">
 								<div class="container-fluid">
 									<div class=row>
 										<div class="col-6">
 											<img alt="pelicula img-fluid"
-												src="${user.getFuncionModoAutomatico().getPelicula().getUrlImagenPelicula()}">
+												src="${usuario.getFuncionModoAutomatico().getPelicula().getUrlImagenPelicula()}">
 										</div>
 										<div class="col-6">
 											<h2>Pelicula:
-												${user.getFuncionModoAutomatico().getPelicula().getNombre()}</h2>
+												${usuario.getFuncionModoAutomatico().getPelicula().getNombre()}</h2>
 											<h2>Fecha:
-												${user.getFuncionModoAutomatico().getFechaHora() }</h2>
-											<h2>Horario: ${user.getFuncionModoAutomatico().getHora() }</h2>
+												${usuario.getFuncionModoAutomatico().getFechaHora() }</h2>
+											<h2>Horario: ${usuario.getFuncionModoAutomatico().getHora() }</h2>
 											<h2>Cine:
-												${user.getFuncionModoAutomatico().getCine().getNombreLocal() }</h2>
+												${usuario.getFuncionModoAutomatico().getCine().getNombreLocal() }</h2>
 											<h2>Sala Id:
-												${user.getFuncionModoAutomatico().getSala().getId()}</h2>
+												${usuario.getFuncionModoAutomatico().getSala().getId()}</h2>
 											<h2>Tipo de sala:
-												${user.getFuncionModoAutomatico().getSala().getTipo() }</h2>
+												${usuario.getFuncionModoAutomatico().getSala().getTipo() }</h2>
 											<a class="btn btn-primary mt-4"
 												href="recepcionista-seleccionarfuncion">Cambiar funci�n</a>
 										</div>
 									</div>
 								</div>
 							</c:if>
-							<c:if test="${user.getFuncionModoAutomatico()==null}">
+							<c:if test="${usuario.getFuncionModoAutomatico()==null}">
 								<br>
 								<a class="btn btn-primary mt-4"
 									href="recepcionista-seleccionarfuncion">Seleccionar funci�n</a>
