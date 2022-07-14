@@ -121,6 +121,14 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		.setProjection(Projections.distinct(Projections.property("cine")))
 		.list();
 	}
+	
+	@Override
+	public List<Funcion> obtenerFuncionesPorFecha(Date fechaHora) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Funcion.class)
+		.add(Restrictions.eq("fechaHora", fechaHora))
+		.list();
+	}
 
 	@Override
 	public void actualizarFuncion(Funcion funcion) {

@@ -18,6 +18,10 @@ public interface ServicioFuncion {
 	
 	List<Funcion> obtenerFuncionesFuturasDePelicula(Long idPelicula);
 	List<Cine> obtenerCinesDisponiblesParaFuncionesFuturas(Long idPelicula);
+
 	void actualizarFuncion(Funcion nuevaFuncion);
+
+	List<Funcion> obtenerFuncionesFechaActual();
+
 	
 }

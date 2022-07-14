@@ -11,7 +11,7 @@
 <!-- Bootstrap theme -->
 <link href="css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="./css/pago.css">
-<title>Recepción</title>
+<title>Recepciï¿½n</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 
@@ -19,6 +19,7 @@
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
 			<div class="container-fluid">
+
 				<a class="navbar-brand" href="inicio">CineApp</a>
 
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +28,7 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav w-100 d-flex justify-content-evenly">
-						<li class="nav-item"><a class="nav-link active" href="iniciorecepcionista">Inicio Recepción</a></li>
+						<li class="nav-item"><a class="nav-link active" href="iniciorecepcionista">Inicio Recepciï¿½n</a></li>
 
 						<li class="nav-item dropdown" style="display: flex;">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${usuario.getNombre()}</a>
@@ -45,6 +46,7 @@
 							</div>
 						</li>
 					</ul>
+
 				</div>
 			</div>
 		</nav>
@@ -84,10 +86,59 @@
 			<div class="row">
 				<div class="col-6">
 					<form id="formidboleto" action="validar-boleto?b=" method="POST">
-						<label>Ingrese la ID del boleto:</label> 
-						<input id="idboleto" class="form-control" /> <br>
-						<button class="btn btn-primary" type="submit">Validar boleto</button>
+						<label>Ingrese la ID del boleto:</label> <input id="idboleto"
+							class="form-control" /> <br>
+						<button class="btn btn-primary" type="submit">Validar
+							boleto</button>
 					</form>
+				</div>
+				<div class="col-6">
+					<div class="text-center">
+						<c:if test="${!user.getModoautomatico()}">
+							<h4>Modo automï¿½tico: desactivado</h4>
+							<a class="btn btn-primary" href="cambiarmodoautomatico">Activar
+								modo automï¿½tico</a>
+						</c:if>
+						<c:if test="${user.getModoautomatico()}">
+							<h4>Modo automï¿½tico: activado</h4>
+							<a class="btn btn-secondary" href="cambiarmodoautomatico">Desactivar
+								modo automï¿½tico</a>
+
+							<c:if test="${user.getFuncionModoAutomatico()!=null}">
+								<div class="container-fluid">
+									<div class=row>
+										<div class="col-6">
+											<img alt="pelicula img-fluid"
+												src="${user.getFuncionModoAutomatico().getPelicula().getUrlImagenPelicula()}">
+										</div>
+										<div class="col-6">
+											<h2>Pelicula:
+												${user.getFuncionModoAutomatico().getPelicula().getNombre()}</h2>
+											<h2>Fecha:
+												${user.getFuncionModoAutomatico().getFechaHora() }</h2>
+											<h2>Horario: ${user.getFuncionModoAutomatico().getHora() }</h2>
+											<h2>Cine:
+												${user.getFuncionModoAutomatico().getCine().getNombreLocal() }</h2>
+											<h2>Sala Id:
+												${user.getFuncionModoAutomatico().getSala().getId()}</h2>
+											<h2>Tipo de sala:
+												${user.getFuncionModoAutomatico().getSala().getTipo() }</h2>
+											<a class="btn btn-primary mt-4"
+												href="recepcionista-seleccionarfuncion">Cambiar funciï¿½n</a>
+										</div>
+									</div>
+								</div>
+							</c:if>
+							<c:if test="${user.getFuncionModoAutomatico()==null}">
+								<br>
+								<a class="btn btn-primary mt-4"
+									href="recepcionista-seleccionarfuncion">Seleccionar funciï¿½n</a>
+							</c:if>
+						</c:if>
+
+					</div>
+
+
 				</div>
 			</div>
 		</div>
@@ -113,13 +164,16 @@
 	<script src="./js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#idboleto").change(function() {
-				var idBoleto;
-				idBoleto = $("#idboleto").val();
-				$("#formidboleto").attr('action','validar-boleto?b='+idBoleto);
-			});
-		});
+		$(document).ready(
+				function() {
+					$("#idboleto").change(
+							function() {
+								var idBoleto;
+								idBoleto = $("#idboleto").val();
+								$("#formidboleto").attr('action',
+										'validar-boleto?b=' + idBoleto);
+							});
+				});
 	</script>
 	<script>
 		$('#navbarDropdownMenuLink').on('click', function(e) {
