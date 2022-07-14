@@ -36,6 +36,9 @@ public class Usuario {
 	@Cascade(CascadeType.PERSIST)
 	private Suscripcion suscripcion;
 	
+	private Boolean modoautomatico=false;
+	@OneToOne
+	private Funcion funcionModoAutomatico;
 	
 	public Long getId() {
 		return id;
@@ -92,6 +95,20 @@ public class Usuario {
 	}
 	public void setTemp(Boleto temp) {
 		this.temp = temp;
+	}
+	
+	public Boolean getModoautomatico() {
+		return modoautomatico;
+	}
+	public void setModoautomatico(Boolean modoautomatico) {
+		this.modoautomatico = modoautomatico;
+	}
+	
+	public Funcion getFuncionModoAutomatico() {
+		return funcionModoAutomatico;
+	}
+	public void setFuncionModoAutomatico(Funcion funcionModoAutomatico) {
+		this.funcionModoAutomatico = funcionModoAutomatico;
 	}
 	@Override
 	public int hashCode() {

@@ -11,6 +11,8 @@
 <!-- Bootstrap theme -->
 <link href="css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="./css/pago.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <title>Home</title>
 </head>
 
@@ -58,64 +60,36 @@
 		%>
 
 		<div class="container-fluid contenedorpago bg-white">
-			<div class="row">
-				<div class="col-6">
-					<form id="formidboleto" action="validar-boleto?b=" method="POST">
-						<label>Ingrese la ID del boleto:</label> <input id="idboleto"
-							class="form-control" /> <br>
-						<button class="btn btn-primary" type="submit">Validar
-							boleto</button>
-					</form>
-				</div>
-				<div class="col-6">
-					<div class="text-center">
-						<c:if test="${!user.getModoautomatico()}">
-							<h4>Modo automático: desactivado</h4>
-							<a class="btn btn-primary" href="cambiarmodoautomatico">Activar
-								modo automático</a>
-						</c:if>
-						<c:if test="${user.getModoautomatico()}">
-							<h4>Modo automático: activado</h4>
-							<a class="btn btn-secondary" href="cambiarmodoautomatico">Desactivar
-								modo automático</a>
-
-							<c:if test="${user.getFuncionModoAutomatico()!=null}">
-								<div class="container-fluid">
-									<div class=row>
-										<div class="col-6">
-											<img alt="pelicula img-fluid"
-												src="${user.getFuncionModoAutomatico().getPelicula().getUrlImagenPelicula()}">
-										</div>
-										<div class="col-6">
-											<h2>Pelicula:
-												${user.getFuncionModoAutomatico().getPelicula().getNombre()}</h2>
-											<h2>Fecha:
-												${user.getFuncionModoAutomatico().getFechaHora() }</h2>
-											<h2>Horario: ${user.getFuncionModoAutomatico().getHora() }</h2>
-											<h2>Cine:
-												${user.getFuncionModoAutomatico().getCine().getNombreLocal() }</h2>
-											<h2>Sala Id:
-												${user.getFuncionModoAutomatico().getSala().getId()}</h2>
-											<h2>Tipo de sala:
-												${user.getFuncionModoAutomatico().getSala().getTipo() }</h2>
-											<a class="btn btn-primary mt-4"
-												href="recepcionista-seleccionarfuncion">Cambiar función</a>
-										</div>
-									</div>
-								</div>
-							</c:if>
-							<c:if test="${user.getFuncionModoAutomatico()==null}">
-								<br>
+			
+			<c:if test="${funcionesdehoy==null || funcionesdehoy.size()==0}">
+				<h1 class="text-danger text-center m-5">
+					<i class="bi bi-x-circle-fill display-1"></i> No se han encontrado funciones para el día de hoy.
+				</h1>
+			</c:if>
+			
+				<c:if test="${funcionesdehoy!=null && funcionesdehoy.size()>0}">
+					<c:forEach items="${funcionesdehoy}" var="funcion">
+						<div class=row>
+							<div class="col-6">
+								<img alt="pelicula img-fluid"
+									src="${funcion.getPelicula().getUrlImagenPelicula()}">
+							</div>
+							<div class="col-6">
+								<h2>Pelicula: ${funcion.getPelicula().getNombre()}</h2> 
+								<h2>Fecha: <br> ${funcion.getFechaHora() }</h2>
+								<h2>Horario: ${funcion.getHora() }</h2>
+								<h2>Cine: ${funcion.getCine().getNombreLocal() }</h2>
+								<h2>Sala Id: ${funcion.getSala().getId()}</h2>
+								<h2>Tipo de sala: ${funcion.getSala().getTipo() }</h2>
 								<a class="btn btn-primary mt-4"
-									href="recepcionista-seleccionarfuncion">Seleccionar función</a>
-							</c:if>
-						</c:if>
+									href="asociarfuncionautomatica?f=${funcion.getId()}">Seleccionar</a>
+							</div>
+							<hr>
+						</div>
+					</c:forEach>
+				</c:if>
 
-					</div>
 
-
-				</div>
-			</div>
 		</div>
 
 
@@ -137,17 +111,12 @@
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="./js/bootstrap.min.js"></script>
+		<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(
-				function() {
-					$("#idboleto").change(
-							function() {
-								var idBoleto;
-								idBoleto = $("#idboleto").val();
-								$("#formidboleto").attr('action',
-										'validar-boleto?b=' + idBoleto);
-							});
+		
 				});
 	</script>
 </body>

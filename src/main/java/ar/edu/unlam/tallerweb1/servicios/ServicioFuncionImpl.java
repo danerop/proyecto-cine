@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -113,4 +115,15 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		return funcionzz;	
 	}
 	
+
+	@Override
+	public List<Funcion> obtenerFuncionesFechaActual() {
+		
+		LocalDate dateObj = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String strfechaActual = dateObj.format(formatter);
+		Date fechaactual=Date.valueOf(strfechaActual);
+		
+		return repositorioFuncionDao.obtenerFuncionesPorFecha(fechaactual);
+	}
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioUsuario;
+import ar.edu.unlam.tallerweb1.modelo.Funcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 // Implelemtacion del Servicio de usuarios, la anotacion @Service indica a Spring que esta clase es un componente que debe
@@ -59,6 +60,27 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Override
 	public List<Usuario> obtenerUsuariosActivos() {
 		return repositorioUsuarioDao.obtenerUsuariosActivos();
+	}
+	@Override
+	public void cambiarmodoautomatico(Usuario usuario) {
+		if (usuario!=null && usuario.getModoautomatico()!=null) {
+			if (usuario.getModoautomatico()) {
+				usuario.setModoautomatico(false);
+			} else {
+				usuario.setModoautomatico(true);
+			}
+			actualizarUsuario(usuario);
+		} else {
+			usuario.setModoautomatico(false);
+			actualizarUsuario(usuario);
+		}
+	}
+	@Override
+	public void seleccionarFuncionAutomatica(Usuario usuario, Funcion funcion) {
+		if (usuario!=null && usuario.getModoautomatico()!=null && funcion!=null) {
+			usuario.setFuncionModoAutomatico(funcion);
+			actualizarUsuario(usuario);
+		}
 	}
 
 }

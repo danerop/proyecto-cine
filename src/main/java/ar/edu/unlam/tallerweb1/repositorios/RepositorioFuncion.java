@@ -23,5 +23,6 @@ public interface RepositorioFuncion {
 	
 	List<Funcion> obtenerFuncionesFuturasDePelicula(Long idPelicula);
 	List<Cine> obtenerCinesDisponiblesParaFuncionesFuturas(Long idPelicula);
+	List<Funcion> obtenerFuncionesPorFecha(Date fechaHora);
 
 }
