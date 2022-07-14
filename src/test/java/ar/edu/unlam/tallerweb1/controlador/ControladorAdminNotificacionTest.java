@@ -50,7 +50,7 @@ public class ControladorAdminNotificacionTest extends SpringTest{
 		ModelAndView mav2 = controladorAdminNoti.agregarNuevaNotificacion(datosNotificacion, mockRequest);
 		
 		assertEquals("admin-notificaciones", mav.getViewName());
-		assertEquals("redirect:/admin-notificaciones", mav2.getViewName());
+		assertEquals("admin-notificaciones", mav2.getViewName());
 	}
 	@Test
 	@Transactional @Rollback

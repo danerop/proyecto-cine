@@ -28,7 +28,7 @@ public class RepositorioPeliculaTest extends SpringTest{
 		session().save(peli2);
 		session().save(peli3);
 		
-		Pelicula peliesperada = repopeli.obtenerPeliculaPorID(2l);
+		Pelicula peliesperada = repopeli.obtenerPeliculaPorID(peli2.getId());
 		
 		assertNotNull(peliesperada);
 		assertEquals(peli2, peliesperada);

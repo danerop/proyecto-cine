@@ -160,11 +160,11 @@ public class ControladorCompraBoleto {
 		try {
 			servicioBoleto.guardarBoleto(boletoAGuardar, temp);
 		}  catch (ExceptionFuncionNoEncontrada e) {
-			model.put("msg", "La funciï¿½n de la cual desea reservar boleto no existe");
+			model.put("msg", "La función de la cual desea reservar boleto no existe");
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			return new ModelAndView("redirect:/inicio", model);
 		} 	catch (ExceptionDatosBoletoDiferentesARegistroButacaFuncion e) {
-			model.put("msg", "Los datos de la butaca seleccionada no corresponden a una vï¿½lida");
+			model.put("msg", "Los datos de la butaca seleccionada no corresponden a una válida");
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			return new ModelAndView("redirect:/inicio", model);
 		} 	catch (ExceptionButacaYaOcupada e) {
@@ -187,6 +187,7 @@ public class ControladorCompraBoleto {
 		ModelMap model = new ModelMap();
 				
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
 		if (user == null || !user.getRol().equals("usuario")) {
 			return new ModelAndView("redirect:/inicio");
 		} 

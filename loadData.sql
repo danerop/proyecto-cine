@@ -138,3 +138,6 @@ select * from usuario;
 select * from butaca;
 select * from suscripcion;
 select * from detallesuscripcion;
+
+Usuario= TESTLNNAD80G
+Contraseña: qatest5854

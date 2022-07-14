@@ -43,7 +43,7 @@ public class ControladorRecepcionista {
 	public ModelAndView irAIniciouRecepcionista(HttpServletRequest request) {
 		Usuario temp=(Usuario) request.getSession().getAttribute("usuario");
 		temp= servicioUsuario.buscarUsuarioPorId(temp.getId());
-		if (request.getSession().getAttribute("usuario") != null && temp.getRol().equals("recepcionista") ) {
+		if (temp != null && temp.getRol().equals("recepcionista") ) {
 			ModelMap modelo = new ModelMap();
 			modelo.put("usuario", temp);
 			modelo.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(temp));
