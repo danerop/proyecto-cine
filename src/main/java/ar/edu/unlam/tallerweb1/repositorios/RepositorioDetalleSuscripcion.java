@@ -14,4 +14,6 @@ public interface RepositorioDetalleSuscripcion {
 	DetalleSuscripcion obtenerDetalleSuscripcionPorId (Long id);
 	void setSessionFactory(SessionFactory sessionFactory);
 	SessionFactory getSessionFactory();
-	List<DetalleSuscripcion> obtenerTodosLosDetallesSuscripcion();}
+	List<DetalleSuscripcion> obtenerTodosLosDetallesSuscripcion();
+
+}

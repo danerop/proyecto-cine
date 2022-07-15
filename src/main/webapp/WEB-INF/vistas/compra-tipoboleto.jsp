@@ -12,52 +12,58 @@
 <title>Compra Boleto</title>
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/pago.css">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 
 <body>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
 			<div class="container-fluid">
-				<!--  <div class="d-flex justify-content-evenly">...</div> -->
-				<a class="navbar-brand" href="inicio">LOGO</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
+				<a class="navbar-brand" href="inicio">CineApp</a>
+
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
+
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav w-100 d-flex justify-content-evenly">
-						<li class="nav-item"><a class="nav-link active" href="inicio">Inicio</a></li>
-						<li class="nav-item"><a class="nav-link" href="mapa">Mapa
-								de cines</a></li>
+						<li class="nav-item"><a class="nav-link" href="inicio">Inicio</a></li>
+						<li class="nav-item"><a class="nav-link" href="mapa">Mapa de cines</a></li>
 						<li class="nav-item"><a class="nav-link" href="suscripcion">Suscripciones</a></li>
-						<li class="nav-item"><a class="nav-link" href="cerrarSesion">Iniciar
-								Session</a></li>
+						<li>
+							<form:form action="buscar" method="GET" class="d-flex" modelAttribute="datosBuscar">
+								<form:input class="form-control me-2" path="busqueda" />
+								<form:button class="btn btn-outline-success" type="submit">Buscar</form:button>
+							</form:form>
+						</li>
+
 						<%
 						if (request.getAttribute("usuario") != null) {
 						%>
-						<li class="nav-item"><a class="nav-link"
-							href="historialcompras">Mis Boletos</a></li>
-						<li class="nav-item">
-							<button type="button" class="btn btn-dark position-relative"
-								data-bs-toggle="modal" data-bs-target="#exampleModal">
+						<li class="nav-item dropdown" style="display: flex;">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${usuario.getNombre()}</a>
+							<button type="button" class="btn btn-dark position-relative" data-bs-toggle="modal" data-bs-target="#exampleModal">
 								<i class="bi bi-bell-fill text-secondary"></i>
 								<c:if test="${notificaciones.size()>0}">
-									<span
-										class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-										${notificaciones.size()} <span class="visually-hidden">unread
-											messages</span>
+									<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+										${notificaciones.size()} <span class="visually-hidden">unread messages</span>
 									</span>
 								</c:if>
 							</button>
+
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="margin-top: 50px;">
+								<a class="dropdown-item" href="generos">Mis Generos Favoritos</a>
+								<a class="dropdown-item" href="historialcompras">Mis Boletos</a>
+								<a class="dropdown-item" href="cerrarSesion">Cerrar Session</a>
+							</div>
 						</li>
+						<%
+						} else {
+						%>
+						<li class="nav-item"><a class="nav-link" href="cerrarSesion">Iniciar Sesion</a></li>
 						<%
 						}
 						%>
-
 					</ul>
 				</div>
 			</div>
@@ -65,15 +71,14 @@
 	</header>
 
 	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Notificaciones</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
+				
 				<div class="modal-body">
 					<c:forEach items="${notificaciones}" var="notificacion">
 						<div class="alert alert-secondary">
@@ -82,11 +87,10 @@
 							<p>${notificacion.getNotificacion().getTexto()}</p>
 						</div>
 					</c:forEach>
-
 				</div>
+				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
 		</div>
@@ -206,6 +210,16 @@
 		});
 	</script>
 
+	<script>
+		$('#navbarDropdownMenuLink').on('click', function(e) {
+			e.preventDefault();
+			if ($(".dropdown-menu").hasClass('show')) {
+				$(".dropdown-menu").removeClass('show');
+			} else {
+				$(".dropdown-menu").addClass('show');
+			}
+		});
+	</script>
 </body>
 
 </html>

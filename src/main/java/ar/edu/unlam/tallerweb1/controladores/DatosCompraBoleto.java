@@ -1,8 +1,6 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 public class DatosCompraBoleto {
 	private Long idCine;
@@ -13,7 +11,6 @@ public class DatosCompraBoleto {
 	private Long idSala;
 	private Long idButaca;
 	private Float precio;
-
 	
 	
 	public DatosCompraBoleto(Long idCine, String fecha, String hora, Long idPelicula, Long idUsuario, Long idSala,
@@ -90,5 +87,6 @@ public class DatosCompraBoleto {
 	public void setPrecio(Float precio) {
 		this.precio = precio;
 	}
+
 	
 }

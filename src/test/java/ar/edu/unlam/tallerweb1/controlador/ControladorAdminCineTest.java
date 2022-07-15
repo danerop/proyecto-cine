@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,11 +18,13 @@ import ar.edu.unlam.tallerweb1.modelo.Cine;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ExceptionCineCamposVacios;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 
 public class ControladorAdminCineTest {
 	
 	private ServicioCine servicioCine = mock(ServicioCine.class);
-	private ControladorAdminCine controladorAdminCine = new ControladorAdminCine(servicioCine);
+	private ServicioNotificacion servicioNotificacion = mock(ServicioNotificacion.class);
+	private ControladorAdminCine controladorAdminCine = new ControladorAdminCine(servicioCine, servicioNotificacion);
 	
 	@Test
 	@Transactional @Rollback

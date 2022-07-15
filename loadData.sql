@@ -1,40 +1,41 @@
+create database db;
 use db;
 
-INSERT INTO genero (id, descripcion, nombre)
-VALUES (1, "accion", "Accion"),
-	   (2, "comedia", "Comedia"),
-       (3, "terror", "Terror"),
-       (4, "ciencia ficcion", "Ciencia Ficcion"),
-       (5, "suspenso", "Suspenso"),
-       (6, "fantasia", "Fantasia"),
-       (7, "aventura", "Aventura"),
-       (8, "documental", "Documental");
+INSERT INTO genero (id, nombre, descripcion)
+VALUES (1, "Accion", ""),
+	   (2, "Comedia", ""),
+       (3, "Terror", ""),
+       (4, "Ciencia Ficcion", ""),
+       (5, "Suspenso", ""),
+       (6, "Fantasia", ""),
+       (7, "Aventura", ""),
+       (8, "Documental", "");
 
-INSERT INTO pelicula(nombre, anio, descripcion, duracion, urlImagenPelicula)
-VALUES("Sonic 2", 2022, "descripcion", 150, "img/pelicula/sonic2.jpg"),
-	  ("Dr Strange: Multiverso de la locura", 2022, "descripcion", 150, "img/pelicula/strange.jpg"),
-      ("Animales Fantasticos 3", 2022, "descripcion", 150, "img/pelicula/animalesf.jpg"),
-      ("Bombonera: La película del templo", 2022, "descripcion", 150, "img/pelicula/bombonera.jpg"),
-      ("La Medium", 2022, "descripcion", 150, "img/pelicula/lamedium.jpg"),
-      ("En la mira", 2022, "descripcion", 150, "img/pelicula/enlamira.jpg"),
-      ("El hombre del norte", 2022, "descripcion", 150, "img/pelicula/elhombredelnorte.jpg"),
-      ("La ciudad perdida", 2022, "descripcion", 150, "img/pelicula/ciudadperdida.jpg"),
-      ("Llamas de venganza", 2022, "descripcion", 150, "img/pelicula/llamas.jpg");
+INSERT INTO pelicula(id, nombre, anio, duracion, urlImagenPelicula, descripcion)
+VALUES(1, "Sonic 2", 2022, 150, "https://es.web.img3.acsta.net/pictures/22/02/18/10/20/5195258.jpg", "Después de establecerse en Green Hills, Sonic quiere demostrar que tiene madera de héroe. La prueba de fuego llega con el retorno del malvado Robotnik, y su nuevo compinche, Knuckles, en busca de una esmeralda que destruye civilizaciones."),
+	  (2, "Dr Strange: Multiverso de la locura", 2022, 150, "https://www.ecartelera.com/carteles/13400/13413/005_m.jpg", "El Dr. Stephen Strange abre un portal al multiverso al utilizar un hechizo prohibido. Ahora, su equipo debe enfrentarse a una amenaza que podrÃ­a destruirlo todo."),
+      (3, "Animales Fantasticos 3", 2022, 150, "https://es.web.img3.acsta.net/pictures/22/03/16/12/44/0138242.jpg", "Ante una severa amenaza, el magizólogo Newt Scamander lidera a un valiente grupo de magos y brujas que busca detener al malvado Gellert Grindelwald."),
+      (4, "Bombonera: La pelÃ­cula del templo", 2022, 150, "https://cineargentinohoy.com.ar/wp-content/uploads/2022/05/bombon_1652959544.jpg", "La historia de uno de los estadios más importantes del continente llega a la pantalla grande."),
+      (5, "La Medium", 2022, 150, "https://static.cinepolis.com.ar/posters/1575/w500/ref-la-medium-poster-70x100-iijpg", "En Tailandia, un grupo de documentalistas registra la vida cotidiana de una médium, Nim Tonvali, quien relata estar poseída por el espíritu de la diosa Bayan. Durante el velatorio de su cuñado, Nim observa un comportamiento extraño en su sobrina."),
+      (6, "En la mira", 2022, 150, "https://www.lavanguardia.com/peliculas-series/images/movie/poster/2022/4/w1280/vhUOhup1WcTVW5YF29qgXY7w7Vg.jpg", "Cuando Axel recibe la última llamada del día de Figueroa Mont un cliente cansado del mal servicio todo empieza a cambiar cuando Mont le dice que lo está mirando a través de un telescopio acoplado a un rifle."),
+      (7, "El hombre del norte", 2022, 150, "https://es.web.img3.acsta.net/pictures/22/03/30/17/33/2402670.jpg", "El príncipe Amleth está a punto de convertirse en hombre pero, en ese momento, su tío asesina brutalmente a su padre y secuestra a la madre del niño. Dos décadas después, Amleth es un vikingo que tiene la misión de salvar a su madre."),
+      (8, "La ciudad perdida", 2022, 150, "https://es.web.img2.acsta.net/pictures/22/02/28/16/18/2106533.jpg", "La escritora solitaria Loretta Sage escribe sobre lugares exóticos en sus populares novelas de aventuras con un atractivo modelo de portada, Alan. Mientras está de gira promocionando su nuevo libro, es secuestrada por un excéntrico multimillonario."),
+      (9, "Llamas de venganza", 2022, 150, "https://www.universalpictures.com.mx/tl_files/content/movies/firestarter/posters/01.jpg", "Una pareja oculta a su hija, Charlie, capaz de provocar fuego espontáneamente, de una agencia que quiere usarla. Finalmente, la organización encuentra a la familia y se dispone a llevarse a la niña, pero ella no está dispuesta a que la utilicen.");
 
-INSERT INTO peliculagenero(id, pelicula_id, genero_id)
-VALUES(1,1,6),
-	  (2,1,2),
-      (3,2,1),
-      (4,2,2),
-      (5,3,6),
-      (6,4,8),
-      (7,5,5),
-      (8,5,3),
-      (9,6,5),
-      (10,7,1),
-      (11,7,7),
-      (12,8,7),
-      (13,9,6);
+INSERT INTO peliculagenero(pelicula_id, genero_id)
+VALUES(1,6),
+	  (1,2),
+      (2,1),
+      (2,2),
+      (3,6),
+      (4,8),
+      (5,5),
+      (5,3),
+      (6,5),
+      (7,1),
+      (7,7),
+      (8,7),
+      (9,6);
 
 INSERT INTO detallesuscripcion(id, cantidadBoletosGratis, cuota, descuentoEnBoletos, tipo)
 VALUES(1, 0, 0.0, 0.0, "comun"),
@@ -43,57 +44,88 @@ VALUES(1, 0, 0.0, 0.0, "comun"),
 
 INSERT INTO suscripcion(id, cantidadDeBoletosGratisRestantes, detalleSuscripcion_id)
 VALUES (1, 0, 1),
-	   (2, 2, 2),
+	   (2, 0, 1),
        (3, 0, 1);
 
-INSERT INTO usuario(id, activo, email, password, rol, urlImagenUsuario, suscripcion_id)
-VALUES (1 , true, "elian@gmail.com", "1234", "admin", "img", 1),
-       (2, true, "hector@gmail.com", "1234", "usuario", "img", 2),
-       (3, true, "braian@gmail.com", "1234", "recepcionista", "img", 3);
+INSERT INTO usuario(id, activo, email, nombre, password, rol, urlImagenUsuario, suscripcion_id, modoautomatico)
+VALUES (1, true, "elian@gmail.com", "Elian Admin", "1234", "admin", "img/perfil/img-perfil-basico.png", 1, false),
+       (2, true, "hector@gmail.com", "Hector Mercado", "1234", "usuario", "img/perfil/img-perfil-basico.png", 2, false),
+       (3, true, "braian@gmail.com", "Braian Medina", "1234", "recepcionista", "img/perfil/img-perfil-basico.png", 3, false);
 
 INSERT INTO favorito (id, activo, genero_id, usuario_id)
 VALUES (1, true, 1, 2),
-	   (2, true, 3, 2),
-       (3, true, 2, 1);
+	   (2, true, 3, 2);
 
 INSERT INTO cine(id, nombreLocal, direccion, latitud, longitud, email, telefono, urlImagenCine)
 VALUES(1, "CINEMARKO", "Calle Anonima 567", -34.6356, -58.5420, "cinemarko@gmail.com", "4444-3333", "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/90/24/84/cinemark.jpg?w=1200&h=-1&s=1"),
 	  (2, "GRANPANTALLA", "Buitre 452", -34.5602, -59.1284, "granpantalla@gmail.com", "4848-5353", "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Sala_de_cine.jpg/1200px-Sala_de_cine.jpg"),
 	  (3, "IMAX", "Av. Corta 123", -45.8687, -67.5196, "imax@gmail.com", "4141-4523", "https://www.adslzone.net/app/uploads-adslzone.net/2018/04/IMAXNewTheater.jpg");
 
-INSERT INTO sala(id, tipo, cine_id)
-VALUES(1,"Comun",1),
-	  (2,"GoldenClass",1),
-	  (3,"Sala3D",1),
-	  (4,"Sala4D",2),
-      (5,"Comun",2),
-      (6,"Comun",3),
-      (7,"GoldenClass",3),
-      (8,"Sala3D",3);
+INSERT INTO sala(cine_id, tipo)
+VALUES(1,"Comun"),
+	  (1,"GoldenClass"),
+	  (1,"Sala3D"),
+	  (2,"Sala4D"),
+      (2,"Comun"),
+      (3,"Comun"),
+      (3,"GoldenClass"),
+      (3,"Sala3D");
       
-INSERT INTO butaca(id, nroUbicacion, sala_id)
-VALUES(1, 205, 1),
-	  (2, 206, 1),
-	  (3, 208, 1),
-	  (4, 100, 2),
-	  (5, 100, 3),
-	  (6, 100, 4);
-      
-INSERT INTO funcion(id, entradasDisponibles, fechaHora, hora, precioMayor, precioMenor, cine_id, pelicula_id, sala_id)
-VALUES(1,50,'2022-08-02',"20:30", 500, 250, 1, 1, 1),
-	  (2,100,'2022-08-23',"19:00", 500, 250, 1, 1, 1),
-      (3,100,'2022-08-24',"22:00", 500, 250, 2, 1, 4),
-      (4,100,'2022-07-02',"22:00", 600, 300, 2, 2, 5),
-      (5,100,'2022-07-03',"22:00", 500, 250, 3, 3, 6),
-      (6,100,'2022-07-07',"22:00", 800, 500, 3, 2, 7);
+INSERT INTO butaca(id, sala_id, nroUbicacion)
+VALUES
+(1, 1, 1), (2, 1, 2), (3, 1, 3), (4, 1, 4), (5, 1, 7), (6, 1, 8), (7, 1, 9), (8, 1, 10), (9, 1, 11), (10, 1, 12), (11, 1, 13), (12, 1, 14), (13, 1, 15), (14, 1, 18), (15, 1, 19), (16, 1, 20), (17, 1, 21), (18, 1, 22), (19, 1, 23), (20, 1, 24), (21, 1, 25), (22, 1, 26), (23, 1, 29), (24, 1, 30), (25, 1, 31), (26, 1, 32),
+(27, 1, 33), (28, 1, 34), (29, 1, 35), (30, 1, 36), (31, 1, 39), (32, 1, 40), (33, 1, 41), (34, 1, 42), (35, 1, 43), (36, 1, 44), (37, 1, 45), (38, 1, 46), (39, 1, 47), (40, 1, 50), (41, 1, 51), (42, 1, 52), (43, 1, 53), (44, 1, 54), (45, 1, 55), (46, 1, 56), (47, 1, 57), (48, 1, 58), (49, 1, 61), (50, 1, 62), (51, 1, 63), (52, 1, 64),
+(53, 1, 65), (54, 1, 66), (55, 1, 67), (56, 1, 68), (57, 1, 71), (58, 1, 72), (59, 1, 73), (60, 1, 74), (61, 1, 75), (62, 1, 76), (63, 1, 77), (64, 1, 78), (65, 1, 79), (66, 1, 82), (67, 1, 83), (68, 1, 84), (69, 1, 85), (70, 1, 86), (71, 1, 87), (72, 1, 88), (73, 1, 89), (74, 1, 90), (75, 1, 93), (76, 1, 94), (77, 1, 95), (78, 1, 96),
+(79, 1, 97), (80, 1, 98), (81, 1, 99), (82, 1, 100), (83, 1, 103), (84, 1, 104), (85, 1, 105), (86, 1, 106), (87, 1, 107), (88, 1, 108), (89, 1, 109), (90, 1, 110), (91, 1, 111), (92, 1, 114), (93, 1, 115), (94, 1, 116), (95, 1, 117), (96, 1, 118), (97, 1, 119), (98, 1, 120), (99, 1, 121), (100, 1, 122), (101, 1, 125), (102, 1, 126), (103, 1, 127), (104, 1, 128),
+(105, 1, 129), (106, 1, 130), (107, 1, 131), (108, 1, 132), (109, 1, 135), (110, 1, 136), (111, 1, 137), (112, 1, 138), (113, 1, 139), (114, 1, 140), (115, 1, 141), (116, 1, 142), (117, 1, 143), (118, 1, 146), (119, 1, 147), (120, 1, 148), (121, 1, 149), (122, 1, 150), (123, 1, 151), (124, 1, 152), (125, 1, 153), (126, 1, 154), (127, 1, 157), (128, 1, 158), (129, 1, 159), (130, 1, 160),
+(131, 1, 161), (132, 1, 162), (133, 1, 163), (134, 1, 164), (135, 1, 167), (136, 1, 168), (137, 1, 169), (138, 1, 170), (139, 1, 171), (140, 1, 172), (141, 1, 173), (142, 1, 174), (143, 1, 175), (144, 1, 178), (145, 1, 179), (146, 1, 180), (147, 1, 181), (148, 1, 182), (149, 1, 183), (150, 1, 184), (151, 1, 185), (152, 1, 186), (153, 1, 189), (154, 1, 190), (155, 1, 191), (156, 1, 192),
+(157, 1, 193), (158, 1, 194), (159, 1, 195), (160, 1, 196), (161, 1, 199), (162, 1, 200), (163, 1, 201), (164, 1, 202), (165, 1, 203), (166, 1, 204), (167, 1, 205), (168, 1, 206), (169, 1, 207), (170, 1, 210), (171, 1, 211), (172, 1, 212), (173, 1, 213), (174, 1, 214), (175, 1, 215), (176, 1, 216), (177, 1, 217), (178, 1, 218), (179, 1, 221), (180, 1, 222), (181, 1, 223), (182, 1, 224),
+(183, 1, 225), (184, 1, 226), (185, 1, 227), (186, 1, 228), (187, 1, 231), (188, 1, 232), (189, 1, 233), (190, 1, 234), (191, 1, 235), (192, 1, 236), (193, 1, 237), (194, 1, 238), (195, 1, 239), (196, 1, 242), (197, 1, 243), (198, 1, 244), (199, 1, 245), (200, 1, 246), (201, 1, 247), (202, 1, 248), (203, 1, 249), (204, 1, 250), (205, 1, 253), (206, 1, 254), (207, 1, 255), (208, 1, 256),
+(209, 1, 289), (210, 1, 290), (211, 1, 291), (212, 1, 292), (213, 1, 295), (214, 1, 296), (215, 1, 297), (216, 1, 298), (217, 1, 299), (218, 1, 300), (219, 1, 301), (220, 1, 302), (221, 1, 303), (222, 1, 306), (223, 1, 307), (224, 1, 308), (225, 1, 309), (226, 1, 310), (227, 1, 311), (228, 1, 312), (229, 1, 313), (230, 1, 314), (231, 1, 317), (232, 1, 318), (233, 1, 319), (234, 1, 320),
+(235, 1, 321), (236, 1, 322), (237, 1, 323), (238, 1, 324), (239, 1, 327), (240, 1, 328), (241, 1, 329), (242, 1, 330), (243, 1, 331), (244, 1, 332), (245, 1, 333), (246, 1, 334), (247, 1, 335), (248, 1, 338), (249, 1, 339), (250, 1, 340), (251, 1, 341), (252, 1, 342), (253, 1, 343), (254, 1, 344), (255, 1, 345), (256, 1, 346), (257, 1, 349), (258, 1, 350), (259, 1, 351), (260, 1, 352),
+(261, 1, 353), (262, 1, 354), (263, 1, 355), (264, 1, 356), (265, 1, 359), (266, 1, 360), (267, 1, 361), (268, 1, 362), (269, 1, 363), (270, 1, 364), (271, 1, 365), (272, 1, 366), (273, 1, 367), (274, 1, 370), (275, 1, 371), (276, 1, 372), (277, 1, 373), (278, 1, 374), (279, 1, 375), (280, 1, 376), (281, 1, 377), (282, 1, 378), (283, 1, 381), (284, 1, 382), (285, 1, 383), (286, 1, 384),
+(287, 1, 385), (288, 1, 386), (289, 1, 387), (290, 1, 388), (291, 1, 391), (292, 1, 392), (293, 1, 393), (294, 1, 394), (295, 1, 395), (296, 1, 396), (297, 1, 397), (298, 1, 398), (299, 1, 399), (300, 1, 402), (301, 1, 403), (302, 1, 404), (303, 1, 405), (304, 1, 406), (305, 1, 407), (306, 1, 408), (307, 1, 409), (308, 1, 410), (309, 1, 413), (310, 1, 414), (311, 1, 415), (312, 1, 416),
+(313, 1, 417), (314, 1, 418), (315, 1, 419), (316, 1, 420), (317, 1, 423), (318, 1, 424), (319, 1, 425), (320, 1, 426), (321, 1, 427), (322, 1, 428), (323, 1, 429), (324, 1, 430), (325, 1, 431), (326, 1, 434), (327, 1, 435), (328, 1, 436), (329, 1, 437), (330, 1, 438), (331, 1, 439), (332, 1, 440), (333, 1, 441), (334, 1, 442), (335, 1, 445), (336, 1, 446), (337, 1, 447), (338, 1, 448),
+(339, 1, 449), (340, 1, 450), (341, 1, 451), (342, 1, 452), (343, 1, 455), (344, 1, 456), (345, 1, 457), (346, 1, 458), (347, 1, 459), (348, 1, 460), (349, 1, 461), (350, 1, 462), (351, 1, 463), (352, 1, 466), (353, 1, 467), (354, 1, 468), (355, 1, 469), (356, 1, 470), (357, 1, 471), (358, 1, 472), (359, 1, 473), (360, 1, 474), (361, 1, 477), (362, 1, 478), (363, 1, 479), (364, 1, 480),
+(365, 1, 481), (366, 1, 482), (367, 1, 483), (368, 1, 484), (369, 1, 487), (370, 1, 488), (371, 1, 489), (372, 1, 490), (373, 1, 491), (374, 1, 492), (375, 1, 493), (376, 1, 494), (377, 1, 495), (378, 1, 498), (379, 1, 499), (380, 1, 500), (381, 1, 501), (382, 1, 502), (383, 1, 503), (384, 1, 504), (385, 1, 505), (386, 1, 506), (387, 1, 509), (388, 1, 510), (389, 1, 511), (390, 1, 512), 
+(391, 2, 100),
+(392, 3, 100),
+(393, 4, 100),
+(394, 5, 100),
+(395, 6, 100),
+(396, 7, 100),
+(397, 8, 100);
 
-INSERT INTO butacafuncion(id, ocupada, butaca_id, funcion_id)
-VALUES(1, 1, 1, 1),
-	  (2, 0, 2, 1),
-      (3, 0, 3, 1),
-      (4, 0, 1, 2),
-	  (5, 0, 2, 2),
-      (6, 0, 3, 2); 
+INSERT INTO funcion(id, entradasDisponibles, fechaHora, hora, precioMayor, precioMenor, cine_id, pelicula_id, sala_id)
+VALUES(1, 390, '2022-07-14', "20:30", 500, 250, 1, 1, 1),
+	  (2, 1, '2022-08-23', "19:00", 500, 250, 1, 1, 1),
+      (3, 1, '2022-08-24', "22:00", 500, 250, 2, 1, 4),
+      (4, 1, '2022-07-14', "22:00", 600, 300, 2, 2, 5),
+      (5, 1, '2022-07-14', "22:00", 500, 250, 3, 3, 6),
+      (6, 1, '2022-07-14', "22:00", 800, 500, 3, 2, 7);
+
+INSERT INTO butacafuncion(funcion_id, butaca_id, ocupada)
+VALUES
+(1, 1, 0), (1, 2, 0), (1, 3, 0), (1, 4, 0), (1, 5, 0), (1, 6, 0), (1, 7, 0), (1, 8, 0), (1, 9, 0), (1, 10, 0), (1, 11, 0), (1, 12, 0), (1, 13, 0), (1, 14, 0), (1, 15, 0), (1, 16, 0), (1, 17, 0), (1, 18, 0), (1, 19, 0), (1, 20, 0), (1, 21, 0), (1, 22, 0), (1, 23, 0), (1, 24, 0), (1, 25, 0), (1, 26, 0),
+(1, 27, 0), (1, 28, 0), (1, 29, 0), (1, 30, 0), (1, 31, 0), (1, 32, 0), (1, 33, 0), (1, 34, 0), (1, 35, 0), (1, 36, 0), (1, 37, 0), (1, 38, 0), (1, 39, 0), (1, 40, 0), (1, 41, 0), (1, 42, 0), (1, 43, 0), (1, 44, 0), (1, 45, 0), (1, 46, 0), (1, 47, 0), (1, 48, 0), (1, 49, 0), (1, 50, 0), (1, 51, 0), (1, 52, 0),
+(1, 53, 0), (1, 54, 0), (1, 55, 0), (1, 56, 0), (1, 57, 0), (1, 58, 0), (1, 59, 0), (1, 60, 0), (1, 61, 0), (1, 62, 0), (1, 63, 0), (1, 64, 0), (1, 65, 0), (1, 66, 0), (1, 67, 0), (1, 68, 0), (1, 69, 0), (1, 70, 0), (1, 71, 0), (1, 72, 0), (1, 73, 0), (1, 74, 0), (1, 75, 0), (1, 76, 0), (1, 77, 0), (1, 78, 0),
+(1, 79, 0), (1, 80, 0), (1, 81, 0), (1, 82, 0), (1, 83, 0), (1, 84, 0), (1, 85, 0), (1, 86, 0), (1, 87, 0), (1, 88, 0), (1, 89, 0), (1, 90, 0), (1, 91, 0), (1, 92, 0), (1, 93, 0), (1, 94, 0), (1, 95, 0), (1, 96, 0), (1, 97, 0), (1, 98, 0), (1, 99, 0), (1, 100, 0), (1, 101, 0), (1, 102, 0), (1, 103, 0), (1, 104, 0),
+(1, 105, 0), (1, 106, 0), (1, 107, 0), (1, 108, 0), (1, 109, 0), (1, 110, 0), (1, 111, 0), (1, 112, 0), (1, 113, 0), (1, 114, 0), (1, 115, 0), (1, 116, 0), (1, 117, 0), (1, 118, 0), (1, 119, 0), (1, 120, 0), (1, 121, 0), (1, 122, 0), (1, 123, 0), (1, 124, 0), (1, 125, 0), (1, 126, 0), (1, 127, 0), (1, 128, 0), (1, 129, 0), (1, 130, 0),
+(1, 131, 0), (1, 132, 0), (1, 133, 0), (1, 134, 0), (1, 135, 0), (1, 136, 0), (1, 137, 0), (1, 138, 0), (1, 139, 0), (1, 140, 0), (1, 141, 0), (1, 142, 0), (1, 143, 0), (1, 144, 0), (1, 145, 0), (1, 146, 0), (1, 147, 0), (1, 148, 0), (1, 149, 0), (1, 150, 0), (1, 151, 0), (1, 152, 0), (1, 153, 0), (1, 154, 0), (1, 155, 0), (1, 156, 0),
+(1, 157, 0), (1, 158, 0), (1, 159, 0), (1, 160, 0), (1, 161, 0), (1, 162, 0), (1, 163, 0), (1, 164, 0), (1, 165, 0), (1, 166, 0), (1, 167, 0), (1, 168, 0), (1, 169, 0), (1, 170, 0), (1, 171, 0), (1, 172, 0), (1, 173, 0), (1, 174, 0), (1, 175, 0), (1, 176, 0), (1, 177, 0), (1, 178, 0), (1, 179, 0), (1, 180, 0), (1, 181, 0), (1, 182, 0),
+(1, 183, 0), (1, 184, 0), (1, 185, 0), (1, 186, 0), (1, 187, 0), (1, 188, 0), (1, 189, 0), (1, 190, 0), (1, 191, 0), (1, 192, 0), (1, 193, 0), (1, 194, 0), (1, 195, 0), (1, 196, 0), (1, 197, 0), (1, 198, 0), (1, 199, 0), (1, 200, 0), (1, 201, 0), (1, 202, 0), (1, 203, 0), (1, 204, 0), (1, 205, 0), (1, 206, 0), (1, 207, 0), (1, 208, 0),
+(1, 209, 0), (1, 210, 0), (1, 211, 0), (1, 212, 0), (1, 213, 0), (1, 214, 0), (1, 215, 0), (1, 216, 0), (1, 217, 0), (1, 218, 0), (1, 219, 0), (1, 220, 0), (1, 221, 0), (1, 222, 0), (1, 223, 0), (1, 224, 0), (1, 225, 0), (1, 226, 0), (1, 227, 0), (1, 228, 0), (1, 229, 0), (1, 230, 0), (1, 231, 0), (1, 232, 0), (1, 233, 0), (1, 234, 0),
+(1, 235, 0), (1, 236, 0), (1, 237, 0), (1, 238, 0), (1, 239, 0), (1, 240, 0), (1, 241, 0), (1, 242, 0), (1, 243, 0), (1, 244, 0), (1, 245, 0), (1, 246, 0), (1, 247, 0), (1, 248, 0), (1, 249, 0), (1, 250, 0), (1, 251, 0), (1, 252, 0), (1, 253, 0), (1, 254, 0), (1, 255, 0), (1, 256, 0), (1, 257, 0), (1, 258, 0), (1, 259, 0), (1, 260, 0),
+(1, 261, 0), (1, 262, 0), (1, 263, 0), (1, 264, 0), (1, 265, 0), (1, 266, 0), (1, 267, 0), (1, 268, 0), (1, 269, 0), (1, 270, 0), (1, 271, 0), (1, 272, 0), (1, 273, 0), (1, 274, 0), (1, 275, 0), (1, 276, 0), (1, 277, 0), (1, 278, 0), (1, 279, 0), (1, 280, 0), (1, 281, 0), (1, 282, 0), (1, 283, 0), (1, 284, 0), (1, 285, 0), (1, 286, 0),
+(1, 287, 0), (1, 288, 0), (1, 289, 0), (1, 290, 0), (1, 291, 0), (1, 292, 0), (1, 293, 0), (1, 294, 0), (1, 295, 0), (1, 296, 0), (1, 297, 0), (1, 298, 0), (1, 299, 0), (1, 300, 0), (1, 301, 0), (1, 302, 0), (1, 303, 0), (1, 304, 0), (1, 305, 0), (1, 306, 0), (1, 307, 0), (1, 308, 0), (1, 309, 0), (1, 310, 0), (1, 311, 0), (1, 312, 0),
+(1, 313, 0), (1, 314, 0), (1, 315, 0), (1, 316, 0), (1, 317, 0), (1, 318, 0), (1, 319, 0), (1, 320, 0), (1, 321, 0), (1, 322, 0), (1, 323, 0), (1, 324, 0), (1, 325, 0), (1, 326, 0), (1, 327, 0), (1, 328, 0), (1, 329, 0), (1, 330, 0), (1, 331, 0), (1, 332, 0), (1, 333, 0), (1, 334, 0), (1, 335, 0), (1, 336, 0), (1, 337, 0), (1, 338, 0),
+(1, 339, 0), (1, 340, 0), (1, 341, 0), (1, 342, 0), (1, 343, 0), (1, 344, 0), (1, 345, 0), (1, 346, 0), (1, 347, 0), (1, 348, 0), (1, 349, 0), (1, 350, 0), (1, 351, 0), (1, 352, 0), (1, 353, 0), (1, 354, 0), (1, 355, 0), (1, 356, 0), (1, 357, 0), (1, 358, 0), (1, 359, 0), (1, 360, 0), (1, 361, 0), (1, 362, 0), (1, 363, 0), (1, 364, 0),
+(1, 365, 0), (1, 366, 0), (1, 367, 0), (1, 368, 0), (1, 369, 0), (1, 370, 0), (1, 371, 0), (1, 372, 0), (1, 373, 0), (1, 374, 0), (1, 375, 0), (1, 376, 0), (1, 377, 0), (1, 378, 0), (1, 379, 0), (1, 380, 0), (1, 381, 0), (1, 382, 0), (1, 383, 0), (1, 384, 0), (1, 385, 0), (1, 386, 0), (1, 387, 0), (1, 388, 0), (1, 389, 0), (1, 390, 0), 
+(2, 1, 0),
+(3, 393, 0),
+(4, 394, 0),
+(5, 395, 0),
+(6, 396, 0); 
        
 select * from favorito;
 select * from pelicula;
@@ -106,3 +138,6 @@ select * from usuario;
 select * from butaca;
 select * from suscripcion;
 select * from detallesuscripcion;
+
+Usuario= TESTLNNAD80G
+Contraseña: qatest5854

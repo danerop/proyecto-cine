@@ -1,11 +1,6 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import java.util.List;
-import java.util.Set;
-
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,35 +26,36 @@ public class PeliculaGenero {
 
 	private Boolean activo=true;
 	
+	
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public Pelicula getPelicula() {
 		return pelicula;
 	}
-
 	public void setPelicula(Pelicula pelicula) {
 		this.pelicula = pelicula;
 	}
-
 	public Genero getGenero() {
 		return genero;
 	}
-
 	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
-
+	public Boolean getActivo() {
+		return activo;
+	}
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+	
 	@Override
 	public String toString() {
 		return "PeliculaGenero [id=" + id + ", pelicula=" + pelicula + ", genero=" + genero + "]";
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -69,7 +65,6 @@ public class PeliculaGenero {
 		result = prime * result + ((pelicula == null) ? 0 : pelicula.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -96,13 +91,4 @@ public class PeliculaGenero {
 			return false;
 		return true;
 	}
-
-	public Boolean getActivo() {
-		return activo;
-	}
-
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
-	}
-	
 }

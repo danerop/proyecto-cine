@@ -1,10 +1,9 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
-import ar.edu.unlam.tallerweb1.modelo.DetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleSuscripcion;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSuscripcion;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +29,13 @@ public class ControladorLogin {
 	// dicha clase debe estar anotada como @Service o @Repository y debe estar en un
 	// paquete de los indicados en
 	// applicationContext.xml
-	private ServicioLogin servicioLogin;
+	private ServicioUsuario servicioUsuario;
 	private ServicioSuscripcion servicioSuscripcion;
 	private ServicioDetalleSuscripcion servicioDetalleSuscripcion;
 
 	@Autowired
-	public ControladorLogin(ServicioLogin servicioLogin, ServicioSuscripcion servicioSuscripcion, ServicioDetalleSuscripcion servicioDetalleSuscripcion) {
-		this.servicioLogin = servicioLogin;
+	public ControladorLogin(ServicioUsuario servicioLogin, ServicioSuscripcion servicioSuscripcion, ServicioDetalleSuscripcion servicioDetalleSuscripcion) {
+		this.servicioUsuario = servicioLogin;
 		this.servicioSuscripcion = servicioSuscripcion;
 		this.servicioDetalleSuscripcion = servicioDetalleSuscripcion;
 	}
@@ -66,7 +65,7 @@ public class ControladorLogin {
 	@RequestMapping(path = "/validar-login", method = RequestMethod.POST)
 	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
-		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
+		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		
 		if (usuarioBuscado != null) {
 			switch (usuarioBuscado.getRol()) {
@@ -108,7 +107,7 @@ public class ControladorLogin {
 		// validar password con repassword
 		ModelMap modelo = new ModelMap();
 
-		if (servicioLogin.consultarUsuario(usuario) == null) {
+		if (servicioUsuario.buscarUsuarioPorEmail(usuario.getPassword()) == null) {
 			if (usuario.getPassword().equals(repassword)) {
 				// guardo en la base
 				usuario.setActivo(true);
@@ -119,7 +118,7 @@ public class ControladorLogin {
 					servicioSuscripcion.guardarSuscripcion(registrosus);
 					usuario.setSuscripcion(registrosus);	
 				}
-				servicioLogin.insertarUsuario(usuario);
+				servicioUsuario.guardarUsuario(usuario);
 				modelo.put("correcto", "Usuario registrado correctamente " + usuario.getEmail());
 			} else {
 				modelo.put("error", "Las contraseñas no coinciden");

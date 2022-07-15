@@ -56,4 +56,9 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 				.add(Restrictions.like("nombre", nombre))
 				.list();
 	}
+
+	@Override
+	public void actualizarPelicula(Pelicula pelicula) {
+		sessionFactory.getCurrentSession().update(pelicula);
+	}
 }

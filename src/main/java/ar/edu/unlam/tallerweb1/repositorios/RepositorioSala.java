@@ -9,5 +9,5 @@ public interface RepositorioSala {
 	List<Sala> obtenerTodasLasSalas();
 	Sala buscarSalaPorId(Long id);
 	void guardarSala(Sala sala);
-	
+	void actualizarSala(Sala sala);
 }

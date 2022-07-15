@@ -22,8 +22,7 @@ public class Cine {
 	private Double longitud;
 	
 
-	public Cine() {
-		
+	public Cine() {	
 	}
 	
 	public Long getId() {
@@ -87,7 +86,6 @@ public class Cine {
 		result = prime * result + ((urlImagenCine == null) ? 0 : urlImagenCine.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.controlador;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.annotation.Rollback;
@@ -21,35 +19,18 @@ import ar.edu.unlam.tallerweb1.modelo.DetalleSuscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleSuscripcion;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSuscripcion;
 
 public class ControladorSuscripcionTest {
  
-	private ServicioLogin servicioUsuario = mock(ServicioLogin.class);
 	private ServicioSuscripcion servicioSuscripcion = mock(ServicioSuscripcion.class);
 	private ServicioDetalleSuscripcion servicioDetalleSuscripcion = mock(ServicioDetalleSuscripcion.class);
-	private ControladorSuscripcion controladorSuscripcion = new ControladorSuscripcion(servicioSuscripcion, servicioUsuario, servicioDetalleSuscripcion);
-	private Usuario usuarioMock;
-	private HttpServletRequest requestMock;
-	private HttpSession sessionMock;
-	private ServicioLogin servicioUsuarioMock;
-	private ServicioSuscripcion servicioSuscripcionMock;
-	private ServicioDetalleSuscripcion servicioDetalleSuscripcionMock;
+	private ServicioNotificacion servicioNotificacion = mock(ServicioNotificacion.class);
+	private ControladorSuscripcion controladorSuscripcion = new ControladorSuscripcion(servicioSuscripcion, servicioDetalleSuscripcion, servicioNotificacion);
+	private HttpServletRequest requestMock = mock(HttpServletRequest.class);
+	private HttpSession sessionMock = mock(HttpSession.class);
 	
-	@Before // Se ejecutan antes de cada prueba. Esto es útil cuando queremos ejecutar algún código común antes de ejecutar una prueba.
-	public void init() {
-		usuarioMock = mock(Usuario.class);
-		requestMock = mock(HttpServletRequest.class);
-		sessionMock = mock(HttpSession.class);
-		servicioSuscripcionMock = mock(ServicioSuscripcion.class);
-		controladorSuscripcion.setServicioSuscripcion(servicioSuscripcion);
-		servicioDetalleSuscripcionMock = mock(ServicioDetalleSuscripcion.class);
-		controladorSuscripcion.setServicioDetalleSuscripcion(servicioDetalleSuscripcion);
-		servicioUsuarioMock = mock(ServicioLogin.class);
-		controladorSuscripcion.setServicioLogin(servicioUsuario);
-	}
-
 	@Test
 	@Rollback(true)
 	@Transactional

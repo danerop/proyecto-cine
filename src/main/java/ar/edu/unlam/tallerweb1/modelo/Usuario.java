@@ -4,12 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+
+import ar.edu.unlam.tallerweb1.controladores.DatosCompraBoleto;
 
 // Clase que modela el concepto de Usuario, la anotacion @Entity le avisa a hibernate que esta clase es persistible
 // el paquete ar.edu.unlam.tallerweb1.modelo esta indicado en el archivo hibernateCOntext.xml para que hibernate
@@ -25,13 +25,20 @@ public class Usuario {
 	// el atributo, la misma admite nulos, y el tipo de dato se deduce del tipo de dato de java.
 	private String email;
 	private String password;
+	private String nombre;
 	private Boolean activo = false;
 	private String urlImagenUsuario;
 	private String rol;
+	@OneToOne
+	private Boleto temp;
 	
 	@OneToOne
 	@Cascade(CascadeType.PERSIST)
 	private Suscripcion suscripcion;
+	
+	private Boolean modoautomatico=false;
+	@OneToOne
+	private Funcion funcionModoAutomatico;
 	
 	public Long getId() {
 		return id;
@@ -51,41 +58,58 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 	public Boolean getActivo() {
 		return activo;
 	}
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
 	}
-	public boolean activo() {
-		return activo;
-    }
-    public void activar() {
-		activo = true;
-    }
 	public String getUrlImagenUsuario() {
 		return urlImagenUsuario;
 	}
 	public void setUrlImagenUsuario(String urlImagenUsuario) {
 		this.urlImagenUsuario = urlImagenUsuario;
 	}
-
 	public String getRol() {
 		return rol;
 	}
-
 	public void setRol(String rol) {
 		this.rol = rol;
 	}
-
 	public Suscripcion getSuscripcion() {
 		return suscripcion;
 	}
-
 	public void setSuscripcion(Suscripcion suscripcion) {
 		this.suscripcion = suscripcion;
 	}
+	
 
+	public Boleto getTemp() {
+		return temp;
+	}
+	public void setTemp(Boleto temp) {
+		this.temp = temp;
+	}
+	
+	public Boolean getModoautomatico() {
+		return modoautomatico;
+	}
+	public void setModoautomatico(Boolean modoautomatico) {
+		this.modoautomatico = modoautomatico;
+	}
+	
+	public Funcion getFuncionModoAutomatico() {
+		return funcionModoAutomatico;
+	}
+	public void setFuncionModoAutomatico(Funcion funcionModoAutomatico) {
+		this.funcionModoAutomatico = funcionModoAutomatico;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -98,7 +122,6 @@ public class Usuario {
 		result = prime * result + ((urlImagenUsuario == null) ? 0 : urlImagenUsuario.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -145,5 +168,4 @@ public class Usuario {
 			return false;
 		return true;
 	}
-	
 }

@@ -70,7 +70,6 @@ public class Pelicula {
 		result = prime * result + ((urlImagenPelicula == null) ? 0 : urlImagenPelicula.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -112,5 +111,4 @@ public class Pelicula {
 			return false;
 		return true;
 	}
-	
 }

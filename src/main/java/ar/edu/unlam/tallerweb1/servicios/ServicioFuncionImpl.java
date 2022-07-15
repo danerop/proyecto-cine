@@ -1,8 +1,8 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -36,36 +36,7 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 
 	@Override
 	public void guardarFuncion(Funcion funcion) {
-		String msg = "";
-		
-		if(funcion.getCine() == null) {
-			msg = msg + "Cine no elegido <br>";
-		}
-		if(funcion.getSala() == null) {
-			msg = msg + "Sala no elegida <br>";
-		}
-		if(funcion.getPelicula() == null) {
-			msg = msg + "Película no elegida <br>";
-		}
-		if(funcion.getPrecioMayor() == null) {
-			msg = msg + "Rellenar precio de adulto <br>";
-		}
-		if(funcion.getFechaHora() == null) {
-			msg = msg + "Elegir fecha <br>";
-		}
-		if(funcion.getHora() == null) {
-			msg = msg + "Rellenar hora (hh:mm) <br>";
-		}
-		if(msg != "") {
-			throw new ExceptionFuncionCamposVacios(msg);
-		}
-		if(!Pattern.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", funcion.getHora())) {
-			throw new ExceptionFuncionHoraIncorrecta();
-		}
-		if(funcion.getPrecioMayor()<0 || funcion.getPrecioMenor()<0) {
-			throw new ExceptionFuncionPrecioIncorrecto();
-		}
-		
+		validarFuncion(funcion);
 		repositorioFuncionDao.guardarFuncion(funcion);
 	}
 
@@ -109,9 +80,60 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 			temp=Date.valueOf(fechaHora);
 		}catch (IllegalArgumentException e){
 			temp=Date.valueOf("0000-01-01");
-		}finally {
-			Funcion funcionzz=repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, temp, hora, idSala);
-			return funcionzz;
 		}
+		
+		Funcion funcionzz=repositorioFuncionDao.obtenerFuncionesPorCineFechaHoraSalaYPelicula(idCine, idPelicula, temp, hora, idSala);
+		return funcionzz;	
+	}
+
+	@Override
+	public void validarFuncion(Funcion funcion) {
+		String msg = "";
+		
+		if(funcion.getCine() == null) {
+			msg = msg + "Cine no elegido <br>";
+		}
+		if(funcion.getSala() == null) {
+			msg = msg + "Sala no elegida <br>";
+		}
+		if(funcion.getPelicula() == null) {
+			msg = msg + "Película no elegida <br>";
+		}
+		if(funcion.getPrecioMayor() == null) {
+			msg = msg + "Rellenar precio de adulto <br>";
+		}
+		if(funcion.getFechaHora() == null) {
+			msg = msg + "Elegir fecha <br>";
+		}
+		if(funcion.getHora() == null) {
+			msg = msg + "Rellenar hora (hh:mm) <br>";
+		}
+		if(msg != "") {
+			throw new ExceptionFuncionCamposVacios(msg);
+		}
+		if(!Pattern.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", funcion.getHora())) {
+			throw new ExceptionFuncionHoraIncorrecta();
+		}
+		if(funcion.getPrecioMayor()<0 || funcion.getPrecioMenor()<0) {
+			throw new ExceptionFuncionPrecioIncorrecto();
+		}
+	}
+
+	@Override
+	public void actualizarFuncion(Funcion funcion) {
+		validarFuncion(funcion);
+		repositorioFuncionDao.actualizarFuncion(funcion);
+	}
+	
+
+	@Override
+	public List<Funcion> obtenerFuncionesFechaActual() {
+		
+		LocalDate dateObj = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String strfechaActual = dateObj.format(formatter);
+		Date fechaactual=Date.valueOf(strfechaActual);
+		
+		return repositorioFuncionDao.obtenerFuncionesPorFecha(fechaactual);
 	}
 }

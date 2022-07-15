@@ -36,7 +36,7 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 	}
 
 	@Override
-	public void guardarPelicula(Pelicula pelicula) {
+	public void validarPelicula(Pelicula pelicula) {
 		String campoNulo = "";
 		
 		if(pelicula.getNombre() == "") {
@@ -60,6 +60,18 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 		if(pelicula.getDuracion() <= 0) {
 			throw new ExceptionPeliculaDuracionNoValida();
 		}
+	}
+	
+	@Override
+	public void actualizarPelicula(Pelicula pelicula) {
+		validarPelicula(pelicula);
+		
+		repositorioPeliculaDao.actualizarPelicula(pelicula);
+	}
+	
+	@Override
+	public void guardarPelicula(Pelicula pelicula) {
+		validarPelicula(pelicula);
 		
 		repositorioPeliculaDao.guardarPelicula(pelicula);
 	}
@@ -71,4 +83,5 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 		
 		return repositorioPeliculaDao.buscarPeliculasPorNombre(busqueda);
 	}
+
 }

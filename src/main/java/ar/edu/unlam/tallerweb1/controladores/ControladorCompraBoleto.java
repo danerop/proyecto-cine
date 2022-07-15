@@ -1,6 +1,5 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
 
 import ar.edu.unlam.tallerweb1.modelo.*;
 import ar.edu.unlam.tallerweb1.servicios.*;
-
 
 @Controller
 public class ControladorCompraBoleto {
@@ -29,16 +29,22 @@ public class ControladorCompraBoleto {
 	private ServicioButaca servicioButaca;
 	private ServicioButacaFuncion servicioButacaFuncion;
 	private ServicioSuscripcion servicioSuscripcion;
+	private ServicioUsuario servicioUsuario;
+	private ServicioNotificacion servicioNotificacion;
 
 	@Autowired
 	public ControladorCompraBoleto(ServicioFuncion servicioFuncion, ServicioBoleto servicioBoleto,
-			ServicioPelicula servicioPelicula, ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion, ServicioSuscripcion servicioSuscripcion) {
+			ServicioPelicula servicioPelicula, ServicioButaca servicioButaca, ServicioButacaFuncion servicioButacaFuncion,
+			ServicioSuscripcion servicioSuscripcion, ServicioUsuario servicioUsuario, ServicioNotificacion servicioNotificacion) {
+
 		this.servicioFuncion = servicioFuncion;
 		this.servicioBoleto = servicioBoleto;
 		this.servicioPelicula = servicioPelicula;
 		this.servicioButaca = servicioButaca;
 		this.servicioButacaFuncion = servicioButacaFuncion;
 		this.servicioSuscripcion = servicioSuscripcion;
+		this.servicioUsuario = servicioUsuario;
+		this.servicioNotificacion = servicioNotificacion;
 	}
 	@RequestMapping(path = "/compra", method = RequestMethod.GET)
 	public ModelAndView irACompra(@RequestParam(value = "p") Long idPelicula,  HttpServletRequest request) {
@@ -46,11 +52,18 @@ public class ControladorCompraBoleto {
 		List<Funcion> funciones = servicioFuncion.obtenerFuncionesFuturasDePelicula(idPelicula);
 		
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
 		if (user == null || !user.getRol().equals("usuario") || funciones==null) {
 			return new ModelAndView("redirect:/inicio");
 		}
 		
+		if (user.getTemp()!=null && user.getTemp().getTemporal()) {
+			return new ModelAndView("redirect:/compraboletoerror?p="+idPelicula);
+		}
 		
+		modelo.addAttribute(new DatosBuscar());
+		modelo.put("usuario", user);
+		modelo.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		modelo.put("datosCompraBoleto", new DatosCompraBoleto());
 		modelo.put("funcionesDisponibles", funciones);
 		modelo.put("cinesDisponibles", servicioFuncion.obtenerCinesDisponiblesParaFuncionesFuturas(idPelicula));
@@ -73,9 +86,12 @@ public class ControladorCompraBoleto {
 			return new ModelAndView("redirect:/inicio");
 		}
 		
+		model.addAttribute(new DatosBuscar());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
-		model.put("user", servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
+		model.put("user", servicioUsuario.buscarUsuarioPorId(user.getId()));
 		model.put("funcionElegida", funcionElegida);
 		return new ModelAndView("compra-tipoboleto", model);
 	}
@@ -97,6 +113,10 @@ public class ControladorCompraBoleto {
 			model.put("msg", "La butaca seleccionada no es válida");
 			return new ModelAndView("redirect:/compra?p="+idPelicula, model);
 		}
+		
+		model.addAttribute(new DatosBuscar());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		model.put("butacas", servicioButacaFuncion.obtenerButacasPorFuncion(funcionElegida));
 		model.put("datosCompraBoleto", datosCompraBoleto);
 		model.put("p", idPelicula);
@@ -106,75 +126,9 @@ public class ControladorCompraBoleto {
 
 	@RequestMapping(path = "/comprar-pago", method = RequestMethod.POST)
 	public ModelAndView irAMetodoDePago(@RequestParam(value = "p") Long idPelicula, HttpServletRequest request,
-			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) {
-		
-		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-		if (user == null || !user.getRol().equals("usuario")) {
-			return new ModelAndView("redirect:/inicio");
-		}
-		
+			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto, RedirectAttributes redirectAttributes ) {
 		
 
-		
-		
-		ModelMap model = new ModelMap();
-		model.put("datosCompraBoleto", datosCompraBoleto);
-		model.put("p", idPelicula);
-		model.put("user", servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
-		return new ModelAndView("compra-metodo-pago", model);
-	}
-
-	@RequestMapping(path = "/comprar-confirmar", method = RequestMethod.POST)
-	public ModelAndView irAConfirmar(@RequestParam(value = "p") Long idPelicula, 
-			@RequestParam(name = "ep", defaultValue= "false") Boolean usoEntradaGratis,
-			HttpServletRequest request,
-			@ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto) {
-		ModelMap model = new ModelMap();
-				
-		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-		if (user == null || !user.getRol().equals("usuario")) {
-			return new ModelAndView("redirect:/inicio");
-		} 
-		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioSuscripcion.obtenerUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
-			model.put("msg", "No se cuenta con más entradas gratis para usar");
-			return new ModelAndView("redirect:/inicio", model);
-			
-		}
-		
-		Funcion funcionElegida = servicioFuncion.obtenerFuncionesPorCineFechaHoraSalaYPelicula(
-				datosCompraBoleto.getIdcine(), idPelicula, datosCompraBoleto.getFecha(), datosCompraBoleto.getHora(),
-				datosCompraBoleto.getIdSala());
-		Butaca butaca = servicioButaca.obtenerButaca(datosCompraBoleto.getIdButaca());
-		
-		if (servicioButacaFuncion.isButacaOcupada(funcionElegida, datosCompraBoleto.getIdButaca())==true) {
-			model.put("msg", "La butaca elegida ya fue ocupada");
-			return new ModelAndView("redirect:/inicio", model);
-		}
-		if (!servicioBoleto.validarPrecioDeFuncionDelBoleto(funcionElegida, datosCompraBoleto.getPrecio(), user)) {
-			return new ModelAndView("redirect:/inicio");
-		}
-		
-		Boleto boletoAGuardar = new Boleto();
-		boletoAGuardar.setButaca(butaca);
-		boletoAGuardar.setFuncion(funcionElegida);
-		boletoAGuardar.setCliente(servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
-		boletoAGuardar.setPrecio(servicioBoleto.aplicarDescuento(boletoAGuardar, datosCompraBoleto.getPrecio()));
-
-		model.put("datosCompraBoleto", datosCompraBoleto);
-		model.put("p", idPelicula);
-		model.put("user", servicioSuscripcion.obtenerUsuarioPorId(user.getId()));
-		model.put("usoEntradaGratis", usoEntradaGratis);
-		model.put("boletoGenerado", boletoAGuardar);
-		model.put("funcionElegida", funcionElegida);
-
-		return new ModelAndView("compra-confirmacion", model);
-	}
-
-	@RequestMapping(path = "/validar-compra", method = RequestMethod.POST)
-	public ModelAndView irARecibo(@RequestParam(value = "p") Long idPelicula,
-			@RequestParam(name = "ep", defaultValue= "false") Boolean usoEntradaGratis,
-			HttpServletRequest request, @ModelAttribute("datosCompraBoleto") DatosCompraBoleto datosCompraBoleto,
-			RedirectAttributes redirectAttributes) {
 		ModelMap model = new ModelMap();
 		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
 		if (user == null || !user.getRol().equals("usuario")) {
@@ -197,20 +151,10 @@ public class ControladorCompraBoleto {
 			return new ModelAndView("redirect:/inicio");
 		}
 		boletoAGuardar.setPrecio(servicioBoleto.aplicarDescuento(boletoAGuardar, datosCompraBoleto.getPrecio()));
+		boletoAGuardar.setTemporal(true);
 		
-		// Uso de entrada gratis
-		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioSuscripcion.obtenerUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
-			model.put("msg", "No te quedan entradas gratis por usar");
-			redirectAttributes.addFlashAttribute("mapping1Form", model);
-			return new ModelAndView("redirect:/inicio", model);
-		}
-		if (usoEntradaGratis) {
-			boletoAGuardar.setFueAdquiridoConEntradaGratis(true);
-			boletoAGuardar.setPrecio(null);
-		}
-		
-		//
-		
+
+		//guardar boleto
 
 		ButacaFuncion temp=servicioButacaFuncion.obtenerPorButacaYFuncion(funcionElegida, butaca.getId());
 		try {
@@ -228,21 +172,90 @@ public class ControladorCompraBoleto {
 			redirectAttributes.addFlashAttribute("mapping1Form", model);
 			return new ModelAndView("redirect:/inicio", model);
 		} 
+
+		Usuario usuarioaactualizar = servicioUsuario.buscarUsuarioPorId(user.getId());
+		usuarioaactualizar.setTemp(boletoAGuardar);
+		servicioUsuario.actualizarUsuario(usuarioaactualizar);
 		
-		//PROCESAR PAGO
-		//medio de pago convencional
+
+		return new ModelAndView("redirect:/comprar-confirmar?p="+idPelicula);
+	}
+
+	@RequestMapping(path = "/comprar-confirmar", method = RequestMethod.GET)
+	public ModelAndView irAConfirmar( 
+			 HttpServletRequest request) throws MPException, MPApiException {
+		ModelMap model = new ModelMap();
+				
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
+		if (user == null || !user.getRol().equals("usuario")) {
+			return new ModelAndView("redirect:/inicio");
+		} 
+
+		
+
+		
+		Boleto boletoAGuardar = servicioUsuario.buscarUsuarioPorId(user.getId()).getTemp();
+	
+		model.addAttribute(new DatosBuscar());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
+		model.put("p", boletoAGuardar.getFuncion().getPelicula().getId());
+		model.put("user", servicioUsuario.buscarUsuarioPorId(user.getId()));
+		model.put("boletoGenerado", boletoAGuardar);
+		model.put("funcionElegida", boletoAGuardar.getFuncion());
+		
+		//Generar Metodo pago
+		String idProducto=servicioBoleto.metodopago(boletoAGuardar);;
+		model.put("producto", idProducto);
+
+
+		
+		return new ModelAndView("compra-confirmacion", model);
+	}
+
+	@RequestMapping(path = "/validar-compra", method = RequestMethod.GET)
+	public ModelAndView irARecibo(
+			@RequestParam(name = "ep", defaultValue= "false") Boolean usoEntradaGratis,
+			HttpServletRequest request, 
+			RedirectAttributes redirectAttributes) {
+		ModelMap model = new ModelMap();
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
+		if (user == null || !user.getRol().equals("usuario")) {
+			model.put("msg", "Debes estar logueado para comprar un boleto");
+			redirectAttributes.addFlashAttribute("mapping1Form", model);
+			return new ModelAndView("redirect:/inicio", model);
+		}
+		
+		Boleto boletoAValidar=user.getTemp();
+		
+
+
 		
 		//usar entrada gratis
+		if ((usoEntradaGratis && user.getSuscripcion()==null) || (usoEntradaGratis && servicioUsuario.buscarUsuarioPorId(user.getId()).getSuscripcion().getCantidadDeBoletosGratisRestante()<1)) {
+			model.put("msg", "No te quedan entradas gratis por usar");
+			redirectAttributes.addFlashAttribute("mapping1Form", model);
+			return new ModelAndView("redirect:/inicio", model);
+		}
+		if (usoEntradaGratis) {
+			boletoAValidar.setFueAdquiridoConEntradaGratis(true);
+			boletoAValidar.setPrecio(null);
+			boletoAValidar.setTemporal(false);
+			servicioBoleto.actualizarrBoleto(boletoAValidar);
+		}
 		if (usoEntradaGratis) {
 			servicioSuscripcion.usarEntradaGratis(user);
 		}
 		//
 		
-		
-		model.put("boletoGenerado", boletoAGuardar);
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
+		model.put("boletoGenerado", boletoAValidar);
 		model.put("nuevacompra", true);
 		redirectAttributes.addFlashAttribute("mapping1Form", model);
-		return new ModelAndView("redirect:/recibo?b=" + boletoAGuardar.getId());
+		return new ModelAndView("redirect:/recibo?b=" + boletoAValidar.getId());
 		
 	}
 
@@ -268,9 +281,88 @@ public class ControladorCompraBoleto {
 		if (model != null) {
 			modelo.addAllAttributes(model);
 		}
+		
+		modelo.addAttribute(new DatosBuscar());
+		modelo.put("usuario", user);
+		modelo.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
 		modelo.put("boletoGenerado", boleto);
 		modelo.put("idBoleto", idBoleto);
 
 		return new ModelAndView("compra-recibocompra", modelo);
 	}
+
+	
+	
+	
+	@RequestMapping(path = "/boletosuccess", method = RequestMethod.GET)
+	public ModelAndView pagoAprobado(	
+			HttpServletRequest request, 
+			@RequestParam(value = "payment_id") String idpago, 
+			@RequestParam(value = "status") String estadopago
+			){
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
+		if (user == null || !user.getRol().equals("usuario")) {
+			return new ModelAndView("redirect:/inicio");
+		}
+		
+		Boleto boletopagado=user.getTemp();
+		boletopagado.setIdpago(idpago);
+		boletopagado.setTemporal(false);
+		servicioBoleto.actualizarrBoleto(boletopagado);
+		
+		System.out.println(idpago);
+		System.out.println(estadopago);
+		
+		return new ModelAndView("redirect:/validar-compra");
+	}
+	
+	
+	@RequestMapping(path = "/compraboletoerror", method = RequestMethod.GET)
+	public ModelAndView irErrorEnCompra(
+			@RequestParam(value = "p") Long idPelicula,
+			HttpServletRequest request 
+			){
+		ModelMap model = new ModelMap();
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
+		if (user == null || !user.getRol().equals("usuario")) {
+			return new ModelAndView("redirect:/inicio");
+		}
+		
+		
+		//boleto viejo no pagado confirmado
+		Boleto boletoAEliminar = user.getTemp();
+		if (boletoAEliminar.getTemporal()) {
+			model.put("idnuevapeli", idPelicula);
+			model.put("boleto", user.getTemp());
+		}
+		
+		model.addAttribute(new DatosBuscar());
+		model.put("usuario", user);
+		model.put("notificaciones", servicioNotificacion.obtenerNotificacionesDeUsuario(user));
+		return new ModelAndView("compra-errores", model);
+	}
+	@RequestMapping(path = "/compraboleto-cancelar", method = RequestMethod.GET)
+	public ModelAndView cancelarnCompra(	
+			@RequestParam(value = "p") Long idPelicula,
+			HttpServletRequest request ){
+		ModelMap model = new ModelMap();
+		Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+		user=servicioUsuario.buscarUsuarioPorId(user.getId());
+		if (user == null || !user.getRol().equals("usuario")) {
+			return new ModelAndView("redirect:/inicio");
+		}
+		
+		Boleto boletoAEliminar = servicioBoleto.buscarBoleto(user.getTemp().getId());
+		if (boletoAEliminar==null) {
+			return new ModelAndView("redirect:/inicio");
+		}
+		user.setTemp(null);
+		servicioUsuario.actualizarUsuario(user);
+		servicioBoleto.cancelarCompraBoleto(boletoAEliminar);
+		return new ModelAndView("redirect:/compra?p="+idPelicula);
+	}
+	
+	
 }

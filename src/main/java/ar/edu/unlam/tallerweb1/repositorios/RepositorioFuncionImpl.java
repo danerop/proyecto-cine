@@ -4,10 +4,8 @@ package ar.edu.unlam.tallerweb1.repositorios;
 import java.sql.Date;
 import java.util.List;
 
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,4 +121,18 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		.setProjection(Projections.distinct(Projections.property("cine")))
 		.list();
 	}
+	
+	@Override
+	public List<Funcion> obtenerFuncionesPorFecha(Date fechaHora) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Funcion.class)
+		.add(Restrictions.eq("fechaHora", fechaHora))
+		.list();
+	}
+
+	@Override
+	public void actualizarFuncion(Funcion funcion) {
+		sessionFactory.getCurrentSession().update(funcion);
+	}
+
 }

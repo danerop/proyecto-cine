@@ -18,6 +18,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioButaca;
 import ar.edu.unlam.tallerweb1.servicios.ServicioButacaFuncion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCine;
 import ar.edu.unlam.tallerweb1.servicios.ServicioFuncion;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.servicios.ServicioSala;
 
@@ -29,9 +30,10 @@ public class ControladorAdminFuncionTest {
 	private ServicioPelicula servicioPelicula = mock(ServicioPelicula.class);
 	private ServicioFuncion servicioFuncion = mock(ServicioFuncion.class);
 	private ServicioButacaFuncion servicioButacaFuncion = mock(ServicioButacaFuncion.class);
+	private ServicioNotificacion servicioNotificacion = mock(ServicioNotificacion.class);
 	
 	private ControladorAdminFuncion controladorAdminFuncion = new ControladorAdminFuncion(servicioCine, servicioSala, servicioButaca,
-			servicioPelicula, servicioFuncion, servicioButacaFuncion);
+			servicioPelicula, servicioFuncion, servicioButacaFuncion, servicioNotificacion);
 	
 	@Test
 	public void sePuedeAccederALaPaginaSiElUsuarioEsAdmin() {

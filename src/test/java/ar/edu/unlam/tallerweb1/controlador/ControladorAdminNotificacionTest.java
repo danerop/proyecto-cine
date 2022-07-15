@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
-import ar.edu.unlam.tallerweb1.controladores.ControladorAdminNotifiacion;
+import ar.edu.unlam.tallerweb1.controladores.ControladorAdminNotificacion;
 import ar.edu.unlam.tallerweb1.controladores.DatosNotificacion;
 import ar.edu.unlam.tallerweb1.modelo.*;
 import ar.edu.unlam.tallerweb1.servicios.*;
@@ -24,7 +24,7 @@ import ar.edu.unlam.tallerweb1.servicios.*;
 public class ControladorAdminNotificacionTest extends SpringTest{
 
 	private ServicioNotificacion servicioNoti = mock(ServicioNotificacion.class);
-	private ControladorAdminNotifiacion controladorAdminNoti = new ControladorAdminNotifiacion(servicioNoti);
+	private ControladorAdminNotificacion controladorAdminNoti = new ControladorAdminNotificacion(servicioNoti);
 
 	@Test
 	@Transactional @Rollback
@@ -41,7 +41,7 @@ public class ControladorAdminNotificacionTest extends SpringTest{
 	
 	
 		DatosNotificacion datosNotificacion = new DatosNotificacion();
-		List<Long> listaIdUsuarios = new ArrayList();
+		List<Long> listaIdUsuarios = new ArrayList<Long>();
 		listaIdUsuarios.add(user.getId());
 		datosNotificacion.setIdUsuario(listaIdUsuarios);
 		datosNotificacion.setTexto("texto titulo");
@@ -50,7 +50,7 @@ public class ControladorAdminNotificacionTest extends SpringTest{
 		ModelAndView mav2 = controladorAdminNoti.agregarNuevaNotificacion(datosNotificacion, mockRequest);
 		
 		assertEquals("admin-notificaciones", mav.getViewName());
-		assertEquals("redirect:/admin-notificaciones", mav2.getViewName());
+		assertEquals("admin-notificaciones", mav2.getViewName());
 	}
 	@Test
 	@Transactional @Rollback

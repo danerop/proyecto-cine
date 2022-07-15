@@ -4,7 +4,6 @@ import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,11 +20,11 @@ public class Boleto {
 	@ManyToOne
 	private Usuario cliente;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="FUNCION_ID")
 	private Funcion funcion;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="BUTACA_ID")
 	private Butaca butaca;
 	
@@ -36,8 +35,11 @@ public class Boleto {
 	private Date fechaComprado;
 	
 	private Boolean fueAdquiridoConEntradaGratis=false;
-
 	
+	private Boolean temporal=false;
+	
+	private String idpago;
+
 	
 	public Boleto(Long nroBoleto, Usuario cliente, Funcion funcion, Float precio, Date fecha, Sala sala, Butaca butaca) {
 		super();
@@ -80,14 +82,28 @@ public class Boleto {
 	public void setPrecio(Float precio) {
 		this.precio = precio;
 	}
-	
-	
 	public Date getFechaComprado() {
 		return fechaComprado;
 	}
 	public void setFechaComprado(Date fechaComprado) {
 		this.fechaComprado = fechaComprado;
 	}
+
+
+	public Boolean getTemporal() {
+		return temporal;
+	}
+	public void setTemporal(Boolean temporal) {
+		this.temporal = temporal;
+	}
+	
+	public String getIdpago() {
+		return idpago;
+	}
+	public void setIdpago(String idpago) {
+		this.idpago = idpago;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

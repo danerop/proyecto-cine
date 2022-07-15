@@ -21,7 +21,11 @@ import ar.edu.unlam.tallerweb1.servicios.*;
 public class ControladorRecepcionistaTest {
 	private ServicioBoleto servicioBoleto = mock(ServicioBoleto.class);
 	private ServicioRecepcionista servicioRecepcionista = mock(ServicioRecepcionista.class);
-	private ControladorRecepcionista controladorRecepcionista = new ControladorRecepcionista(servicioBoleto, servicioRecepcionista);
+	
+	private ServicioFuncion servicioFuncion = mock(ServicioFuncion.class);
+	private ServicioUsuario servicioUsuario = mock(ServicioUsuario.class);
+	private ServicioNotificacion servicioNotificacion = mock(ServicioNotificacion.class);
+	private ControladorRecepcionista controladorRecepcionista = new ControladorRecepcionista(servicioBoleto, servicioRecepcionista, servicioFuncion, servicioUsuario, servicioNotificacion);
 	
 	@Test
 	@Transactional @Rollback
@@ -35,6 +39,7 @@ public class ControladorRecepcionistaTest {
 		
 		when(mockRequest.getSession()).thenReturn(sessionmock);
 		when(mockRequest.getSession().getAttribute("usuario")).thenReturn(user);
+		when(servicioUsuario.buscarUsuarioPorId(user.getId())).thenReturn(user);
 	
 		
 		ModelAndView mav = controladorRecepcionista.irAIniciouRecepcionista(mockRequest);
@@ -60,6 +65,7 @@ public class ControladorRecepcionistaTest {
 		
 		when(mockRequest.getSession()).thenReturn(sessionmock);
 		when(mockRequest.getSession().getAttribute("usuario")).thenReturn(user);
+		when(servicioUsuario.buscarUsuarioPorId(user.getId())).thenReturn(user);
 		doThrow(ExceptionBoletoInvalido.class).when(servicioRecepcionista).ConsultarBoletoValido(Mockito.any(Boleto.class));
 		
 		ModelAndView mav2 = controladorRecepcionista.validarBoleto(1l ,mockRequest);
@@ -79,6 +85,7 @@ public class ControladorRecepcionistaTest {
 		
 		when(mockRequest.getSession()).thenReturn(sessionmock);
 		when(mockRequest.getSession().getAttribute("usuario")).thenReturn(user);
+		when(servicioUsuario.buscarUsuarioPorId(user.getId())).thenReturn(user);
 		doThrow(ExceptionFechaDistinta.class).when(servicioRecepcionista).ConsultarBoletoValido(Mockito.any(Boleto.class));
 		
 		ModelAndView mav2 = controladorRecepcionista.validarBoleto(1l ,mockRequest);
@@ -98,6 +105,7 @@ public class ControladorRecepcionistaTest {
 		
 		when(mockRequest.getSession()).thenReturn(sessionmock);
 		when(mockRequest.getSession().getAttribute("usuario")).thenReturn(user);
+		when(servicioUsuario.buscarUsuarioPorId(user.getId())).thenReturn(user);
 		doThrow(ExceptionBoletoYaUsado.class).when(servicioRecepcionista).ConsultarBoletoValido(Mockito.any(Boleto.class));
 		
 		ModelAndView mav2 = controladorRecepcionista.validarBoleto(1l ,mockRequest);
@@ -120,6 +128,7 @@ public class ControladorRecepcionistaTest {
 		
 		when(mockRequest.getSession()).thenReturn(sessionmock);
 		when(mockRequest.getSession().getAttribute("usuario")).thenReturn(user);
+		when(servicioUsuario.buscarUsuarioPorId(user.getId())).thenReturn(user);
 		when(servicioBoleto.buscarBoleto(Mockito.anyLong())).thenReturn(boleto);
 		
 		ModelAndView mav2 = controladorRecepcionista.registrarAsistenciaBoleto(1l ,mockRequest);

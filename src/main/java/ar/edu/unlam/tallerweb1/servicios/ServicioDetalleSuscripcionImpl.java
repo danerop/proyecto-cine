@@ -23,6 +23,39 @@ public class ServicioDetalleSuscripcionImpl implements ServicioDetalleSuscripcio
 	
 	@Override
 	public void guardarDetalleSuscripcion(DetalleSuscripcion ds) {
+		validarDetalleSuscripcion(ds);
+		
+		repositorioDetalleSuscripcionDao.guardarDetalleSuscripcion(ds);
+	}
+
+	@Override
+	public void modificarDetalleSuscripcion(DetalleSuscripcion detalleSuscripcion) {
+		validarDetalleSuscripcion(detalleSuscripcion);
+		
+		repositorioDetalleSuscripcionDao.modificarDetalleSuscripcion(detalleSuscripcion);
+	}
+
+	@Override
+	public void eliminarDetalleSuscripcion(DetalleSuscripcion detalleSuscripcion) {
+		repositorioDetalleSuscripcionDao.eliminarDetalleSuscripcion(detalleSuscripcion);
+	}
+
+	@Override
+	public DetalleSuscripcion obtenerDetalleSuscripcionPorId(Long id) {
+		DetalleSuscripcion ds = repositorioDetalleSuscripcionDao.obtenerDetalleSuscripcionPorId(id);
+		if(ds == null) {
+			throw new ExceptionDetalleSuscripcionNoEncontrada();
+		}
+		return ds;
+	}
+
+	@Override
+	public List<DetalleSuscripcion> obtenerTodasLasSuscripciones() {
+		return repositorioDetalleSuscripcionDao.obtenerTodosLosDetallesSuscripcion();
+	}
+
+	@Override
+	public void validarDetalleSuscripcion(DetalleSuscripcion ds) {
 		String msg = "";
 		
 		if(ds.getCantidadBoletosGratis() == null){ds.setCantidadBoletosGratis(0l);}
@@ -45,36 +78,6 @@ public class ServicioDetalleSuscripcionImpl implements ServicioDetalleSuscripcio
 		if(ds.getDescuentoEnBoletos() < 0.0) {
 			throw new ExceptionDetalleSuscripcionDescuentoNoValido();
 		}
-		
-		repositorioDetalleSuscripcionDao.guardarDetalleSuscripcion(ds);
 	}
-
-	@Override
-	public void modificarDetalleSuscripcion(DetalleSuscripcion detalleSuscripcion) {
-		repositorioDetalleSuscripcionDao.modificarDetalleSuscripcion(detalleSuscripcion);
-		
-	}
-
-	@Override
-	public void eliminarDetalleSuscripcion(DetalleSuscripcion detalleSuscripcion) {
-		repositorioDetalleSuscripcionDao.eliminarDetalleSuscripcion(detalleSuscripcion);
-		
-	}
-
-	@Override
-	public DetalleSuscripcion obtenerDetalleSuscripcionPorId(Long id) {
-		DetalleSuscripcion ds = repositorioDetalleSuscripcionDao.obtenerDetalleSuscripcionPorId(id);
-		if(ds == null) {
-			throw new ExceptionDetalleSuscripcionNoEncontrada();
-		}
-		return ds;
-	}
-
-	@Override
-	public List<DetalleSuscripcion> obtenerTodasLasSuscripciones() {
-		return repositorioDetalleSuscripcionDao.obtenerTodosLosDetallesSuscripcion();
-	}
-
-	
 	
 }

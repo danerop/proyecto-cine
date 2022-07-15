@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import ar.edu.unlam.tallerweb1.modelo.Butaca;
 import ar.edu.unlam.tallerweb1.modelo.ButacaFuncion;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioButaca;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioButacaFuncion;
 
 @Service("servicioButacaFuncion")

@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import ar.edu.unlam.tallerweb1.modelo.Suscripcion;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 public interface RepositorioSuscripcion {
 
@@ -16,4 +15,5 @@ public interface RepositorioSuscripcion {
 	void setSessionFactory(SessionFactory sessionFactory);
 	SessionFactory getSessionFactory();
 	List<Suscripcion> obtenerTodasLasSuscripciones();
+	
 }

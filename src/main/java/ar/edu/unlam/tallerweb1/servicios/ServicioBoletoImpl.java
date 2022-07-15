@@ -1,41 +1,34 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import com.mercadopago.MercadoPagoConfig;
+import com.mercadopago.client.preference.*;
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
+import com.mercadopago.resources.preference.Preference;
+
+import java.math.BigDecimal;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-
 import ar.edu.unlam.tallerweb1.modelo.Boleto;
-import ar.edu.unlam.tallerweb1.modelo.Butaca;
 import ar.edu.unlam.tallerweb1.modelo.ButacaFuncion;
 import ar.edu.unlam.tallerweb1.modelo.Funcion;
-import ar.edu.unlam.tallerweb1.modelo.Genero;
 import ar.edu.unlam.tallerweb1.modelo.Pelicula;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.repositorios.RepositorioBoleto;
-import ar.edu.unlam.tallerweb1.repositorios.RepositorioFuncion;
 
 @Service("servicioBoleto")
 @Transactional
 public class ServicioBoletoImpl implements ServicioBoleto{
+	
 	private RepositorioBoleto repositorioBoletoDao;
 	private ServicioButacaFuncion servicioButacaFuncion;
 	
@@ -49,10 +42,10 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	public void guardarBoleto(Boleto boleto, ButacaFuncion temp) {	
 
 		if (boleto.getFuncion()==null || boleto.getFuncion().getId()==null || boleto.getFuncion().getEntradasDisponibles()<=0) {
-			throw new ExceptionFuncionNoEncontrada("La funciï¿½n de la cual desea reservar boleto no existe");
+			throw new ExceptionFuncionNoEncontrada("La función de la cual desea reservar boleto no existe");
 		}
 		if (temp.getFuncion().getId()!=boleto.getFuncion().getId() || temp.getButaca().getId() != boleto.getButaca().getId()) {
-			throw new ExceptionDatosBoletoDiferentesARegistroButacaFuncion("Los datos de la butaca seleccionada no corresponden a una vï¿½lida");
+			throw new ExceptionDatosBoletoDiferentesARegistroButacaFuncion("Los datos de la butaca seleccionada no corresponden a una válida");
 		}
 
 		if (boleto.getButaca()==null || temp==null || temp.getOcupada()==true ) {
@@ -75,6 +68,10 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	@Override
 	public Boleto buscarBoleto(Long id) {
 		return repositorioBoletoDao.buscarBoleto(id);
+	}
+	@Override
+	public void actualizarrBoleto(Boleto boletoactualizar) {
+		repositorioBoletoDao.actualizarBoleto(boletoactualizar);
 	}
 
 	@Override
@@ -145,9 +142,75 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		
 		return res;
 	}
+	
+	@Override
+	public String metodopago(Boleto boleto) throws MPException, MPApiException {
+		MercadoPagoConfig.setAccessToken("TEST-8013221418454965-071313-a570264e533984de955502601aed3514-1159619599");
+		
+		
+		// Crea un objeto de preferencia
+		PreferenceClient client = new PreferenceClient();
+
+		// Crea un item en la preferencia
+		List<PreferenceItemRequest> items = new ArrayList<>();
+		PreferenceItemRequest item =
+		   PreferenceItemRequest.builder()
+		       .title("Boleto "+boleto.getFuncion().getPelicula().getNombre())
+		       .quantity(1)
+		       .unitPrice(new BigDecimal(boleto.getPrecio()))
+		       .build();
+		items.add(item);
+		
+		PreferenceBackUrlsRequest backurls=
+				PreferenceBackUrlsRequest.builder()
+					.success("http://localhost:8080/proyecto-cine/boletosuccess")
+					.failure("http://localhost:8080/proyecto-cine/inicio")
+					.pending("http://localhost:8080/proyecto-cine/inicio")
+					.build();
+		String temp=boleto.getFuncion().getPelicula().getId().toString();
+		PreferenceRequest request = PreferenceRequest.builder().items(items).backUrls(backurls).additionalInfo(temp).build();
+
+		Preference preferencia=client.create(request);
+		
+		
+		
+		return preferencia.getId();
+	
+
+	}
 
 	public List<Funcion> obtenerFuncionesCompradasPorUsuario(Usuario user) {
 		return repositorioBoletoDao.obtenerFuncionesCompradasPorUsuario(user);
+
+	}
+
+	
+	@Override
+	public void cancelarCompraBoleto(Boleto boletoacancelar) {
+		boletoacancelar.getFuncion().setEntradasDisponibles(boletoacancelar.getFuncion().getEntradasDisponibles()+1);
+		ButacaFuncion temp=servicioButacaFuncion.obtenerPorButacaYFuncion(boletoacancelar.getFuncion(), boletoacancelar.getButaca().getId());
+		temp.setOcupada(false);
+		servicioButacaFuncion.actualizarButacaFuncion(temp);
+		
+		repositorioBoletoDao.eliminarBoleto(boletoacancelar);
+	}
+
+	@Override
+	public List<Pelicula> obtenerPeliculasDeFuncionesCompradasPorUsuario(Usuario user) {
+		return repositorioBoletoDao.obtenerPeliculasDeFuncionesCompradasPorUsuario(user);
+	}
+
+	@Override
+	public Long obtenerCantidadUsuariosQueVieronLaPelicula(Pelicula pelicula) {
+		Long cant = 0l;
+		
+		try {
+			cant = repositorioBoletoDao.obtenerCantidadUsuariosQueVieronLaPelicula(pelicula);
+		}catch(Exception e) {
+			return 0l;
+		}
+		
+		return cant;
 
 	}
 }
