@@ -1,17 +1,12 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-
-import java.io.File;
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.preference.*;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.preference.Preference;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -47,10 +42,10 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 	public void guardarBoleto(Boleto boleto, ButacaFuncion temp) {	
 
 		if (boleto.getFuncion()==null || boleto.getFuncion().getId()==null || boleto.getFuncion().getEntradasDisponibles()<=0) {
-			throw new ExceptionFuncionNoEncontrada("La funciï¿½n de la cual desea reservar boleto no existe");
+			throw new ExceptionFuncionNoEncontrada("La función de la cual desea reservar boleto no existe");
 		}
 		if (temp.getFuncion().getId()!=boleto.getFuncion().getId() || temp.getButaca().getId() != boleto.getButaca().getId()) {
-			throw new ExceptionDatosBoletoDiferentesARegistroButacaFuncion("Los datos de la butaca seleccionada no corresponden a una valida");
+			throw new ExceptionDatosBoletoDiferentesARegistroButacaFuncion("Los datos de la butaca seleccionada no corresponden a una válida");
 		}
 
 		if (boleto.getButaca()==null || temp==null || temp.getOcupada()==true ) {
@@ -156,7 +151,7 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		// Crea un objeto de preferencia
 		PreferenceClient client = new PreferenceClient();
 
-		// Crea un ï¿½tem en la preferencia
+		// Crea un item en la preferencia
 		List<PreferenceItemRequest> items = new ArrayList<>();
 		PreferenceItemRequest item =
 		   PreferenceItemRequest.builder()

@@ -11,7 +11,7 @@
 <!-- Bootstrap theme -->
 <link href="css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="./css/pago.css">
-<title>Recepciï¿½n</title>
+<title>Recepción</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 
@@ -28,7 +28,7 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav w-100 d-flex justify-content-evenly">
-						<li class="nav-item"><a class="nav-link active" href="iniciorecepcionista">Inicio Recepciï¿½n</a></li>
+						<li class="nav-item"><a class="nav-link active" href="iniciorecepcionista">Inicio Recepción</a></li>
 
 						<li class="nav-item dropdown" style="display: flex;">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${usuario.getNombre()}</a>
@@ -95,36 +95,38 @@
 				<div class="col-6">
 					<div class="text-center">
 						<c:if test="${!usuario.getModoautomatico()}">
-							<h4>Modo automï¿½tico: desactivado</h4>
+							<h4>Modo automático: desactivado</h4>
 							<a class="btn btn-primary" href="cambiarmodoautomatico">Activar
-								modo automï¿½tico</a>
+								modo automático</a>
 						</c:if>
 						<c:if test="${usuario.getModoautomatico()}">
-							<h4>Modo automï¿½tico: activado</h4>
+							<h4>Modo automático: activado</h4>
 							<a class="btn btn-secondary" href="cambiarmodoautomatico">Desactivar
-								modo automï¿½tico</a>
-
+								modo automático</a>
+							
+							<br><br>
 							<c:if test="${usuario.getFuncionModoAutomatico()!=null}">
 								<div class="container-fluid">
 									<div class=row>
 										<div class="col-6">
 											<img alt="pelicula img-fluid"
-												src="${usuario.getFuncionModoAutomatico().getPelicula().getUrlImagenPelicula()}">
+												src="${usuario.getFuncionModoAutomatico().getPelicula().getUrlImagenPelicula()}"
+												style="width:100%;">
 										</div>
 										<div class="col-6">
-											<h2>Pelicula:
-												${usuario.getFuncionModoAutomatico().getPelicula().getNombre()}</h2>
-											<h2>Fecha:
-												${usuario.getFuncionModoAutomatico().getFechaHora() }</h2>
-											<h2>Horario: ${usuario.getFuncionModoAutomatico().getHora() }</h2>
-											<h2>Cine:
-												${usuario.getFuncionModoAutomatico().getCine().getNombreLocal() }</h2>
-											<h2>Sala Id:
-												${usuario.getFuncionModoAutomatico().getSala().getId()}</h2>
-											<h2>Tipo de sala:
-												${usuario.getFuncionModoAutomatico().getSala().getTipo() }</h2>
+											<h4>Pelicula:
+												${usuario.getFuncionModoAutomatico().getPelicula().getNombre()}</h4>
+											<h4>Fecha:
+												${usuario.getFuncionModoAutomatico().getFechaHora() }</h4>
+											<h4>Horario: ${usuario.getFuncionModoAutomatico().getHora() }</h4>
+											<h4>Cine:
+												${usuario.getFuncionModoAutomatico().getCine().getNombreLocal() }</h4>
+											<h4>Sala Id:
+												${usuario.getFuncionModoAutomatico().getSala().getId()}</h4>
+											<h4>Tipo de sala:
+												${usuario.getFuncionModoAutomatico().getSala().getTipo() }</h4>
 											<a class="btn btn-primary mt-4"
-												href="recepcionista-seleccionarfuncion">Cambiar funciï¿½n</a>
+												href="recepcionista-seleccionarfuncion">Cambiar función</a>
 										</div>
 									</div>
 								</div>
@@ -132,7 +134,7 @@
 							<c:if test="${usuario.getFuncionModoAutomatico()==null}">
 								<br>
 								<a class="btn btn-primary mt-4"
-									href="recepcionista-seleccionarfuncion">Seleccionar funciï¿½n</a>
+									href="recepcionista-seleccionarfuncion">Seleccionar función</a>
 							</c:if>
 						</c:if>
 

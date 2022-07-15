@@ -2,8 +2,6 @@ package ar.edu.unlam.tallerweb1.servicios;
 
 import java.util.List;
 
-
-import com.google.zxing.WriterException;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 

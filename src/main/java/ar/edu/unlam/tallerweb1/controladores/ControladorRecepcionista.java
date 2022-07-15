@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.*;
 import ar.edu.unlam.tallerweb1.servicios.*;
-import net.bytebuddy.asm.Advice.This;
 
 
 @Controller
@@ -86,7 +85,7 @@ public class ControladorRecepcionista {
 			if (user.getFuncionModoAutomatico()!=null && boleto.getFuncion().getId()==user.getFuncionModoAutomatico().getId()) {
 				return new ModelAndView("redirect:/registrar-asistencia-boleto?b="+idBoleto);
 			} else {
-				modelo.put("msg", "La entrada no pertenece a la funciï¿½n indicada en el modo automï¿½tico");
+				modelo.put("msg", "La entrada no pertenece a la función indicada en el modo automático");
 				return new ModelAndView("recepcionista-validarboleto", modelo);
 			}
 		}

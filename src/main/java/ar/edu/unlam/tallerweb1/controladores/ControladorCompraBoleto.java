@@ -110,7 +110,7 @@ public class ControladorCompraBoleto {
 				datosCompraBoleto.getHora(), datosCompraBoleto.getIdSala());		
 		ModelMap model = new ModelMap();
 		if (funcionElegida==null) {
-			model.put("msg", "La butaca seleccionada no es vï¿½lida");
+			model.put("msg", "La butaca seleccionada no es válida");
 			return new ModelAndView("redirect:/compra?p="+idPelicula, model);
 		}
 		
