@@ -44,7 +44,9 @@ public class ServicioBoletoImpl implements ServicioBoleto{
 		if (boleto.getFuncion()==null || boleto.getFuncion().getId()==null || boleto.getFuncion().getEntradasDisponibles()<=0) {
 			throw new ExceptionFuncionNoEncontrada("La función de la cual desea reservar boleto no existe");
 		}
-		if (temp.getFuncion().getId()!=boleto.getFuncion().getId() || temp.getButaca().getId() != boleto.getButaca().getId()) {
+		
+		
+		if (!temp.getFuncion().getId().equals(boleto.getFuncion().getId()) || !temp.getButaca().getId().equals(boleto.getButaca().getId())) {
 			throw new ExceptionDatosBoletoDiferentesARegistroButacaFuncion("Los datos de la butaca seleccionada no corresponden a una válida");
 		}
 
